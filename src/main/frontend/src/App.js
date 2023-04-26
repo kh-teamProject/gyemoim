@@ -6,23 +6,15 @@ import Login from "./page/Login";
 import MyPage from "./page/MyPage";
 import Home from "./page/Home";
 import Board from "./page/Board";
+import Stage from './page/Stage';
 
 
 const App = () => {
-  const [message, setMessage] = useState([]);
-  useEffect(() => {
-    axios.get('/hello')
-      .then((res) => {
-        setMessage(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+
 
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: '/hello',
       element: <Home />
     },
     {
@@ -36,6 +28,10 @@ const App = () => {
     {
       path: '/board',
       element: <Board />
+    },
+    {
+      path: '/stage',
+      element: <Stage />
     }
   ]);
 
