@@ -1,0 +1,42 @@
+h2 {
+  font-size: 2.5rem;
+}
+
+.field {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.field label {
+  display: inline-block;
+  margin-right: 20px;
+  width: 120px;
+  text-align: left;
+}
+
+.field input {
+  width: 300px;
+  height: 30px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+}
+
+.field:nth-child(10) div {
+  display: inline-block;
+  position: relative;
+}
+
+.field:nth-child(10), .field:nth-child(11) {
+  margin-bottom: 0;
+}
+
+.field:nth-child(10) button {
+  position: absolute;
+  right: 0;
+  width: 80px;
+  height: 30px;
+  background: skyblue;
+  color: white;
+  border: 1px solid rgba(118, 118, 118);
+}

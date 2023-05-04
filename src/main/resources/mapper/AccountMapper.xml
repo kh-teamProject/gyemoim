@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.gyemoim.mapper.AccountMapper">
+
+  <resultMap id="memberResultMap" type="java.util.HashMap">
+    <result property="uNo" column="uNo" />
+    <result property="email" column="email" />
+    <result property="password" column="password" />
+    <result property="name" column="name" />
+    <result property="ssn" column="ssn" />
+    <result property="phone" column="phone" />
+    <result property="bankName" column="bankName" />
+    <result property="bankAccountNumber" column="bankAccountNumber" />
+    <result property="accountHolder" column="accountHolder" />
+    <result property="identifier" column="identifier" />
+    <result property="creditRating" column="creditRating" />
+    <result property="plusRate" column="plusRate" />
+    <result property="enrollDate" column="enrollDate" />
+    <result property="interest" column="interest" />
+    <result property="postcode" column="postcode" />
+    <result property="address" column="address" />
+    <result property="addressDetail" column="addressDetail" />
+  </resultMap>
+
+  <select id="getMyInfo" resultMap="memberResultMap">
+    SELECT *
+    FROM member
+    WHERE uNo = #{uNo}
+  </select>
+
+</mapper>
