@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.gyemoim.mapper.BoardMapper">
+
+    <!-- 게시글 총 갯수 구하기 -->
+    <select id="countBoard" resultType="int">
+        SELECT COUNT(*)
+        FROM BOARD
+    </select>
+
+    <!-- 검색 후 게시글 갯수 구하기 -->
+    <select id="searchCountBoard" resultType="int">
+        SELECT COUNT(*)
+        FROM BOARD
+        WHERE title LIKE '%' || #{keyword} || '%'
+           OR content LIKE '%' || #{keyword} || '%'
+           OR name = #{keyword}
+    </select>
+
+    <!-- 페이징 처리 후 게시글 조회하기 -->
+    <select id="selectBoard" resultType="com.team.gyemoim.vo.BoardVO">
+        SELECT *
+        FROM (SELECT rownum RN, A.*
+              FROM (SELECT *
+                    FROM BOARD
+                    ORDER BY bid DESC) A)
+        WHERE RN BETWEEN ${start} AND ${end}
+    </select>
+
+    <!-- 특정 게시글 상세보기 -->
+    <select id="readDetail" resultType="com.team.gyemoim.vo.BoardVO">
+        SELECT *
+        FROM BOARD
+        WHERE BID = #{bid}
+    </select>
+
+
+    <!-- 조회수 올리기 -->
+    <update id="updateViewCnt">
+        UPDATE BOARD SET views = views + 1 WHERE bid = #{bid}
+    </update>
+
+
+    <!-- 검색 후 검색에 해당하는 게시글 리스트 조회하기 (페이징 동시에 검색)-->
+    <select id="searchList" parameterType="com.team.gyemoim.vo.PageVO" resultType="com.team.gyemoim.vo.BoardVO">
+        SELECT *
+        FROM (SELECT rownum RN, A.*
+              FROM (SELECT *
+                    FROM BOARD
+                    WHERE title LIKE '%' || #{keyword} || '%'
+                       OR content LIKE '%' || #{keyword} || '%'
+                       OR name = #{keyword}
+                    ORDER BY bid DESC) A)
+    WHERE RN BETWEEN ${start} AND ${end}
+    </select>
+
+</mapper>

@@ -5,8 +5,14 @@ import './App.css';
 import Login from "./page/Login";
 import MyPage from "./page/MyPage";
 import Home from "./page/Home";
-import Board from "./page/Board";
+import BoardList from "./page/BoardList";
 import Stage from './page/Stage';
+import BoardWrite from './page/BoardWrite';
+import BoardDetail from "./page/BoardDetail";
+import BoardUpdate from "./page/BoardUpdate";
+import BoardAnswer from "./page/BoardAnswer";
+import RootLayout from "./page/Root";
+import BoardRootLayout from "./page/BoardRoot";
 
 
 const App = () => {
@@ -14,25 +20,53 @@ const App = () => {
 
   const router = createBrowserRouter([
     {
-      path: '/hello',
-      element: <Home />
+      path: '/',
+      element: <RootLayout />,
+      children: [
+        {
+          index: true,
+          element: <Home />
+        },
+        {
+          path: 'login',
+          element: <Login />
+        },
+        {
+          path: 'mypage',
+          element: <MyPage />
+        },
+        {
+          path: 'stage',
+          element: <Stage />
+        },
+        {
+          path: 'board',
+          element: <BoardRootLayout />,
+          children: [
+            {
+              index: true,
+              element: <BoardList />
+            },
+            {
+              path: 'write',
+              element: <BoardWrite />
+            },
+            {
+              path: 'detail/:bid',
+              element: <BoardDetail />
+            },
+            {
+              path: 'update',
+              element: <BoardUpdate />
+            },
+            {
+              path: 'answer/:parentBid',
+              element: <BoardAnswer />
+            }
+          ]
+        }
+      ]
     },
-    {
-      path: '/login',
-      element: <Login />
-    },
-    {
-      path: '/mypage',
-      element: <MyPage />
-    },
-    {
-      path: '/board',
-      element: <Board />
-    },
-    {
-      path: '/stage',
-      element: <Stage />
-    }
   ]);
 
   return (
