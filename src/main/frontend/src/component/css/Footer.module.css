@@ -1,0 +1,19 @@
+footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #4040f1;
+}
+
+footer .logo-wrap {
+  width: 200px;
+}
+
+footer .member-wrap {
+  padding: 20px 0;
+}
+
+footer .member-wrap p {
+  text-align: left;
+  color: white;
+}

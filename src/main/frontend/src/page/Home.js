@@ -5,9 +5,7 @@ const Home = () => {
   const [message, setMessage] = useState([]);
 
   useEffect(() => {
-    axios.post('/hello', {
-
-    })
+    axios.get('/hello')
       .then((res) => {
         setMessage(res.data);
       })
