@@ -1,16 +1,18 @@
 import React from "react";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import './App.css';
-import Login from "./page/Login";
-import MyPage from "./page/MyPage";
+
+import RootLayout from "./page/root/Root";
+import MyPageRootLayout from "./page/root/MyPageRoot";
 import Home from "./page/Home";
+import Login from "./page/account/Login";
+import MyPage from "./page/account/MyPage";
+import MyPageModify from "./page/account/MyPageModify";
 import Board from "./page/Board";
 import Stage from './page/Stage';
-import RootLayout from "./page/Root";
+import './App.css';
 
 
 const App = () => {
-
 
   const router = createBrowserRouter([
     {
@@ -27,7 +29,17 @@ const App = () => {
         },
         {
           path: 'mypage',
-          element: <MyPage />
+          element: <MyPageRootLayout />,
+          children: [
+            {
+              index: true,
+              element: <MyPage />
+            },
+            {
+              path: ':uNo',
+              element: <MyPageModify />
+            }
+          ]
         },
         {
           path: 'board',

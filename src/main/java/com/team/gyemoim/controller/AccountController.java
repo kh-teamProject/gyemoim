@@ -1,15 +1,14 @@
 package com.team.gyemoim.controller;
 
+import com.team.gyemoim.dto.MemberDTO;
 import com.team.gyemoim.service.AccountService;
-import com.team.gyemoim.vo.MemberVO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -26,7 +25,13 @@ public class AccountController {
   }
 
   // U
-
+  @PostMapping("/myInfoModify")
+  public boolean myInfoModify(MemberDTO dto) {
+    System.out.println("myInfoModify Controller....");
+    System.out.println("MemberDTO: " + dto);
+    accountService.myInfoModify(dto);
+    return true;
+  }
 
   // D
 }

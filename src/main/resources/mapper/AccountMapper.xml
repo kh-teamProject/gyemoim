@@ -29,4 +29,17 @@
     WHERE uNo = #{uNo}
   </select>
 
+  <update id="myInfoModify">
+    UPDATE MEMBER
+    SET name=#{name},
+        phone=#{phone},
+        bankname=#{bankName},
+        bankaccountnumber=#{bankAccountNumber},
+        creditrating=#{creditRating},
+        postcode=#{postcode},
+        address=#{address},
+        addressdetail=#{addressDetail}
+    WHERE uno=#{uno}
+  </update>
+
 </mapper>

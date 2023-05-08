@@ -26,16 +26,16 @@ h2 {
   box-sizing: border-box;
 }
 
-.field:nth-child(10) div {
+.field:nth-child(9) div {
   display: inline-block;
   position: relative;
 }
 
-.field:nth-child(10), .field:nth-child(11) {
+.field:nth-child(9), .field:nth-child(10) {
   margin-bottom: 0;
 }
 
-.field:nth-child(10) button {
+.field:nth-child(9) button {
   position: absolute;
   right: 0;
   width: 80px;
@@ -43,9 +43,10 @@ h2 {
   background: skyblue;
   color: white;
   border: 1px solid rgba(118, 118, 118);
+  font-weight: bold;
 }
 
-.field .link-btn, .field .submit-btn {
+.field .submit-btn {
   display: inline-block;
   width: 100px;
   height: 40px;
@@ -53,11 +54,8 @@ h2 {
   background: skyblue;
   line-height: 40px;
   border-radius: 4px;
-  cursor: pointer;
-}
-
-.field .submit-btn {
   border: 0;
   font-size: 1rem;
   font-weight: bold;
+  cursor: pointer;
 }

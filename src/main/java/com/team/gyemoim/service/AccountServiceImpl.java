@@ -1,5 +1,6 @@
 package com.team.gyemoim.service;
 
+import com.team.gyemoim.dto.MemberDTO;
 import com.team.gyemoim.mapper.AccountMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,10 @@ public class AccountServiceImpl implements AccountService{
   public HashMap<String, Object> getMyInfo(Integer uNo) {
     System.out.println("getMyInfo Service....");
     return accountMapper.getMyInfo(uNo);
+  }
+
+  @Override
+  public void myInfoModify(MemberDTO dto) {
+    accountMapper.myInfoModify(dto);
   }
 }
