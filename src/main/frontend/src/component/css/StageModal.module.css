@@ -1,0 +1,96 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+  position: fixed;
+  top: 30vh;
+  left: 10%;
+  width: 80%;
+  z-index: 100;
+  overflow: hidden;
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+/* exit */
+.modal.exit p:first-child{
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 2;
+}
+.modal.exit p.caution{
+    margin-top: 2rem;
+    font-size: 1rem;
+}
+.modal.exit div {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+}
+.modal.exit button {
+    display: block;
+    padding: 1rem 2rem;
+    border: 0;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+}
+.modal.exit button.back{
+    background: #004DC1;
+}
+.modal.exit button.exit{
+    background: #444;
+}
+/* receipt */
+.modal.receipt p:first-child{
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 2;
+}
+.modal.receipt table{
+    border-collapse: collapse;
+}
+.modal.receipt table thead th{
+    background: #f7f7f7;
+    color: #505050;
+    font-weight: 600;
+    width: 10%;
+    height: 40px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+.modal.receipt table tbody td{
+    text-align: center;
+    color: #505050;
+    height: 40px;
+    border-bottom: 1px solid #eee;
+}
+.modal.receipt button.back{
+        padding: 0;
+        font-size: 1.8rem;
+        background-color: white;
+        border: 1px solid white;
+        cursor: pointer;
+        margin: 1rem auto;
+        position: absolute;
+        top: 0;
+        right: 2rem;
+}
+@media (min-width: 768px) {
+  .modal {
+    left: calc(50% - 20rem);
+    width: 40rem;
+  }
+  .modal.receipt {
+      left: calc(40% - 20rem);
+      width: 55rem;
+  }
+}
