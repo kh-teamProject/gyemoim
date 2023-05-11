@@ -9,6 +9,7 @@ import MyPage from "./page/account/MyPage";
 import MyPageModify from "./page/account/MyPageModify";
 import Board from "./page/Board";
 import Stage from './page/Stage';
+import ChanHeeTest from './page/ChanHeeTest';
 import './App.css';
 
 
@@ -48,6 +49,10 @@ const App = () => {
         {
           path: 'stage',
           element: <Stage />
+        },
+        {
+          path: 'ChanHeeTest',
+          element: <ChanHeeTest />
         }
       ]
     },
