@@ -27,6 +27,7 @@ public interface BoardService {
     /* 수정 U */
 
 
+
     /* 삭제 D */
     void delete(BoardDeleteDTO boardDeleteDTO) throws Exception;
 

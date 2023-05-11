@@ -1,9 +1,10 @@
+/*
 import {useState, useEffect} from "react";
 import axios from "axios";
 import Pagination from "react-js-pagination";
 
-import Reply from "./Reply";
-
+import Reply from "./Reply";*/
+/*
 const ReplyList = (props) => {
 
     const bid = props.bid; // rno 인지 bid 인지,,,
@@ -70,4 +71,4 @@ const ReplyList = (props) => {
 
 }
 
-export default ReplyList;
+export default ReplyList;*/

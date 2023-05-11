@@ -1,11 +1,9 @@
-import {useContext, useState} from "react";
-import {AuthContext} from "./AuthProvider";
-import {HttpHeadersContext} from "./HttpHeadersProvider";
+/*import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
+import axios from "axios";*/
 
-
-/* 댓글 컴포넌트 */
+/*
+/!* 댓글 컴포넌트 *!/
 const Reply = (props) => {
 
     const {auth, setAuth} = useContext(AuthContext);
@@ -24,7 +22,7 @@ const Reply = (props) => {
 
 
 
-    /* 댓글 수정 */
+    /!* 댓글 수정 *!/
     const updateReply = async () => {
 
         const req = {
@@ -55,7 +53,7 @@ const Reply = (props) => {
 
 
 
-    /* 댓글 삭제 */
+    /!* 댓글 삭제 *!/
     const deleteReply = async () => {
         await axios.delete(`http://localhost:3000/reply/${reply.rno}`)
             .then((resp) => {
@@ -82,7 +80,7 @@ const Reply = (props) => {
     if (reply.del == 0) {
         return (
             <>
-                {/* 상단 영역 (프로필 이미지, 댓글 작성자, 댓글 작성시간) */}
+                {/!* 상단 영역 (프로필 이미지, 댓글 작성자, 댓글 작성시간) *!/}
                 <div>
                     <div>
                         <img src="/images/profile-placeholder.png" alt="프로필 이미지" className="profile-img" />
@@ -98,7 +96,7 @@ const Reply = (props) => {
 
                     <div>
                         {
-                            /* 자신이 작성한 댓글인 경우에만 수정, 삭제 가능함 */
+                            /!* 자신이 작성한 댓글인 경우에만 수정, 삭제 가능함 *!/
                             (localStorage.getItem("uNo") == reply.uNo) ?
                                 <>
                                     <button onClick={updateToggle}>수정하기</button> &nbsp;
@@ -112,10 +110,10 @@ const Reply = (props) => {
                 </div>
 
                 {
-                    /* 댓글 수정하는 경우 */
+                    /!* 댓글 수정하는 경우 *!/
                     show ?
                         <>
-                            {/* 댓글 수정하는 하단 영역 : (댓글내용 + 댓글 내용 편집 창) */}
+                            {/!* 댓글 수정하는 하단 영역 : (댓글내용 + 댓글 내용 편집 창) *!/}
                             <div>
                                 <textarea rows="5" value={comm} onClick={changeComm}></textarea>
                             </div>
@@ -125,7 +123,7 @@ const Reply = (props) => {
                         </>
                         :
                         <>
-                            {/* 댓글 수정 안하는 하단 영역 : (댓글 내용) */}
+                            {/!* 댓글 수정 안하는 하단 영역 : (댓글 내용) *!/}
                             <div>
                                 <div className="col-10 comm">{comm}</div>
                             </div>
@@ -152,4 +150,4 @@ const Reply = (props) => {
 
 }
 
-export default Reply;
+export default Reply;*/

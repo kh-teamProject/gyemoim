@@ -5,14 +5,18 @@ import './App.css';
 import Login from "./page/Login";
 import MyPage from "./page/MyPage";
 import Home from "./page/Home";
-import BoardList from "./page/BoardList";
+import NoticeList from "./page/NoticeList";
 import Stage from './page/Stage';
-import BoardWrite from './page/BoardWrite';
-import BoardDetail from "./page/BoardDetail";
-import BoardUpdate from "./page/BoardUpdate";
-import BoardAnswer from "./page/BoardAnswer";
+import QuestionWritePost from './page/QuestionWritePost';
+import QuestionDetail from "./page/QuestionDetail";
 import RootLayout from "./page/Root";
 import BoardRootLayout from "./page/BoardRoot";
+import Board from "./page/Board";
+import QuestionList from "./page/QuestionList";
+import NoticeWritePost from "./page/NoticeWritePost";
+import NoticeDetail from "./page/NoticeDetail";
+import NoticeUpdate from "./page/NoticeUpdate";
+import QuestionUpdate from "./page/QuestionUpdate";
 
 
 const App = () => {
@@ -45,23 +49,39 @@ const App = () => {
           children: [
             {
               index: true,
-              element: <BoardList />
+              element: <Board />
             },
             {
-              path: 'write',
-              element: <BoardWrite />
+              path: 'notice',
+              element: <NoticeList />
             },
             {
-              path: 'detail/:bid',
-              element: <BoardDetail />
+              path: 'notice/write',
+              element: <NoticeWritePost />
             },
             {
-              path: 'update',
-              element: <BoardUpdate />
+              path: 'notice/detail/:bid',
+              element: <NoticeDetail />
             },
             {
-              path: 'answer/:parentBid',
-              element: <BoardAnswer />
+              path: 'notice/update',
+              element: <NoticeUpdate />
+            },
+            {
+              path: 'question',
+              element: <QuestionList />
+            },
+            {
+              path: 'question/write',
+              element: <QuestionWritePost />
+            },
+            {
+              path: 'question/detail/:bid',
+              element: <QuestionDetail />
+            },
+            {
+              path: 'question/update',
+              element: <QuestionUpdate />
             }
           ]
         }

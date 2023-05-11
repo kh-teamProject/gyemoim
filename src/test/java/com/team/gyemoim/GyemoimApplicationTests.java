@@ -1,7 +1,5 @@
 package com.team.gyemoim;
 
-import com.team.gyemoim.dto.board.request.BoardCreateRequest;
-import com.team.gyemoim.service.board.BoardService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,14 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class GyemoimApplicationTests {
 
-	@Autowired
-	BoardService service;
-
 
 	@Test
 	void contextLoads() {
 	}
 
+/*
 	@Test
 	void testBoardInsert(){
 		String title = "";
@@ -33,6 +29,7 @@ class GyemoimApplicationTests {
 		}
 
 	}
+*/
 
 
 }

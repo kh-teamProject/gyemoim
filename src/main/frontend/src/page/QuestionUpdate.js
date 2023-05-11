@@ -1,6 +1,5 @@
+/*
 import {useContext, useState} from "react";
-import {HttpHeadersContext} from "./HttpHeadersProvider";
-import {AuthContext} from "./AuthProvider";
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 
@@ -37,7 +36,7 @@ const BoardUpdate = () => {
 
         await axios.patch(`http://localhost:3000/board/${board.bid}`, req, {headers: headers})
             .then((resp) => {
-                console.log("[BoardUpdate.js] updateBoard() success :D");
+                console.log("[NoticeUpdate.js] updateBoard() success :D");
                 console.log(resp.data);
 
                 if(resp.data.updatedRecordCount == 1) {
@@ -47,7 +46,7 @@ const BoardUpdate = () => {
 
             })
             .catch((err) => {
-               console.log("[BoardUpdate.js] updateBoard() error :<");
+               console.log("[NoticeUpdate.js] updateBoard() error :<");
                console.log(err);
             });
     }
@@ -90,4 +89,16 @@ const BoardUpdate = () => {
 }
 
 
-export default BoardUpdate;
+export default BoardUpdate;*/
+
+const QuestionUpdate = () => {
+
+
+    return (
+        <>
+
+        </>
+    );
+}
+
+export default QuestionUpdate;

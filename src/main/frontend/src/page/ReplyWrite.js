@@ -1,9 +1,7 @@
-import {useContext, useState} from "react";
+/*import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
-
-import {HttpHeadersContext} from "./HttpHeadersProvider";
-
+import axios from "axios";*/
+/*
 const ReplyWrite = (props) => {
 
     const {headers, setHeaders} = useContext(HttpHeadersContext);
@@ -43,10 +41,11 @@ const ReplyWrite = (props) => {
 
             });
     }
-
+*/
+/*
     return (
         <>
-            {/* 상단 영역 (프로필 이미지, 댓글 작성자) */}
+
             <div>
                 <div>
                     <img src="/images/profile-placeholder.png" alt="프로필 이미지" className="profile-img" />
@@ -61,7 +60,7 @@ const ReplyWrite = (props) => {
                 </div>
             </div>
 
-            {/* 하단 영역 (댓글 내용) */}
+
             <div>
                 <textarea rows="5" value={comm} onChange={changeComm}></textarea>
             </div><br/><br/>
@@ -71,4 +70,4 @@ const ReplyWrite = (props) => {
 
 }
 
-export default ReplyWrite;
+export default ReplyWrite;*/

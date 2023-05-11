@@ -1,5 +1,7 @@
 package com.team.gyemoim.mapper;
 
+import com.team.gyemoim.dto.BoardDeleteDTO;
+import com.team.gyemoim.dto.BoardWriteDTO;
 import com.team.gyemoim.vo.BoardVO;
 import com.team.gyemoim.vo.PageVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,5 +22,11 @@ public interface BoardMapper {
     void updateViewCnt(int bid) throws Exception; // 조회수 올리기
     
     List<BoardVO> searchList(PageVO spv) throws Exception; // 검색 후 검색에 해당하는 게시글 리스트 조회하기(페이징 동시에 검색)
-    
+
+    void delete(BoardDeleteDTO boardDeleteDTO) throws Exception; // 게시글 삭제하기
+
+    void write(BoardWriteDTO boardWriteDTO) throws Exception; // 게시글 생성하기
+
+    void addAttachedName(String savedName) throws Exception; // 첨부파일 올리기
+
 }
