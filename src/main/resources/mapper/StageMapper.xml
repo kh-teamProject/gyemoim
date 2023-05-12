@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.gyemoim.mapper.StageMapper">
+  <!--(찬희)스테이지 참여 시 Participation update-->
+  <update id="stageIn">
+    UPDATE PART SET uNo = #{uNo}
+    WHERE receiveTurn = #{receiveTurn}
+  </update>
+
+  <!--(찬희)스테이지 참여 시 roll insert-->
+  <insert id="rollIn">
+    INSERT INTO roll(uNo, pfID, receiveTurn)
+    VALUES (#{uNo} , #{pfID}, #{receiveTurn})
+  </insert>
+
+  <!--(찬희)Participation의 uNo 갯수 조회 -->
+  <select id="partUnoCount" resultType="int">
+    SELECT COUNT(uNo)
+    FROM part
+    WHERE pfID = #{pfID}
+  </select>
+
+  <!--(찬희)PF의 pfEntry 값 조회 -->
+  <select id="pfEntryValue" resultType="int">
+    SELECT pfEntry
+    FROM PF2
+    WHERE pfID = #{pfID}
+  </select>
+
+  <!--(찬희)PF의 startDate 값 조회 -->
+  <select id="getStartDate" resultType="java.util.Date">
+    SELECT startDate
+    FROM PF2
+    WHERE pfID = #{pfID}
+  </select>
+
+  <!--(찬희)PF의 startFlag를 '참여중'으로 update-->
+  <update id="stageStart" parameterType="com.team.gyemoim.dto.StagePfDTO">
+    UPDATE PF2
+    SET startFlag = '참여중'
+    WHERE pfID = #{pfID}
+  </update>
+
+  <!--(찬희)PF의 startDate를 SYSDATE update-->
+  <update id="startDateInsert" parameterType="com.team.gyemoim.dto.StagePfDTO">
+    UPDATE PF2
+    SET startDate = SYSDATE
+    WHERE pfID = #{pfID}
+  </update>
+
+  <!--(찬희)PF의 endDate를 SYSDATE update-->
+  <update id="endDateInsert" parameterType="com.team.gyemoim.dto.StagePfDTO">
+    UPDATE PF2
+    SET endDate = #{endDate}
+    WHERE pfID = #{pfID}
+  </update>
+
+  <!--(찬희)참여중에 관한 partList -->
+  <select id="getPartList" resultType="com.team.gyemoim.dto.StageParticipationDTO">
+    SELECT * FROM part
+    WHERE pfID = #{pfID}
+    ORDER BY receiveTurn
+  </select>
+
+  <!--(찬희)스테이지에 관한 pfList -->
+  <select id="getPfList" resultType="com.team.gyemoim.dto.StagePfDTO">
+    SELECT * FROM pf2
+    WHERE pfID = #{pfID}
+  </select>
+
+  <!--(찬희)개인 RollList -->
+  <select id="getRollList" resultType="com.team.gyemoim.dto.StageRollDTO" parameterType="com.team.gyemoim.dto.StageRollDTO">
+    SELECT DISTINCT r.*, i.uPayment, i.uTotalPayment, i.uTotalReceipts
+    FROM ROLL r
+    JOIN IMPORT2 i ON i.receiveTurn = r.receiveTurn
+    JOIN PF2 p ON p.pfRate = i.pfRate
+    WHERE p.deposit = i.deposit
+    AND r.pfID = #{pfID}
+    AND uNo = #{uNo}
+  </select>
+
+  <!--(찬희)참여중인 MemberList -->
+  <select id="getMemList" resultType="com.team.gyemoim.dto.StageRollListDTO">
+    SELECT DISTINCT p.uNo, p.receiveTurn, p.pfMaster, CASE WHEN p.uNo IS NULL THEN NULL ELSE m.name END AS name
+    FROM part p LEFT JOIN member2 m ON p.uNo = m.uNo
+    WHERE p.pfID = #{pfID}
+    ORDER BY p.receiveTurn
+  </select>
+
+  <!--(찬희)수령예정표 갖고오기-->
+  <select id="getImportList" resultType="com.team.gyemoim.dto.StageImportDTO">
+    SELECT i.*
+    FROM import2 i, pf2 p
+    WHERE i.deposit = p.deposit
+    AND i.pfRate = p.pfRate
+    AND p.pfID = #{pfID}
+  </select>
+
+</mapper>

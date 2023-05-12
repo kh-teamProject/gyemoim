@@ -7,6 +7,8 @@ import StageSequence from "../component/UI/stage/StageSequence";
 import MemberList from "../component/UI/stage/StageMemberList";
 import StageDeposit from "../component/UI/stage/StageDeposit";
 import StageModal from "../component/UI/stage/StageModal";
+import moment from 'moment';
+
 
 
 const Stage = () => {
@@ -16,17 +18,16 @@ const Stage = () => {
     const [roll, setRoll] = useState([]);
     const [schedule, setSchedule] = useState([]);
     const [mem, setMem] = useState([]);
-    console.log(schedule);
     const [startFlag, setStartFlag] = useState('');
     const [pfData, setPfData] = useState([]);
     const [rollData, setRollData] = useState([]);
     const [partData, setPartData] = useState([]);
-    console.log(startFlag)
+    console.log(rollData)
 
   useEffect(() => {
     axios.get('/stage', {
       params: {
-        uNo: 2,
+        uNo: 4,
         pfID: 1
       }
     })
@@ -43,6 +44,15 @@ const Stage = () => {
 
         const depositList = res.data.pf.map((item) => item.deposit);
         const pfNameList = res.data.pf.map((item) => item.pfName);
+        const startDateList = res.data.pf.map((item) => {
+          const startDateData = moment(item.startDate).format('YYYY.MM.DD');
+          return startDateData;
+        });
+        const endDateList = res.data.pf.map((item) => {
+          const endDateData = moment(item.endDate).format('YYYY.MM.DD');
+          return endDateData;
+        });
+
         //const depositWithComma = depositList.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         const depositWithComma = depositList
           .map((value) => (value / 10000).toFixed(0) + '만')
@@ -52,15 +62,20 @@ const Stage = () => {
         const pfData = {
         deposit: depositWithComma,
         pfRate: pfRateList.join(''),
-        pfName: pfNameList.join('')
+        pfName: pfNameList.join(''),
+        startDate: startDateList.join(''),
+        endDate: endDateList.join('')
         };
         setPfData(pfData);
 
         const RollDepositCnt = res.data.roll.map((item) => item.depositCnt);
         const RollUno = res.data.roll.map((item) => item.uno);
+        const RollReceiveTurn = res.data.roll.map((item) => item.receiveTurn);
+
         const rollData = {
         depositCnt: RollDepositCnt.join(''),
-        uNo: RollUno.join('')
+        uNo: RollUno.join(''),
+        receiveTurn: RollReceiveTurn.join('')
         };
         setRollData(rollData);
 
@@ -96,15 +111,13 @@ const Stage = () => {
 
     return (
         <>
-        {pf.map((pf, index) => (
-	        <p key={index}><span className={classes.stageTitle}>{pf.pfName}</span></p>
 
-         ))}
+	        <p><span className={classes.stageTitle}>{pfData.pfName}</span></p>
              <p>스테이지 상태 : {startFlag}</p>
              {
                   startFlag === '대기중'
                   ? <p>기간 : -</p>
-                  : <p>기간 : 2023.04.01~2023.12.1</p>
+                  : <p>기간 : {pfData.startDate} ~ {pfData.endDate}</p>
               }
 
             <div id="contents" className={classes.areaLayout}>
@@ -112,7 +125,7 @@ const Stage = () => {
                    <div id="stageArea">
                         <div className={classes.blueArea}>
                             <ul className={classes.pfInfo}>
-                                <li><span>나의 순번</span><br /><span className={classes.seqNum}>{rollData.uNo}</span></li>
+                                <li><span>나의 순번</span><br /><span className={classes.seqNum}>{rollData.receiveTurn}</span></li>
                                 <li><span>총 입금</span><br />{rollData.depositCnt}회</li>
                                 <li><span>약정금</span><br />{pfData.deposit}원</li>
                                 <li><span>이율(세후)</span><br />{pfData.pfRate}%</li>

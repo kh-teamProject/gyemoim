@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class MemberDTO {
-  private Integer uno; // 회원번호
+  private Integer uNo; // 회원번호
   private String email; //이메일
   private String name; //이름
   private String phone; //전화번호
