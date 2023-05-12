@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {createBrowserRouter, Link, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, Link, Route, RouterProvider} from "react-router-dom";
 import axios from 'axios';
 import './App.css';
 import Login from "./page/Login";
@@ -7,6 +7,7 @@ import MyPage from "./page/MyPage";
 import Home from "./page/Home";
 import Board from "./page/Board";
 import Stage from './page/Stage';
+import Test from "./page/Test";
 
 
 const App = () => {
@@ -27,12 +28,17 @@ const App = () => {
     },
     {
       path: '/board',
-      element: <Board />
+      element: <Board/>
+    },
+    {
+      path: '/test/:pfID',
+      element: <Test />
     },
     {
       path: '/stage',
-      element: <Stage />
+      element: <Stage/>,
     }
+
   ]);
 
   return (

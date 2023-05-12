@@ -7,4 +7,11 @@
     SELECT * FROM member2
   </select>
 
+  <select id="getTestList" resultType="com.team.gyemoim.dto.StageListDTO">
+  SELECT * FROM PF
+  JOIN participation
+  ON PF.PFID = participation.PFID
+  WHERE STARTFLAG ='대기중' AND PF.PFID = #{pfID}
+  </select>
+
 </mapper>

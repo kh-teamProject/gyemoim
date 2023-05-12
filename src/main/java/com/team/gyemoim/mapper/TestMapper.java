@@ -1,5 +1,6 @@
 package com.team.gyemoim.mapper;
 
+import com.team.gyemoim.dto.StageListDTO;
 import com.team.gyemoim.dto.TestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,4 +10,5 @@ import java.util.List;
 public interface TestMapper {
 
   List<TestDTO> getUserList();
+  List<StageListDTO> getTestList(int pfID);
 }

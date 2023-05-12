@@ -1,5 +1,6 @@
 package com.team.gyemoim.service;
 
+import com.team.gyemoim.dto.StageListDTO;
 import com.team.gyemoim.dto.TestDTO;
 import com.team.gyemoim.mapper.TestMapper;
 import lombok.RequiredArgsConstructor;
@@ -16,5 +17,11 @@ public class TestServiceImpl implements TestService {
   @Override
   public List<TestDTO> getUserList() {
     return testMapper.getUserList();
+  }
+
+  @Override
+  public List<StageListDTO> getTestList(int pfID) {
+    System.out.println("테스트서비스 돌아가연");
+    return testMapper.getTestList(pfID);
   }
 }
