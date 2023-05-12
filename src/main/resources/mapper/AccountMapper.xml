@@ -29,17 +29,24 @@
     WHERE uNo = #{uNo}
   </select>
 
+<!-- password 확인을 위한 select문 -->
+  <select id="getPassword" resultType="String">
+    SELECT password
+    FROM MEMBER
+    WHERE uNo = #{uNo}
+  </select>
+
   <update id="myInfoModify">
     UPDATE MEMBER
-    SET name=#{name},
-        phone=#{phone},
-        bankname=#{bankName},
-        bankaccountnumber=#{bankAccountNumber},
-        creditrating=#{creditRating},
-        postcode=#{postcode},
-        address=#{address},
-        addressdetail=#{addressDetail}
-    WHERE uno=#{uno}
+    SET name = #{name},
+        phone = #{phone},
+        bankname = #{bankName},
+        bankaccountnumber = #{bankAccountNumber},
+        creditrating = #{creditRating},
+        postcode = #{postcode},
+        address = #{address},
+        addressdetail = #{addressDetail}
+    WHERE uno = #{uno}
   </update>
 
 </mapper>

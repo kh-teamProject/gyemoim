@@ -10,6 +10,13 @@ import MyPageModify from "./page/account/MyPageModify";
 import Board from "./page/Board";
 import Stage from './page/Stage';
 import './App.css';
+import CheckedPwd from "./page/account/CheckedPwd";
+import BankAccount from "./page/account/BankAccount";
+import MyStage from "./page/account/MyStage";
+import Interest from "./page/account/Interest";
+import MemberDelete from "./page/account/MemberDelete";
+import Withdraw from "./page/account/Withdraw";
+import DetailsInquiry from "./page/account/DetailsInquiry";
 
 
 const App = () => {
@@ -32,12 +39,40 @@ const App = () => {
           element: <MyPageRootLayout />,
           children: [
             {
-              index: true,
+              path: 'info',
               element: <MyPage />
             },
             {
-              path: ':uNo',
+              path: 'info/modify/:uNo',
               element: <MyPageModify />
+            },
+            {
+              path: 'info/checkedPwd',
+              element: <CheckedPwd />
+            },
+            {
+              path: 'info/interest',
+              element: <Interest />
+            },
+            {
+              path: 'info/delete',
+              element: <MemberDelete />
+            },
+            {
+              path: 'bankAccount/deposit',
+              element: <BankAccount />
+            },
+            {
+              path: 'bankAccount/withdraw',
+              element: <Withdraw />
+            },
+            {
+              path: 'bankAccount/detailsInquiry',
+              element: <DetailsInquiry />
+            },
+            {
+              path: 'stage',
+              element: <MyStage />
             }
           ]
         },
