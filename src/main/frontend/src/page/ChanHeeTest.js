@@ -13,8 +13,9 @@ const ChanHeeTest = () => {
     console.log(value);
     axios.post('/stageIn', null, {
       params: {
-        uNo: 5,
-        receiveTurn: value
+        uNo: 4,
+        receiveTurn: value,
+        pfID: 1
       }
     })
       .then(response => {
@@ -27,6 +28,8 @@ const ChanHeeTest = () => {
 
   return (
     <div>
+      <button onClick={() => handleClick(1)}>Button 1</button>
+      <button onClick={() => handleClick(2)}>Button 2</button>
       <button onClick={() => handleClick(3)}>Button 3</button>
       <button onClick={() => handleClick(4)}>Button 4</button>
       <button onClick={() => handleClick(5)}>Button 5</button>
