@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import classes from '../../css/StageModal.module.css';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 
 const Backdrop = (props) => {
@@ -9,15 +10,17 @@ const Backdrop = (props) => {
 };
 
 const ExitModalOverlay = (props) => {
+    const navigate = useNavigate();
+
     const exitButtonClick = () => {
       axios.delete('/stageOut', {
             params: {
-              uNo: 4,
-              pfId: 1
+              uNo: 3,
+              pfID: 1
             }
           })
         .then(response => {
-          // 요청 성공 시 처리
+          navigate('/');
           console.log('DELETE 요청이 성공했습니다.');
         })
         .catch(error => {

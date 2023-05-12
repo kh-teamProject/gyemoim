@@ -35,4 +35,8 @@ public interface StageMapper {
   Date getStartDate(StageINDTO dto);
   //(찬희)PF의 endDate update
   void endDateInsert(StageINDTO dto);
+  //(찬희)스테이지 나갈 때 Participation_uNo:null
+  void partUNoNull(StageINDTO dto);
+  //(찬희)스테이지 나갈 때 roll_uNo:delete
+  void rollDelete(StageINDTO dto);
 }

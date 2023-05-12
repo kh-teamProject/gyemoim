@@ -20,4 +20,6 @@ public interface StageService {
   void stageIn(StageINDTO dto);
   //(찬희)참가자 수가 다 차면 stage 시작
   void stageStart(StageINDTO dto);
+  //(찬희)스테이지 나가기
+  void stageOut(StageINDTO dto);
 }

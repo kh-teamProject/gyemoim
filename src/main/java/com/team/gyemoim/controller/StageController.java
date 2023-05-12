@@ -48,9 +48,10 @@ public class StageController {
 
     // D
     //(찬희) stage 탈출하기
-    @PostMapping("/stageOut")
+    @DeleteMapping("/stageOut")
     public String stageOut(StageINDTO dto) {
         System.out.println("**********stageOut" + dto);
+        stageService.stageOut(dto); // 버튼 누르면 roll_uNo:delete / part_uNo:null update
         return "success";
     }
 }

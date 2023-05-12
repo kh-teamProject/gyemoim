@@ -97,4 +97,18 @@
     AND p.pfID = #{pfID}
   </select>
 
+  <!--(찬희)스테이지 나갈 때 Participation_uNo:null-->
+  <update id="partUNoNull" parameterType="com.team.gyemoim.dto.StageParticipationDTO">
+    UPDATE PART
+    SET uNo = null
+    WHERE receiveTurn = 4
+    AND pfID = #{pfID}
+  </update>
+  <!--(찬희)스테이지 나갈 때 roll_uNo:delete-->
+  <delete id="rollDelete" parameterType="com.team.gyemoim.dto.StageRollDTO">
+    DELETE FROM roll
+    WHERE uNo = #{uNo}
+    AND pfID = #{pfID}
+  </delete>
+
 </mapper>

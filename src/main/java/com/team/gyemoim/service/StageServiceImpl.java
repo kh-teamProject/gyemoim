@@ -79,8 +79,12 @@ public class StageServiceImpl implements StageService {
       // 3.endDate update
       stageMapper.endDateInsert(dto);
     }
-
-
   }
+  //(찬희)스테이지 나가기
+  public void stageOut(StageINDTO dto){
+    stageMapper.partUNoNull(dto); // Participation 테이블 uNo를 null로 변경
+    stageMapper.rollDelete(dto); // roll 테이블 uNo 삭제
+  };
+
 
 }
