@@ -1,18 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classes from '../../css/StageModal.module.css';
+import axios from "axios";
+
 
 const Backdrop = (props) => {
   return <div className={classes.backdrop} onClick={props.onConfirm}/>;
 };
 
 const ExitModalOverlay = (props) => {
+    const exitButtonClick = () => {
+      axios.delete('/stageOut', {
+            params: {
+              uNo: 4,
+              pfId: 1
+            }
+          })
+        .then(response => {
+          // 요청 성공 시 처리
+          console.log('DELETE 요청이 성공했습니다.');
+        })
+        .catch(error => {
+          // 요청 실패 시 처리
+          console.error('DELETE 요청이 실패했습니다.', error);
+        });
+    };
   return (
     <div className={[classes.modal, classes.exit].join(' ')}>
       <p>{props.title}</p>
       <div>
       <button onClick={props.onConfirm} className={classes.back}>돌아가기</button>
-      <button className={classes.exit}>탈출하기</button>
+      <button onClick={exitButtonClick} className={classes.exit}>탈출하기</button>
       </div>
       <p className={classes.caution}>* 주의사항: 탈출 후 빈자리가 있으면 다시 돌아오실 수 있으나, 자리 없으면 돌아올 수 없다잉</p>
     </div>
