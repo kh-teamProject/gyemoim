@@ -1,5 +1,6 @@
 package com.team.gyemoim.service;
 
+import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.mapper.AccountMapper;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,14 @@ public class AccountServiceImpl implements AccountService{
   @Override
   public void myInfoModify(MyPageDTO dto) {
     accountMapper.myInfoModify(dto);
+  }
+
+  // 내 관심사 수정하기
+  @Override
+  public void interestUpdate(InterestDTO interestDTO) {
+    System.out.println("관심사 서비스");
+    System.out.println(interestDTO + "서비스스스스스스");
+    accountMapper.interestUpdate(interestDTO);
   }
 
   // MemberDelete

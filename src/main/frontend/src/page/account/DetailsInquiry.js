@@ -51,7 +51,7 @@ const DetailsInquiry = () => {
               <td>2023년 5월 8일</td>
               <td>NH 농협은행</td>
               <td>12,000원</td>
-              <td>입금</td>
+              <td>충전</td>
             </tr>
             <tr>
               <td>2023년 5월 8일</td>

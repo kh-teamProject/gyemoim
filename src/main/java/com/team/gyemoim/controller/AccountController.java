@@ -1,12 +1,10 @@
 package com.team.gyemoim.controller;
 
+import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.service.AccountService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
@@ -30,6 +28,8 @@ public class AccountController {
   }
 
   // U
+
+  // 내 정보 수정하기
   @PostMapping("/myInfoModify")
   public boolean myInfoModify(MyPageDTO dto) {
     System.out.println("myInfoModify Controller....");
@@ -38,5 +38,11 @@ public class AccountController {
     return true;
   }
 
+  // 내 관심사 수정하기
+  @GetMapping("/interestUpdate")
+  public void interestUpdate(InterestDTO interestDTO) {
+    System.out.println(interestDTO);
+    accountService.interestUpdate(interestDTO);
+  }
   // D
 }

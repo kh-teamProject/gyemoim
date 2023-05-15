@@ -36,6 +36,7 @@
     WHERE uNo = #{uNo}
   </select>
 
+<!-- 내 정보 수정 -->
   <update id="myInfoModify">
     UPDATE MEMBER
     SET name = #{name},
@@ -46,6 +47,13 @@
         postcode = #{postcode},
         address = #{address},
         addressdetail = #{addressDetail}
+    WHERE uno = #{uno}
+  </update>
+
+<!-- 내 관심사 수정 -->
+  <update id="interestUpdate">
+    UPDATE MEMBER
+    SET interest = #{interest}
     WHERE uno = #{uno}
   </update>
 

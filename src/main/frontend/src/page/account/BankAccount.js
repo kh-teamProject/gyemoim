@@ -51,7 +51,7 @@ const BankAccount = () => {
         <div className={`${classes['my-account']}`}>
           <div>
             <span>얼마나 보낼까요?</span>
-            <button>잔액입금</button>
+            <button>충전하기</button>
           </div>
           <div>
             <input
