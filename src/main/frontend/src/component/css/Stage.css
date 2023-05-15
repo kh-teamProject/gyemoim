@@ -1,13 +1,76 @@
-table{
-    display: flex;
-    justify-content: center;
-
+.stage{
+    background: transparent;
+    border: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    letter-spacing: -.5px;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+    text-decoration: none;
+    /*border-bottom: 1px solid #f0f0f0;*/
+    /*border-left: 1px solid #f0f0f0;*/
 }
-h3{
-    border-bottom: 2px solid #4040f1;
-    }
-tr{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.stage-h3{
+    border-bottom: 1px solid #f0f0f0;
+    height: 75px;
+    /*position: relative;*/
+}
+
+/*.stage-wrap{*/
+/*    text-align: center;*/
+/*    background: #fff;*/
+/*    border: 1px solid #d6d6d6;*/
+/*    float: left;*/
+/*    height: 394px;*/
+/*    margin: -1px 0 0 -1px;*/
+/*    position: relative;*/
+/*    width: 394px;*/
+/*}*/
+
+#rec-turn{
+    list-style-type: none;
+    border: 1px solid #0693c1;
+    border-radius: 50%;
+    box-sizing: border-box;
+    color: #0693c1;
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 400;
+    height: 32px;
+    line-height: 30px;
+    margin: 0 5px;
+    text-align: center;
+    width: 32px;
+}
+#{
+    box-sizing: border-box;
+    color: #1a1a1a;
+    display: block;
+    font-size: 20px;
+    font-weight: 400;
+    height: 100%;
+    line-height: 58px;
+    padding: 0 50px;
+    text-align: center;
+}
+#select-stage{
+    background: transparent;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #505050;
+    letter-spacing: -.5px;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    vertical-align: baseline;
+    border-bottom: 1px solid #f0f0f0;
+    border-left: 1px solid #f0f0f0;
+}
+
+#stage-payInfo{
+    font-size: 20px;
+    margin-top: 38px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
 }
