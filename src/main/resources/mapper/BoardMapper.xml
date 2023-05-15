@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.gyemoim.mapper.BoardMapper">
 
+    <!-- 게시글 Read -->
     <!-- 게시글 총 갯수 구하기 -->
     <select id="countBoard" resultType="int">
         SELECT COUNT(*)
@@ -39,7 +40,9 @@
 
     <!-- 조회수 올리기 -->
     <update id="updateViewCnt">
-        UPDATE BOARD SET views = views + 1 WHERE bid = #{bid}
+        UPDATE BOARD
+        SET views = views + 1
+        WHERE bid = #{bid}
     </update>
 
 
@@ -53,7 +56,58 @@
                        OR content LIKE '%' || #{keyword} || '%'
                        OR name = #{keyword}
                     ORDER BY bid DESC) A)
-    WHERE RN BETWEEN ${start} AND ${end}
+        WHERE RN BETWEEN ${start} AND ${end}
     </select>
+
+
+    <!-- 게시글 Create -->
+    <!-- 글 작성하기 -->
+    <insert id="write">
+        INSERT INTO board (bid, uNo, name, title, content, type, views, writeDate, secret)
+        VALUES (BID_BOA_SEQ.NEXTVAL, #{uNo}, #{name}, #{title}, #{content}, '공지사항', 0, sysdate, #{secret})
+    </insert>
+
+    <!-- 첨부파일 작성하기 -->
+    <insert id="addAttachedName">
+        INSERT INTO Attached(bid, fileNamae)
+        VALUES (BID_BOA_SEQ.currval, #{fileNamae})
+    </insert>
+
+
+    <!-- 게시글 Update -->
+    <!-- 수정 전 원래 글 세부내용 가져오기 -->
+    <select id="modify" resultType="com.team.gyemoim.vo.BoardVO">
+        SELECT * FROM BOARD WHERE bid = #{bid}
+    </select>
+
+    <!-- 수정 전 게시글에 있는 기존 첨부파일 가져오기 -->
+    <select id="attached" resultType="com.team.gyemoim.vo.AttachedVO">
+        SELECT * FROM ATTACEHD WHERE bid = #{bid}
+    </select>
+
+    <!-- 특정 bid 에 해당하는 게시글 수정하기 -->
+    <update id="modifyUpdate">
+        UPDATE BOARD
+        SET uNo     = #{uNo},
+            name    = #{name},
+            title   = #{title},
+            content = #{content},
+            secret  = #{secret}
+        WHERE bid = #{bid}
+    </update>
+
+    <!-- 특정 bid 에 해당하는 게시글에 있는 첨부파일 수정하기 -->
+    <update id="addAttachedUpdate">
+        UPDATE ATTACHED
+        SET fileName = #{fileName}
+        WHERE bid = #{bid}
+    </update>
+
+
+    <!-- 게시글 Delete -->
+    <!-- 특정 bid 와 글 작성자 uNo에 해당하는 게시글 삭제하기 -->
+    <delete id="delete">
+        DELETE FROM BOARD WHERE bid = #{bid} AND uNo = #{uNo}
+    </delete>
 
 </mapper>

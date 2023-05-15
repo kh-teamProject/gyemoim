@@ -15,8 +15,8 @@ import Board from "./page/Board";
 import QuestionList from "./page/QuestionList";
 import NoticeWritePost from "./page/NoticeWritePost";
 import NoticeDetail from "./page/NoticeDetail";
-import NoticeUpdate from "./page/NoticeUpdate";
-import QuestionUpdate from "./page/QuestionUpdate";
+import NoticeModify from "./page/NoticeModify";
+import QuestionModify from "./page/QuestionModify";
 
 
 const App = () => {
@@ -60,12 +60,12 @@ const App = () => {
               element: <NoticeWritePost />
             },
             {
-              path: 'notice/detail/:bid',
+              path: 'notice/detail',
               element: <NoticeDetail />
             },
             {
-              path: 'notice/update',
-              element: <NoticeUpdate />
+              path: 'notice/modify',
+              element: <NoticeModify />
             },
             {
               path: 'question',
@@ -80,8 +80,8 @@ const App = () => {
               element: <QuestionDetail />
             },
             {
-              path: 'question/update',
-              element: <QuestionUpdate />
+              path: 'question/modify',
+              element: <QuestionModify />
             }
           ]
         }

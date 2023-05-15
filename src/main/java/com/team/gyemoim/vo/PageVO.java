@@ -14,11 +14,11 @@ public class PageVO {
 
     /* 글 총 갯수, 현재페이지, 페이지당 글 갯수 3개 매개변수 받는 생성자 */
     public PageVO(int total, int nowPage, int cntPerPage) {
-        setTotal(total);
         setNowPage(nowPage);
         setCntPerPage(cntPerPage);
+        setTotal(total);
         calcLastPage(getTotal(), getCntPerPage());
-        calcStartEndPage(getNowPage(), cntPage);
+        calcStartEndPage(getNowPage(), getCntPage());
         calcStartEnd(getNowPage(), getCntPerPage());
     }
 
@@ -26,11 +26,11 @@ public class PageVO {
 
     /* 글 총 갯수, 현재페이지, 페이지당 글 갯수, 검색어타입, 검색어 5개 매개변수 받는 생성자 */
     public PageVO(int total, int nowPage, int cntPerPage, String type, String keyword) {
-        setTotal(total);
         setNowPage(nowPage);
         setCntPerPage(cntPerPage);
+        setTotal(total);
         calcLastPage(getTotal(), getCntPerPage());
-        calcStartEndPage(getNowPage(), cntPage);
+        calcStartEndPage(getNowPage(), getCntPage());
         calcStartEnd(getNowPage(), getCntPerPage());
         this.type = type;
         this.keyword = keyword;

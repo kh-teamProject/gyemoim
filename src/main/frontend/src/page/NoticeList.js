@@ -1,51 +1,25 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import styleTable from "../component/styleTable";
+import axios from "axios";
 
 const NoticeList = () => {
 
     const [list, setList] = useState([
-        {
-            title: "title1",
-            uNo: "1",
-            writeDate: "2023-05-05",
-            views: 0
-        },
-        {
-            title: "title2",
-            uNo: "1",
-            writeDate: "2023-05-06",
-            views: 0
-        },
-        {
-            title: "title3",
-            uNo: "1",
-            writeDate: "2023-05-07",
-            views: 0
-        },
-        {
-            title: "title4",
-            uNo: "1",
-            writeDate: "2023-05-08",
-            views: 0
-        },
-        {
-            title: "title5",
-            uNo: "1",
-            writeDate: "2023-05-09",
-            views: 0
-        },
+
     ]);
-    const [paging, setPaging] = useState({
-        total: 5,
+    const [pagingData, setPagingData] = useState({
+        /*total: 5,
         nowPage: 1,
         cntPage: 5,
         startPage: 0,
         cntPerPage: 5,
-        /*endPage: paging.startPage + 10,
+        endPage: paging.startPage + 10,
         lastPage: paging.endPage,
         start: paging.end - paging.cntPerPage + 1,
         end: paging.nowPage * paging.cntPerPage,*/
     });
+
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -62,6 +36,24 @@ const NoticeList = () => {
     const handleSecretClick = () => {
         alert("다른 사람의 비밀글은 볼 수 없습니다.");
     };
+
+    const moveNoticeWrite = () => {
+        window.location.href = 'notice/write';
+    };
+
+    const fetchPagingData = async () => {
+      try {
+          const response = await axios.get('/board/notice/list');
+          setPagingData(response.data);
+          setList(response.data);
+      }  catch (error) {
+          console.log(error);
+      }
+    };
+
+    useEffect(() => {
+        fetchPagingData();
+    }, []);
 
     return (
         <>
@@ -92,7 +84,7 @@ const NoticeList = () => {
                             </div>
                             {/* 검색 끝 */}
 
-                            <table className="table table-hover">
+                            <table className="table table-hover" style={styleTable}>
                                 <colgroup>
                                     <col width="10%"/>
                                     <col width="40%"/>
@@ -109,12 +101,12 @@ const NoticeList = () => {
                                     <th className="text-center">조회수</th>
                                 </tr>
                                 </thead>
-                                {/* 게시글 목록 */}
+                                {/* 게시글 목록 (적용시켜야하는 것 : 비밀글인 경우, 로그인 되어있는 사람의 uNo와 글의 uNo가 같으면 글 제목 눌렀을 때 글 상세보기로 이동하게하고 uNo가 서로 같지 않으면 '비밀글입니다.' 라고 alert() 띄워주기 / 공개글인 경우 그냥 제목 누르면 상세보기로 이동시키기 ) */}
                                 {list.map((item, index) => (
                                     <tr key={index}>
-                                        <td className="text-center">{(paging.total - index) - ((paging.nowPage - 1) * 10)}</td>
+                                        <td className="text-center">{(pagingData.total - item.status.index) - ((pagingData.nowPage - 1) * 10)}</td>
                                         <td>
-                                            <Link to={'/board/notice/detail?${bid}'}>{item.title}</Link>
+                                            <Link to={`/board/notice/detail?{bid}`}>{item.title}</Link>
                                         </td>
                                         <td className="text-center">{item.uNo}</td>
                                         <td className="text-center">{item.writeDate}</td>
@@ -123,17 +115,36 @@ const NoticeList = () => {
                                 ))}
                             </table>
                             <div className="list-btn-area">
-                                {/* 로그인 여부에 따른 글쓰기 버튼(/board/write 로 이동하게 하기) */}
-                                <input type="button" value="글쓰기" className="btn btn-primary btn-lg px-4 me-sm-3" />
+                                {/* 적용시켜야 할 것: 로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화(/board/notice/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기 */}
+                                <input type="button" value="글쓰기" className="btn btn-primary btn-lg px-4 me-sm-3" onClick={moveNoticeWrite}/>
                             </div>
                             <ul className="page-list">
                                 {/* 페이지 번호 목록 */}
+                                {pagingData.startPage !== 1 && (
+                                    <li>
+                                        <Link to={`/board/notice/list?nowPage=${pagingData.startPage - 1}&cntPerPage=${pagingData.cntPerPage}`}>&lt;</Link>
+                                    </li>
+                                )}
+                                {Array.from({length: pagingData.endPage - pagingData.startPage + 1}, (_, i) => i + pagingData.startPage).map((p) => (
+                                    <li key={p}>
+                                        {p === pagingData.nowPage ? (
+                                            <span>{p}</span>
+                                        ) : (
+                                            <Link to={`/board/notice/list?nowPage=${p}&cntPerPage=${pagingData.cntPerPage}`}>{p}</Link>
+                                        )}
+                                    </li>
+                                ))}
+                                {pagingData.endPage !== pagingData.lastPage && (
+                                    <li>
+                                        <Link to={`/board/notice/list?nowPage=${pagingData.endPage + 1}&cntPerPage=${pagingData.cntPerPage}`}>&gt;</Link>
+                                    </li>
+                                )}
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
-            
+
             {/* 푸터 */}
         </>
     );

@@ -36,7 +36,7 @@ const BoardUpdate = () => {
 
         await axios.patch(`http://localhost:3000/board/${board.bid}`, req, {headers: headers})
             .then((resp) => {
-                console.log("[NoticeUpdate.js] updateBoard() success :D");
+                console.log("[NoticeModify.js] updateBoard() success :D");
                 console.log(resp.data);
 
                 if(resp.data.updatedRecordCount == 1) {
@@ -46,7 +46,7 @@ const BoardUpdate = () => {
 
             })
             .catch((err) => {
-               console.log("[NoticeUpdate.js] updateBoard() error :<");
+               console.log("[NoticeModify.js] updateBoard() error :<");
                console.log(err);
             });
     }
@@ -88,17 +88,15 @@ const BoardUpdate = () => {
 
 }
 
+*/
 
-export default BoardUpdate;*/
-
-const QuestionUpdate = () => {
+const NoticeModify = () => {
 
 
     return (
         <>
-
         </>
     );
 }
 
-export default QuestionUpdate;
+export default NoticeModify;

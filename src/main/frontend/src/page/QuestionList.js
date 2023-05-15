@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {Link} from "react-router-dom";
+import styleTable from "../component/styleTable";
 
 const QuestionList = () => {
 
@@ -59,8 +60,14 @@ const QuestionList = () => {
 
     };
 
+    /* 다른 사람글이 비밀글인 경우 상세보기 하려고 할 때 작동하는 컴포넌트 */
     const handleSecretClick = () => {
         alert("다른 사람의 비밀글은 볼 수 없습니다.");
+    };
+
+    /* 문의사항 글 쓰는 화면으로 이동 */
+    const moveQuestionWrite = () => {
+      window.location.href = 'question/write';
     };
 
     return (
@@ -92,7 +99,7 @@ const QuestionList = () => {
                             </div>
                             {/* 검색 끝 */}
 
-                            <table className="table table-hover">
+                            <table className="table table-hover" style={styleTable}>
                                 <colgroup>
                                     <col width="10%"/>
                                     <col width="40%"/>
@@ -123,8 +130,8 @@ const QuestionList = () => {
                                 ))}
                             </table>
                             <div className="list-btn-area">
-                                {/* 로그인 여부에 따른 글쓰기 버튼(/board/write 로 이동하게 하기) */}
-                                <input type="button" value="글쓰기" className="btn btn-primary btn-lg px-4 me-sm-3" />
+                                {/* 로그인 되어있는 경우에만 글쓰기 버튼 활성화(/board/question/write 로 이동하게 하기) */}
+                                <input type="button" value="글쓰기" className="btn btn-primary btn-lg px-4 me-sm-3" onClick={moveQuestionWrite}/>
                             </div>
                             <ul className="page-list">
                                 {/* 페이지 번호 목록 */}

@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 const QuestionDetail = () => {
-/*
+
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [views, setViews] = useState(0);
@@ -45,7 +45,7 @@ const QuestionDetail = () => {
     };
 
     useEffect(() => {
-        const getBoardDetail = async () => {
+        const getQuestionDetail = async () => {
             let response = await axios.get(`/board/question/detail/${bid}`);
             console.log('QuestionDetail/response: ' , response);
             console.log('QuestionDetail/response.data: ' , response.data)
@@ -55,11 +55,10 @@ const QuestionDetail = () => {
             setViews(response.data.data.views+1);
         }
 
-        getBoardDetail();
+        getQuestionDetail();
     }, [])
 
 
- */
 
     return (
         < >

@@ -1,67 +1,6 @@
-import {useState} from "react";
-import {useNavigate} from "react-router-dom";
-import axios from "axios";
-import login from "./Login";
 import handleFileChange from "../component/HandleFileChange";
 import handleRemoveImage from "../component/HandleRemoveImage";
 
-/*
-const QuestionWritePost = () => {
-
-
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-
-    let navigate = useNavigate(); // 다른 component 로 이동할 때 사용
-
-    const resetInput = () => {
-        setContent("");
-        setTitle("");
-        document.getElementById('input_title').value = '';
-        document.getElementById('textarea_content').value = '';
-    }
-
-    const handleInputClick = async (e) => {
-        document.getElementById('input_title').value = '';
-        document.getElementById('textarea_content').value = '';
-
-        console.log('QuestionWritePost');
-
-        const request_data = {title: title, content: content};
-
-        console.log('req_data: ', request_data);
-
-        try {
-            let response = await axios({
-                method: 'post',
-                url: '/board/writePost',
-                headers:{'Content-Type': 'application/json'},
-                data: JSON.stringify(request_data)
-            });
-            console.log('QuestionWritePost/response: ', response);
-            console.log('QuestionWritePost/response.status: ', response.status);
-
-            if (response.status >= 200 && response.status < 300) {
-                alert("게시글이 정상적으로 작성되었습니다.")
-            }
-            if (response.status >= 400) {
-                alert("게시글 작성이 정상적으로 되지 않았습니다.");
-            }
-            navigate("/board", {});
-        }
-        catch (err) {
-            console.log('QuestionWritePost/handleInput/err: ', err);
-            resetInput();
-        }
-    }
-
-    return (
-        <>
-
-        </>
-    );
-}
-*/
 
 const QuestionWritePost = () => {
 
@@ -81,7 +20,7 @@ const QuestionWritePost = () => {
                         <div className="col-11">
                             <div className="title text-center mb-3">
                                 <h1>1:1 문의사항 글쓰기</h1>
-                                <p>문의사항을 적어주세요</p>
+                                <p>반갑습니다 고객님, 문의사항을 적어주세요</p>
                             </div>
                             <form onClick={handleSubmit} encType="multipart/form-data" id="writeConn">
                                 <input type="hidden" id="write-input-uNo" name="uNo" value="{login.getUno()}" />
