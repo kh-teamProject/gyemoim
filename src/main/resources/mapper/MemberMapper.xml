@@ -6,10 +6,10 @@
 
 
 
-  <insert id="join">
+  <insert id="account">
     INSERT INTO MEMBER
-      (uNo, email, password, userRole)
-    VALUES(6, #{email}, #{password}, #{userRole})
+      (uNo, email, password, name, userRole)
+    VALUES(uno_mem_seq.nextVal, #{email}, #{password},#{name}, #{userRole})
   </insert>
 
   <!-- <insert id="addRole" parameterType="com.song.backfol.domain.user.dto.UserDTO">

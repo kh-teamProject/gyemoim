@@ -23,6 +23,7 @@ import java.time.Duration;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "*")
 public class MemberController {
     @Autowired
     MemberService memberService;
@@ -33,12 +34,12 @@ public class MemberController {
 
 
 
-    @PostMapping(value="/join")
-    public ResponseEntity<?> join(@RequestBody MemberDTO memberDTO) {
+    @PostMapping(value="/account")
+    public ResponseEntity<?> account(@RequestBody MemberDTO memberDTO) {
         ResponseEntity responseEntity = null;
 
         try {
-            memberService.join(memberDTO);
+            memberService.account(memberDTO);
             TokenDTO token = memberService.tokenGenerator(memberDTO.getEmail());
             ResponseCookie responseCookie =
                     ResponseCookie.from(HttpHeaders.SET_COOKIE, token.getRefreshToken())///new Cookie("refreshToken", token.getRefreshToken());

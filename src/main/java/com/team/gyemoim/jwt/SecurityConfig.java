@@ -82,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.apply(new JwtSecurityConfig(tokenProvider));
 
-        // http.addFilter(jwtau)
+        // http.addFilter(jwt)
 
     }
     @Bean

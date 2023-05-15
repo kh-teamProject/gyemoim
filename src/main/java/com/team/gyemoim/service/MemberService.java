@@ -41,7 +41,7 @@ public class MemberService {
      * @param memberDTO
      */
     @Transactional
-    public boolean join(MemberDTO memberDTO) {
+    public boolean account(MemberDTO memberDTO) {
         // 가입된 유저인지 확인
         
         if (memberMapper.findUser(memberDTO.getEmail()).isPresent()) {
@@ -54,11 +54,12 @@ public class MemberService {
         MemberDTO memberDTO1 = MemberDTO.builder()
                 .email(memberDTO.getEmail())
                 .password(passwordEncoder.encode(memberDTO.getPassword()))
+                .name(memberDTO.getName())
                 .userRole("ROLE_USER")
 //                .enrollDate(localTime)
                 .build();
         System.out.println(memberDTO1);
-        memberMapper.join(memberDTO1);
+        memberMapper.account(memberDTO1);
         // userMapper.addRole(userVo);
         System.out.println("회원가입 성공");
 

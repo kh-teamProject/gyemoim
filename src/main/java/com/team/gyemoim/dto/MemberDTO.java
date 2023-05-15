@@ -15,7 +15,7 @@ import java.util.Collection;
 @AllArgsConstructor
 public class MemberDTO implements UserDetails {
     private String email;
-    private String username;
+    private String name;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String userRole;
@@ -39,7 +39,7 @@ public class MemberDTO implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.name;
     }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
