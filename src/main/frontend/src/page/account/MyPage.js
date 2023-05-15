@@ -35,7 +35,6 @@ const MyPage = () => {
         bankRef.current.value = res.data.bankName ? res.data.bankName : '';
         bankNumberRef.current.value = res.data.bankAccountNumber ? res.data.bankAccountNumber : '';
         creditRatingRef.current.value = res.data.creditRating ? res.data.creditRating : '';
-        plusRateRef.current.value = res.data.plusRate;
         enrollDateRef.current.value = `${year}-${month}-${day}`;
       })
       .catch((error) => {
@@ -86,10 +85,6 @@ const MyPage = () => {
         <div className={classes.field}>
           <label htmlFor="credit-rating">신용등급</label>
           <input type="text" id="credit-rating" ref={creditRatingRef} readOnly/>
-        </div>
-        <div className={classes.field}>
-          <label htmlFor="plus-rate">추가이율</label>
-          <input type="text" id="plus-rate" ref={plusRateRef} readOnly/>
         </div>
         <div className={classes.field}>
           <label htmlFor="enroll-date">가입일</label>
