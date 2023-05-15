@@ -18,7 +18,7 @@ public class StageListDTO {
   private int pRank; //등급
   private String interest; //관심사
   private int receiveTurn; //곗돈수령순서
-  private int uNo; //회원번호
+  private Integer uNo; //회원번호
   private Date startDate; //계모임 시작일
   private Date endDate; //계모임 종료일
 }

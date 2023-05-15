@@ -8,8 +8,9 @@ const Stage = () => {
   const [error, setError] = useState();
   // 계모임 값 뿌리기
   const [stage, setStage] = useState([]);
-  // 버튼으로 스테이지 세팅하는 State
+  // 약정금 버튼으로 스테이지 세팅하는 State
   const [isClicked, setIsClicked] = useState('전체');
+
   //페이징 가보자고~
   const [curPage, setCurPage] = useState(1); //현재페이지
   const [totalPage, setTotalPage] = useState(0); //전체 페이지 수
@@ -22,8 +23,9 @@ const Stage = () => {
     setError(null);
   };
 
+  //약정금 기반으로 조회하는 함수
   const handleButtonClick = (event) => {
-    if (event.target.value == '전체') {
+    if (event.target.value === '전체') {
       setIsClicked(event.target.value);
       console.log(event.target.value);
     } else {
@@ -34,6 +36,8 @@ const Stage = () => {
     setCurPage(1); //페이지 버튼 클릭시 현재 페이지를 1로 초기화
 
   };
+
+  //페이징 함수
   const handlePageClick = (event) => {
     const targetPage = Number(event.target.value); //클릭한 페이지
     if (targetPage > 0 && targetPage <= totalPage) {
@@ -71,6 +75,7 @@ const Stage = () => {
         });
     }
   }, [isClicked]);
+  // const recTurn=[value.receiveTurn];
 
   return (
     <>
@@ -82,41 +87,65 @@ const Stage = () => {
         <button onClick={handleButtonClick} value='5000000'>500만원</button>
         <button onClick={handleButtonClick} value='7000000'>700만원</button>
       </div>
+      {/*<select>*/}
+      {/*  <option onChange={selectHobby} value ='정렬조건'>정렬조건</option>*/}
+      {/*  <option onChange={selectHobby} value ='여행'>여행</option>*/}
+      {/*  <option value>정렬조건</option>*/}
+      {/*  <option value>정렬조건</option>*/}
+      {/*  <option value>정렬조건</option>*/}
+      {/*  <option value>정렬조건</option>*/}
+      {/*</select>*/}
 
-      <div>
-        <table>
 
+      <div class="stage-wrap">
+        <div class="stage">
           {stage.slice((curPage - 1) * 35, curPage * 35)
                 .reduce((acc,value) =>{
                   const index = acc.findIndex(item => item.pfID === value.pfID)
                   if(index === -1){
                     acc.push({
-                      pfName: value.pfName, pfID : value.pfID, receiveTurn:[value.receiveTurn],
-                      deposit:value.deposit, payment : value.payment ,pfEntry :value.pfEntry})
+                      pfName: value.pfName,
+                      pfID : value.pfID,
+                      receiveTurn:[{turn:value.receiveTurn,uno: value.uno}],
+                      deposit:value.deposit,
+                      payment : value.payment ,
+                      pfEntry : value.pfEntry ,
+                      // uno:value.uno,
+                      interest:value.interest})
+                    console.log((value.uno));
+
                   } else{
-                    acc[index].receiveTurn.push(value.receiveTurn)
+                    acc[index].receiveTurn.push({turn: value.receiveTurn, uno: value.uno})
                   }
                   return acc
                 },[])
-              .map((value, index) => (
-              <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}}>
-              <div key={index}>
-                <div>
-                <h3>{value.pfName}</h3>
-                </div>
-                <td>계모임 식별번호 ->{value.pfID}</td>
-                <div>
-                 {value.receiveTurn.join(<li/>)}
-                </div>
-                {/*{5 === <></>}*/}
-                <div>
-                <p>약정금 :<strong>{value.deposit}</strong> |
-                  월 입금액 : <strong>{value.payment}</strong></p>
-                </div>
+                .map((value, index) => (
+              <div key={index} >
+                <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
+                  <div id="select-deposit">
+                    <h3 class="stage-h3">{value.pfName}</h3>
+                      {value.interest}
+                  </div>
+
+                  <ul>
+                    {[...Array(Number(value.pfEntry))].map((_,index) =>{
+                      const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn ===index +1)
+                      const uno = receiveTurnIndex !== -1? value.receiveTurn[receiveTurnIndex].uno:null
+                      return(
+                        <li key={index} id="rec-turn">
+                          {uno === null? index+1 : uno<= index +1? "참" : index +1}
+                        </li>
+                      )
+                    })}
+                  </ul>
+
+                  <div id="stage-payInfo">
+                    <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                  </div>
+                </Link>
               </div>
-            </Link>
         ))}
-        </table>
+        </div>
       </div>
 
       <div>
