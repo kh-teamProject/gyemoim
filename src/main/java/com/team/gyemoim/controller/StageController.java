@@ -1,16 +1,13 @@
 package com.team.gyemoim.controller;
 
-import com.team.gyemoim.dto.MemberDTO;
-import com.team.gyemoim.dto.StageINDTO;
-import com.team.gyemoim.dto.StageParticipationDTO;
-import com.team.gyemoim.dto.StageRollDTO;
+import com.team.gyemoim.dto.*;
 import com.team.gyemoim.service.StageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,13 +23,21 @@ public class StageController {
     @ResponseBody
     public HashMap<String, Object> stage(@RequestParam Integer pfID, StageRollDTO dto) {
         log.info("*******찬희 컨트롤러");
+
         HashMap<String,Object> map = new HashMap<String,Object>();
         map.put("participation", stageService.getPartList(pfID));
         map.put("pf", stageService.getPfList(pfID));
-        map.put("roll", stageService.getRollList(dto));
+        Integer myBalance = stageService.getMyAccount(dto);
+        List<StageRollDTO> rollList = stageService.getRollList(dto);
+        for (StageRollDTO rollDTO : rollList) {
+            rollDTO.setMyBalance(myBalance);
+        }
+        map.put("roll", rollList);
         map.put("import", stageService.getImportList(pfID));
         map.put("memList", stageService.getMemList(pfID));
-        log.info(stageService.getRollList(dto));
+
+        log.info(rollList);
+
         return map;
     }
 

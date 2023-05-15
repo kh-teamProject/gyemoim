@@ -84,7 +84,13 @@ public class StageServiceImpl implements StageService {
   public void stageOut(StageINDTO dto){
     stageMapper.partUNoNull(dto); // Participation 테이블 uNo를 null로 변경
     stageMapper.rollDelete(dto); // roll 테이블 uNo 삭제
-  };
+  }
+
+  @Override
+  public Integer getMyAccount(StageRollDTO dto) {
+    return stageMapper.getMyAccount(dto);
+  }
+
 
 
 }

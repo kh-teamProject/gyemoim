@@ -82,8 +82,10 @@
 
   <!--(찬희)참여중인 MemberList -->
   <select id="getMemList" resultType="com.team.gyemoim.dto.StageRollListDTO">
-    SELECT DISTINCT p.uNo, p.receiveTurn, p.pfMaster, CASE WHEN p.uNo IS NULL THEN NULL ELSE m.name END AS name
-    FROM part p LEFT JOIN member2 m ON p.uNo = m.uNo
+    SELECT DISTINCT r.uNo, p.receiveTurn, r.pfMaster, CASE WHEN r.uNo IS NULL THEN NULL ELSE m.name END AS name
+    FROM part p
+    LEFT JOIN roll r ON p.uNo = r.uNo
+    LEFT JOIN member2 m ON r.uNo = m.uNo
     WHERE p.pfID = #{pfID}
     ORDER BY p.receiveTurn
   </select>
@@ -95,6 +97,12 @@
     WHERE i.deposit = p.deposit
     AND i.pfRate = p.pfRate
     AND p.pfID = #{pfID}
+  </select>
+
+  <!--(찬희) MyAccount 정보 갖고오기-->
+  <select id="getMyAccount" resultType="Integer">
+    SELECT mybalance FROM MYACCOUNT
+    WHERE uNo = #{uNo}
   </select>
 
   <!--(찬희)스테이지 나갈 때 Participation_uNo:null-->
@@ -110,5 +118,6 @@
     WHERE uNo = #{uNo}
     AND pfID = #{pfID}
   </delete>
+
 
 </mapper>

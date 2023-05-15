@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import classes from '../../css/StageModal.module.css';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 const Backdrop = (props) => {
@@ -42,7 +42,6 @@ const ExitModalOverlay = (props) => {
 
 const ReceiptModalOverlay = (props) => {
     const lis = [];
-    console.log("********************나오라고!!!!!"+props.schedule);
     for (let i = 0; i < props.schedule.length; i++) {
       const scheduleData = props.schedule[i];
       const schedule = (
@@ -81,12 +80,57 @@ const ReceiptModalOverlay = (props) => {
   );
 };
 
+const DepositModalOverlay = (props) => {
+    let myBalance =  props.roll[0].myBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+return (
+    <div className={[classes.modal, classes.deposit].join(' ')}>
+      <p className={classes.title}>"{props.title}" 입금하기</p>
+      {props.roll.map((value, index) => (
+      <>
+          <div className={classes.stageInfo}>
+                <div className={classes.whiteBox}>
+                    <p>나의 순번</p>
+                    <div key={index} className={classes.seqNum}>{value.uno}</div>
+                </div>
+
+                <div className={classes.whiteBox}>
+                    <p>총 입금횟수</p>
+                    <p key={index} >{value.depositCnt}회</p>
+                </div>
+                <div className={classes.whiteBox}>
+                    <p>나의 누적 입금액</p>
+                    <p key={index} >{value.stageAmount}원</p>
+                </div>
+          </div>
+
+          <div className={classes.depositUpdate}>
+            <div className={classes.depositAmount}>이번 달 입금 금액 : {props.uPayment}원</div>
+            <button>입금하기</button>
+          </div>
+
+      <div className={classes.myAccount}>
+        <div>
+        <p>my계좌잔액</p>
+        <p>{myBalance}원</p>
+        </div>
+        <p className={classes.caution}>*계좌에 금액이 부족하실 경우 마이페이지에서 충전해주시기 바랍니다. <Link to={'/mypage'}>마이페이지 ></Link></p>
+      </div>
+         </>
+        ))}
+      <button onClick={props.onConfirm} className={classes.back}>X</button>
+    </div>
+  );
+};
+
 const StageModal = (props) => {
   return (
     <>
     {ReactDOM.createPortal(<Backdrop onConfirm={props.onConfirm} />, document.getElementById('backdrop-root'))}
     {props.id === 'exit' && ReactDOM.createPortal(<ExitModalOverlay title={props.title} message={props.message} onConfirm={props.onConfirm} />, document.getElementById('overlay-root'))}
     {props.id === 'receipt' && ReactDOM.createPortal(<ReceiptModalOverlay title={props.title} schedule={props.schedule} message={props.message} onConfirm={props.onConfirm} />, document.getElementById('overlay-root'))}
+    {props.id === 'deposit' && ReactDOM.createPortal(<DepositModalOverlay title={props.title} roll={props.roll} uPayment={props.uPayment} message={props.message} onConfirm={props.onConfirm} />, document.getElementById('overlay-root'))}
+
     </>
   );
 };

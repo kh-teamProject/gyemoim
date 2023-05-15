@@ -22,4 +22,6 @@ public interface StageService {
   void stageStart(StageINDTO dto);
   //(찬희)스테이지 나가기
   void stageOut(StageINDTO dto);
+
+  Integer getMyAccount(StageRollDTO dto);
 }

@@ -84,6 +84,93 @@
         top: 0;
         right: 2rem;
 }
+/* deposit */
+.modal.deposit p.title{
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 2;
+}
+.modal.deposit button.back{
+    padding: 0;
+    font-size: 1.8rem;
+    background-color: white;
+    border: 1px solid white;
+    cursor: pointer;
+    margin: 1rem auto;
+    position: absolute;
+    top: 0;
+    right: 2rem;
+}
+.modal.deposit .stageInfo{
+    display: flex;
+    background-color: #F1F3F4;
+    padding: 1.5rem 2rem;
+    justify-content: center;
+    gap: 1.5rem;
+}
+.modal.deposit .whiteBox{
+    background-color: white;
+    padding: 1rem 1rem 1.3rem;
+    flex: 1;
+    text-align: center;
+}
+.modal.deposit .whiteBox p:first-child{
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+.modal.deposit .whiteBox p:last-child{
+    font-size: 1.3rem;
+    margin: 1rem 0 0;
+}
+.modal.deposit .depositUpdate{
+    display: flex;
+    border-bottom: 1px solid;
+    width: max-content;
+    margin: 0 auto;
+    padding: 2rem 0 0.5rem;
+    gap: 3rem;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.modal.deposit .depositUpdate .depositAmount{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.modal.deposit .depositUpdate button{
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    color: white;
+    background-color: #004DC1;
+    border: 1px solid #004DC1;
+}
+.modal.deposit .myAccount > div{
+    display: flex;
+    background-color: #FFE600;
+    width: max-content;
+    gap: 10rem;
+    padding: 0.5rem 2rem;
+    border-radius: 10px;
+    margin: 2rem auto 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.modal.deposit .myAccount .caution{
+    text-align: center
+}
+.modal.deposit .myAccount .caution a{
+    color: #004dc1;
+    text-decoration: underline;
+    margin-left: 10px;
+}
+.modal.deposit .seqNum{
+    background-color: #004DC1;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    width: fit-content;
+    margin: 0 auto;
+}
 @media (min-width: 768px) {
   .modal {
     left: calc(50% - 20rem);
@@ -93,4 +180,10 @@
       left: calc(40% - 20rem);
       width: 55rem;
   }
+    .modal.deposit {
+        left: calc(45% - 20rem);
+        width: 50rem;
+        padding: 2rem 0;
+        top: 5vh;
+    }
 }

@@ -13,4 +13,6 @@ public class StageRollDTO {
   private String paymentCheck; //입금확인 식별자
   private Integer receiveTurn; //곗돈 수령순서
   private Integer uPayment; //개인별 월 입금액
+  private String pfMaster; //계모임 장
+  private Integer myBalance; //myAccount 잔액
 }

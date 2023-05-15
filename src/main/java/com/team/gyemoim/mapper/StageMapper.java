@@ -39,4 +39,6 @@ public interface StageMapper {
   void partUNoNull(StageINDTO dto);
   //(찬희)스테이지 나갈 때 roll_uNo:delete
   void rollDelete(StageINDTO dto);
+
+  Integer getMyAccount(StageRollDTO dto);
 }
