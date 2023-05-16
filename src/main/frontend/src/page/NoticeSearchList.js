@@ -2,9 +2,8 @@ import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import styleTable from "../component/styleTable";
 import axios from "axios";
-import NoticeSearchList from "./NoticeSearchList";
 
-const NoticeList = () => {
+const NoticeSearchList = () => {
 
     const [list, setList] = useState([]);
     const [paging, setPaging] = useState({
@@ -18,6 +17,7 @@ const NoticeList = () => {
         start: paging.end - paging.cntPerPage + 1,
         end: paging.nowPage * paging.cntPerPage,*/
     });
+    const [searchInput, setSearchInput] =useState('');
 
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const NoticeList = () => {
 
     const fetchList = async  () => {
       try {
-          const response = await axios.get('/board/notice/list');
+          const response = await axios.get('/board/notice/getSearchList');
           setList(response.data.list);
           setPaging(response.data.paging);
       } catch (error) {
@@ -41,7 +41,7 @@ const NoticeList = () => {
 
         if (searchInput === '') {
             alert('검색어를 입력해주세요.');
-            return false;
+            return;
         }
         // 검색 로직 구현
 
@@ -55,19 +55,7 @@ const NoticeList = () => {
         window.location.href = 'notice/write';
     };
 
-   /* const fetchPagingData = async () => {
-      try {
-          const response = await axios.get('/board/notice/list');
-          setPagingData(response.data);
-          setList(response.data);
-      }  catch (error) {
-          console.log(error);
-      }
-    };
 
-    useEffect(() => {
-        fetchPagingData();
-    }, []);*/
 
     return (
         <>
@@ -93,7 +81,7 @@ const NoticeList = () => {
                                     </select>
                                     <input className="form-control search-item" type="text" id="search-input"
                                            name="keyword" placeholder="검색어를 입력하세요."/>
-                                    <button type="submit" className="btn btn-primary search-item" onChange={NoticeSearchList}>검색</button>
+                                    <button type="submit" className="btn btn-primary search-item">검색</button>
                                 </form>
                             </div>
                             {/* 검색 끝 */}
@@ -118,7 +106,7 @@ const NoticeList = () => {
                                 {/* 게시글 목록 (적용시켜야하는 것 : 비밀글인 경우, 로그인 되어있는 사람의 uNo와 글의 uNo가 같으면 글 제목 눌렀을 때 글 상세보기로 이동하게하고 uNo가 서로 같지 않으면 '비밀글입니다.' 라고 alert() 띄워주기 / 공개글인 경우 그냥 제목 누르면 상세보기로 이동시키기 ) */}
                                 {list.map((item, index) => (
                                     <tr key={index}>
-                                        <td className="text-center">{(paging.total - item.status.index) - ((paging.nowPage - 1) * 10)}</td>
+                                        <td className="text-center">{(pagingData.total - item.status.index) - ((pagingData.nowPage - 1) * 10)}</td>
                                         <td>
                                             <Link to={`/board/notice/detail?{bid}`}>{item.title}</Link>
                                         </td>
@@ -134,23 +122,23 @@ const NoticeList = () => {
                             </div>
                             <ul className="page-list">
                                 {/* 페이지 번호 목록 */}
-                                {paging.startPage !== 1 && (
+                                {pagingData.startPage !== 1 && (
                                     <li>
-                                        <Link to={`/board/notice/list?nowPage=${paging.startPage - 1}&cntPerPage=${paging.cntPerPage}`}>&lt;</Link>
+                                        <Link to={`/board/notice/list?nowPage=${pagingData.startPage - 1}&cntPerPage=${pagingData.cntPerPage}`}>&lt;</Link>
                                     </li>
                                 )}
-                                {Array.from({length: paging.endPage - paging.startPage + 1}, (_, i) => i + paging.startPage).map((p) => (
+                                {Array.from({length: pagingData.endPage - pagingData.startPage + 1}, (_, i) => i + pagingData.startPage).map((p) => (
                                     <li key={p}>
-                                        {p === paging.nowPage ? (
+                                        {p === pagingData.nowPage ? (
                                             <span>{p}</span>
                                         ) : (
-                                            <Link to={`/board/notice/list?nowPage=${p}&cntPerPage=${paging.cntPerPage}`}>{p}</Link>
+                                            <Link to={`/board/notice/list?nowPage=${p}&cntPerPage=${pagingData.cntPerPage}`}>{p}</Link>
                                         )}
                                     </li>
                                 ))}
-                                {paging.endPage !== paging.lastPage && (
+                                {pagingData.endPage !== pagingData.lastPage && (
                                     <li>
-                                        <Link to={`/board/notice/list?nowPage=${paging.endPage + 1}&cntPerPage=${paging.cntPerPage}`}>&gt;</Link>
+                                        <Link to={`/board/notice/list?nowPage=${pagingData.endPage + 1}&cntPerPage=${pagingData.cntPerPage}`}>&gt;</Link>
                                     </li>
                                 )}
                             </ul>
@@ -165,4 +153,4 @@ const NoticeList = () => {
 
 }
 
-export default NoticeList;
+export default NoticeSearchList;

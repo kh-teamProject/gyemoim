@@ -12,7 +12,7 @@
     </select>
 
     <!-- 검색 후 게시글 갯수 구하기 -->
-    <select id="searchCountBoard" resultType="int">
+    <select id="searchCountBoard" parameterType="com.team.gyemoim.vo.PageVO" resultType="int">
         SELECT COUNT(*)
         FROM BOARD
         WHERE title LIKE '%' || #{keyword} || '%'
@@ -21,7 +21,7 @@
     </select>
 
     <!-- 페이징 처리 후 게시글 조회하기 -->
-    <select id="selectBoard" resultType="com.team.gyemoim.vo.BoardVO">
+    <select id="selectBoard" parameterType="com.team.gyemoim.vo.PageVO" resultType="com.team.gyemoim.vo.BoardVO">
         SELECT *
         FROM (SELECT rownum RN, A.*
               FROM (SELECT *
@@ -62,7 +62,7 @@
 
     <!-- 게시글 Create -->
     <!-- 글 작성하기 -->
-    <insert id="write">
+    <insert id="write" parameterType="com.team.gyemoim.dto.BoardWriteDTO">
         INSERT INTO board (bid, uNo, name, title, content, type, views, writeDate, secret)
         VALUES (BID_BOA_SEQ.NEXTVAL, #{uNo}, #{name}, #{title}, #{content}, '공지사항', 0, sysdate, #{secret})
     </insert>
@@ -106,8 +106,10 @@
 
     <!-- 게시글 Delete -->
     <!-- 특정 bid 와 글 작성자 uNo에 해당하는 게시글 삭제하기 -->
-    <delete id="delete">
+    <delete id="delete" parameterType="com.team.gyemoim.dto.BoardDeleteDTO">
         DELETE FROM BOARD WHERE bid = #{bid} AND uNo = #{uNo}
     </delete>
 
 </mapper>
+
+

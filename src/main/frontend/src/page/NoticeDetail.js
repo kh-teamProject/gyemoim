@@ -366,6 +366,42 @@ const NoticeDetail = () => {
 
     return (
         <>
+            <section>
+                <div>
+                    <div>
+                        <div>
+                            <div className="title">
+                                <h1>공지사항</h1>
+                                <p>공지사항 세부내용</p>
+                            </div>
+                            <div>
+                                <table>
+                                    <tr>
+                                        <td className="read-detail">
+                                            <div><b>작성자: </b>길현지</div>
+                                            <div><b>작성일자: </b>2023-05-15</div>
+                                            <div><b>조회수: </b>0</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="read-content p-3">안녕하세요. 이것은 공지사항입니다.</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-start AttachedFile">
+                                            <b>첨부파일 : </b>
+                                            <div><img id="ImgPreview" className="preview"/></div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+
+                                {/* 댓글 시작 */}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </>
     );
 }
