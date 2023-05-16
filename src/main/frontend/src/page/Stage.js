@@ -88,12 +88,14 @@ const Stage = () => {
         <button onClick={handleButtonClick} value='7000000'>700만원</button>
       </div>
       {/*<select>*/}
-      {/*  <option onChange={selectHobby} value ='정렬조건'>정렬조건</option>*/}
-      {/*  <option onChange={selectHobby} value ='여행'>여행</option>*/}
-      {/*  <option value>정렬조건</option>*/}
-      {/*  <option value>정렬조건</option>*/}
-      {/*  <option value>정렬조건</option>*/}
-      {/*  <option value>정렬조건</option>*/}
+      {/*  <option onChange={selectInterest} value ='정렬조건'>정렬조건</option>*/}
+      {/*  <option onChange={selectInterest} value ='목돈'>목돈</option>*/}
+      {/*  <option value='여행'>여행</option>*/}
+      {/*  <option value='전자제품'>전자제품</option>*/}
+      {/*  <option value='패션잡화'>패션잡화</option>*/}
+      {/*  <option value='취미'>취미</option>*/}
+      {/*  <option value='웨딩'>웨딩</option>*/}
+      {/*  <option value='자동차'>자동차</option>*/}
       {/*</select>*/}
 
 
@@ -110,6 +112,7 @@ const Stage = () => {
                       deposit:value.deposit,
                       payment : value.payment ,
                       pfEntry : value.pfEntry ,
+                      startFlag : value.startFlag,
                       // uno:value.uno,
                       interest:value.interest})
                     console.log((value.uno));
@@ -121,6 +124,8 @@ const Stage = () => {
                 },[])
                 .map((value, index) => (
               <div key={index} >
+                {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
+                {value.startFlag ==='대기중'?(
                 <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
                   <div id="select-deposit">
                     <h3 class="stage-h3">{value.pfName}</h3>
@@ -129,11 +134,11 @@ const Stage = () => {
 
                   <ul>
                     {[...Array(Number(value.pfEntry))].map((_,index) =>{
-                      const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn ===index +1)
-                      const uno = receiveTurnIndex !== -1? value.receiveTurn[receiveTurnIndex].uno:null
+                      const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index+1)
+                      const uno = receiveTurnIndex !== -1? value.receiveTurn[receiveTurnIndex].receiveTurn:null
                       return(
                         <li key={index} id="rec-turn">
-                          {uno === null? index+1 : uno<= index +1? "참" : index +1}
+                          {uno === null? index+1 : "참"}
                         </li>
                       )
                     })}
@@ -143,6 +148,23 @@ const Stage = () => {
                     <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
                   </div>
                 </Link>
+                )
+                :
+                  // 대기중이 아닐때 보여지는 코드
+                  (<div class='stage-ing'>
+                    <div id="select-deposit">
+                      <h3 className="stage-h3">{value.pfName}</h3>
+                     {value.interest}
+                    </div>
+                    <div class ='all-attend'>
+                      <p>전원 참여</p>
+                      <p>스테이지 진행중입니다</p>
+                    </div>
+                    <div id="stage-payInfo">
+                      <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                    </div>
+                  </div>)}
+                {/*startFlag가 대기중일때만 Link동작하게 하는 코드 끝*/}
               </div>
         ))}
         </div>

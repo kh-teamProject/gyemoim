@@ -6,7 +6,7 @@
         SELECT * FROM PF
         JOIN participation
         ON PF.PFID = participation.PFID
-        WHERE STARTFLAG ='대기중'
+--         WHERE STARTFLAG ='대기중'
 --         SELECT * FROM PF
 --         WHERE STARTFLAG ='N'
     </select>
@@ -17,7 +17,7 @@
     JOIN participation
     ON PF.PFID = participation.PFID
     WHERE DEPOSIT IN #{deposit}
-    AND STARTFLAG ='대기중'
+--     AND STARTFLAG ='대기중'
     </select>
 
 <!--(유진) 수령순서 가져오기  -->
