@@ -6,10 +6,10 @@ import modalClasses from '../../css/StageModal.module.css';
 
 
 function StageDeposit(props){
-    console.log(props.rollData)
     let uPayment;
-    let myBalance = props.rollData.myBalance.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-    if(props.startFlag === '참여중'){
+    let myBalance;
+    if(props.startFlag === '대기중' || props.startFlag === '참여중'){
+    myBalance = props.rollData.myBalance.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     uPayment =  props.rollData.uPayment.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     };
 
