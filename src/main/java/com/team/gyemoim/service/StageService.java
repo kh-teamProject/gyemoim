@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface StageService {
-  //(찬희) 참여중인 Participation 정보 갖고오기
-  List<StageParticipationDTO> getPartList(Integer pfID);
   //(찬희) 스테이지 PF 정보 갖고오기
   List<StagePfDTO> getPfList(Integer pfID);
   //(찬희) 개인 Roll 정보 갖고오기

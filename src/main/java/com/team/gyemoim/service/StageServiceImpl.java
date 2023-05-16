@@ -19,11 +19,7 @@ public class StageServiceImpl implements StageService {
 
   private final StageMapper stageMapper;
 
-  //(찬희) 참여중인 Participation 정보 갖고오기
-  @Override
-  public List<StageParticipationDTO> getPartList(Integer pfId) {
-    return stageMapper.getPartList(pfId);
-  }
+
   //(찬희) 스테이지 PF 정보 갖고오기
   @Override
   public List<StagePfDTO> getPfList(Integer pfID) {
@@ -47,15 +43,14 @@ public class StageServiceImpl implements StageService {
   //(찬희)stageSelect페이지-> stage 참여할때
   @Override
   public void stageIn(StageINDTO dto) {
-      //stageMapper.stageIn(dto); // Participation uNo update
       stageMapper.rollIn(dto); // Roll에 insert
 
   }
   //(찬희)참가자 수가 다 차면 stage 시작
   @Override
   public void stageStart(StageINDTO dto) {
-    // Participation의 uNo 갯수 조회
-    int uNoCount = stageMapper.partUnoCount(dto);
+    // roll에서 pfid=1일때의 uNo 수
+    int uNoCount = stageMapper.RollUnoCount(dto);
 
     // PF의 pfEntry 값 조회
     int pfEntry = stageMapper.pfEntryValue(dto);
@@ -63,7 +58,6 @@ public class StageServiceImpl implements StageService {
     if(uNoCount == pfEntry) {
       //진행상태 update
       stageMapper.stageStart(dto);
-
       //시작날짜 SYSDATE update
       stageMapper.startDateInsert(dto);
 
@@ -83,8 +77,6 @@ public class StageServiceImpl implements StageService {
   }
   //(찬희)스테이지 나가기
   public void stageOut(StageINDTO dto){
-
-    stageMapper.partUNoNull(dto); // Participation 테이블 uNo를 null로 변경
     stageMapper.rollDelete(dto); // roll 테이블 uNo 삭제
   }
 

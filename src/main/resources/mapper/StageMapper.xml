@@ -2,22 +2,17 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.gyemoim.mapper.StageMapper">
-  <!--(찬희)스테이지 참여 시 Participation update
-  <update id="stageIn">
-    UPDATE PART SET uNo = #{uNo}
-    WHERE receiveTurn = #{receiveTurn}
-  </update>
--->
+
   <!--(찬희)스테이지 참여 시 roll insert-->
   <insert id="rollIn">
     INSERT INTO roll(uNo, pfID, receiveTurn)
     VALUES (#{uNo} , #{pfID}, #{receiveTurn})
   </insert>
 
-  <!--(찬희)Participation의 uNo 갯수 조회 -->
-  <select id="partUnoCount" resultType="int">
+  <!--(찬희)roll의 uNo 갯수 조회 -->
+  <select id="RollUnoCount" resultType="int">
     SELECT COUNT(uNo)
-    FROM part
+    FROM roll
     WHERE pfID = #{pfID}
   </select>
 
@@ -56,12 +51,7 @@
     WHERE pfID = #{pfID}
   </update>
 
-  <!--(찬희)참여중에 관한 partList -->
-  <select id="getPartList" resultType="com.team.gyemoim.dto.StageParticipationDTO">
-    SELECT * FROM part
-    WHERE pfID = #{pfID}
-    ORDER BY receiveTurn
-  </select>
+
 
   <!--(찬희)스테이지에 관한 pfList -->
   <select id="getPfList" resultType="com.team.gyemoim.dto.StagePfDTO">
@@ -105,14 +95,6 @@
     WHERE uNo = #{uNo}
   </select>
 
-  <!--!!!!!!나갈때 그냥 roll 삭제 -->
-  <!--(찬희)스테이지 나갈 때 Participation_uNo:null-->
-  <update id="partUNoNull" parameterType="com.team.gyemoim.dto.StageParticipationDTO">
-    UPDATE PART
-    SET uNo = null
-    WHERE receiveTurn = 4
-    AND pfID = #{pfID}
-  </update>
   <!--(찬희)스테이지 나갈 때 roll_uNo:delete-->
   <delete id="rollDelete" parameterType="com.team.gyemoim.dto.StageRollDTO">
     DELETE FROM roll

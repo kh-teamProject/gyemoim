@@ -25,7 +25,6 @@ public class StageController {
         log.info("*******찬희 컨트롤러");
 
         HashMap<String,Object> map = new HashMap<String,Object>();
-        map.put("participation", stageService.getPartList(pfID));
         map.put("pf", stageService.getPfList(pfID));
         Integer myBalance = stageService.getMyAccount(dto);
         List<StageRollDTO> rollList = stageService.getRollList(dto);
@@ -36,7 +35,7 @@ public class StageController {
         map.put("import", stageService.getImportList(pfID));
         map.put("memList", stageService.getMemList(pfID));
 
-        log.info(rollList);
+        log.info(stageService.getImportList(pfID));
 
         return map;
     }
@@ -45,8 +44,7 @@ public class StageController {
     //(찬희) stage 들어오기
     @PostMapping("/stageIn")
     public String stageIn(StageINDTO dto) {
-        System.out.println("**********stageIn" + dto);
-        stageService.stageIn(dto); // part(수령순서)에 uNo update
+        stageService.stageIn(dto); // roll 테이블에 uNo insert
         stageService.stageStart(dto); // 마지막 사람이 참여하면 pf(시작일, 종료일, 시작여부) update
         return "success";
     }
@@ -56,7 +54,8 @@ public class StageController {
     @DeleteMapping("/stageOut")
     public String stageOut(StageINDTO dto) {
         System.out.println("**********stageOut" + dto);
-        stageService.stageOut(dto); // 버튼 누르면 roll_uNo:delete / part_uNo:null update
+        stageService.stageOut(dto); // 버튼 누르면 roll_uNo:delete
         return "success";
     }
 }
+
