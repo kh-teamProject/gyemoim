@@ -13,7 +13,6 @@ public class MemberDTO {
   private String addressDetail; //상세주소
   private String bankName; //은행명
   private String bankAccountNumber; //계좌번호
-  private double creditRating; //신용등급
-  private double plusRate; //추가이율
+  private Integer creditRating; //신용등급
   private String enrollDate; //회원가입일
 }

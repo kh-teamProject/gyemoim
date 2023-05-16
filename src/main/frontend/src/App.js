@@ -11,7 +11,7 @@ import Board from "./page/Board";
 import Stage from './page/Stage';
 import './App.css';
 import CheckedPwd from "./page/account/CheckedPwd";
-import BankAccount from "./page/account/BankAccount";
+import Deposit from "./page/account/Deposit";
 import MyStage from "./page/account/MyStage";
 import Interest from "./page/account/Interest";
 import MemberDelete from "./page/account/MemberDelete";
@@ -60,7 +60,7 @@ const App = () => {
             },
             {
               path: 'bankAccount/deposit',
-              element: <BankAccount />
+              element: <Deposit />
             },
             {
               path: 'bankAccount/withdraw',

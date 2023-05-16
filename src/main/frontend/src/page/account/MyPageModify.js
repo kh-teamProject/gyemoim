@@ -88,13 +88,13 @@ const MyPageModify = () => {
           <div className={classes.field}>
             <label htmlFor="bank-name">은행</label>
             <select name="bankName" id="bank-name" ref={bankRef}>
-              <option value="KEB">KEB하나은행</option>
-              <option value="SC">SC제일은행</option>
-              <option value="KB">국민은행</option>
-              <option value="SH">신한은행</option>
-              <option value="WR">우리은행</option>
-              <option value="IBK">기업은행</option>
-              <option value="NH">농협</option>
+              <option value="KEB하나은행">KEB하나은행</option>
+              <option value="SC제일은행">SC제일은행</option>
+              <option value="국민은행">국민은행</option>
+              <option value="신한은행">신한은행</option>
+              <option value="우리은행">우리은행</option>
+              <option value="기업은행">기업은행</option>
+              <option value="농협">농협</option>
             </select>
           </div>
           <div className={classes.field}>

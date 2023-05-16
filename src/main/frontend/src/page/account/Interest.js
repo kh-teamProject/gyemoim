@@ -12,12 +12,25 @@ const Interest = () => {
   const [interest, setInterest] = useState('');
   const [checkedInterest, setCheckedInterest] = useState('');
 
+  const radioInput = document.getElementsByName('interest');
+
   useEffect(() => {
-    axios.get('/getInterest', {
+    axios.get('/mypage', {
       params: {
-        interest: '0'
+        uNo: 3
       }
     })
+      .then((res) => {
+        radioInput.forEach((element) => {
+          if(res.data.interest === element.value) {
+            setCheckedInterest(res.data.interest);
+            element.checked = true;
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }, [])
 
   const checkedInterestHandler = (e) => {
@@ -27,7 +40,7 @@ const Interest = () => {
   const changedInterestHandler = (e) => {
     e.preventDefault();
 
-    axios.get('/interestUpdate', {
+    axios.post('/interestUpdate', null, {
       params: {
         uno: 3,
         interest: checkedInterest,

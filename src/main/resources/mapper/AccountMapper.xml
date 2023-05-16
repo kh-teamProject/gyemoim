@@ -4,23 +4,23 @@
 <mapper namespace="com.team.gyemoim.mapper.AccountMapper">
 
   <resultMap id="memberResultMap" type="java.util.HashMap">
-    <result property="uNo" column="uNo" />
-    <result property="email" column="email" />
-    <result property="password" column="password" />
-    <result property="name" column="name" />
-    <result property="ssn" column="ssn" />
-    <result property="phone" column="phone" />
-    <result property="bankName" column="bankName" />
-    <result property="bankAccountNumber" column="bankAccountNumber" />
-    <result property="accountHolder" column="accountHolder" />
-    <result property="identifier" column="identifier" />
-    <result property="creditRating" column="creditRating" />
-    <result property="plusRate" column="plusRate" />
-    <result property="enrollDate" column="enrollDate" />
-    <result property="interest" column="interest" />
-    <result property="postcode" column="postcode" />
-    <result property="address" column="address" />
-    <result property="addressDetail" column="addressDetail" />
+    <result property="uNo" column="uNo"/>
+    <result property="email" column="email"/>
+    <result property="password" column="password"/>
+    <result property="name" column="name"/>
+    <result property="ssn" column="ssn"/>
+    <result property="phone" column="phone"/>
+    <result property="bankName" column="bankName"/>
+    <result property="bankAccountNumber" column="bankAccountNumber"/>
+    <result property="accountHolder" column="accountHolder"/>
+    <result property="identifier" column="identifier"/>
+    <result property="creditRating" column="creditRating"/>
+    <result property="plusRate" column="plusRate"/>
+    <result property="enrollDate" column="enrollDate"/>
+    <result property="interest" column="interest"/>
+    <result property="postcode" column="postcode"/>
+    <result property="address" column="address"/>
+    <result property="addressDetail" column="addressDetail"/>
   </resultMap>
 
   <select id="getMyInfo" resultMap="memberResultMap">
@@ -29,32 +29,49 @@
     WHERE uNo = #{uNo}
   </select>
 
-<!-- password 확인을 위한 select문 -->
+  <!-- password 확인을 위한 select문 -->
   <select id="getPassword" resultType="String">
     SELECT password
     FROM MEMBER
     WHERE uNo = #{uNo}
   </select>
 
-<!-- 내 정보 수정 -->
+  <!-- 계모임계좌 정보 가져오기 -->
+  <select id="getMyAccount" resultType="com.team.gyemoim.vo.MyAccount">
+    SELECT *
+    FROM MYACCOUNT
+    WHERE uNo = #{uNo}
+  </select>
+
+  <!-- 내 정보 수정 -->
   <update id="myInfoModify">
     UPDATE MEMBER
-    SET name = #{name},
-        phone = #{phone},
-        bankname = #{bankName},
+    SET name              = #{name},
+        phone             = #{phone},
+        bankname          = #{bankName},
         bankaccountnumber = #{bankAccountNumber},
-        creditrating = #{creditRating},
-        postcode = #{postcode},
-        address = #{address},
-        addressdetail = #{addressDetail}
+        creditrating      = #{creditRating}
     WHERE uno = #{uno}
   </update>
 
-<!-- 내 관심사 수정 -->
+  <!-- 내 관심사 수정 -->
   <update id="interestUpdate">
     UPDATE MEMBER
     SET interest = #{interest}
     WHERE uno = #{uno}
   </update>
+
+  <!-- 계모임 계좌 정보 수정 -->
+  <update id="myAccountUpdate" parameterType="com.team.gyemoim.vo.MyAccount">
+    update MYACCOUNT
+    SET MYBALANCE = MYBALANCE + #{transactionAmount}
+    WHERE UNO = #{uNo}
+  </update>
+
+  <!-- 계모임 계좌 잔액 충전하기 -->
+  <insert id="deposit" parameterType="com.team.gyemoim.dto.DepositDTO">
+    INSERT INTO MYACCOUNTHISTORY(UNO, BANKNAME, BANKACCOUNTNUMBER, TRANSACTIONAMOUNT, BANKHISTORY, TRADINGHOURS)
+    VALUES (#{uNo}, #{bankName}, #{bankAccountNumber}, #{transactionAmount}, '충전', sysdate)
+  </insert>
 
 </mapper>

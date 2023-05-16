@@ -28,7 +28,7 @@ const Withdraw = () => {
         <div>
           <ul>
             <li>
-              <NavLink to={'/mypage/bankAccount/deposit'} className={({isActive}) => isActive ? classes.isActive : undefined} end>입급하기</NavLink>
+              <NavLink to={'/mypage/bankAccount/deposit'} className={({isActive}) => isActive ? classes.isActive : undefined} end>충전하기</NavLink>
             </li>
             <li>
               <NavLink to={'/mypage/bankAccount/withdraw'} className={({isActive}) => isActive ? classes.isActive : undefined} end>출금하기</NavLink>
