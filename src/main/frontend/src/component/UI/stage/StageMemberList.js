@@ -1,16 +1,26 @@
 import classes from '../../../page/css/Stage.module.css';
 
 function StageMemberList(props){
-	return 	<ul className={classes.memberOrder}>
-                {props.mem.map((value, index) => (
-                    <li key={index} className={classes.memList}>
-                        {value.uno === null ? <span className={classes.memNum}>{value.receiveTurn}</span> :  <span className={[classes.memNum, classes.blueNum].join(' ')}>{value.receiveTurn}</span>}
-                        {value.uno === null ? <span className={[classes.memInfo, classes.gray].join(' ')}>대기중</span> : <span className={classes.memInfo}>{value.name}</span>}
-                        {value.pfMaster === 'M' ? <span>(계모임 장)</span> : null}
+   console.log(props.mem);
 
-                    </li>
-                ))}
-          </ul>
+      return (
+      <ul className={classes.memberOrder}>
+        {Array.from({ length: props.pfEntry }, (_, index) => {
+          const receiveTurnIndex = props.mem.findIndex((item) => item.receiveTurn === index + 1);
+          const name =
+            receiveTurnIndex !== -1 ? props.mem[receiveTurnIndex].name : '대기중';
+          const nameClass = receiveTurnIndex !== -1 ? classes.black : '';
+          const numClass = receiveTurnIndex !== -1 ? classes.blueNum : '';
+
+          return (
+            <li key={index} className={classes.memList}>
+              <span className={[classes.memNum, numClass].join(' ')}>{index + 1}</span>
+              <span className={[classes.memInfo, nameClass].join(' ')}>{name}</span>
+            </li>
+          );
+        })}
+      </ul>
+      );
 }
 
 export default StageMemberList;

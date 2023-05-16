@@ -8,8 +8,8 @@ ul{
 .backRed{
     background-color: #FF0000 !important;
 }
-.gray{
-    color: #939393;
+.black{
+    color: #000 !important;
 }
 .stageTitle{
         font-size: 2rem;
@@ -233,6 +233,7 @@ ul{
 }
 .memberList .memInfo{
     font-size: 1.3rem;
+    color: #939393;
 }
 /*community*/
 .community{

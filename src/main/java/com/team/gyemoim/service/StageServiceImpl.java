@@ -47,8 +47,9 @@ public class StageServiceImpl implements StageService {
   //(찬희)stageSelect페이지-> stage 참여할때
   @Override
   public void stageIn(StageINDTO dto) {
-    stageMapper.stageIn(dto); // Participation uNo update
-    stageMapper.rollIn(dto); // Roll에 insert
+      //stageMapper.stageIn(dto); // Participation uNo update
+      stageMapper.rollIn(dto); // Roll에 insert
+
   }
   //(찬희)참가자 수가 다 차면 stage 시작
   @Override
@@ -82,6 +83,7 @@ public class StageServiceImpl implements StageService {
   }
   //(찬희)스테이지 나가기
   public void stageOut(StageINDTO dto){
+
     stageMapper.partUNoNull(dto); // Participation 테이블 uNo를 null로 변경
     stageMapper.rollDelete(dto); // roll 테이블 uNo 삭제
   }

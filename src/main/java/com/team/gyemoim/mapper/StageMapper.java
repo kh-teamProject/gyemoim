@@ -20,7 +20,7 @@ public interface StageMapper {
   //(찬희) 수령예정표 갖고오기
   List<StageImportDTO> getImportList(Integer pfID);
   //(찬희)스테이지 참여 시 Participation update-
-  void stageIn(StageINDTO dto);
+  //void stageIn(StageINDTO dto);
   //(찬희)스테이지 참여 시 roll insert
   void rollIn(StageINDTO dto);
   //(찬희)Participation의 uNo 갯수 조회
