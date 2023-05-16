@@ -11,15 +11,6 @@
         FROM BOARD
     </select>
 
-    <!-- 검색 후 게시글 갯수 구하기 -->
-    <select id="searchCountBoard" parameterType="com.team.gyemoim.vo.PageVO" resultType="int">
-        SELECT COUNT(*)
-        FROM BOARD
-        WHERE title LIKE '%' || #{keyword} || '%'
-           OR content LIKE '%' || #{keyword} || '%'
-           OR name = #{keyword}
-    </select>
-
     <!-- 페이징 처리 후 게시글 조회하기 -->
     <select id="selectBoard" parameterType="com.team.gyemoim.vo.PageVO" resultType="com.team.gyemoim.vo.BoardVO">
         SELECT *
@@ -29,6 +20,17 @@
                     ORDER BY bid DESC) A)
         WHERE RN BETWEEN ${start} AND ${end}
     </select>
+
+
+    <!-- 검색 후 게시글 갯수 구하기 -->
+    <select id="searchCountBoard" parameterType="com.team.gyemoim.vo.PageVO" resultType="int">
+        SELECT COUNT(*)
+        FROM BOARD
+        WHERE title LIKE '%' || #{keyword} || '%'
+        OR content LIKE '%' || #{keyword} || '%'
+        OR name = #{keyword}
+    </select>
+
 
     <!-- 특정 게시글 상세보기 -->
     <select id="readDetail" resultType="com.team.gyemoim.vo.BoardVO">

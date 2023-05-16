@@ -24,15 +24,21 @@ const NoticeList = () => {
         fetchList();
     }, []);
 
-    const fetchList = async  () => {
-      try {
-          const response = await axios.get('/board/notice/list');
-          setList(response.data.list);
-          setPaging(response.data.paging);
-      } catch (error) {
-          console.log("NoticeList_fetchList 에러발생 :< ");
-          console.log(error);
-      }
+    const fetchList = async () => {
+        try {
+            const response = await axios.get('/board/notice/list');
+            const data = response.data;
+
+            setList(data.list);
+            setPaging(data.paging);
+
+            console.log("NoticeList_fetchList_컨트롤러로 들어갑니다~ :D");
+            console.log("게시글 목록 response.data.list: " + data.list);
+            console.log("페이징 데이터 response.data.paging: " + data.paging);
+        } catch (error) {
+            console.log("NoticeList_fetchList 게시글 불러오기 에러발생 :< ");
+            console.log(error);
+        }
     };
 
     const handleFormSubmit = (e) => {
@@ -55,19 +61,19 @@ const NoticeList = () => {
         window.location.href = 'notice/write';
     };
 
-   /* const fetchPagingData = async () => {
-      try {
-          const response = await axios.get('/board/notice/list');
-          setPagingData(response.data);
-          setList(response.data);
-      }  catch (error) {
-          console.log(error);
-      }
-    };
+    /* const fetchPagingData = async () => {
+       try {
+           const response = await axios.get('/board/notice/list');
+           setPagingData(response.data);
+           setList(response.data);
+       }  catch (error) {
+           console.log(error);
+       }
+     };
 
-    useEffect(() => {
-        fetchPagingData();
-    }, []);*/
+     useEffect(() => {
+         fetchPagingData();
+     }, []);*/
 
     return (
         <>
@@ -93,7 +99,9 @@ const NoticeList = () => {
                                     </select>
                                     <input className="form-control search-item" type="text" id="search-input"
                                            name="keyword" placeholder="검색어를 입력하세요."/>
-                                    <button type="submit" className="btn btn-primary search-item" onChange={NoticeSearchList}>검색</button>
+                                    <button type="submit" className="btn btn-primary search-item"
+                                            onChange={NoticeSearchList}>검색
+                                    </button>
                                 </form>
                             </div>
                             {/* 검색 끝 */}
@@ -122,7 +130,7 @@ const NoticeList = () => {
                                         <td>
                                             <Link to={`/board/notice/detail?{bid}`}>{item.title}</Link>
                                         </td>
-                                        <td className="text-center">{item.uNo}</td>
+                                        <td className="text-center">{item.uno}</td>
                                         <td className="text-center">{item.writeDate}</td>
                                         <td className="text-center">{item.views}</td>
                                     </tr>
@@ -130,10 +138,11 @@ const NoticeList = () => {
                             </table>
                             <div className="list-btn-area">
                                 {/* 적용시켜야 할 것: 로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화(/board/notice/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기 */}
-                                <input type="button" value="글쓰기" className="btn btn-primary btn-lg px-4 me-sm-3" onClick={moveNoticeWrite}/>
+                                <input type="button" value="글쓰기" className="btn btn-primary btn-lg px-4 me-sm-3"
+                                       onClick={moveNoticeWrite}/>
                             </div>
-                            <ul className="page-list">
-                                {/* 페이지 번호 목록 */}
+                            {/*<ul className="page-list">
+                                 페이지 번호 목록
                                 {paging.startPage !== 1 && (
                                     <li>
                                         <Link to={`/board/notice/list?nowPage=${paging.startPage - 1}&cntPerPage=${paging.cntPerPage}`}>&lt;</Link>
@@ -153,7 +162,7 @@ const NoticeList = () => {
                                         <Link to={`/board/notice/list?nowPage=${paging.endPage + 1}&cntPerPage=${paging.cntPerPage}`}>&gt;</Link>
                                     </li>
                                 )}
-                            </ul>
+                            </ul>*/}
                         </div>
                     </div>
                 </div>

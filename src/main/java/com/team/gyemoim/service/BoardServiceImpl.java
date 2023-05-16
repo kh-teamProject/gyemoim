@@ -42,19 +42,19 @@ public class BoardServiceImpl implements BoardService{
 
     /* (Create) BoardWriteServiceImpl */
     // 게시글 작성하기
-    @Transactional
+    /*@Transactional
     @Override
     public void write(BoardWriteDTO boardWriteDTO) throws Exception {
         System.out.println("BoardServiceImpl.write_boardWriteDTO 나와줘 :< " + boardWriteDTO);
         boardMapper.write(boardWriteDTO);
 
-        /* 첨부파일 */
+        *//* 첨부파일 *//*
         MultipartFile UploadFile = boardWriteDTO.getUploadFile();
         if (!UploadFile.isEmpty() && UploadFile != null) {// 업로드된 파일이 있는 경우
-            /*String originalFileName = uploadFile.getOriginalFilename();
+            *//*String originalFileName = uploadFile.getOriginalFilename();
             String savedName = generateUniqueFileName(originalFileName);// savedName : 유니크네임
             String fullPath = uploadPath + savedName;
-            uploadFile.transferTo(new File(fullPath));// 서버에 파일 저장*/
+            uploadFile.transferTo(new File(fullPath));// 서버에 파일 저장*//*
             
             UUID uid = UUID.randomUUID();
             String savedName = uid.toString() + "_" + UploadFile.getOriginalFilename();
@@ -63,7 +63,14 @@ public class BoardServiceImpl implements BoardService{
             boardMapper.addAttachedName(savedName);// 첨부파일 이름을 게시글에 보여주기 위해 파일이름 저장하는 메서드
         }
 
+    }*/
+
+    @Override
+    public void write(BoardWriteDTO boardWriteDTO) throws Exception{
+        System.out.println("BoardServiceImpl.write 글 작성 되는건가? " + boardWriteDTO);
+        boardMapper.write(boardWriteDTO);
     }
+
 
     // 업로드된 파일의 원본 이름을 전달받아 고유한 파일 이름 생성하여 반환하는 메서드
     // 위의 write 메서드에서 사용된다.
@@ -79,18 +86,21 @@ public class BoardServiceImpl implements BoardService{
     // 게시글 총 갯수 구하기
     @Override
     public int countBoard() throws Exception {
+        System.out.println("BoardServiceImpl.countBoard_게시글 총 갯수 : " + boardMapper.countBoard());
         return boardMapper.countBoard();
     }
 
     // 검색 후 게시글 갯수 구하기
     @Override
     public int searchCountBoard(PageVO spv) throws Exception {
+        System.out.println("BoardServiceImpl.searchCountBoard_검색한 게시글 갯수 : " + boardMapper.searchCountBoard(spv));
         return boardMapper.searchCountBoard(spv);
     }
 
     // 페이징 처리 후 게시글 조회하기
     @Override
     public List<BoardVO> selectBoard(PageVO vo) throws Exception {
+        System.out.println("BoardSereviceImpl.selectBoard_페이징 처리 후 게시글 조회 : " + boardMapper.selectBoard(vo));
         return boardMapper.selectBoard(vo);
     }
 
@@ -104,6 +114,7 @@ public class BoardServiceImpl implements BoardService{
     // 검색 후 검색에 해당하는 게시글 리스트 조회하기 (페이징 동시에 검색)
     @Override
     public List<BoardVO> searchList(PageVO spv) throws Exception {
+        System.out.println("BoardServiceImpl.searchList_검색 후 해당하는 게시글 페이징해서 리스트로 뽑아봄 : " + boardMapper.searchList(spv));
         return boardMapper.searchList(spv);
     }
 

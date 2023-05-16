@@ -9,6 +9,7 @@ import com.team.gyemoim.vo.PageVO;
 import com.team.gyemoim.vo.ReplyVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class BoardController {
     @GetMapping("/board/notice/list")
     public List<BoardVO> getBoardList(@RequestParam(value = "nowPage", required = false, defaultValue = "1") int nowPage,
                                       @RequestParam(value = "cntPerPage", required = false, defaultValue = "10") int cntPerPage) throws Exception {
-        int total = boardService.countBoard();
+        int total = boardService.countBoard();// 게시글 전체 갯수
 
         if (nowPage == 0 && cntPerPage == 0) {
             nowPage = 1;
@@ -41,8 +42,11 @@ public class BoardController {
         }
 
         PageVO pageVO = new PageVO(total, nowPage, cntPerPage);
+        System.out.println("BoardController.getBoardList_게시글 총 갯수 : "+ boardService.countBoard());
+        System.out.println("BoardController.getBoardList_pageVO : "+ pageVO);
+        System.out.println("BoardController.getBoardList_페이징 처리 후 게시글 조회 : "+ boardService.selectBoard(pageVO));
 
-        return boardService.selectBoard(pageVO);
+        return boardService.selectBoard(pageVO);// 페이징 처리 후 게시글 조회하기
     }
 
     
@@ -66,7 +70,7 @@ public class BoardController {
     }
 
     /* 생성 Create */
-    @PostMapping("/board/notice/writePost")
+    /*@PostMapping("/board/notice/writePost")
     public ResponseEntity<String> writePost(BoardWriteDTO boardWriteDTO, @RequestParam("uploadFile") MultipartFile uploadFile) {
         System.out.println("BoardController_writePost_들어왔다!! 오예압 ");
         System.out.println("BoardWriteDTO: " + boardWriteDTO);
@@ -80,6 +84,19 @@ public class BoardController {
             return ResponseEntity.ok("BoardController_writePost_Success :D");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("BoardController_writePost_Error: " + e.getMessage());
+        }
+    }*/
+
+
+    @PostMapping("/board/notice/writePost")
+    public ResponseEntity<String> writePost(@RequestBody BoardWriteDTO boardWriteDTO) {
+        try {
+            boardService.write(boardWriteDTO);
+            return ResponseEntity.ok("BoardController 글 작성 돌아간닷! :D");
+        } catch (Exception e) {
+            System.out.println("BoardController 글 작성 실패 writePost 에러 발생함 :< ");
+            System.out.println("error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController 글 작성 실패 :< ");
         }
     }
 

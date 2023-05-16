@@ -13,6 +13,6 @@ public class BoardWriteDTO {
     private String title; // 게시글 제목
     private String content; // 게시글 내용
     private String secret; // 글 여부 (공개/비공개)
-    private MultipartFile uploadFile; // 업로드할 파일
+    /*private MultipartFile uploadFile; // 업로드할 파일*/
 
 }
