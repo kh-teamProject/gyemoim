@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {createBrowserRouter, Link, RouterProvider} from "react-router-dom";
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
 import axios from 'axios';
 import './App.css';
 import Login from "./page/Login";
@@ -7,14 +9,15 @@ import MyPage from "./page/MyPage";
 import Home from "./page/Home";
 import Board from "./page/Board";
 import Stage from './page/Stage';
-
+import StageCreate from './page/StageCreate';
+import StagePartIn from './page/StagePartIn';
 
 const App = () => {
 
 
   const router = createBrowserRouter([
     {
-      path: '/hello',
+      path: '/',
       element: <Home />
     },
     {
@@ -32,7 +35,17 @@ const App = () => {
     {
       path: '/stage',
       element: <Stage />
-    }
+    },
+
+    {
+         path: '/stageCreate',
+         element: <StageCreate />
+        },
+
+    {
+         path: '/stageAgree/:pfID',
+         element: <StagePartIn />
+     }
   ]);
 
   return (
