@@ -81,7 +81,25 @@ const ReceiptModalOverlay = (props) => {
 };
 
 const DepositModalOverlay = (props) => {
-    let myBalance =  props.roll[0].myBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        let uPayment =  props.rollData.uPayment.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        let myBalance = props.rollData.myBalance.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    const exitButtonClick = () => {
+          axios.post('/stageOut', {
+                params: {
+                  uNo: 3,
+                  pfID: 1
+                }
+              })
+            .then(response => {
+
+              console.log('DELETE 요청이 성공했습니다.');
+            })
+            .catch(error => {
+              // 요청 실패 시 처리
+              console.error('DELETE 요청이 실패했습니다.', error);
+            });
+        };
 
 return (
     <div className={[classes.modal, classes.deposit].join(' ')}>
@@ -103,9 +121,10 @@ return (
                     <p key={index} >{value.stageAmount}원</p>
                 </div>
           </div>
-
+         </>
+        ))}
           <div className={classes.depositUpdate}>
-            <div className={classes.depositAmount}>이번 달 입금 금액 : {props.uPayment}원</div>
+            <div className={classes.depositAmount}>이번 달 입금 금액 : {uPayment}원</div>
             <button>입금하기</button>
           </div>
 
@@ -116,8 +135,7 @@ return (
         </div>
         <p className={classes.caution}>*계좌에 금액이 부족하실 경우 마이페이지에서 충전해주시기 바랍니다. <Link to={'/mypage'}>마이페이지 ></Link></p>
       </div>
-         </>
-        ))}
+
       <button onClick={props.onConfirm} className={classes.back}>X</button>
     </div>
   );
@@ -129,7 +147,7 @@ const StageModal = (props) => {
     {ReactDOM.createPortal(<Backdrop onConfirm={props.onConfirm} />, document.getElementById('backdrop-root'))}
     {props.id === 'exit' && ReactDOM.createPortal(<ExitModalOverlay title={props.title} message={props.message} onConfirm={props.onConfirm} />, document.getElementById('overlay-root'))}
     {props.id === 'receipt' && ReactDOM.createPortal(<ReceiptModalOverlay title={props.title} schedule={props.schedule} message={props.message} onConfirm={props.onConfirm} />, document.getElementById('overlay-root'))}
-    {props.id === 'deposit' && ReactDOM.createPortal(<DepositModalOverlay title={props.title} roll={props.roll} uPayment={props.uPayment} message={props.message} onConfirm={props.onConfirm} />, document.getElementById('overlay-root'))}
+    {props.id === 'deposit' && ReactDOM.createPortal(<DepositModalOverlay title={props.title} roll={props.roll} rollData={props.rollData} message={props.message} onConfirm={props.onConfirm} />, document.getElementById('overlay-root'))}
 
     </>
   );

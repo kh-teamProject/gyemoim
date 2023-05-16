@@ -5,8 +5,8 @@ function StageSequence(props){
 
 	for(let i=0; i<props.schedule.length; i++){
            		let s = props.schedule[i];
-                let uTotalReceipts = s.utotalReceipts.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-           		let uPayment =  s.upayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                let uTotalReceipts = s.utotalReceipts.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+           		let uPayment =  s.upayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
            		lis.push(<li key={s.receiveTurn} className={classes.seqList}>
            		{
