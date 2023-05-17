@@ -8,6 +8,9 @@
     padding: 0;
     vertical-align: baseline;
     text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     /*border-bottom: 1px solid #f0f0f0;*/
     /*border-left: 1px solid #f0f0f0;*/
 }
@@ -17,7 +20,7 @@
     /*position: relative;*/
 }
 .stage-ing{
-    background: url(../images/grey_dimm.png);
+    background: url(../../component/images/grey_dimm.png);
     /*top: 30px;*/
     /*height: 330px;*/
     /*height: 115px;*/
@@ -46,6 +49,36 @@
     font-weight: 400;
     top: 30%;
 }
+.more-stage{
+    background: url(../../component/images/verti_ellipsis.png) center top no-repeat;
+    height: 85px;
+    margin: 60px auto 0;
+    padding-top: 0;
+    position: relative;
+    width: 75px;
+}
+.more-stage-btn{
+    background:  url(../../component/images/btn_plus_stage.png) center top no-repeat;;
+    display: block;
+    height: 65px;
+    left: 50%;
+    margin-left: -32.5px;
+    overflow: hidden;
+    padding-top: 0;
+    position: absolute;
+    text-indent: -20000px;
+    top: 0;
+    width: 65px;
+    margin-top: 100px;
+    border: 0
+}
+.sel-btn{
+    position: absolute;
+    right: 3rem;
+}
+/*.sel-deposit{*/
+/*    position:fixed;*/
+/*}*/
 
 
 /*.stage-wrap{*/

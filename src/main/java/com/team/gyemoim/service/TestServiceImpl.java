@@ -1,6 +1,6 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.StageListDTO;
+import com.team.gyemoim.dto.stage.StageListDTO;
 import com.team.gyemoim.dto.TestDTO;
 import com.team.gyemoim.mapper.TestMapper;
 import lombok.RequiredArgsConstructor;

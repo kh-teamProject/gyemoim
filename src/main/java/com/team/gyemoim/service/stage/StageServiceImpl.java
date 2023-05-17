@@ -1,9 +1,8 @@
 package com.team.gyemoim.service.stage;
 
 
-import com.team.gyemoim.dto.StageListDTO;
+import com.team.gyemoim.dto.stage.StageListDTO;
 import com.team.gyemoim.mapper.StageMapper;
-import com.team.gyemoim.vo.PFVO;
 import com.team.gyemoim.vo.ParticipationVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

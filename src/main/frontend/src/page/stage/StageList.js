@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import ErrorModal from "../component/UI/ErrorModal";
+import ErrorModal from "../../component/UI/ErrorModal";
 import {Link} from "react-router-dom";
-import classes from '../component/css/Stage.css';
+import classes from '../css/StageList.modlue.css';
 
-const Stage = () => {
+const StageList = () => {
   const [error, setError] = useState();
   // 계모임 값 뿌리기
   const [stage, setStage] = useState([]);
@@ -14,7 +14,7 @@ const Stage = () => {
   //페이징 가보자고~
   const [curPage, setCurPage] = useState(1); //현재페이지
   const [totalPage, setTotalPage] = useState(0); //전체 페이지 수
-
+  const [list, setList ] = useState(10);//현재 스테이지 수
   const modalHandler = () => {
     setError('Modal');
   };
@@ -34,8 +34,12 @@ const Stage = () => {
       console.log(i);
     }
     setCurPage(1); //페이지 버튼 클릭시 현재 페이지를 1로 초기화
-
+    setList(10);
   };
+  //관심사 목록기반으로 조회하는 함수
+  const selectInterest = (event) =>{
+
+  }
 
   //페이징 함수
   const handlePageClick = (event) => {
@@ -43,6 +47,7 @@ const Stage = () => {
     if (targetPage > 0 && targetPage <= totalPage) {
       //클릭한 타겟페이지가 0보다 크고 totalPage보다 작거나 같으면 -> 즉, 클릭한 페이지가 유효범위에 있을때
       setCurPage(targetPage); //현재페이지를 클릭페이지로 설정
+      setList(list+10);
     }
   };
 
@@ -50,11 +55,11 @@ const Stage = () => {
     // 버튼 클릭으로 스테이지 조회하는 구문
     if (isClicked === '전체') {
       axios
-        .get('/stage', {})
+        .get('/stagelist', {})
         .then((res) => {
           console.log(res.data.PF);
           setStage(res.data.PF);
-          setTotalPage(Math.ceil(res.data.PF.length / 35)); //전체 페이지 수 계산
+          setTotalPage(Math.ceil(res.data.PF.length / 10)); //전체 페이지 수 계산
         })
         .catch((error) => {
           console.log(error);
@@ -68,7 +73,7 @@ const Stage = () => {
         })
         .then((res) => {
           setStage(res.data);
-          setTotalPage(Math.ceil(res.data.length / 35)); //전체 페이지 수 계산
+          setTotalPage(Math.ceil(res.data.length / 10)); //전체 페이지 수 계산
         })
         .catch((error) => {
           console.log(error);
@@ -80,28 +85,31 @@ const Stage = () => {
   return (
     <>
       <h1>스테이지 조회</h1>
-      <div >
+      <div>
         <button onClick={handleButtonClick} value='전체'>전체</button>
         <button onClick={handleButtonClick} value='2500000'>250만원</button>
         <button onClick={handleButtonClick} value='3500000'>350만원</button>
         <button onClick={handleButtonClick} value='5000000'>500만원</button>
         <button onClick={handleButtonClick} value='7000000'>700만원</button>
       </div>
-      {/*<select>*/}
-      {/*  <option onChange={selectInterest} value ='정렬조건'>정렬조건</option>*/}
-      {/*  <option onChange={selectInterest} value ='목돈'>목돈</option>*/}
-      {/*  <option value='여행'>여행</option>*/}
-      {/*  <option value='전자제품'>전자제품</option>*/}
-      {/*  <option value='패션잡화'>패션잡화</option>*/}
-      {/*  <option value='취미'>취미</option>*/}
-      {/*  <option value='웨딩'>웨딩</option>*/}
-      {/*  <option value='자동차'>자동차</option>*/}
-      {/*</select>*/}
+
+      <div>
+        <select class='sel-btn'>
+          <option value ='정렬조건'>정렬조건</option>
+          <option value ='목돈'>목돈</option>
+          <option value='여행'>여행</option>
+          <option value='전자제품'>전자제품</option>
+          <option value='패션잡화'>패션잡화</option>
+          <option value='취미'>취미</option>
+          <option value='웨딩'>웨딩</option>
+          <option value='자동차'>자동차</option>
+        </select>
+      </div>
 
 
       <div class="stage-wrap">
         <div class="stage">
-          {stage.slice((curPage - 1) * 35, curPage * 35)
+          {stage.slice((curPage - 1) * list, curPage * list)
                 .reduce((acc,value) =>{
                   const index = acc.findIndex(item => item.pfID === value.pfID)
                   if(index === -1){
@@ -109,6 +117,7 @@ const Stage = () => {
                       pfName: value.pfName,
                       pfID : value.pfID,
                       receiveTurn:[{turn:value.receiveTurn,uno: value.uno}],
+                      // {turn:value.receiveTurn,uno: value.uno}
                       deposit:value.deposit,
                       payment : value.payment ,
                       pfEntry : value.pfEntry ,
@@ -125,6 +134,7 @@ const Stage = () => {
                 .map((value, index) => (
               <div key={index} >
                 {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
+                {/*&& value.interest==={}*/}
                 {value.startFlag ==='대기중'?(
                 <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
                   <div id="select-deposit">
@@ -135,9 +145,10 @@ const Stage = () => {
                   <ul>
                     {[...Array(Number(value.pfEntry))].map((_,index) =>{
                       const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index+1)
-                      const uno = receiveTurnIndex !== -1? value.receiveTurn[receiveTurnIndex].receiveTurn:null
+                      const uno = receiveTurnIndex !== -1? value.receiveTurn[receiveTurnIndex].uno:null
                       return(
                         <li key={index} id="rec-turn">
+                          {/*{value.receiveTurn===index+1?"참": index+1}*/}
                           {uno === null? index+1 : "참"}
                         </li>
                       )
@@ -168,22 +179,24 @@ const Stage = () => {
               </div>
         ))}
         </div>
+        <p class='more-stage'>
+           <button class='more-stage-btn' onClick={() => handlePageClick({target: {value: curPage}})}> 스테이지 더보기 </button>
+        </p>
       </div>
 
-      <div>
-        <button onClick={modalHandler}>Modal</button>
-        {error && <ErrorModal title={'Modal'} onConfirm={errorHandler}/>}
-      </div>
-      <button onClick={() => handlePageClick({target: {value: curPage - 1}})}>《</button>
-      {/*어레이로 숫자를 클릭해서 페이지 전환을 할 수 있게함.*/}
-      {Array.from({length: totalPage}, (_, i) => (
-        <button key={i + 1} value={i + 1} onClick={handlePageClick}
-                className={curPage === i + 1 ? 'active' : ''}>{i + 1}</button>
-      ))}
-      <button onClick={() => handlePageClick({target: {value: curPage + 1}})}>》</button>
+      {/*<div>*/}
+      {/*  <button onClick={modalHandler} >Modal</button>*/}
+      {/*  {error && <ErrorModal title={'Modal'} onConfirm={errorHandler}/>}*/}
+      {/*</div>*/}
+      {/*<button onClick={() => handlePageClick({target: {value: curPage - 1}})}>《</button>*/}
+      {/*/!*어레이로 숫자를 클릭해서 페이지 전환을 할 수 있게함.*!/*/}
+      {/*{Array.from({length: totalPage}, (_, i) => (*/}
+      {/*  <button key={i + 1} value={i + 1} onClick={handlePageClick}*/}
+      {/*          className={curPage === i + 1 ? 'active' : ''}>{i + 1}</button>*/}
+      {/*))}*/}
     </>
   );
 
 }
 
-export default Stage;
+export default StageList;

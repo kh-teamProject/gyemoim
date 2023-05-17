@@ -1,6 +1,6 @@
 package com.team.gyemoim.mapper;
 
-import com.team.gyemoim.dto.StageListDTO;
+import com.team.gyemoim.dto.stage.StageListDTO;
 import com.team.gyemoim.dto.TestDTO;
 import org.apache.ibatis.annotations.Mapper;
 

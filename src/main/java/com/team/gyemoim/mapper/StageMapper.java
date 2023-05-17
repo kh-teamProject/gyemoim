@@ -1,7 +1,6 @@
 package com.team.gyemoim.mapper;
 
-import com.team.gyemoim.dto.StageListDTO;
-import com.team.gyemoim.vo.PFVO;
+import com.team.gyemoim.dto.stage.StageListDTO;
 import com.team.gyemoim.vo.ParticipationVO;
 import org.apache.ibatis.annotations.Mapper;
 

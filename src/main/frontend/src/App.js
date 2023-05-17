@@ -6,7 +6,7 @@ import Login from "./page/Login";
 import MyPage from "./page/MyPage";
 import Home from "./page/Home";
 import Board from "./page/Board";
-import Stage from './page/Stage';
+import StageList from './page/stage/StageList';
 import Test from "./page/Test";
 
 
@@ -35,8 +35,8 @@ const App = () => {
       element: <Test />
     },
     {
-      path: '/stage',
-      element: <Stage/>,
+      path: '/stagelist',
+      element: <StageList/>,
     }
 
   ]);

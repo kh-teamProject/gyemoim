@@ -1,8 +1,7 @@
 package com.team.gyemoim.controller;
 
-import com.team.gyemoim.dto.StageListDTO;
+import com.team.gyemoim.dto.stage.StageListDTO;
 import com.team.gyemoim.service.stage.StageService;
-import com.team.gyemoim.vo.PFVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,12 +13,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class SolutionController {
+public class StageController {
   //C
   //R
   private final StageService stageService;
 
-  @GetMapping("/stage") // (유진)계모임 전체를 조회할 수 있음.
+  @GetMapping("/stagelist") // (유진)계모임 전체를 조회할 수 있음.
   @ResponseBody
   public HashMap<String,Object> stage() {
     HashMap<String,Object> map = new HashMap<>();
