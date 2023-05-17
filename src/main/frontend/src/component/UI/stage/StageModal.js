@@ -15,7 +15,7 @@ const ExitModalOverlay = (props) => {
     const exitButtonClick = () => {
       axios.delete('/stageOut', {
             params: {
-              uNo: 3,
+              uNo: 5,
               pfID: 1
             }
           })
@@ -81,25 +81,25 @@ const ReceiptModalOverlay = (props) => {
 };
 
 const DepositModalOverlay = (props) => {
-        let uPayment =  props.rollData.uPayment.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        let myBalance = props.rollData.myBalance.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    let uPayment =  props.rollData.uPayment.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    let myBalance = props.rollData.myBalance.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-    const exitButtonClick = () => {
-          axios.post('/stageOut', {
-                params: {
-                  uNo: 3,
-                  pfID: 1
-                }
-              })
-            .then(response => {
-
-              console.log('DELETE 요청이 성공했습니다.');
-            })
-            .catch(error => {
-              // 요청 실패 시 처리
-              console.error('DELETE 요청이 실패했습니다.', error);
-            });
-        };
+    const depositButtonClick = () => {
+      axios.post('/deposit',null, {
+            params: {
+              uNo: 4,
+              pfID: 1,
+              uPayment: props.rollData.uPayment
+            }
+          })
+        .then(response => {
+          console.log('입금 요청이 성공했습니다.');
+        })
+        .catch(error => {
+          // 요청 실패 시 처리
+          console.error('입금 요청이 실패했습니다.', error);
+        });
+    };
 
 return (
     <div className={[classes.modal, classes.deposit].join(' ')}>
@@ -118,14 +118,14 @@ return (
                 </div>
                 <div className={classes.whiteBox}>
                     <p>나의 누적 입금액</p>
-                    <p key={index} >{value.stageAmount}원</p>
+                    <p key={index} >{value.stageAmount.toLocaleString()}원</p>
                 </div>
           </div>
          </>
         ))}
           <div className={classes.depositUpdate}>
             <div className={classes.depositAmount}>이번 달 입금 금액 : {uPayment}원</div>
-            <button>입금하기</button>
+            <button onClick={depositButtonClick} >입금하기</button>
           </div>
 
       <div className={classes.myAccount}>

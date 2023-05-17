@@ -35,8 +35,6 @@ public class StageController {
         map.put("import", stageService.getImportList(pfID));
         map.put("memList", stageService.getMemList(pfID));
 
-        log.info(stageService.getImportList(pfID));
-
         return map;
     }
 
@@ -48,12 +46,18 @@ public class StageController {
         stageService.stageStart(dto); // 마지막 사람이 참여하면 pf(시작일, 종료일, 시작여부) update
         return "success";
     }
+    //(찬희) stage 입금하기
+    @PostMapping("/deposit")
+    public String stageDeposit(StageRollDTO dto){
+        log.info("deposit 컨트롤러" + dto);
+        stageService.stageDeposit(dto);
+        return "success";
+    }
 
     // D
     //(찬희) stage 탈출하기
     @DeleteMapping("/stageOut")
     public String stageOut(StageINDTO dto) {
-        System.out.println("**********stageOut" + dto);
         stageService.stageOut(dto); // 버튼 누르면 roll_uNo:delete
         return "success";
     }

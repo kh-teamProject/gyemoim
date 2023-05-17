@@ -20,6 +20,8 @@ public interface StageService {
   void stageStart(StageINDTO dto);
   //(찬희)스테이지 나가기
   void stageOut(StageINDTO dto);
-
+  //(찬희) 스테이지 my계좌 정보 불러오기
   Integer getMyAccount(StageRollDTO dto);
+  //(찬희) 스테이지 입금하기
+  void stageDeposit(StageRollDTO dto);
 }

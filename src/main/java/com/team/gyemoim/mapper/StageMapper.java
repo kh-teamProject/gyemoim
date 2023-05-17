@@ -35,6 +35,14 @@ public interface StageMapper {
   void partUNoNull(StageINDTO dto);
   //(찬희)스테이지 나갈 때 roll_uNo:delete
   void rollDelete(StageINDTO dto);
-
+  //(찬희) 스테이지 my계좌 정보 불러오기
   Integer getMyAccount(StageRollDTO dto);
+  //(찬희)1. 계좌잔액 업데이트 -> uPayment 금액을 insert
+  void stageBalanceUpdate(StageRollDTO dto);
+  //(찬희)2.my계좌 잔액 -> 현금액 - uPayment
+  void myAccountUPaymentUpdate(StageRollDTO dto);
+  //(찬희)4. 입금 횟수 mapper.xml에서 +1
+  void depositCntPlus(StageRollDTO dto);
+  //(찬희)5. 입금 누적 금액 update
+  void stageAmountUpdate(StageRollDTO dto);
 }

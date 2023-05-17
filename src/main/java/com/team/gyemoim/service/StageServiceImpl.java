@@ -79,12 +79,27 @@ public class StageServiceImpl implements StageService {
   public void stageOut(StageINDTO dto){
     stageMapper.rollDelete(dto); // roll 테이블 uNo 삭제
   }
-
+  //(찬희) 스테이지 my계좌 정보 불러오기
   @Override
   public Integer getMyAccount(StageRollDTO dto) {
     return stageMapper.getMyAccount(dto);
   }
+  //(찬희) 스테이지 입금하기
+  @Override
+  public void stageDeposit(StageRollDTO dto) {
+    //1. 계좌잔액 업데이트 -> uPayment 금액을 insert
+      stageMapper.stageBalanceUpdate(dto);
+    //2. my계좌 잔액 -> 현금액 - uPayment
+      stageMapper.myAccountUPaymentUpdate(dto);
+    //3. 계좌이력도 남겨야 함
+    //4. 입금 횟수 mapper.xml에서 +1
+      stageMapper.depositCntPlus(dto);
+    //5. 입금 누적 금액 update
+      stageMapper.stageAmountUpdate(dto);
+    //6. 입금식별 -> update
 
+    //stageMapper.stageDeposit(dto);
+  }
 
 
 }

@@ -14,26 +14,24 @@ import moment from 'moment';
 const Stage = () => {
 
     const [pf, setPf] = useState([]);
-    const [part, setPart] = useState([]);
     const [roll, setRoll] = useState([]);
     const [schedule, setSchedule] = useState([]);
     const [mem, setMem] = useState([]);
     const [startFlag, setStartFlag] = useState('');
     const [pfData, setPfData] = useState([]);
     const [rollData, setRollData] = useState([]);
-    const [partData, setPartData] = useState([]);
-    console.log(rollData)
+
+
 
   useEffect(() => {
     axios.get('/stage', {
       params: {
-        uNo: 4,
+        uNo: 1,
         pfID: 1
       }
     })
       .then((res) => {
         setPf(res.data.pf);
-        setPart(res.data.participation);
         setRoll(res.data.roll);
         setMem(res.data.memList);
         setSchedule(res.data.import);
@@ -59,44 +57,49 @@ const Stage = () => {
           .toString()
           .replace(/\B(?=(\d{4})+(?!\d))/g, ',');
         const pfRateList = res.data.pf.map((item) => item.pfRate);
+        const pfEntryList = res.data.pf.map((item) => item.pfEntry);
+        const stageBalanceList = res.data.pf.map((item) => item.stageBalance);
+
         const pfData = {
         deposit: depositWithComma,
         pfRate: pfRateList.join(''),
         pfName: pfNameList.join(''),
         startDate: startDateList.join(''),
-        endDate: endDateList.join('')
+        endDate: endDateList.join(''),
+        pfEntry: pfEntryList.join(''),
+        stageBalance: stageBalanceList.join('')
         };
         setPfData(pfData);
 
         const RollDepositCnt = res.data.roll.map((item) => item.depositCnt);
         const RollUno = res.data.roll.map((item) => item.uno);
         const RollReceiveTurn = res.data.roll.map((item) => item.receiveTurn);
+        const RollUPayment = res.data.roll.map((item) => item.upayment);
+        const RollMyBalance = res.data.roll.map((item) => item.myBalance);
 
         const rollData = {
         depositCnt: RollDepositCnt.join(''),
         uNo: RollUno.join(''),
-        receiveTurn: RollReceiveTurn.join('')
+        receiveTurn: RollReceiveTurn.join(''),
+        uPayment: RollUPayment.join(''),
+        myBalance: RollMyBalance.join('')
         };
         setRollData(rollData);
 
-        const StageBalanceList = res.data.participation.map((item) => item.stageBalance);
-        const partData = {
-        stageBalance: StageBalanceList.join('')
-        };
-        setPartData(partData);
+
 
       })
       .catch((error) => {
         console.log(error);
+
       });
   }, []);
 
     const [receipt, setReceipt] = useState();
-
     const receiptHandler = () => {
     setReceipt('Modal');
     };
-    const receiptExitHandler = () => {
+    const errorReceiptHandler = () => {
     setReceipt(null);
     };
 
@@ -109,6 +112,9 @@ const Stage = () => {
     };
 
 
+
+
+
     return (
         <>
 
@@ -119,7 +125,7 @@ const Stage = () => {
                   ? <p>기간 : -</p>
                   : <p>기간 : {pfData.startDate} ~ {pfData.endDate}</p>
               }
-
+             <p>스테이지 잔액 : {pfData.stageBalance}원</p>
             <div id="contents" className={classes.areaLayout}>
                 <div>
                    <div id="stageArea">
@@ -129,13 +135,13 @@ const Stage = () => {
                                 <li><span>총 입금</span><br />{rollData.depositCnt}회</li>
                                 <li><span>약정금</span><br />{pfData.deposit}원</li>
                                 <li><span>이율(세후)</span><br />{pfData.pfRate}%</li>
-                                <li><span>S잔액</span><br />{partData.stageBalance}원</li>
+                                <li><span>상태</span><br />입금 전</li>
                             </ul>
 
                         </div>
                         <div className={classes.boxButton}>
                             <BoxButton title="이율표 확인하기 >" desc="순번에 따른 얼마를 받게되는지 궁금할 땐," handler={receiptHandler}></BoxButton>
-                            {receipt && <StageModal id={'receipt'}  title={pfData.pfName} schedule={schedule} onConfirm={receiptExitHandler} />}
+                            {receipt && <StageModal id={'receipt'}  title={pfData.pfName} schedule={schedule} onConfirm={errorReceiptHandler} />}
                             <Link to={'/login'}><BoxButton title="고객문의 바로가기 >" desc="무엇을 도와드릴까요?"></BoxButton></Link>
                         </div>
 
@@ -143,15 +149,15 @@ const Stage = () => {
                             {startFlag==='완료' && <p className={classes.red} >축하합니다!</p>}
                             <p className={classes.subTitle}>스테이지 {startFlag}</p>
                             {startFlag==='대기중' && <p>모두 입장하면 계모임이 시작됩니다.</p>}
-                            {startFlag==='참여중' && <p>매 달 <span className={classes.red}>1일 전</span>에 입금하세요</p>}
+                            {startFlag==='참여중' && <p>매달 <span className={classes.red}>24일 전</span>에 입금하세요</p>}
 
                             <StageSequence schedule={schedule} roll={roll} ></StageSequence>
                         </div>
 
                         <div>
-                        {startFlag==='대기중' && <StageDeposit roll={roll} startFlag={startFlag} title="입금하기" btn="입금하기"></StageDeposit>}
-                        {startFlag==='참여중' && <StageDeposit roll={roll} startFlag={startFlag} title="입금하기" btn="입금하기"></StageDeposit>}
-                        {startFlag==='완료' && <StageDeposit roll={roll} startFlag={startFlag} title="출력하기" btn="출력하기"></StageDeposit>}
+                        {startFlag==='대기중' && <StageDeposit roll={roll} rollData={rollData} startFlag={startFlag} title={pfData.pfName} subTitle="입금하기" btn="입금하기" />}
+                        {startFlag==='참여중' && <StageDeposit  roll={roll} rollData={rollData} startFlag={startFlag} title={pfData.pfName}subTitle="입금하기" btn="입금하기" />}
+                        {startFlag==='완료' && <StageDeposit startFlag={startFlag} title={pfData.pfName} subTitle="출력하기" btn="출력하기" />}
                         </div>
 
 
@@ -160,7 +166,7 @@ const Stage = () => {
                    <div id="memberArea" className>
                         <div className={classes.memberList}>
                              <p className={classes.boxTitle}>우리 멤버들</p>
-                            <MemberList mem={mem} ></MemberList>
+                            <MemberList mem={mem} pfEntry={pfData.pfEntry}></MemberList>
                         </div>
 
                         <div className={classes.community}>

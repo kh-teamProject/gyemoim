@@ -102,5 +102,33 @@
     AND pfID = #{pfID}
   </delete>
 
+  <!--(찬희)입금하기:pf2 계모임잔액에 uPayment만큼 update-->
+  <update id="stageBalanceUpdate" parameterType="com.team.gyemoim.dto.StageRollDTO">
+    UPDATE pf2
+    SET stageBalance = stageBalance + #{uPayment}
+    WHERE pfID = #{pfID}
+  </update>
 
+  <!--(찬희)입금하기:My계좌에서 uPayment만큼 빼기-->
+  <update id="myAccountUPaymentUpdate" parameterType="com.team.gyemoim.dto.StageRollDTO">
+    UPDATE MyAccount
+    SET myBalance = myBalance - #{uPayment}
+    WHERE uNo = #{uNo}
+  </update>
+
+  <!--(찬희)입금하기:입금 횟수 mapper.xml에서 +1-->
+  <update id="depositCntPlus" parameterType="com.team.gyemoim.dto.StageRollDTO">
+    UPDATE roll
+    SET depositCnt = depositCnt + 1
+    WHERE uNo = #{uNo}
+    AND pfID = #{pfID}
+  </update>
+
+  <!--(찬희)입금하기:입금 누적 금액 update-->
+  <update id="stageAmountUpdate" parameterType="com.team.gyemoim.dto.StageRollDTO">
+    UPDATE roll
+    SET stageAmount = stageAmount + #{uPayment}
+    WHERE uNo = #{uNo}
+    AND pfID = #{pfID}
+  </update>
 </mapper>

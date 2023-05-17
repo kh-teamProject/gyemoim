@@ -142,6 +142,7 @@
     color: white;
     background-color: #004DC1;
     border: 1px solid #004DC1;
+    cursor: pointer;
 }
 .modal.deposit .myAccount > div{
     display: flex;
