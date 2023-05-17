@@ -3,9 +3,6 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
 
-import { checkId, issueToken } from "../account/Api";
-import { getAccessTokenCookie, setAccessTokenCookie, removeAllCookies } from "../account/Cookie";
-
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -16,12 +13,14 @@ const Login = () => {
             const response = await axios.post('/api/v1/login', {
                 email,
                 password
-
             });
 
-            const token = response.data.token;
+            const {accessToken, refreshToken} = response.data;
+
+            localStorage.setItem("accessToken", response.data);
+            localStorage.setItem("refreshToken", refreshToken);
             navigate("/stage")
-            alert("님 환영합니다.")
+            alert(response.data)
 
             // TODO: 토큰을 저장하거나 사용해야 할 작업 수행
         } catch (error) {

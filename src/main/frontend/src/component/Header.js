@@ -1,9 +1,12 @@
-import './css/Header.module.css';
 import {NavLink} from "react-router-dom";
+import Cookies from 'js-cookie';
 
+import './css/Header.module.css';
 import logo from './assert/images/logo0306.png';
 
 const Header = () => {
+  // console.log('cookie');
+  // console.log(Cookies.get('Set-Cookie'));
   return (
     <header>
       <nav>

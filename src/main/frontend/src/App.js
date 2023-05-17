@@ -11,6 +11,7 @@ import Board from "./page/Board";
 import Stage from './page/Stage';
 import './App.css';
 import Account from "./page/account/Account";
+import Logout from "./page/account/Logout";
 
 
 const App = () => {
@@ -27,6 +28,10 @@ const App = () => {
                 {
                     path: 'login',
                     element: <Login/>
+                },
+                {
+                    path: 'logout',
+                    element: <Logout/>
                 },
                 {
                     path: 'account',
