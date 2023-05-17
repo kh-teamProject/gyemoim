@@ -16,7 +16,7 @@ const Logout = () => {
             localStorage.removeItem('refreshToken');
 
             // 로그아웃 완료 후 리다이렉트 또는 다른 동작 수행
-            navigate("/stage")
+            navigate("/login")
 
         } catch (error) {
             // 에러 처리

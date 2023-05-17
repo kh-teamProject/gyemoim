@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -53,6 +55,7 @@ public class MemberController {
 
     @PostMapping(value="/login")
     public ResponseEntity login(@RequestBody LoginDTO loginDTO) {
+        Map<String, Object> responseData = new HashMap<>();
         ResponseEntity responseEntity = null;
 
         try {
@@ -65,13 +68,22 @@ public class MemberController {
                             .httpOnly(true)
                              .secure(true)
                             .build();
-            System.out.println("RefreshToken in Cookie : " + responseCookie.toString());
+//            System.out.println("RefreshToken in Cookie : " + responseCookie);
+            System.out.println("RefreshToken in Cookie : " + token.getRefreshToken());
 
             SingleDataResponse<String> response = responseService.getSingleDataResponse(true, email, token.getAccessToken());
             responseEntity = ResponseEntity.status(HttpStatus.OK)
                     .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                     .body(response);
-            System.out.println("AccessToken : " + token.getAccessToken().toString());
+            System.out.println("AccessToken : " + token.getAccessToken());
+
+            responseData.put("refreshToken", token.getRefreshToken());
+            responseData.put("accessToken", token.getAccessToken());
+            responseData.put("responseEntity", responseEntity);
+
+            String name = memberService.getName(loginDTO);
+            responseData.put("name", name);
+
 
         } catch (LoginFailedException exception) {
             log.debug(exception.getMessage());
@@ -80,11 +92,11 @@ public class MemberController {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-        return responseEntity;
+        return ResponseEntity.ok(responseData);
     }
 
     @PostMapping(value="/logout")
-    public ResponseEntity logout(
+    public ResponseEntity<Map<String, Object>> logout(
             @CookieValue(value = HttpHeaders.SET_COOKIE) Cookie refreshCookie
     ) {
         ResponseEntity responseEntity = null;

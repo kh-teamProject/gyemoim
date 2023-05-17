@@ -14,4 +14,6 @@ public interface MemberMapper {
     Optional<MemberDTO> findUser(String email);
     Optional<MemberDTO> findUserId(String email);
     String getUserPassword(LoginDTO loginDTO);
+
+    String getName(LoginDTO loginDTO);
 }

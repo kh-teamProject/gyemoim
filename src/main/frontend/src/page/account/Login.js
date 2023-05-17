@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
 
 
 const Login = () => {
@@ -10,17 +11,24 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('/api/v1/login', {
+            await axios.post('/api/v1/login', {
                 email,
                 password
-            });
+            })
+                .then((res) => {
+                    Cookies.set('Set-Cookie', res.data.responseEntity.body.data);
+                    const refreshToken = res.data.refreshToken.split('.');
+                    const accessToken = res.data.accessToken.split('.');
+                    localStorage.setItem("accessToken", accessToken[accessToken.length - 1]);
+                    localStorage.setItem("refreshToken", refreshToken[refreshToken.length - 1]);
+                    navigate("/")
+                    alert(`${res.data.name}님 환영합니다.`);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
 
-            const {accessToken, refreshToken} = response.data;
 
-            localStorage.setItem("accessToken", response.data);
-            localStorage.setItem("refreshToken", refreshToken);
-            navigate("/stage")
-            alert(response.data)
 
             // TODO: 토큰을 저장하거나 사용해야 할 작업 수행
         } catch (error) {

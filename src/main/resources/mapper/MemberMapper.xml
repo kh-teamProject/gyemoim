@@ -39,6 +39,12 @@
     WHERE email = #{email}
 </select>
 
+  <select id="getName" resultType="String">
+    SELECT name
+    FROM MEMBER
+    WHERE email = #{email}
+  </select>
+
 
 
   <!--회원가입 정보 저장-->

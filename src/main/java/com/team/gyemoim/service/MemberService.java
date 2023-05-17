@@ -118,4 +118,8 @@ public class MemberService {
                 .refreshToken("Bearer" + jwtTokenProvider.createRefreshToken(memberDTO.getEmail(), Collections.singletonList(memberDTO.getUserRole())))
                 .build();
     }
+
+    public String getName(LoginDTO loginDTO) {
+        return memberMapper.getName(loginDTO);
+    }
 }
