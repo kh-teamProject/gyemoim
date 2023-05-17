@@ -5,6 +5,7 @@ import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.service.AccountService;
 import com.team.gyemoim.vo.MyAccount;
+import com.team.gyemoim.vo.MyAccountHistory;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,11 +36,16 @@ public class AccountController {
     return accountService.getPassword(uNo);
   }
 
-  // 계모임계좌 정보 가져오기
+  // 계모임 계좌 정보 가져오기
   @GetMapping("/getMyAccount")
   public List<MyAccount> getMyAccount(@RequestParam Integer uNo) {
-    System.out.println(accountService.getMyAccount(uNo));
     return accountService.getMyAccount(uNo);
+  }
+
+  // 계모임 계좌 거래내역 가져오기
+  @GetMapping("/getMyAccountHistory")
+  public List<MyAccountHistory> getMyAccountHistory(@RequestParam Integer uNo) {
+    return accountService.getMyAccountHistory(uNo);
   }
 
   // Update

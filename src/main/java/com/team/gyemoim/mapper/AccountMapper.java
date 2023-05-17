@@ -4,6 +4,7 @@ import com.team.gyemoim.dto.DepositDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.vo.MyAccount;
+import com.team.gyemoim.vo.MyAccountHistory;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +38,9 @@ public interface AccountMapper {
 
   // 계모임 계좌 정보 수정
   void myAccountUpdate(DepositDTO depositDTO);
+
+  // 내 계모임 계좌 거래내역 가져오기
+  List<MyAccountHistory> getMyAccountHistory(Integer uNo);
 
   // Delete
 

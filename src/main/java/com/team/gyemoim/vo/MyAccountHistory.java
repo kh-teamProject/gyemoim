@@ -14,6 +14,6 @@ public class MyAccountHistory {
   private String bankName;
   private String bankAccountNumber;
   private Integer transactionAmount;
-  private String myHistory;
+  private String bankHistory;
   private Date tradingHours;
 }

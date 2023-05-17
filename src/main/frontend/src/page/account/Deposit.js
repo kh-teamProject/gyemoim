@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import axios from "axios";
 
 import MyPageSidebar from "../../component/MyPageSidebar";
@@ -20,7 +20,6 @@ const Deposit = () => {
       }
     })
       .then((res) => {
-        console.log(res);
         setMyAccount(res.data[0]);
       })
       .catch((error) => {
@@ -38,7 +37,7 @@ const Deposit = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [myAccount]);
 
   const moneyChangeHandler = (e) => {
     setEnteredMoney(e.target.value);
@@ -48,6 +47,7 @@ const Deposit = () => {
     console.log(enteredMoney)
     if (enteredMoney === 0) {
       alert('충전할 금액을 입력해주세요.');
+      return;
     } else {
       // 계모임 계좌 이력 저장
       axios.post('/deposit', null, {
@@ -59,7 +59,6 @@ const Deposit = () => {
         }
       })
         .then((res) => {
-          console.log(res);
           setMyInfo(res.data);
         })
         .catch((error) => {
@@ -76,12 +75,12 @@ const Deposit = () => {
         }
       })
         .then((res) => {
-          console.log(res);
         })
         .catch((error) => {
           console.log(error);
         })
     }
+    setEnteredMoney(0);
   }
 
   return (
@@ -114,7 +113,7 @@ const Deposit = () => {
         <div className={`${classes['my-account']}`}>
           <div>
             <span>내 지급 계좌로</span>
-            <button>계좌변경</button>
+            <button><Link to={'/mypage/info/checkedPwd'}>계좌변경</Link></button>
           </div>
           <div>
             <span>{myInfo.bankName}</span>
@@ -129,6 +128,7 @@ const Deposit = () => {
           <div>
             <input
               type="number"
+              value={enteredMoney}
               onChange={moneyChangeHandler}
               placeholder={"충전할 금액을 적어주세요."}
             />

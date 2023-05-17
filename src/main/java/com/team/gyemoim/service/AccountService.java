@@ -4,6 +4,7 @@ import com.team.gyemoim.dto.DepositDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.vo.MyAccount;
+import com.team.gyemoim.vo.MyAccountHistory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,9 @@ public interface AccountService {
 
   // 계모임 계좌 정보 수정
   void myAccountUpdate(DepositDTO depositDTO);
+
+  // 내 계모임 계좌 거래내역 가져오기
+  List<MyAccountHistory> getMyAccountHistory(Integer uNo);
 
   // Delete
 

@@ -2,26 +2,51 @@ import {NavLink} from "react-router-dom";
 
 import MyPageSidebar from "../../component/MyPageSidebar";
 import classes from "../css/DetailsInquiry.module.css";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const DetailsInquiry = () => {
+  const options = {year: 'numeric', month: 'long', day: 'numeric'};
+
+  const [myAccountHistory, setMyAccountHistory] = useState([]);
+
+  useEffect(() => {
+    axios.get('/getMyAccountHistory', {
+      params: {
+        uNo: 3
+      }
+    })
+      .then((res) => {
+        console.log(res.data);
+        setMyAccountHistory(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }, []);
+
+  console.log(myAccountHistory);
 
   return (
     <section>
       <div>
-        <MyPageSidebar />
+        <MyPageSidebar/>
       </div>
       <div className={classes.field}>
         <h3>나의 계좌관리</h3>
         <div>
           <ul>
             <li>
-              <NavLink to={'/mypage/bankAccount/deposit'} className={({isActive}) => isActive ? classes.isActive : undefined} end>충전하기</NavLink>
+              <NavLink to={'/mypage/bankAccount/deposit'}
+                       className={({isActive}) => isActive ? classes.isActive : undefined} end>충전하기</NavLink>
             </li>
             <li>
-              <NavLink to={'/mypage/bankAccount/withdraw'} className={({isActive}) => isActive ? classes.isActive : undefined} end>출금하기</NavLink>
+              <NavLink to={'/mypage/bankAccount/withdraw'}
+                       className={({isActive}) => isActive ? classes.isActive : undefined} end>출금하기</NavLink>
             </li>
             <li>
-              <NavLink to={'/mypage/bankAccount/detailsInquiry'} className={({isActive}) => isActive ? classes.isActive : undefined} end>내역조회</NavLink>
+              <NavLink to={'/mypage/bankAccount/detailsInquiry'}
+                       className={({isActive}) => isActive ? classes.isActive : undefined} end>내역조회</NavLink>
             </li>
           </ul>
         </div>
@@ -33,44 +58,22 @@ const DetailsInquiry = () => {
             <col style={{width: '10%'}}/>
           </colgroup>
           <thead>
-            <tr>
-              <th>날짜</th>
-              <th>은행</th>
-              <th>금액</th>
-              <th>상태</th>
-            </tr>
+          <tr>
+            <th>날짜</th>
+            <th>은행</th>
+            <th>금액</th>
+            <th>상태</th>
+          </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>2023년 5월 9일</td>
-              <td>신한은행</td>
-              <td>-2,000원</td>
-              <td>출금</td>
+          {myAccountHistory.map((value, index) => (
+            <tr key={index}>
+              <td>{new Date(value.tradingHours).toLocaleString('ko-KR', options)}</td>
+              <td>{value.bankName}</td>
+              <td>{value.transactionAmount}</td>
+              <td>{value.bankHistory}</td>
             </tr>
-            <tr>
-              <td>2023년 5월 8일</td>
-              <td>NH 농협은행</td>
-              <td>12,000원</td>
-              <td>충전</td>
-            </tr>
-            <tr>
-              <td>2023년 5월 8일</td>
-              <td>신한은행</td>
-              <td>-1,000원</td>
-              <td>출금</td>
-            </tr>
-            <tr>
-              <td>2023년 5월 8일</td>
-              <td>신한은행</td>
-              <td>-1,000원</td>
-              <td>출금</td>
-            </tr>
-            <tr>
-              <td>2023년 5월 8일</td>
-              <td>신한은행</td>
-              <td>-1,000원</td>
-              <td>출금</td>
-            </tr>
+          ))}
           </tbody>
         </table>
       </div>

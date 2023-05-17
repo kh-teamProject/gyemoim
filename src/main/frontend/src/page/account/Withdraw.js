@@ -1,20 +1,53 @@
-import {useState} from "react";
-import {NavLink} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {Link, NavLink} from "react-router-dom";
 
 import MyPageSidebar from "../../component/MyPageSidebar";
 import classes from "../css/Withdraw.module.css";
+import axios from "axios";
 
 const Withdraw = () => {
-  const [accountMoney, setAccountMoney] = useState(222222);
-  const [enteredMoney, setEnteredMoney] = useState(0);
   const [isWithdrawValid, setIswithdrawValid] = useState(false);
+  const [enteredMoney, setEnteredMoney] = useState(0);
+  const [myAccount, setMyAccount] = useState({});
+  const [myInfo, setMyInfo] = useState({
+    uno: 0
+  });
+
+  useEffect(() => {
+    axios.get('/getMyAccount', {
+      params: {
+        uNo: 3
+      }
+    })
+      .then((res) => {
+        setMyAccount(res.data[0]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    axios.get('/mypage', {
+      params: {
+        uNo: 3
+      }
+    })
+      .then((res) => {
+        setMyInfo(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [myAccount]);
 
   const moneyChangeHandler = (e) => {
     setEnteredMoney(e.target.value);
   };
 
   const isWithdrawHandler = () => {
-    if(enteredMoney > accountMoney) setIswithdrawValid(true);
+    if(enteredMoney > myAccount.myBalance) {
+      alert('출금가능 금액이 부족합니다.')
+      setIswithdrawValid(true);
+    }
     else setIswithdrawValid(false);
   }
 
@@ -40,16 +73,16 @@ const Withdraw = () => {
         </div>
         <div className={`${classes['account-money']}`}>
           <span>출금가능 금액</span>
-          <span>{accountMoney}원</span>
+          <span>{myAccount.myBalance}원</span>
         </div>
         <div className={`${classes['my-account']}`}>
           <div>
             <span>내 지급 계좌로</span>
-            <button>계좌변경</button>
+            <button><Link to={'/mypage/info/checkedPwd'}>계좌변경</Link></button>
           </div>
           <div>
-            <span>신한은행</span>
-            <span>123-456-7890</span>
+            <span>{myInfo.bankName}</span>
+            <span>{myInfo.bankAccountNumber}</span>
           </div>
         </div>
         <div className={`${classes['my-account']}`}>
@@ -66,7 +99,7 @@ const Withdraw = () => {
               placeholder={"출금할 금액을 입력해주세요."}
             />
           </div>
-          {isWithdrawValid && <span className={`${classes['warning-msg']}`}>!출금가능금액이 부족합니다.</span>}
+          {isWithdrawValid && <span className={`${classes['warning-msg']}`}>!출금가능 금액이 부족합니다.</span>}
         </div>
       </div>
     </section>
