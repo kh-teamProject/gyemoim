@@ -1,3 +1,17 @@
+ul{
+    padding: 0;
+}
+
+ul li {
+  list-style-type:none;
+  margin: 0;
+  padding: 0;
+}
+
+.won ul li {
+text-align: right;
+}
+
 body{
  background: #F7F7F7;
   text-align: center;
@@ -7,6 +21,13 @@ body{
    color: #373f57;
 }
 
+.gap{
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    justify-content: space-between;
+
+}
 /*flex*/
 .flexD{
     display: flex;
@@ -26,8 +47,12 @@ body{
 
 .flex1{
     flex:1;
-     padding: 1rem;
+     padding: 0.5rem;
 
+}
+
+.font{
+    text-align: left;
 }
 
 /*버튼*/
@@ -51,6 +76,11 @@ body{
   line-height: 24px
 }
 
+
+
+.margin{
+text-align : right;
+}
 
 /*제목*/
 .sixth { position: relative; }
@@ -90,48 +120,3 @@ body{
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-
-/*테이블*/
-
-.table{
-   margin: auto;
-  min-width: 300px;
-  max-width: 100%;
-  border-collapse: collapse;
-}
-
-.table thead{
-   border-top: 1px solid #ddd;
-   border-bottom: 1px solid #ddd;
-  background: #004DC1;
-  color: #fff;
-  background-color:#004DC1;
-}
-
-.table tr {
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-}
-
-.table td:first-child {
-  margin-top: .5em;
-}
-
-.table td:last-child {
-  margin-bottom: .5em;
-}
-
-.table {
-  color: #333;
-  border-radius: .4em;
-  overflow: hidden;
-}
-.table th,
-table td {
-  padding: .5em 1em;
-}
-
-  .table tr:hover {
-    background-color: #d8e7f3;
-    color : blue;
-  }

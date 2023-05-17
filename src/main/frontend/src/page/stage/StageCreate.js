@@ -31,8 +31,13 @@ const [createButton, setCreateButton] = useState(false);
 
  const [turn, setTurn] = useState("");
 
-  const [deposit, setDeposit] = useState("");
-  const [category, setCategory] = useState("");
+ const [deposit, setDeposit] = useState("");
+
+ const [category, setCategory] = useState("");
+
+const [rank, setRank] = useState("");
+
+const [isIdDuplicated, setIsIdDuplicated] = useState(false);
 
   const nameHandler = (event) => {
     setName(event.target.value);
@@ -52,6 +57,7 @@ const [createButton, setCreateButton] = useState(false);
           pfRate: rate,
           Deposit: deposit,
           interest: category,
+          pRank:rank,
          receiveTurn : turn,
         },
       })
@@ -111,6 +117,11 @@ const [createButton, setCreateButton] = useState(false);
     setTurn(turnData);
   };
 
+  const rankHandler = (event) => {
+    setRank(event.target.value);
+    console.log(event.target.value);
+  };
+
   const categoryHandler = (event) => {
     setCategory(event.target.value);
     console.log(event.target.value);
@@ -119,6 +130,19 @@ const [createButton, setCreateButton] = useState(false);
 
 const movePage = useNavigate("");
 
+const handleIdInputChange = async (e) => {
+  const enteredId = e.target.value;
+  try {
+    const response = await axios.get("/checkPfName", {
+      params: {
+         pfName: name,
+      }
+    });
+    setIsIdDuplicated(response.data.isDuplicated);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 
 
@@ -146,10 +170,15 @@ const movePage = useNavigate("");
 
       <form action="/register" method="get">
       <div className={styles.flexD}>
-       <div className={styles.flex1}>/* 문단1*/
+       <div className={styles.flex1}>
 
         <div className={styles.flex2}>
+
+
+
           <h4>스테이지 이름</h4>
+          <div className={styles.flexD}>
+           <div className={styles.flex1}>
           <input className={styles.inputStage}
             type="text"
             onChange={nameHandler}
@@ -157,8 +186,17 @@ const movePage = useNavigate("");
             value={name}
             placeholder="스테이지 이름 기재해주세요"
           />
-        </div>
+           </div>
 
+            <div className={styles.flex1}>
+             <button className={styles.buttonSmall}  onChange={handleIdInputChange}>중복체크</button>
+             {isIdDuplicated && <p>이미 사용 중인 아이디입니다.</p>}
+             {!isIdDuplicated && <p>사용 가능한 아이디입니다.</p>}
+            </div>
+
+            </div>
+
+            </div>
         <div className={styles.flex1}>
         <h4>참여인원</h4>
           <input type="radio" name="count" value="5" onClick={countHandler} />
@@ -168,26 +206,26 @@ const movePage = useNavigate("");
         </div>
 
         <div className={styles.flex1}>
-        <h4>약정금액</h4>
+        <h4>약정금액(총 금액)</h4>
 
           {count === "5" && (
             <>
 
               <Participants name="deposit" value="2500000" onClick={depositHandler}>
-                250만원
+                250만원(월50만원)
               </Participants>
               <Participants name="deposit" value="5000000" onClick={depositHandler}>
-                500만원
+                500만원(월100만원)
               </Participants>
             </>
           )}
           {count === "7" && (
             <>
               <Participants name="deposit" value="3500000" onClick={depositHandler}>
-                350만원
+                350만원(월50만원)
               </Participants>
               <Participants name="deposit" value="7000000" onClick={depositHandler}>
-                700만원
+                700만원(월100만원)
               </Participants>
             </>
           )}
@@ -281,7 +319,12 @@ const movePage = useNavigate("");
             </>
           )}
         </div>
-
+        <div className={styles.flex1}>
+         <h4>신용등급</h4>
+          <input type="radio" name="rank"  value="A" onChange={rankHandler} />A등급(1~2)
+          <input type="radio" name="rank"  value="B" onChange={rankHandler} />B등급(3~5)
+          <input type="radio" name="rank"  value="C" onChange={rankHandler} />C 등급(6~9)
+        </div>
 
          <div className={styles.flex1}>
           <h4>관심사</h4>

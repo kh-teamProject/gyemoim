@@ -47,22 +47,35 @@ const Agree = () => {
           </div>
           <div className={styles.flex1}>
             <div className={styles.font}>
+
                 {data1.map((value, index) => (
                 <ul key={index}>
                   <li>pf번호: {value.pfID}</li>
                 </ul>
               ))}
 
+               <div className={styles.gap}>
+              <div>
+              <ul >
+                <li>월 입금액</li>
+                <li>적용 이율</li>
+                 <li>총 입금액</li>
+
+                <li>실 지급액</li>
+              </ul>
+              </div>
+
+               <div className={styles.won} >
               {data2.map((value, index) => (
                 <ul key={index}>
-                  <li>월 입금액(수령예정표):  {value.upayment.toLocaleString()}원</li>
-                  <li>적용 이율(수령예정표): {value.urate}%</li>
-                   <li>총 입금액(수령예정표): {value.utotalPayment.toLocaleString()}원</li>
-
-                  <li>실 지급액(수령예정표): {value.utotalReceipts.toLocaleString()}원</li>
-
+                  <li>{value.upayment.toLocaleString()}원</li>
+                  <li>{value.urate}%</li>
+                   <li> {value.utotalPayment.toLocaleString()}원</li>
+                  <li> {value.utotalReceipts.toLocaleString()}원</li>
                 </ul>
               ))}
+               </div>
+               </div>
             </div>
           </div>
         </div>

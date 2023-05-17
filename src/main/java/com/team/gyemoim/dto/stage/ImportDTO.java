@@ -2,9 +2,11 @@ package com.team.gyemoim.dto;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class ImportDTO {
-    private double pfRate; //이율
+    private BigDecimal pfRate; //이율
 
     private Integer receiveTurn; //순번
     private Integer deposit; //약정금
