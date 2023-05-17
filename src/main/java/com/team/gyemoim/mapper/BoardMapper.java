@@ -1,6 +1,7 @@
 package com.team.gyemoim.mapper;
 
 import com.team.gyemoim.dto.BoardDeleteDTO;
+import com.team.gyemoim.dto.BoardListDTO;
 import com.team.gyemoim.dto.BoardModifyDTO;
 import com.team.gyemoim.dto.BoardWriteDTO;
 import com.team.gyemoim.vo.AttachedVO;
@@ -21,7 +22,7 @@ public interface BoardMapper {
 
     /* BoardDAO (Read) */
     int countBoard(); // 게시글 총 갯수 구하기
-    List<BoardVO> selectBoard(PageVO vo); // 페이징 처리 후 게시글 조회하기
+    List<BoardListDTO> selectBoard(); // 게시글 조회하기
     int searchCountBoard(PageVO spv); // 검색 후 게시글 갯수 구하기
     BoardVO readDetail(int bid); // 특정 게시글 상세보기
     void updateViewCnt(int bid) throws Exception; // 조회수 올리기

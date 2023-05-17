@@ -12,13 +12,11 @@
     </select>
 
     <!-- 페이징 처리 후 게시글 조회하기 -->
-    <select id="selectBoard" parameterType="com.team.gyemoim.vo.PageVO" resultType="com.team.gyemoim.vo.BoardVO">
+    <select id="selectBoard" resultType="com.team.gyemoim.dto.BoardListDTO">
         SELECT *
-        FROM (SELECT rownum RN, A.*
-              FROM (SELECT *
-                    FROM BOARD
-                    ORDER BY bid DESC) A)
-        WHERE RN BETWEEN ${start} AND ${end}
+        FROM (SELECT *
+              FROM BOARD
+              ORDER BY bid DESC)
     </select>
 
 

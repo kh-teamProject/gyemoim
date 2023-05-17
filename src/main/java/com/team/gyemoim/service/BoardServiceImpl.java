@@ -1,6 +1,7 @@
 package com.team.gyemoim.service;
 
 import com.team.gyemoim.dto.BoardDeleteDTO;
+import com.team.gyemoim.dto.BoardListDTO;
 import com.team.gyemoim.dto.BoardModifyDTO;
 import com.team.gyemoim.dto.BoardWriteDTO;
 import com.team.gyemoim.mapper.BoardMapper;
@@ -97,11 +98,11 @@ public class BoardServiceImpl implements BoardService{
         return boardMapper.searchCountBoard(spv);
     }
 
-    // 페이징 처리 후 게시글 조회하기
+    // 게시글 조회하기
     @Override
-    public List<BoardVO> selectBoard(PageVO vo) throws Exception {
-        System.out.println("BoardSereviceImpl.selectBoard_페이징 처리 후 게시글 조회 : " + boardMapper.selectBoard(vo));
-        return boardMapper.selectBoard(vo);
+    public List<BoardListDTO> selectBoard() throws Exception {
+        System.out.println("BoardSereviceImpl.selectBoard_게시글 조회 : " + boardMapper.selectBoard());
+        return boardMapper.selectBoard();
     }
 
     // 특정 게시글 상세보기

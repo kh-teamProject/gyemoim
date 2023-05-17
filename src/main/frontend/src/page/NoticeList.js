@@ -6,52 +6,88 @@ import NoticeSearchList from "./NoticeSearchList";
 
 const NoticeList = () => {
 
-    const [list, setList] = useState([]);
-    const [paging, setPaging] = useState({
-        /*total: 5,
-        nowPage: 1,
-        cntPage: 5,
-        startPage: 0,
-        cntPerPage: 5,
-        endPage: paging.startPage + 10,
-        lastPage: paging.endPage,
-        start: paging.end - paging.cntPerPage + 1,
-        end: paging.nowPage * paging.cntPerPage,*/
-    });
+    // 게시글 데이터 받는 변수
+    const [boardList, setBoardList] = useState([]);
 
+    // 페이징 관련 변수
+    // 1. 현재페이지 : curPage
+    const [curPage, setCurPage] = useState(1);
+    // 2. 전체 페이지 수 : totalPage
+    const [totalPage, setTotalPage] = useState(0);
+    // 3. 현재 게시글 수 : list
+    const [list, setList] = useState(10);
 
     useEffect(() => {
         fetchList();
     }, []);
 
-    const fetchList = async () => {
-        try {
-            const response = await axios.get('/board/notice/list');
-            const data = response.data;
 
-            setList(data.list);
-            setPaging(data.paging);
+    // 게시글 목록 가져오기
+    const fetchList = async () => {
+
+        await axios.get('/board/notice/list', {})
+            .then((response) => {
+                console.log("NoticeList_fetchList_컨트롤러로 들어갑니다~ :D");
+                console.log("NoticeList_fetchList_컨트롤러에서 받아온 res: " + response);
+                console.log("게시글 목록 response.data.list: " + response.data);
+
+                setBoardList(response.data);
+                setTotalPage(Math.ceil(response.data.bid.length / 10)); // 전체 페이지 수 (bid 개수 가지고) 계산
+            })
+            .catch((error) => {
+                console.log("NoticeList_fetchList 게시글 불러오기 에러발생 :< ");
+                console.log(error);
+            })
+
+        try {
+            const response = await axios.get('/board/notice/list', {});
+
+            setBoardList(response.data);
 
             console.log("NoticeList_fetchList_컨트롤러로 들어갑니다~ :D");
-            console.log("게시글 목록 response.data.list: " + data.list);
-            console.log("페이징 데이터 response.data.paging: " + data.paging);
+            console.log("NoticeList_fetchList_컨트롤러에서 받아온 res: " + response);
+            console.log("게시글 목록 response.data.list: " + response.data);
         } catch (error) {
             console.log("NoticeList_fetchList 게시글 불러오기 에러발생 :< ");
             console.log(error);
         }
     };
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        const searchInput = document.getElementById('search-input').value;
+    // keyword (검색어), type (검색타입) 기반으로 조회하는 함수
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
 
-        if (searchInput === '') {
+        const searchKeyword = document.getElementById('search-keyword').value;
+        const searchType = document.getElementById('search-type').value;
+
+        if (searchKeyword === '') {
             alert('검색어를 입력해주세요.');
             return false;
         }
         // 검색 로직 구현
 
+
+        // 페이지 버튼 클릭 시 현재 페이지를 1로 초기화
+        setCurPage(1);
+        setList(10);
+
     };
+
+
+    // 페이징 함수
+    const handlePageClick = (e) => {
+        // 클릭한 페이지
+        const targetPage = Number(e.target.value);
+
+        // 클릭한 targetPage 가 0보다 크고 totalPage 보다 작거나 같으면
+        // 즉, 클릭한 페이지가 유효 범위에 있을 때
+        // 현재페이지 setCurPage 를 클릭한 페이지 targetPage 로 변경해준다.
+        if (targetPage > 0 && targetPage <= totalPage) {
+            setCurPage(targetPage);
+            setList(list + 10); // 현재 게시글 수를 +10한 상태로 변경해준다.
+        }
+    }
+
 
     const handleSecretClick = () => {
         alert("다른 사람의 비밀글은 볼 수 없습니다.");
@@ -61,19 +97,6 @@ const NoticeList = () => {
         window.location.href = 'notice/write';
     };
 
-    /* const fetchPagingData = async () => {
-       try {
-           const response = await axios.get('/board/notice/list');
-           setPagingData(response.data);
-           setList(response.data);
-       }  catch (error) {
-           console.log(error);
-       }
-     };
-
-     useEffect(() => {
-         fetchPagingData();
-     }, []);*/
 
     return (
         <>
@@ -92,19 +115,27 @@ const NoticeList = () => {
                             {/* 검색 시작 */}
                             <div className="search-container row justify-content-center">
                                 <form className="col-8 search-box" name="search_form" onSubmit={handleFormSubmit}>
-                                    <select name="type" className="search-item" defaultValue="title">
+                                    <select name="type" id="search-type" className="search-item" defaultValue="title">
                                         <option value="title">제목</option>
                                         <option value="content">내용</option>
                                         <option value="name">작성자</option>
                                     </select>
-                                    <input className="form-control search-item" type="text" id="search-input"
+                                    <input className="form-control search-item" type="text" id="search-keyword"
                                            name="keyword" placeholder="검색어를 입력하세요."/>
                                     <button type="submit" className="btn btn-primary search-item"
-                                            onChange={NoticeSearchList}>검색
+                                            onSubmit={handleFormSubmit}>검색
                                     </button>
+
+                                    <div className="list-btn-area">
+                                        {/* 적용시켜야 할 것: 로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화(/board/notice/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기 */}
+                                        <input type="button" value="글쓰기" className="btn btn-primary btn-lg px-4 me-sm-3"
+                                               onClick={moveNoticeWrite}/>
+                                    </div>
                                 </form>
+
                             </div>
                             {/* 검색 끝 */}
+
 
                             <table className="table table-hover" style={styleTable}>
                                 <colgroup>
@@ -124,45 +155,26 @@ const NoticeList = () => {
                                 </tr>
                                 </thead>
                                 {/* 게시글 목록 (적용시켜야하는 것 : 비밀글인 경우, 로그인 되어있는 사람의 uNo와 글의 uNo가 같으면 글 제목 눌렀을 때 글 상세보기로 이동하게하고 uNo가 서로 같지 않으면 '비밀글입니다.' 라고 alert() 띄워주기 / 공개글인 경우 그냥 제목 누르면 상세보기로 이동시키기 ) */}
-                                {list.map((item, index) => (
+                                {boardList.map((item, index) => (
                                     <tr key={index}>
-                                        <td className="text-center">{(paging.total - item.status.index) - ((paging.nowPage - 1) * 10)}</td>
+                                        <td className="text-center">{item.bid}</td>
                                         <td>
-                                            <Link to={`/board/notice/detail?{bid}`}>{item.title}</Link>
+                                            <Link to={`/board/notice/detail?${item.bid}`}>{item.title}</Link>
                                         </td>
-                                        <td className="text-center">{item.uno}</td>
+                                        <td className="text-center">{item.name}</td>
                                         <td className="text-center">{item.writeDate}</td>
                                         <td className="text-center">{item.views}</td>
                                     </tr>
                                 ))}
+                                <div>
+                                    <p>
+                                        <button className="boardList-more-view"
+                                                onClick={() => handlePageClick({target: {value: curPage}})}>게시글 더보기
+                                        </button>
+                                    </p>
+                                </div>
                             </table>
-                            <div className="list-btn-area">
-                                {/* 적용시켜야 할 것: 로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화(/board/notice/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기 */}
-                                <input type="button" value="글쓰기" className="btn btn-primary btn-lg px-4 me-sm-3"
-                                       onClick={moveNoticeWrite}/>
-                            </div>
-                            {/*<ul className="page-list">
-                                 페이지 번호 목록
-                                {paging.startPage !== 1 && (
-                                    <li>
-                                        <Link to={`/board/notice/list?nowPage=${paging.startPage - 1}&cntPerPage=${paging.cntPerPage}`}>&lt;</Link>
-                                    </li>
-                                )}
-                                {Array.from({length: paging.endPage - paging.startPage + 1}, (_, i) => i + paging.startPage).map((p) => (
-                                    <li key={p}>
-                                        {p === paging.nowPage ? (
-                                            <span>{p}</span>
-                                        ) : (
-                                            <Link to={`/board/notice/list?nowPage=${p}&cntPerPage=${paging.cntPerPage}`}>{p}</Link>
-                                        )}
-                                    </li>
-                                ))}
-                                {paging.endPage !== paging.lastPage && (
-                                    <li>
-                                        <Link to={`/board/notice/list?nowPage=${paging.endPage + 1}&cntPerPage=${paging.cntPerPage}`}>&gt;</Link>
-                                    </li>
-                                )}
-                            </ul>*/}
+
                         </div>
                     </div>
                 </div>
