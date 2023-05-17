@@ -1,8 +1,7 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.*;
+import com.team.gyemoim.dto.stage.*;
 
-import java.util.Date;
 import java.util.List;
 
 public interface StageService {

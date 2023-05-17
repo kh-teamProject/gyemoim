@@ -1,9 +1,8 @@
 package com.team.gyemoim.mapper;
 
-import com.team.gyemoim.dto.*;
+import com.team.gyemoim.dto.stage.*;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 

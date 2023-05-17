@@ -1,6 +1,7 @@
 package com.team.gyemoim.controller;
 
-import com.team.gyemoim.dto.*;
+import com.team.gyemoim.dto.stage.StageINDTO;
+import com.team.gyemoim.dto.stage.StageRollDTO;
 import com.team.gyemoim.service.StageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

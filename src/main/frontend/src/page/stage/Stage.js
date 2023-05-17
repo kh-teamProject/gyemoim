@@ -112,9 +112,6 @@ const Stage = () => {
     };
 
 
-
-
-
     return (
         <>
 

@@ -1,9 +1,10 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.*;
+import com.team.gyemoim.dto.stage.*;
 import com.team.gyemoim.mapper.StageMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -98,8 +99,14 @@ public class StageServiceImpl implements StageService {
       stageMapper.stageAmountUpdate(dto);
     //6. 입금식별 -> update
 
+
     //stageMapper.stageDeposit(dto);
   }
-
+  //7. 스테이지 금액 -> my계좌로 순서에 맞게 update
+  @Scheduled(cron = "0 0 0 25 * ?") // 매달 25일 0시 0분 0초에 실행
+  public void performUpdate() {
+    // <update> 문 실행 코드 작성
+    // 실행할 로직을 구현합니다.
+  }
 
 }
