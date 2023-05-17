@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import styleTable from "../component/styleTable";
+import styleTable from "../../component/styleTable";
 import axios from "axios";
 import NoticeSearchList from "./NoticeSearchList";
 

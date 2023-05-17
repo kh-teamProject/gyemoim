@@ -1,22 +1,19 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.BoardDeleteDTO;
-import com.team.gyemoim.dto.BoardListDTO;
-import com.team.gyemoim.dto.BoardModifyDTO;
-import com.team.gyemoim.dto.BoardWriteDTO;
+import com.team.gyemoim.dto.board.BoardDeleteDTO;
+import com.team.gyemoim.dto.board.BoardListDTO;
+import com.team.gyemoim.dto.board.BoardModifyDTO;
+import com.team.gyemoim.dto.board.BoardWriteDTO;
 import com.team.gyemoim.mapper.BoardMapper;
 import com.team.gyemoim.vo.AttachedVO;
 import com.team.gyemoim.vo.BoardVO;
 import com.team.gyemoim.vo.PageVO;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.print.DocFlavor;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;

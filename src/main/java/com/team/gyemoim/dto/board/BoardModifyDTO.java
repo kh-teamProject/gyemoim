@@ -1,4 +1,4 @@
-package com.team.gyemoim.dto;
+package com.team.gyemoim.dto.board;
 
 import lombok.Data;
 import lombok.ToString;

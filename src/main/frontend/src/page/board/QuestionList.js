@@ -1,39 +1,52 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {Link} from "react-router-dom";
-import styleTable from "../component/styleTable";
-import axios from "axios";
+import styleTable from "../../component/styleTable";
 
-const NoticeSearchList = () => {
+const QuestionList = () => {
 
-    const [list, setList] = useState([]);
+    const [list, setList] = useState([
+        {
+            title: "title1",
+            uNo: "1",
+            writeDate: "2023-05-05",
+            views: 0
+        },
+        {
+            title: "title2",
+            uNo: "1",
+            writeDate: "2023-05-06",
+            views: 0
+        },
+        {
+            title: "title3",
+            uNo: "1",
+            writeDate: "2023-05-07",
+            views: 0
+        },
+        {
+            title: "title4",
+            uNo: "1",
+            writeDate: "2023-05-08",
+            views: 0
+        },
+        {
+            title: "title5",
+            uNo: "1",
+            writeDate: "2023-05-09",
+            views: 0
+        },
+    ]);
     const [paging, setPaging] = useState({
-        /*total: 5,
+        total: 5,
         nowPage: 1,
         cntPage: 5,
         startPage: 0,
         cntPerPage: 5,
-        endPage: paging.startPage + 10,
+        /*endPage: paging.startPage + 10,
         lastPage: paging.endPage,
         start: paging.end - paging.cntPerPage + 1,
         end: paging.nowPage * paging.cntPerPage,*/
     });
-    const [searchInput, setSearchInput] =useState('');
-
-
-    useEffect(() => {
-        fetchList();
-    }, []);
-
-    const fetchList = async  () => {
-      try {
-          const response = await axios.get('/board/notice/getSearchList');
-          setList(response.data.list);
-          setPaging(response.data.paging);
-      } catch (error) {
-          console.log("NoticeList_fetchList 에러발생 :< ");
-          console.log(error);
-      }
-    };
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -47,15 +60,15 @@ const NoticeSearchList = () => {
 
     };
 
+    /* 다른 사람글이 비밀글인 경우 상세보기 하려고 할 때 작동하는 컴포넌트 */
     const handleSecretClick = () => {
         alert("다른 사람의 비밀글은 볼 수 없습니다.");
     };
 
-    const moveNoticeWrite = () => {
-        window.location.href = 'notice/write';
+    /* 문의사항 글 쓰는 화면으로 이동 */
+    const moveQuestionWrite = () => {
+      window.location.href = 'question/write';
     };
-
-
 
     return (
         <>
@@ -67,15 +80,15 @@ const NoticeSearchList = () => {
                     <div className="row justify-content-center">
                         <div className="col-11">
                             <div className="title">
-                                <h1>공지사항</h1>
-                                <p>계모임의 소식을 전합니다.</p>
+                                <h1>1:1 문의사항</h1>
+                                <p>문의사항이 필요하시면 작성해주세요~</p>
                             </div>
 
                             {/* 검색 시작 */}
                             <div className="search-container row justify-content-center">
                                 <form className="col-8 search-box" name="search_form" onSubmit={handleFormSubmit}>
-                                    <select name="type" className="search-item" defaultValue="title">
-                                        <option value="title">제목</option>
+                                    <select name="type" className="search-item">
+                                        <option selected value="title">제목</option>
                                         <option value="content">내용</option>
                                         <option value="name">작성자</option>
                                     </select>
@@ -103,12 +116,12 @@ const NoticeSearchList = () => {
                                     <th className="text-center">조회수</th>
                                 </tr>
                                 </thead>
-                                {/* 게시글 목록 (적용시켜야하는 것 : 비밀글인 경우, 로그인 되어있는 사람의 uNo와 글의 uNo가 같으면 글 제목 눌렀을 때 글 상세보기로 이동하게하고 uNo가 서로 같지 않으면 '비밀글입니다.' 라고 alert() 띄워주기 / 공개글인 경우 그냥 제목 누르면 상세보기로 이동시키기 ) */}
+                                {/* 게시글 목록 */}
                                 {list.map((item, index) => (
                                     <tr key={index}>
-                                        <td className="text-center">{(paging.total - item.status.index) - ((paging.nowPage - 1) * 10)}</td>
-                                        <td>
-                                            <Link to={`/board/notice/detail?{bid}`}>{item.title}</Link>
+                                        <td className="text-center">{(paging.total - index) - ((paging.nowPage - 1) * 10)}</td>
+                                        <td>{/* 아래에 글이 비밀글일때 로그인한 사람의 uNo와 글의 uNo 가 같을때만 상세글로 이동하게 만든다. */}
+                                            <Link to={'/board/detail?${bid}'}>{item.title}</Link>
                                         </td>
                                         <td className="text-center">{item.uNo}</td>
                                         <td className="text-center">{item.writeDate}</td>
@@ -117,40 +130,21 @@ const NoticeSearchList = () => {
                                 ))}
                             </table>
                             <div className="list-btn-area">
-                                {/* 적용시켜야 할 것: 로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화(/board/notice/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기 */}
-                                <input type="button" value="글쓰기" className="btn btn-primary btn-lg px-4 me-sm-3" onClick={moveNoticeWrite}/>
+                                {/* 로그인 되어있는 경우에만 글쓰기 버튼 활성화(/board/question/write 로 이동하게 하기) */}
+                                <input type="button" value="글쓰기" className="btn btn-primary btn-lg px-4 me-sm-3" onClick={moveQuestionWrite}/>
                             </div>
                             <ul className="page-list">
                                 {/* 페이지 번호 목록 */}
-                                {paging.startPage !== 1 && (
-                                    <li>
-                                        <Link to={`/board/notice/list?nowPage=${paging.startPage - 1}&cntPerPage=${paging.cntPerPage}`}>&lt;</Link>
-                                    </li>
-                                )}
-                                {Array.from({length: paging.endPage - paging.startPage + 1}, (_, i) => i + paging.startPage).map((p) => (
-                                    <li key={p}>
-                                        {p === paging.nowPage ? (
-                                            <span>{p}</span>
-                                        ) : (
-                                            <Link to={`/board/notice/list?nowPage=${p}&cntPerPage=${paging.cntPerPage}`}>{p}</Link>
-                                        )}
-                                    </li>
-                                ))}
-                                {paging.endPage !== paging.lastPage && (
-                                    <li>
-                                        <Link to={`/board/notice/list?nowPage=${paging.endPage + 1}&cntPerPage=${paging.cntPerPage}`}>&gt;</Link>
-                                    </li>
-                                )}
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
-
+            
             {/* 푸터 */}
         </>
     );
 
 }
 
-export default NoticeSearchList;
+export default QuestionList;

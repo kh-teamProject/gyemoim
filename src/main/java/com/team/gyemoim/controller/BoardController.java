@@ -1,21 +1,18 @@
 package com.team.gyemoim.controller;
 
-import com.team.gyemoim.dto.BoardDeleteDTO;
-import com.team.gyemoim.dto.BoardListDTO;
-import com.team.gyemoim.dto.BoardWriteDTO;
+import com.team.gyemoim.dto.board.BoardDeleteDTO;
+import com.team.gyemoim.dto.board.BoardListDTO;
+import com.team.gyemoim.dto.board.BoardWriteDTO;
 import com.team.gyemoim.service.BoardService;
 import com.team.gyemoim.service.ReplyService;
 import com.team.gyemoim.vo.BoardVO;
-import com.team.gyemoim.vo.PageVO;
 import com.team.gyemoim.vo.ReplyVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -53,6 +50,7 @@ public class BoardController {
 
 
     /* 읽기 Read */
+    @GetMapping("/board/notice/read/${bid}")
     public BoardVO read(@RequestParam("bid") int bid) throws Exception {
 
         List<ReplyVO> replyVOList = replyService.reply(bid);

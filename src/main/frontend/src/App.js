@@ -5,18 +5,18 @@ import './App.css';
 import Login from "./page/Login";
 import MyPage from "./page/MyPage";
 import Home from "./page/Home";
-import NoticeList from "./page/NoticeList";
+import NoticeList from "./page/board/NoticeList";
 import Stage from './page/Stage';
-import QuestionWritePost from './page/QuestionWritePost';
-import QuestionDetail from "./page/QuestionDetail";
+import QuestionWritePost from './page/board/QuestionWritePost';
+import QuestionDetail from "./page/board/QuestionDetail";
 import RootLayout from "./page/Root";
-import BoardRootLayout from "./page/BoardRoot";
-import Board from "./page/Board";
-import QuestionList from "./page/QuestionList";
-import NoticeWritePost from "./page/NoticeWritePost";
-import NoticeDetail from "./page/NoticeDetail";
-import NoticeModify from "./page/NoticeModify";
-import QuestionModify from "./page/QuestionModify";
+import BoardRootLayout from "./page/board/BoardRoot";
+import Board from "./page/board/Board";
+import QuestionList from "./page/board/QuestionList";
+import NoticeWritePost from "./page/board/NoticeWritePost";
+import NoticeDetail from "./page/board/NoticeDetail";
+import NoticeModify from "./page/board/NoticeModify";
+import QuestionModify from "./page/board/QuestionModify";
 
 
 const App = () => {

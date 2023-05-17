@@ -1,5 +1,5 @@
-import handleFileChange from "../component/HandleFileChange";
-import handleRemoveImage from "../component/HandleRemoveImage";
+import handleFileChange from "../../component/HandleFileChange";
+import handleRemoveImage from "../../component/HandleRemoveImage";
 
 
 const QuestionWritePost = () => {
@@ -54,7 +54,7 @@ const QuestionWritePost = () => {
                                     <label className="attr-name" htlmlFor="upload" multipart>첨부파일</label>
                                     <div className="attr-img">
                                         <input type="file" className="" name="UploadFile" value="" id="theFile" onChange={handleFileChange}/>
-                                        <img id="ImgPreview" src="" className="preview"/>
+                                        <img id="ImgPreview" src="." className="preview"/>
                                         <input type="button" id="removeImage" value="X" className="btn-rmv" onClick={handleRemoveImage}/>
                                     </div>
                                 </div>

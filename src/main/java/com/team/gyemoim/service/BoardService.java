@@ -1,9 +1,9 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.BoardDeleteDTO;
-import com.team.gyemoim.dto.BoardListDTO;
-import com.team.gyemoim.dto.BoardModifyDTO;
-import com.team.gyemoim.dto.BoardWriteDTO;
+import com.team.gyemoim.dto.board.BoardDeleteDTO;
+import com.team.gyemoim.dto.board.BoardListDTO;
+import com.team.gyemoim.dto.board.BoardModifyDTO;
+import com.team.gyemoim.dto.board.BoardWriteDTO;
 import com.team.gyemoim.vo.AttachedVO;
 import com.team.gyemoim.vo.BoardVO;
 import com.team.gyemoim.vo.PageVO;

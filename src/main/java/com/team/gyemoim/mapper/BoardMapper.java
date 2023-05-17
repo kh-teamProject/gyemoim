@@ -1,9 +1,9 @@
 package com.team.gyemoim.mapper;
 
-import com.team.gyemoim.dto.BoardDeleteDTO;
-import com.team.gyemoim.dto.BoardListDTO;
-import com.team.gyemoim.dto.BoardModifyDTO;
-import com.team.gyemoim.dto.BoardWriteDTO;
+import com.team.gyemoim.dto.board.BoardDeleteDTO;
+import com.team.gyemoim.dto.board.BoardListDTO;
+import com.team.gyemoim.dto.board.BoardModifyDTO;
+import com.team.gyemoim.dto.board.BoardWriteDTO;
 import com.team.gyemoim.vo.AttachedVO;
 import com.team.gyemoim.vo.BoardVO;
 import com.team.gyemoim.vo.PageVO;
@@ -42,6 +42,15 @@ public interface BoardMapper {
 
 
 
-    
+    /* 게시글 리스트 관련해서 가져온 코드 */
+    /*
+    List<BoardVO> getBbsSearchPageList(BoardListParam param);// 검색 후 페이징해서 게시글들 리스트로 가져오기
+    Integer getBbsCount(BbsCountParam param);// 게시글 개수 구하기
+
+    // Bbs == BoardVO
+    Bbs getBbs(Integer seq);// 특정 게시글 번호 가지고 게시글들 가져오기
+    Integer createBbsReadCountHistory(CreateReadCountParam param);//
+    Integer increaseBbsReadCount(Integer seq); // 조회수 올리기?
+    */
     
 }

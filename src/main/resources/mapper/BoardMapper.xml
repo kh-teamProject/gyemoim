@@ -12,7 +12,7 @@
     </select>
 
     <!-- 페이징 처리 후 게시글 조회하기 -->
-    <select id="selectBoard" resultType="com.team.gyemoim.dto.BoardListDTO">
+    <select id="selectBoard" resultType="com.team.gyemoim.dto.board.BoardListDTO">
         SELECT *
         FROM (SELECT *
               FROM BOARD
@@ -62,7 +62,7 @@
 
     <!-- 게시글 Create -->
     <!-- 글 작성하기 -->
-    <insert id="write" parameterType="com.team.gyemoim.dto.BoardWriteDTO">
+    <insert id="write" parameterType="com.team.gyemoim.dto.board.BoardWriteDTO">
         INSERT INTO board (bid, uNo, name, title, content, type, views, writeDate, secret)
         VALUES (BID_BOA_SEQ.NEXTVAL, #{uNo}, #{name}, #{title}, #{content}, '공지사항', 0, sysdate, #{secret})
     </insert>
@@ -106,7 +106,7 @@
 
     <!-- 게시글 Delete -->
     <!-- 특정 bid 와 글 작성자 uNo에 해당하는 게시글 삭제하기 -->
-    <delete id="delete" parameterType="com.team.gyemoim.dto.BoardDeleteDTO">
+    <delete id="delete" parameterType="com.team.gyemoim.dto.board.BoardDeleteDTO">
         DELETE FROM BOARD WHERE bid = #{bid} AND uNo = #{uNo}
     </delete>
 

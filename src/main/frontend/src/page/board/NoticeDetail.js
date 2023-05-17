@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 /*
@@ -363,6 +363,29 @@ const NoticeDetail = ({bid}) => {
 
 const NoticeDetail = () => {
 
+    const [boardDetail, setBoardDetail] = useState({});
+    // 파라미터 가져오기
+    const {bid} = useParams();
+
+    const getNoticeDetail = async () => {
+
+        await axios.get(`/board/notice/read/${bid}`)
+            .then((response) => {
+                console.log("NoticeDetail_getNoticeDetail 게시글 세부내용 가져오기 :D");
+                console.log("NoticeDetail_가져온 데이터 : " + response.data);
+
+                setBoardDetail(response.data.data);
+            })
+            .catch((error) => {
+               console.log("NoticeDetail_getNoticeDetail 게시글 못가져옴 :<");
+               console.log("NoticeDetail_axios 에러사항: " + error);
+            });
+    }
+
+
+    useEffect(() => {
+        getNoticeDetail();
+    }, []);
 
     return (
         <>
@@ -378,13 +401,14 @@ const NoticeDetail = () => {
                                 <table>
                                     <tr>
                                         <td className="read-detail">
-                                            <div><b>작성자: </b>길현지</div>
-                                            <div><b>작성일자: </b>2023-05-15</div>
-                                            <div><b>조회수: </b>0</div>
+                                            <div><b>작성자: </b>{boardDetail.name}</div>
+                                            <div><b>제목: </b>{boardDetail.title}</div>
+                                            <div><b>작성일자: </b>{boardDetail.writeDate}</div>
+                                            <div><b>조회수: </b>{boardDetail.views}</div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="read-content p-3">안녕하세요. 이것은 공지사항입니다.</td>
+                                        <td className="read-content p-3">{boardDetail.content}</td>
                                     </tr>
                                     <tr>
                                         <td className="text-start AttachedFile">
@@ -393,6 +417,10 @@ const NoticeDetail = () => {
                                         </td>
                                     </tr>
                                 </table>
+
+                                <div>
+                                    <Link to="/board/notice">글 목록</Link>
+                                </div><br/><br/>
 
 
                                 {/* 댓글 시작 */}

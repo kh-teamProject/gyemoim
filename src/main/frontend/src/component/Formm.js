@@ -1,5 +1,5 @@
 import Login from "../page/Login";
-import BoardList from "../page/Board";
+import BoardList from "../page/board/Board";
 
 const LoginForm = () => {
   const handler = (event) => {
