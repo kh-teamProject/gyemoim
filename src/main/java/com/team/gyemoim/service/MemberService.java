@@ -41,11 +41,11 @@ public class MemberService {
      * @param memberDTO
      */
     @Transactional
-    public boolean join(MemberDTO memberDTO) {
+    public boolean account(MemberDTO memberDTO) {
         // 가입된 유저인지 확인
         
         if (memberMapper.findUser(memberDTO.getEmail()).isPresent()) {
-            System.out.println("!!!");
+            System.out.println("이미 가입된 유저입니다.");
             throw new DuplicatedUsernameException("이미 가입된 유저에요");
         }
 
@@ -54,12 +54,13 @@ public class MemberService {
         MemberDTO memberDTO1 = MemberDTO.builder()
                 .email(memberDTO.getEmail())
                 .password(passwordEncoder.encode(memberDTO.getPassword()))
+                .name(memberDTO.getName())
                 .userRole("ROLE_USER")
 //                .enrollDate(localTime)
                 .build();
         System.out.println(memberDTO1);
-        memberMapper.join(memberDTO1);
-        // userMapper.addRole(userVo);
+        memberMapper.account(memberDTO1);
+//        memberMapper.addRole(memberDTO);
         System.out.println("회원가입 성공");
 
         return memberMapper.findUserId(memberDTO1.getEmail()).isPresent();
@@ -71,7 +72,7 @@ public class MemberService {
      */
     public String login (LoginDTO loginDTO) {
 
-        MemberDTO memberDTO = memberMapper.findUser(loginDTO.getEmail())//indUserByUsername(loginDto.getUsername())
+        MemberDTO memberDTO = memberMapper.findUser(loginDTO.getEmail())
                 .orElseThrow(() -> new LoginFailedException("잘못된 아이디입니다"));
         System.out.println(loginDTO.getPassword());
         System.out.println(memberMapper.getUserPassword(loginDTO));
@@ -81,8 +82,6 @@ public class MemberService {
         }
 
         return memberDTO.getEmail();
-        // return loginDTO.getUserId();
-        // // return tokenGenerator(userDto);
     }
 
     /**
@@ -91,7 +90,6 @@ public class MemberService {
      * @return 유저가 있다면: true, 유저가 없다면: false
      */
     public boolean haveUser(String email) {
-        // IdDTO idDTO = IdDTO.builder().userId(userid).build();
         if (memberMapper.findUserId(email).isPresent()) {
             return true;
         }else {
@@ -112,11 +110,11 @@ public class MemberService {
 
     public TokenDTO tokenGenerator(String email) {
 
-        MemberDTO memberDTO = memberMapper.findUser(email)//indUserByUsername(loginDto.getUsername())
+        MemberDTO memberDTO = memberMapper.findUser(email)
                 .orElseThrow(() -> new LoginFailedException("잘못된 아이디입니다"));
 
         return TokenDTO.builder()
-                .accessToken("Bearer" + jwtTokenProvider.createAcessToken(memberDTO.getEmail(), Collections.singletonList(memberDTO.getUserRole())))
+                .accessToken("Bearer" + jwtTokenProvider.createAccessToken(memberDTO.getEmail(), Collections.singletonList(memberDTO.getUserRole())))
                 .refreshToken("Bearer" + jwtTokenProvider.createRefreshToken(memberDTO.getEmail(), Collections.singletonList(memberDTO.getUserRole())))
                 .build();
     }

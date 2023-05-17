@@ -8,8 +8,8 @@ import java.util.Optional;
 
 @Mapper
 public interface MemberMapper {
-    void join(MemberDTO memberDTO);
-    // void addRole(UserDTO userVo);
+    void account(MemberDTO memberDTO);
+//     void addRole(MemberDTO memberDTO);
     // Optional<UserVo> findUserById(String userId);
     Optional<MemberDTO> findUser(String email);
     Optional<MemberDTO> findUserId(String email);

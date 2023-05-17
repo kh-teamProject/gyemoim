@@ -9,7 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseResponse {
+public class BaseResponse{
     private boolean success; // 요청 성공 여부
     private String message; // 응답 메세지
+    private String accessToken;
+    private String refreshToken;
 }

@@ -52,7 +52,7 @@ public class JwtFilter extends GenericFilterBean {
         // 아래 uri로 접근시 토큰이 필요하지 않으므로 바로 접근시킴.
         if (requestURI.equals("/api/v1/login")
                 || requestURI.equals("/api/v1/logout")
-                || requestURI.equals("/api/v1/join")
+                || requestURI.equals("/api/v1/account")
                 || requestURI.equals("/api/v1/get")
                 || requestURI.equals("/api/v1/board/readBoardLists")
                 || requestURI.equals("/api/v1/board/getBoardListLimit")
@@ -62,14 +62,7 @@ public class JwtFilter extends GenericFilterBean {
             return;
         }
 
-//        Cookie[] cookies = httpServletRequest.getCookies();
-//        String refreshToken = null;
-//        String useToken = null;
-//        for (Cookie cookie : cookies) {
-//            if (cookie.getName().equals(HttpHeaders.SET_COOKIE)) {
-//                refreshToken = cookie.getValue();
-//            }
-//        }
+
         Cookie[] cookies = httpServletRequest.getCookies();
         String refreshToken = null;
         String useToken;
@@ -80,6 +73,7 @@ public class JwtFilter extends GenericFilterBean {
         }
         if (requestURI.equals("/api/v1/token/getAccessToken")) {
             useToken = tokenProvider.resolveToken(refreshToken);
+            System.out.println("dddddddddddddddddddddddddddddddddddddddddd" + refreshToken.toString());
             try {
                 if (StringUtils.hasText(refreshToken) && tokenProvider.validateToken(useToken)){
                     filterChain.doFilter(request, response);

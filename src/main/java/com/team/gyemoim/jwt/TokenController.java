@@ -29,13 +29,13 @@ public class TokenController {
 
     @PostMapping(value = "/getAccessToken")
     public ResponseEntity issueToken(
-//             @RequestHeader(value = "Authorization") String accessTokenRequest,
+             @RequestHeader(value = "Authorization") String accessTokenRequest,
             @CookieValue(value = HttpHeaders.SET_COOKIE) Cookie refreshCookie
     ) {
         ResponseEntity responseEntity = null;
         try{
             String refreshToken = tokenProvider.resolveToken(refreshCookie.getValue());
-            // String oldAccessToken = tokenProvider.resolveToken(accessTokenRequest);
+             String oldAccessToken = tokenProvider.resolveToken(accessTokenRequest);
 
             // 유저 권한 저장 들어있는 컬렉션
             Collection<? extends GrantedAuthority> accessTokenAuthoriryCollection = tokenProvider.getAuthentication(refreshToken).getAuthorities();
@@ -49,7 +49,7 @@ public class TokenController {
                 for (GrantedAuthority x : accessTokenAuthoriryCollection) {
                     accessTokenAuthorities.add(x.getAuthority());
                 }
-                newAccessToken = "Bearer" + tokenProvider.createAcessToken(accessTokenUserId, accessTokenAuthorities);
+                newAccessToken = "Bearer" + tokenProvider.createAccessToken(accessTokenUserId, accessTokenAuthorities);
                 log.debug("토큰 재발급 성공");
                 SingleDataResponse<String> response = responseService.getSingleDataResponse(true, "accessToken 발급성공", newAccessToken);
                 responseEntity = ResponseEntity.status(HttpStatus.OK).body(response);

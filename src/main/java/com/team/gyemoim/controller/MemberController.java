@@ -23,6 +23,7 @@ import java.time.Duration;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "*")
 public class MemberController {
     @Autowired
     MemberService memberService;
@@ -32,33 +33,21 @@ public class MemberController {
     TokenProvider tokenProvider;
 
 
-
-    @PostMapping(value="/join")
-    public ResponseEntity<?> join(@RequestBody MemberDTO memberDTO) {
+    @PostMapping(value="/account")
+    public ResponseEntity<?> account(@RequestBody MemberDTO memberDTO) {
         ResponseEntity responseEntity = null;
 
         try {
-            memberService.join(memberDTO);
-            TokenDTO token = memberService.tokenGenerator(memberDTO.getEmail());
-            ResponseCookie responseCookie =
-                    ResponseCookie.from(HttpHeaders.SET_COOKIE, token.getRefreshToken())///new Cookie("refreshToken", token.getRefreshToken());
-                            .path("/")
-                            .maxAge(14 * 24 * 60 * 60) // 14일
-                            .httpOnly(true)
-                             .httpOnly(true).secure(true)   // 주석
-                            .build();
-            System.out.println(responseCookie);
+            memberService.account(memberDTO);
 
-            SingleDataResponse<String> response = responseService.getSingleDataResponse(true, memberDTO.getEmail(), token.getAccessToken());
-            responseEntity = ResponseEntity.status(HttpStatus.OK)
-                    .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                    .body(response);
+            SingleDataResponse<String> response = responseService.getSingleDataResponse(true, memberDTO.getEmail(), null);
+            responseEntity = ResponseEntity.status(HttpStatus.OK).body(response);
 
-        }catch(DuplicatedUsernameException exception) {
+        } catch(DuplicatedUsernameException exception) {
             BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-
         }
+
         return responseEntity;
     }
 
@@ -74,13 +63,15 @@ public class MemberController {
                             .path("/")
                             .maxAge(Duration.ofDays(14))
                             .httpOnly(true)
-                            // .secure(true)
+                             .secure(true)
                             .build();
+            System.out.println("RefreshToken in Cookie : " + responseCookie.toString());
 
             SingleDataResponse<String> response = responseService.getSingleDataResponse(true, email, token.getAccessToken());
             responseEntity = ResponseEntity.status(HttpStatus.OK)
                     .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                     .body(response);
+            System.out.println("AccessToken : " + token.getAccessToken().toString());
 
         } catch (LoginFailedException exception) {
             log.debug(exception.getMessage());
@@ -106,6 +97,7 @@ public class MemberController {
                             .maxAge(0).build();
             BaseResponse response =
                     responseService.getBaseResponse(true, "로그아웃 성공");
+            System.out.println("로그아웃 성공");
             responseEntity = ResponseEntity.status(HttpStatus.OK)
                     .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                     .body(response);
