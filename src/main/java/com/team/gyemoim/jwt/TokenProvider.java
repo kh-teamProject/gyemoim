@@ -61,7 +61,7 @@ public class TokenProvider implements InitializingBean {
      * @param roles 발급받는 유저의 권한
      * @return 발급받은 토큰을 리턴해줌
      */
-    public String createAcessToken(String email, List<String> roles) {
+    public String createAccessToken(String email, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("roles", roles);
         // 토큰 만료기간

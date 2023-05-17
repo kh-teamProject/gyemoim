@@ -9,7 +9,7 @@ import java.util.Optional;
 @Mapper
 public interface MemberMapper {
     void account(MemberDTO memberDTO);
-    // void addRole(UserDTO userVo);
+//     void addRole(MemberDTO memberDTO);
     // Optional<UserVo> findUserById(String userId);
     Optional<MemberDTO> findUser(String email);
     Optional<MemberDTO> findUserId(String email);

@@ -1,11 +1,10 @@
 import React from "react";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import {Routes, Route, Link} from "react-router-dom";
 
 import RootLayout from "./page/root/Root";
 import MyPageRootLayout from "./page/root/MyPageRoot";
 import Home from "./page/Home";
-// import Login from "./page/account/Login";
+import Login from "./page/account/Login";
 import MyPage from "./page/account/MyPage";
 import MyPageModify from "./page/account/MyPageModify";
 import Board from "./page/Board";
@@ -25,10 +24,10 @@ const App = () => {
                     index: true,
                     element: <Home/>
                 },
-                // {
-                //     path: 'login',
-                //     element: <Login/>
-                // },
+                {
+                    path: 'login',
+                    element: <Login/>
+                },
                 {
                     path: 'account',
                     element: <Account/>

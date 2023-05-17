@@ -20,7 +20,7 @@ public class MemberDTO implements UserDetails {
     private String password;
     private String userRole;
     // private String userAuth;
-    private String enrollDate;
+//    private String enrollDate;
 
 
     // 이하 코드는 security 를 위한 용도

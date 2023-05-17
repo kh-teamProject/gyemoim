@@ -12,14 +12,14 @@
     VALUES(uno_mem_seq.nextVal, #{email}, #{password},#{name}, #{userRole})
   </insert>
 
-  <!-- <insert id="addRole" parameterType="com.song.backfol.domain.user.dto.UserDTO">
-    INSERT INTO user_authority_TB
-    (user_FK, authority_FK)
-    VALUES(
-      (SELECT user_PK FROM user_TB WHERE user_ID = #{userId}),
-      (SELECT authority_PK FROM authority_TB WHERE authority_PK = #{userRole})
-    );
-  </insert> -->
+<!--  <insert id="addRole" parameterType="com.team.gyemoim.dto.MemberDTO">-->
+<!--    INSERT INTO MEMBER_AUTHORITY-->
+<!--    (MEMBER_FK, AUTHORITY_FK)-->
+<!--    VALUES(-->
+<!--      (SELECT uNo FROM MEMBER WHERE EMAIL = #{EMAIL}),-->
+<!--      (SELECT authority_PK FROM AUTHORITY WHERE authority_PK = #{userRole})-->
+<!--    );-->
+<!--  </insert>-->
 
   <select id="findUser" resultType="com.team.gyemoim.dto.MemberDTO">
     SELECT email
