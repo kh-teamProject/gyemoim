@@ -10,6 +10,8 @@ const StageList = () => {
   const [stage, setStage] = useState([]);
   // 약정금 버튼으로 스테이지 세팅하는 State
   const [isClicked, setIsClicked] = useState('전체');
+  // 관심사 기반으로 스테이지 세팅하는 State
+  const [interest, setInterest] = useState('관심사');
 
   //페이징 가보자고~
   const [curPage, setCurPage] = useState(1); //현재페이지
@@ -35,9 +37,14 @@ const StageList = () => {
     }
     setCurPage(1); //페이지 버튼 클릭시 현재 페이지를 1로 초기화
     setList(10);
+    setInterest('관심사');
   };
   //관심사 목록기반으로 조회하는 함수
   const selectInterest = (event) =>{
+    console.log(event.target.value);
+    setInterest(event.target.value);
+    // setCurPage(1);
+    setList(10);
 
   }
 
@@ -59,7 +66,7 @@ const StageList = () => {
         .then((res) => {
           console.log(res.data.PF);
           setStage(res.data.PF);
-          setTotalPage(Math.ceil(res.data.PF.length / 10)); //전체 페이지 수 계산
+          setTotalPage(Math.ceil(res.data.PF.length / list)); //전체 페이지 수 계산
         })
         .catch((error) => {
           console.log(error);
@@ -73,7 +80,8 @@ const StageList = () => {
         })
         .then((res) => {
           setStage(res.data);
-          setTotalPage(Math.ceil(res.data.length / 10)); //전체 페이지 수 계산
+          setTotalPage(Math.ceil(res.data.length / list)); //전체 페이지 수 계산
+
         })
         .catch((error) => {
           console.log(error);
@@ -94,9 +102,9 @@ const StageList = () => {
       </div>
 
       <div>
-        <select class='sel-btn'>
-          <option value ='정렬조건'>정렬조건</option>
-          <option value ='목돈'>목돈</option>
+        <select class='sel-btn' onChange={selectInterest} >
+          <option value='관심사'>관심사</option>
+          <option value='목돈'>목돈</option>
           <option value='여행'>여행</option>
           <option value='전자제품'>전자제품</option>
           <option value='패션잡화'>패션잡화</option>
@@ -105,6 +113,9 @@ const StageList = () => {
           <option value='자동차'>자동차</option>
         </select>
       </div>
+
+      {/*value.interest !== interest
+      ㅇ어찌할지 생각해보기...*/}
 
 
       <div class="stage-wrap">
@@ -131,7 +142,10 @@ const StageList = () => {
                   }
                   return acc
                 },[])
-                .map((value, index) => (
+                // .filter(item => item.interest === interest)
+                .map((value, index) => {
+                  if(interest ==='관심사'){
+                    return(
               <div key={index} >
                 {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
                 {/*&& value.interest==={}*/}
@@ -176,8 +190,55 @@ const StageList = () => {
                     </div>
                   </div>)}
                 {/*startFlag가 대기중일때만 Link동작하게 하는 코드 끝*/}
-              </div>
-        ))}
+              </div>)}
+                  else if(value.interest === interest){
+                    return(
+                      <div key={index} >
+                        {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
+                        {/*&& value.interest==={}*/}
+                        {value.startFlag ==='대기중'?(
+                            <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
+                              <div id="select-deposit">
+                                <h3 class="stage-h3">{value.pfName}</h3>
+                                {value.interest}
+                              </div>
+
+                              <ul>
+                                {[...Array(Number(value.pfEntry))].map((_,index) =>{
+                                  const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index+1)
+                                  const uno = receiveTurnIndex !== -1? value.receiveTurn[receiveTurnIndex].uno:null
+                                  return(
+                                    <li key={index} id="rec-turn">
+                                      {/*{value.receiveTurn===index+1?"참": index+1}*/}
+                                      {uno === null? index+1 : "참"}
+                                    </li>
+                                  )
+                                })}
+                              </ul>
+
+                              <div id="stage-payInfo">
+                                <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                              </div>
+                            </Link>
+                          )
+                          :
+                          // 대기중이 아닐때 보여지는 코드
+                          (<div class='stage-ing'>
+                            <div id="select-deposit">
+                              <h3 className="stage-h3">{value.pfName}</h3>
+                              {value.interest}
+                            </div>
+                            <div class ='all-attend'>
+                              <p>전원 참여</p>
+                              <p>스테이지 진행중입니다</p>
+                            </div>
+                            <div id="stage-payInfo">
+                              <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                            </div>
+                          </div>)}
+                        {/*startFlag가 대기중일때만 Link동작하게 하는 코드 끝*/}
+                      </div>)}
+          })}
         </div>
         <p class='more-stage'>
            <button class='more-stage-btn' onClick={() => handlePageClick({target: {value: curPage}})}> 스테이지 더보기 </button>
