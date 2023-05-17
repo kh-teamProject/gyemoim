@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useLocation} from 'react-router-dom';
 
-import styles from "../component/css/StageAgree.module.css";
-import StageModal from "../component/UI/StageModal";
+import styles from "../css/StageAgree.module.css";
+import StageCreateModal from "../../component/UI/stage/StageCreateModal";
 
 const StagePartIn = () => {
     const location = useLocation();
@@ -64,7 +64,7 @@ const StagePartIn = () => {
 
       <div className={styles.flex1}>
         <button className={styles.button} onClick={modalHandler}>스테이지 확인 </button>
-         {page && <StageModal onConfirm={pageHandler}/>}
+         {page && <StageCreateModal onConfirm={pageHandler}/>}
         </div>
 
           </>

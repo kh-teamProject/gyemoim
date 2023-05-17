@@ -1,15 +1,19 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.ImportDTO;
-import com.team.gyemoim.dto.StageCreateDTO;
-import com.team.gyemoim.dto.StageParticipateDTO;
+import com.team.gyemoim.dto.stage.ImportDTO;
+import com.team.gyemoim.dto.stage.StageCreateDTO;
+import com.team.gyemoim.dto.stage.StageParticipateDTO;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface StageCreateService {
     void stageCreate(StageCreateDTO stageCreateDTO);
     void stageParticipate(StageParticipateDTO stageParticipateDTO);
-    List <ImportDTO> importGet(double pfRate);
+
+    int checkPfName(String pfName);
+    List <ImportDTO> importGet(BigDecimal pfRate);
+
 
     //Read
     List <StageCreateDTO> stagePartIn1(String pfName);

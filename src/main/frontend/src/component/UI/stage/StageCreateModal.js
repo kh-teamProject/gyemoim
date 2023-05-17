@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
-import Agree from '../Agree';
-import classes from './StageModal.module.css';
+import Agree from './Agree';
+import classes from '../../css/StageCreateModal.module.css';
 
 const Backdrop = (props) => {
   return <div className={classes.backdrop} onClick={props.onConfirm}/>;
@@ -19,7 +19,7 @@ const ModalOverlay = (props) => {
   );
 };
 
-const StageModal= (props) => {
+const StageCreateModal= (props) => {
   return (
     <>
       {ReactDOM.createPortal(<Backdrop onConfirm={props.onConfirm} />, document.getElementById('backdrop-root'))}
@@ -30,4 +30,4 @@ const StageModal= (props) => {
 
 
 
-export default StageModal;
+export default StageCreateModal;

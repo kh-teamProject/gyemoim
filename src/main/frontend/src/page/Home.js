@@ -5,11 +5,10 @@ const Home = () => {
   const [message, setMessage] = useState([]);
 
   useEffect(() => {
-    axios.post('/hello', {
-
-    })
+    axios.get('/hello')
       .then((res) => {
         setMessage(res.data);
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);

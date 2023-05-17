@@ -9,8 +9,8 @@ import MyPage from "./page/MyPage";
 import Home from "./page/Home";
 import Board from "./page/Board";
 import Stage from './page/Stage';
-import StageCreate from './page/StageCreate';
-import StagePartIn from './page/StagePartIn';
+import StageCreate from './page/stage/StageCreate';
+import StagePartIn from './page/stage/StagePartIn';
 
 const App = () => {
 

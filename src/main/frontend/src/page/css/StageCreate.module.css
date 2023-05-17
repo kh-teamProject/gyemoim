@@ -149,3 +149,10 @@ table td {
     background-color: #d8e7f3;
     color : blue;
   }
+.small{
+    font-size: small;
+    text-align: left;
+}
+  .warningMsg{
+    color: red;
+  }

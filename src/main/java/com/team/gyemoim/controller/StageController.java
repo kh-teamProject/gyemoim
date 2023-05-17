@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class SolutionController {
+public class StageController {
 
     private final StageCreateService stageCreateService;
 
@@ -34,10 +34,11 @@ public class SolutionController {
         return stageCreateService.importGet(pfRate);
     }
     // 중복체크
-    @GetMapping(value ="/checkPfName")
-    public boolean checkPfName(@RequestParam("name") String pfName) {
-         System.out.println("[컨트롤러] 중복체크 ");
+    @PostMapping(value ="/checkPfName")
+    public boolean checkPfName(@RequestParam("pfName") String pfName) {
+         System.out.println("[컨트롤러] 중복체크 " + pfName);
          int count = stageCreateService.checkPfName(pfName);
+        System.out.println("[컨트롤러] 중복체크 count " + count);
         return count>0;
     }
 

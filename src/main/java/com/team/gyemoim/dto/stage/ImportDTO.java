@@ -1,4 +1,4 @@
-package com.team.gyemoim.dto;
+package com.team.gyemoim.dto.stage;
 
 import lombok.Data;
 

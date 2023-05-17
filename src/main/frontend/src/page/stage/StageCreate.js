@@ -6,14 +6,13 @@ import { Link } from 'react-router-dom';
 import { useParams} from 'react-router-dom';
 
 
-import styles from "../component/css/StageCreate.module.css";
+import styles from "../css/StageCreate.module.css";
 
-import Participants from "../component/Participants";
-import Rate from "../component/Rate";
-import Turn from "../component/Turn";
+import Participants from "../../component/UI/stage/Participants";
+import Rate from "../../component/UI/stage/Rate";
+import Turn from "../../component/UI/stage/Turn";
 
-import StageModal from "../component/UI/StageModal";
-import Agree from "../component/Agree";
+import Agree from "../../component/UI/stage/Agree";
 
 const StageCreate = () => {
   const [name, setName] = useState("");
@@ -37,7 +36,9 @@ const [createButton, setCreateButton] = useState(false);
 
 const [rank, setRank] = useState("");
 
-const [isIdDuplicated, setIsIdDuplicated] = useState(false);
+const [pfName, setPfName] = useState("");
+const [isDuplicate, setIsDuplicate] = useState(false);
+ const [message, setMessage] = useState("");
 
   const nameHandler = (event) => {
     setName(event.target.value);
@@ -130,19 +131,28 @@ const [isIdDuplicated, setIsIdDuplicated] = useState(false);
 
 const movePage = useNavigate("");
 
-const handleIdInputChange = async (e) => {
-  const enteredId = e.target.value;
-  try {
-    const response = await axios.get("/checkPfName", {
-      params: {
-         pfName: name,
-      }
-    });
-    setIsIdDuplicated(response.data.isDuplicated);
-  } catch (error) {
-    console.log(error);
-  }
-};
+
+
+  const handleCheckDuplicate = () => {
+    axios
+      .post("/checkPfName",null, {
+        params: {
+          pfName: name,
+        },
+      })
+      .then((response) => {
+        setIsDuplicate(response.data);
+        console.log(response.data);
+        if (response.data) {
+          setMessage("중복된 스테이지 이름입니다.");
+        } else {
+          setMessage("사용 가능한 스테이지 이름입니다.");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
 
 
@@ -180,22 +190,27 @@ const handleIdInputChange = async (e) => {
           <div className={styles.flexD}>
            <div className={styles.flex1}>
           <input className={styles.inputStage}
+            style={{borderColor: isDuplicate ? 'red' : 'gray'}}
             type="text"
             onChange={nameHandler}
             name="pfName"
             value={name}
             placeholder="스테이지 이름 기재해주세요"
           />
+          <div className={styles.small}>
+              <p  style={{color: isDuplicate ? 'red' : 'gray'}}>{message}</p>
+
+           </div>
            </div>
 
             <div className={styles.flex1}>
-             <button className={styles.buttonSmall}  onChange={handleIdInputChange}>중복체크</button>
-             {isIdDuplicated && <p>이미 사용 중인 아이디입니다.</p>}
-             {!isIdDuplicated && <p>사용 가능한 아이디입니다.</p>}
+                  <button className={styles.buttonSmall} type="button" onClick={handleCheckDuplicate}>중복체크</button>
             </div>
 
             </div>
+            <div>
 
+                </div>
             </div>
         <div className={styles.flex1}>
         <h4>참여인원</h4>

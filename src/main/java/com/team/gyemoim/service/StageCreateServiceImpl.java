@@ -1,12 +1,13 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.ImportDTO;
-import com.team.gyemoim.dto.StageCreateDTO;
-import com.team.gyemoim.dto.StageParticipateDTO;
+import com.team.gyemoim.dto.stage.ImportDTO;
+import com.team.gyemoim.dto.stage.StageCreateDTO;
+import com.team.gyemoim.dto.stage.StageParticipateDTO;
 import com.team.gyemoim.mapper.StageCreateMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -29,7 +30,13 @@ public class StageCreateServiceImpl implements StageCreateService {
     }
 
     @Override
-    public List<ImportDTO> importGet(double pfRate) {
+    public int checkPfName(String pfName) {
+        System.out.println("[서비스] 스테이지 이름 중복체크 ");
+        return stageCreateMapper.checkPfName(pfName);
+    }
+
+    @Override
+    public List<ImportDTO> importGet(BigDecimal pfRate) {
         System.out.println("[서비스] 수령예정표 가져오기");
         return stageCreateMapper.importGet(pfRate);
     }
