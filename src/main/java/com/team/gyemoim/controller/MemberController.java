@@ -51,35 +51,6 @@ public class MemberController {
         return responseEntity;
     }
 
-//    @PostMapping(value="/account")
-//    public ResponseEntity<?> account(@RequestBody MemberDTO memberDTO) {
-//        ResponseEntity responseEntity = null;
-//
-//        try {
-//            memberService.account(memberDTO);
-//            TokenDTO token = memberService.tokenGenerator(memberDTO.getEmail());
-//            ResponseCookie responseCookie =
-//                    ResponseCookie.from(HttpHeaders.SET_COOKIE, token.getRefreshToken())///new Cookie("refreshToken", token.getRefreshToken());
-//                            .path("/")
-//                            .maxAge(14 * 24 * 60 * 60) // 14일
-//                            .httpOnly(true)
-//                             .httpOnly(true).secure(true)   // 주석
-//                            .build();
-//            System.out.println(responseCookie);
-//
-//            SingleDataResponse<String> response = responseService.getSingleDataResponse(true, memberDTO.getEmail(), token.getAccessToken());
-//            responseEntity = ResponseEntity.status(HttpStatus.OK)
-//                    .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-//                    .body(response);
-//
-//        }catch(DuplicatedUsernameException exception) {
-//            BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());
-//            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-//
-//        }
-//        return responseEntity;
-//    }
-
     @PostMapping(value="/login")
     public ResponseEntity login(@RequestBody LoginDTO loginDTO) {
         ResponseEntity responseEntity = null;
@@ -92,7 +63,7 @@ public class MemberController {
                             .path("/")
                             .maxAge(Duration.ofDays(14))
                             .httpOnly(true)
-                            // .secure(true)
+                             .secure(true)
                             .build();
             System.out.println("RefreshToken in Cookie : " + responseCookie.toString());
 
@@ -126,6 +97,7 @@ public class MemberController {
                             .maxAge(0).build();
             BaseResponse response =
                     responseService.getBaseResponse(true, "로그아웃 성공");
+            System.out.println("로그아웃 성공");
             responseEntity = ResponseEntity.status(HttpStatus.OK)
                     .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                     .body(response);
