@@ -5,7 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class StageImportDTO {
+public class StageReceiptDTO {
   private BigDecimal pfRate; //계모임 이율
   private Integer deposit; //약정금
   private Integer receiveTurn; //곗돈 수령순서

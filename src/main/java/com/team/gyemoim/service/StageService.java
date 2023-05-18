@@ -12,7 +12,7 @@ public interface StageService {
   //(찬희) 참여중인 Member 리스트 정보 갖고오기
   List<StageRollListDTO> getMemList(Integer pfID);
   //(찬희) 수령예정표 정보 갖고오기
-  List<StageImportDTO> getImportList(Integer pfID);
+  List<StageReceiptDTO> getImportList(Integer pfID);
   //(찬희)stageSelect페이지-> stage 참여할때
   void stageIn(StageINDTO dto);
   //(찬희)참가자 수가 다 차면 stage 시작
@@ -23,4 +23,6 @@ public interface StageService {
   Integer getMyAccount(StageRollDTO dto);
   //(찬희) 스테이지 입금하기
   void stageDeposit(StageRollDTO dto);
+  //(찬희) 자동으로 곗돈 수령
+  void performUpdate();
 }

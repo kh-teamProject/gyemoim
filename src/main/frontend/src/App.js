@@ -8,7 +8,7 @@ import Login from "./page/account/Login";
 import MyPage from "./page/account/MyPage";
 import MyPageModify from "./page/account/MyPageModify";
 import Board from "./page/Board";
-import Stage from './page/Stage';
+import Stage from './page/stage/Stage';
 import ChanHeeTest from './page/ChanHeeTest';
 import './App.css';
 
