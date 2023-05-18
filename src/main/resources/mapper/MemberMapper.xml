@@ -8,8 +8,8 @@
 
   <insert id="account">
     INSERT INTO MEMBER
-      (uNo, email, password, name, userRole)
-    VALUES(uno_mem_seq.nextVal, #{email}, #{password},#{name}, #{userRole})
+      (uNo, email, password, name, USERROLE)
+    VALUES(uno_mem_seq.nextVal, #{email}, #{password}, #{name}, #{userRole})
   </insert>
 
 <!--  <insert id="addRole" parameterType="com.team.gyemoim.dto.MemberDTO">-->
