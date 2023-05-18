@@ -25,5 +25,46 @@
         SELECT RECEIVETURN,pfID
         FROM PARTICIPATION
     </select>
-</mapper>
+  
+    <!--(현지) <스테이지 생성> _스테이지 생성(PF)-->
+    <insert id="stageCreate" >
+        INSERT  INTO PF(pfID,pfName,pfEntry,pfRate,deposit,interest,receiveTurn,pRank)
+        VALUES(PFID_PF_SEQ.NEXTVAL,#{pfName},#{pfEntry},#{pfRate},#{deposit},#{interest},#{receiveTurn},#{pRank})
+    </insert>
 
+    <!--(현지) <스테이지 생성> _참가 데이터 -->
+    <insert id="stageParticipate" >
+        INSERT  INTO Roll2(pfID,receiveTurn,pfMaster)
+        VALUES(PFID_PF_SEQ.CURRVAL,#{receiveTurn},'M')
+    </insert>
+
+    <!--(현지) <스테이지 생성> _중복체크 -->
+    <select id="checkPfName" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM pf
+        WHERE pfName=#{pfName}
+    </select>
+
+    <!--(현지) <스테이지 생성> _수령예정표-->
+    <select id="importGet" parameterType="java.util.HashMap" resultType="com.team.gyemoim.dto.stage.ImportDTO">
+        SELECT * FROM import2
+        WHERE pfRate=#{pfRate}
+    </select>
+
+    <!--(현지) <스테이지 생성> _스테이지 pfID 가져오기-->
+    <select id="stagePartIn1" parameterType="java.util.HashMap" resultType="com.team.gyemoim.dto.stage.StageCreateDTO">
+        SELECT pfID
+        FROM PF
+        WHERE pfName=#{pfName}
+    </select>
+
+    <!--(현지) <스테이지 생성> _스테이지 정보 가져오기-->
+    <select id="stagePartIn2" parameterType="java.util.HashMap" resultType="com.team.gyemoim.dto.stage.ImportDTO">
+        SELECT uPayment,uTotalReceipts,uRate,uTotalPayment
+        FROM import2 i, PF p
+        WHERE pfName=#{pfName}
+        AND i.pfEntry = p.pfEntry
+        AND i.pfRate = p.pfRate
+        AND i.deposit= p.deposit
+        AND i.receiveTurn= p.receiveTurn
+    </select>
+</mapper>

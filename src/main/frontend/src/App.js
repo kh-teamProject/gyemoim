@@ -8,6 +8,9 @@ import Login from "./page/account/Login";
 import MyPage from "./page/account/MyPage";
 import MyPageModify from "./page/account/MyPageModify";
 import Board from "./page/Board";
+import Stage from './page/Stage';
+import StageCreate from './page/stage/StageCreate';
+import StagePartIn from './page/stage/StagePartIn';
 import StageList from './page/stage/StageList';
 import Account from "./page/account/Account";
 import Logout from "./page/account/Logout";
@@ -62,7 +65,17 @@ const App = () => {
         {
           path :'test/:pfID',
           element:<Test/>
-        }
+        },
+
+    {
+         path: '/stageCreate',
+         element: <StageCreate />
+        },
+
+    {
+         path: '/stageAgree/:pfID',
+         element: <StagePartIn />
+     }
 
       ]
     },
