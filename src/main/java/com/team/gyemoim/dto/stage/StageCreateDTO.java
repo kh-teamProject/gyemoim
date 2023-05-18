@@ -19,4 +19,5 @@ public class StageCreateDTO {
     private String  endDate; //종료일자
     private Integer StageBalance; //순번
     private String  startFlag; //대기중(디폴트)->참여중->완료
+    private Integer paymentOrder; //지급순서
 }

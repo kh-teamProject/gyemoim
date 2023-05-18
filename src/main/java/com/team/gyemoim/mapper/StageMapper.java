@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Mapper
-public interface StageCreateMapper {
+public interface StageMapper {
     void stageCreate(StageCreateDTO stageCreateDTO);
     void stageParticipate(StageParticipateDTO stageParticipateDTO);
 

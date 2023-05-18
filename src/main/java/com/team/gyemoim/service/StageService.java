@@ -7,7 +7,7 @@ import com.team.gyemoim.dto.stage.StageParticipateDTO;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface StageCreateService {
+public interface StageService {
     void stageCreate(StageCreateDTO stageCreateDTO);
     void stageParticipate(StageParticipateDTO stageParticipateDTO);
 
