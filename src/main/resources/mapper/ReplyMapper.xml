@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.gyemoim.mapper.ReplyMapper">
+
+    <!-- 댓글 작성하는 sql 문 -->
+    <insert id="replyWrite">
+        INSERT INTO REPLY(rno, bid, uNo, name, repdate, comm)
+        VALUES (rno_reply_seq.nextval, #{bid}, #{uNo}, #{name}, SYSDATE, #{comm})
+    </insert>
+
+    <!-- 특정 게시글 bid 에 해당하는 댓글들 가져오는 sql 문 -->
+    <select id="reply" resultType="com.team.gyemoim.vo.ReplyVO">
+        SELECT *
+        FROM REPLY
+        WHERE bid = #{bid}
+    </select>
+
+
+    <!-- 특정 댓글 rno 에 해당하는 댓글 내용 수정하는 sql 문 -->
+    <update id="replyModify">
+        UPDATE REPLY
+        SET comm = #{comm}
+        WHERE rno = #{rno}
+    </update>
+
+    <!-- 특정 댓글 rno 에 해당하는 댓글 삭제하는 sql 문 -->
+    <delete id="replyDelete">
+        DELETE REPLY
+        WHERE rno = #{rno}
+    </delete>
+
+</mapper>
