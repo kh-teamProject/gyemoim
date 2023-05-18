@@ -1,6 +1,6 @@
 package com.team.gyemoim.controller;
 
-import com.team.gyemoim.dto.DepositDTO;
+import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.service.AccountService;
@@ -20,9 +20,9 @@ public class AccountController {
 
   // Creat
   // 계모임계좌에 입금하기
-  @PostMapping("/deposit")
-  public void deposit(DepositDTO depositDTO) {
-    accountService.deposit(depositDTO);
+  @PostMapping("/bankHistory")
+  public void deposit(BankHistoryDTO bankHistoryDTO) {
+    accountService.deposit(bankHistoryDTO);
   }
 
   // Read
@@ -64,9 +64,10 @@ public class AccountController {
 
   // 계모임 계좌 정보 업데이트
   @PostMapping("/myAccountUpdate")
-  public void myAccountUpdate(DepositDTO depositDTO) {
-    accountService.myAccountUpdate(depositDTO);
+  public void myAccountUpdate(BankHistoryDTO bankHistoryDTO) {
+    accountService.myAccountUpdate(bankHistoryDTO);
   }
+
 
   // Delete
 }

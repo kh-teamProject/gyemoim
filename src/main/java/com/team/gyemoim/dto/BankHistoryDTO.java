@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DepositDTO {
+public class BankHistoryDTO {
   private Integer uNo;
   private String bankName;
   private String bankAccountNumber;
   private Integer transactionAmount;
+  private String bankHistory;
 }

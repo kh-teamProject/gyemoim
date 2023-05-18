@@ -1,6 +1,6 @@
 package com.team.gyemoim.mapper;
 
-import com.team.gyemoim.dto.DepositDTO;
+import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.vo.MyAccount;
@@ -17,7 +17,7 @@ public interface AccountMapper {
 
   // Create
   // 계모임 계좌 잔액 충전 이력 저장
-  void deposit(DepositDTO depositDTO);
+  void deposit(BankHistoryDTO bankHistoryDTO);
 
   // Reade
   // 내 정보 불러오기
@@ -37,7 +37,7 @@ public interface AccountMapper {
   void interestUpdate(InterestDTO interestDTO);
 
   // 계모임 계좌 정보 수정
-  void myAccountUpdate(DepositDTO depositDTO);
+  void myAccountUpdate(BankHistoryDTO bankHistoryDTO);
 
   // 내 계모임 계좌 거래내역 가져오기
   List<MyAccountHistory> getMyAccountHistory(Integer uNo);

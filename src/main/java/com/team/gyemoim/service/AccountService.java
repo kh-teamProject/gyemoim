@@ -1,6 +1,6 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.DepositDTO;
+import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.vo.MyAccount;
@@ -13,7 +13,7 @@ public interface AccountService {
 
   // Create
   // 계모임 계좌에 잔액 충전하기
-  void deposit(DepositDTO depositDTO);
+  void deposit(BankHistoryDTO bankHistoryDTO);
 
   // Read
   // 내 정보 가져오기
@@ -33,7 +33,7 @@ public interface AccountService {
   void interestUpdate(InterestDTO interestDTO);
 
   // 계모임 계좌 정보 수정
-  void myAccountUpdate(DepositDTO depositDTO);
+  void myAccountUpdate(BankHistoryDTO bankHistoryDTO);
 
   // 내 계모임 계좌 거래내역 가져오기
   List<MyAccountHistory> getMyAccountHistory(Integer uNo);

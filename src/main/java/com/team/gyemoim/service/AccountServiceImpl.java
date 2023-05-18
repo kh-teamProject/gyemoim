@@ -1,6 +1,6 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.DepositDTO;
+import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.mapper.AccountMapper;
@@ -23,8 +23,8 @@ public class AccountServiceImpl implements AccountService{
   // Create
   // 계모임 계좌에 잔액 충전 이력저장
   @Override
-  public void deposit(DepositDTO depositDTO) {
-    accountMapper.deposit(depositDTO);
+  public void deposit(BankHistoryDTO bankHistoryDTO) {
+    accountMapper.deposit(bankHistoryDTO);
   }
 
   // Read
@@ -60,8 +60,9 @@ public class AccountServiceImpl implements AccountService{
 
   // 계모임 계좌 정보 수정
   @Override
-  public void myAccountUpdate(DepositDTO depositDTO) {
-    accountMapper.myAccountUpdate(depositDTO);
+  public void myAccountUpdate(BankHistoryDTO bankHistoryDTO) {
+    System.out.println(bankHistoryDTO);
+    accountMapper.myAccountUpdate(bankHistoryDTO);
   }
 
   // 내 계모임 계좌 거래내역 가져오기

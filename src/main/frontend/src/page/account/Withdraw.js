@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import {Link, NavLink} from "react-router-dom";
+import axios from "axios";
 
 import MyPageSidebar from "../../component/MyPageSidebar";
 import classes from "../css/Withdraw.module.css";
-import axios from "axios";
 
 const Withdraw = () => {
   const [isWithdrawValid, setIswithdrawValid] = useState(false);
@@ -44,11 +44,50 @@ const Withdraw = () => {
   };
 
   const isWithdrawHandler = () => {
+    if(enteredMoney > myAccount.myBalance) setIswithdrawValid(true);
+    else setIswithdrawValid(false);
+  }
+
+  const withdrawHandler = () => {
     if(enteredMoney > myAccount.myBalance) {
       alert('출금가능 금액이 부족합니다.')
       setIswithdrawValid(true);
     }
-    else setIswithdrawValid(false);
+    else {
+      setIswithdrawValid(false);
+      axios.post('/bankHistory', null, {
+        params: {
+          uNo: myAccount.uno,
+          bankName: myInfo.bankName,
+          bankAccountNumber: myInfo.bankAccountNumber,
+          transactionAmount: enteredMoney,
+          bankHistory: '출금'
+        }
+      })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // 계모임 계좌 정보 수정
+      axios.post('/myAccountUpdate', null, {
+        params: {
+          uNo: myAccount.uno,
+          bankName: myInfo.bankName,
+          bankAccountNumber: myInfo.bankAccountNumber,
+          transactionAmount: enteredMoney,
+          bankHistory: '출금'
+        }
+      })
+        .then((res) => {
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    setEnteredMoney(0);
   }
 
   return (
@@ -59,7 +98,7 @@ const Withdraw = () => {
       <div className={classes.field}>
         <h3>나의 계좌관리</h3>
         <div>
-          <ul>
+          <ul className={classes.myAccount}>
             <li>
               <NavLink to={'/mypage/bankAccount/deposit'} className={({isActive}) => isActive ? classes.isActive : undefined} end>충전하기</NavLink>
             </li>
@@ -88,7 +127,7 @@ const Withdraw = () => {
         <div className={`${classes['my-account']}`}>
           <div>
             <span>얼마나 보낼까요?</span>
-            <button>잔액출금</button>
+            <button onClick={withdrawHandler}>잔액출금</button>
           </div>
           <div>
             <input

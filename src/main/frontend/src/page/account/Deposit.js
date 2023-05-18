@@ -50,12 +50,13 @@ const Deposit = () => {
       return;
     } else {
       // 계모임 계좌 이력 저장
-      axios.post('/deposit', null, {
+      axios.post('/bankHistory', null, {
         params: {
           uNo: myAccount.uno,
           bankName: myInfo.bankName,
           bankAccountNumber: myInfo.bankAccountNumber,
           transactionAmount: enteredMoney,
+          bankHistory: '충전'
         }
       })
         .then((res) => {
@@ -72,6 +73,7 @@ const Deposit = () => {
           bankName: myInfo.bankName,
           bankAccountNumber: myInfo.bankAccountNumber,
           transactionAmount: enteredMoney,
+          bankHistory: '충전'
         }
       })
         .then((res) => {
@@ -91,7 +93,7 @@ const Deposit = () => {
       <div className={classes.field}>
         <h3>나의 계좌관리</h3>
         <div>
-          <ul>
+          <ul className={classes.myAccount}>
             <li>
               <NavLink to={'/mypage/bankAccount/deposit'}
                        className={({isActive}) => isActive ? classes.isActive : undefined} end>충전하기</NavLink>

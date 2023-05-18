@@ -48,6 +48,7 @@
     SELECT *
     FROM MYACCOUNTHISTORY
     WHERE uNo = #{uNo}
+    ORDER BY TRADINGHOURS DESC
   </select>
 
   <!-- 내 정보 수정 -->
@@ -71,14 +72,22 @@
   <!-- 계모임 계좌 정보 수정 -->
   <update id="myAccountUpdate" parameterType="com.team.gyemoim.vo.MyAccount">
     update MYACCOUNT
-    SET MYBALANCE = MYBALANCE + #{transactionAmount}
+    SET
+        <choose>
+          <when test="bankHistory == '충전'">
+            MYBALANCE = MYBALANCE + #{transactionAmount}
+          </when>
+          <when test="bankHistory == '출금'">
+            MYBALANCE = MYBALANCE - #{transactionAmount}
+          </when>
+        </choose>
     WHERE UNO = #{uNo}
   </update>
 
   <!-- 계모임 계좌 잔액 충전하기 -->
-  <insert id="deposit" parameterType="com.team.gyemoim.dto.DepositDTO">
+  <insert id="deposit" parameterType="com.team.gyemoim.dto.BankHistoryDTO">
     INSERT INTO MYACCOUNTHISTORY(UNO, BANKNAME, BANKACCOUNTNUMBER, TRANSACTIONAMOUNT, BANKHISTORY, TRADINGHOURS)
-    VALUES (#{uNo}, #{bankName}, #{bankAccountNumber}, #{transactionAmount}, '충전', sysdate)
+    VALUES (#{uNo}, #{bankName}, #{bankAccountNumber}, #{transactionAmount}, #{bankHistory}, sysdate)
   </insert>
 
 </mapper>

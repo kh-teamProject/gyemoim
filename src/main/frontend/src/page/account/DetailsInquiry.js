@@ -1,14 +1,17 @@
+import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 import MyPageSidebar from "../../component/MyPageSidebar";
+import Paging from "../../component/Paging";
 import classes from "../css/DetailsInquiry.module.css";
-import {useEffect, useState} from "react";
-import axios from "axios";
 
 const DetailsInquiry = () => {
   const options = {year: 'numeric', month: 'long', day: 'numeric'};
 
   const [myAccountHistory, setMyAccountHistory] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10); // 페이지당 아이템 수
 
   useEffect(() => {
     axios.get('/getMyAccountHistory', {
@@ -25,7 +28,16 @@ const DetailsInquiry = () => {
       })
   }, []);
 
-  console.log(myAccountHistory);
+  const pageChangeHandler = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // 현재 페이지에 해당하는 데이터 가져오기
+  const getDataForCurrentPage = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return myAccountHistory.slice(startIndex, endIndex);
+  }
 
   return (
     <section>
@@ -35,7 +47,7 @@ const DetailsInquiry = () => {
       <div className={classes.field}>
         <h3>나의 계좌관리</h3>
         <div>
-          <ul>
+          <ul className={classes.myAccount}>
             <li>
               <NavLink to={'/mypage/bankAccount/deposit'}
                        className={({isActive}) => isActive ? classes.isActive : undefined} end>충전하기</NavLink>
@@ -66,16 +78,22 @@ const DetailsInquiry = () => {
           </tr>
           </thead>
           <tbody>
-          {myAccountHistory.map((value, index) => (
+          {getDataForCurrentPage().map((value, index) => (
             <tr key={index}>
               <td>{new Date(value.tradingHours).toLocaleString('ko-KR', options)}</td>
               <td>{value.bankName}</td>
-              <td>{value.transactionAmount}</td>
+              <td>{value.bankHistory === '출금' ? -value.transactionAmount : value.transactionAmount}</td>
               <td>{value.bankHistory}</td>
             </tr>
           ))}
           </tbody>
         </table>
+        <Paging
+          page={currentPage}
+          itemsCountPerPage={itemsPerPage}
+          count={myAccountHistory.length}
+          onChange={pageChangeHandler}
+        />
       </div>
     </section>
   );
