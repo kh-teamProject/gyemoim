@@ -1,0 +1,140 @@
+.stage{
+    background: transparent;
+    border: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    letter-spacing: -.5px;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /*border-bottom: 1px solid #f0f0f0;*/
+    /*border-left: 1px solid #f0f0f0;*/
+}
+.stage-h3{
+    border-bottom: 1px solid #f0f0f0;
+    height: 75px;
+    /*position: relative;*/
+}
+.stage-ing{
+    background: url(../../component/images/grey_dimm.png);
+    /*top: 30px;*/
+    /*height: 330px;*/
+    /*height: 115px;*/
+    /*left: 0;*/
+    /*position: absolute;*/
+    top: 125px;
+    width: 100%;
+    z-index: 5;
+}
+.all-attend{
+    background: #fff;
+    border: 2px solid #2a7fab;
+    height: 130px;
+    line-height: 46px;
+    width: 280px;
+    margin: auto;
+    /*margin-top: 80px;*/
+    border-radius: 10px;
+}
+.all-attend p{
+    display: flex;
+    justify-content: center;
+    /*position: relative;*/
+    color: #2a7fab;
+    font-size: 22px;
+    font-weight: 400;
+    top: 30%;
+}
+.more-stage{
+    background: url(../../component/images/verti_ellipsis.png) center top no-repeat;
+    height: 85px;
+    margin: 60px auto 0;
+    padding-top: 0;
+    position: relative;
+    width: 75px;
+}
+.more-stage-btn{
+    background:  url(../../component/images/btn_plus_stage.png) center top no-repeat;;
+    display: block;
+    height: 65px;
+    left: 50%;
+    margin-left: -32.5px;
+    overflow: hidden;
+    padding-top: 0;
+    position: absolute;
+    text-indent: -20000px;
+    top: 0;
+    width: 65px;
+    margin-top: 100px;
+    border: 0
+}
+.sel-btn{
+    position: absolute;
+    right: 3rem;
+}
+/*.sel-deposit{*/
+/*    position:fixed;*/
+/*}*/
+
+
+/*.stage-wrap{*/
+/*    text-align: center;*/
+/*    background: #fff;*/
+/*    border: 1px solid #d6d6d6;*/
+/*    float: left;*/
+/*    height: 394px;*/
+/*    margin: -1px 0 0 -1px;*/
+/*    position: relative;*/
+/*    width: 394px;*/
+/*}*/
+
+#rec-turn{
+    list-style-type: none;
+    border: 1px solid #0693c1;
+    border-radius: 50%;
+    box-sizing: border-box;
+    color: #0693c1;
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 400;
+    height: 32px;
+    line-height: 30px;
+    margin: 0 5px;
+    text-align: center;
+    width: 32px;
+}
+#{
+    box-sizing: border-box;
+    color: #1a1a1a;
+    display: block;
+    font-size: 20px;
+    font-weight: 400;
+    height: 100%;
+    line-height: 58px;
+    padding: 0 50px;
+    text-align: center;
+}
+#select-stage{
+    background: transparent;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #505050;
+    letter-spacing: -.5px;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    vertical-align: baseline;
+    border-bottom: 1px solid #f0f0f0;
+    border-left: 1px solid #f0f0f0;
+}
+
+#stage-payInfo{
+    font-size: 20px;
+    margin-top: 38px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+}

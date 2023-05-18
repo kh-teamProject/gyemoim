@@ -1,8 +1,9 @@
-import Formm from "../component/Formm";
 
 const Board = () => {
   return (
-    <Formm title={"board"}/>
+    <>
+      <h1>Board</h1>
+    </>
   );
 }
 

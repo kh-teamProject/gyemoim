@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.team.gyemoim.mapper.StageMapper">
+<!--(유진)리스트 띄우기  -->
+    <select id="getPFList" resultType="com.team.gyemoim.dto.stage.StageListDTO">
+        SELECT * FROM PF
+        JOIN ROLL
+            ON PF.PFID = ROLL.PFID
+--         WHERE STARTFLAG ='대기중'
+--         SELECT * FROM PF
+--         WHERE STARTFLAG ='N'
+    </select>
 
+<!--(유진)deposit에 따라 값 달리 가져오기.-->
+    <select id="filterList" resultType="com.team.gyemoim.dto.stage.StageListDTO">
+    SELECT * FROM PF
+    JOIN ROLL
+    ON PF.PFID = ROLL.PFID
+    WHERE DEPOSIT IN #{deposit}
+--     AND STARTFLAG ='대기중'
+    </select>
+
+<!--(유진) 수령순서 가져오기  -->
+    <select id="getRecTurn" resultType="com.team.gyemoim.vo.PFVO">
+        SELECT RECEIVETURN,pfID
+        FROM PARTICIPATION
+    </select>
+  
     <!--(현지) <스테이지 생성> _스테이지 생성(PF)-->
     <insert id="stageCreate" >
         INSERT  INTO PF(pfID,pfName,pfEntry,pfRate,deposit,interest,receiveTurn,pRank)
@@ -45,5 +67,4 @@
         AND i.deposit= p.deposit
         AND i.receiveTurn= p.receiveTurn
     </select>
-
 </mapper>
