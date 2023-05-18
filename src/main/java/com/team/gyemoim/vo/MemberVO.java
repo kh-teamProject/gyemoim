@@ -24,8 +24,5 @@ public class MemberVO {
     private String enrollDate; //회원가입일
     private String isLeave; // 탈퇴여부
     private String userRole;// 권한
-
-    public MemberVO(String subject, String string, Collection<? extends GrantedAuthority> authorities) {
-    }
     
 }
