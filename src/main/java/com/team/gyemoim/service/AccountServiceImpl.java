@@ -1,6 +1,5 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.MemberDTO;
 import com.team.gyemoim.mapper.AccountMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class AccountServiceImpl implements AccountService{
   }
 
   @Override
-  public void myInfoModify(MemberDTO dto) {
-    accountMapper.myInfoModify(dto);
+  public void myInfoModify() {
+    accountMapper.myInfoModify();
   }
 }

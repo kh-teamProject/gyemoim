@@ -1,6 +1,5 @@
 package com.team.gyemoim.mapper;
 
-import com.team.gyemoim.dto.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
@@ -9,5 +8,5 @@ import java.util.HashMap;
 public interface AccountMapper {
   HashMap<String, Object> getMyInfo(Integer uNo);
 
-  void myInfoModify(MemberDTO dto);
+  void myInfoModify();
 }

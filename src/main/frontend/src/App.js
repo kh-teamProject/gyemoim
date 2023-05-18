@@ -12,6 +12,8 @@ import StagePartIn from './page/stage/StagePartIn';
 import StageList from './page/stage/StageList';
 import Account from "./page/account/Account";
 import Logout from "./page/account/Logout";
+import Stage from './page/stage/Stage';
+import ChanHeeTest from './page/ChanHeeTest';
 import './App.css';
 import Test from "./page/Test";
 
@@ -73,8 +75,15 @@ const App = () => {
     {
          path: '/stageAgree/:pfID',
          element: <StagePartIn />
-     }
-
+     },
+     {
+          path: 'stage',
+          element: <Stage />
+        },
+        {
+          path: 'ChanHeeTest',
+          element: <ChanHeeTest />
+        }
       ]
     },
   ]);
