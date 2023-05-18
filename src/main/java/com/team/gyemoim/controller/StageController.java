@@ -37,7 +37,6 @@ public class StageController {
     }
   
   //R
-  private final StageService stageService;
 
   @GetMapping("/stagelist") // (유진)계모임 전체를 조회할 수 있음.
   @ResponseBody

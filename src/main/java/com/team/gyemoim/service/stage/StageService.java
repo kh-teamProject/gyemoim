@@ -1,8 +1,12 @@
 package com.team.gyemoim.service.stage;
 
+import com.team.gyemoim.dto.stage.ImportDTO;
+import com.team.gyemoim.dto.stage.StageCreateDTO;
 import com.team.gyemoim.dto.stage.StageListDTO;
+import com.team.gyemoim.dto.stage.StageParticipateDTO;
 import com.team.gyemoim.vo.ParticipationVO;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface StageService {
@@ -14,4 +18,15 @@ public interface StageService {
 
 // (유진) 수령순서 가져오기
  List<ParticipationVO> getRecTurn();
+
+  void stageCreate(StageCreateDTO stageCreateDTO);
+  void stageParticipate(StageParticipateDTO stageParticipateDTO);
+
+  int checkPfName(String pfName);
+  List <ImportDTO> importGet(BigDecimal pfRate);
+
+
+  //Read
+  List <StageCreateDTO> stagePartIn1(String pfName);
+  List <ImportDTO> stagePartIn2(String pfName);
 }

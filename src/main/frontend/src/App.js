@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from "react";
-import {createBrowserRouter, Link, Route, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
 import RootLayout from "./page/root/Root";
 import MyPageRootLayout from "./page/root/MyPageRoot";
@@ -8,7 +7,6 @@ import Login from "./page/account/Login";
 import MyPage from "./page/account/MyPage";
 import MyPageModify from "./page/account/MyPageModify";
 import Board from "./page/Board";
-import Stage from './page/Stage';
 import StageCreate from './page/stage/StageCreate';
 import StagePartIn from './page/stage/StagePartIn';
 import StageList from './page/stage/StageList';
