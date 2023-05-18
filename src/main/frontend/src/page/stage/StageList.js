@@ -25,7 +25,7 @@ const StageList = () => {
     setError(null);
   };
 
-  //약정금 기반으로 조회하는 함수
+  // 약정금 기반으로 조회하는 함수
   const handleButtonClick = (event) => {
     if (event.target.value === '전체') {
       setIsClicked(event.target.value);
@@ -37,13 +37,13 @@ const StageList = () => {
     }
     setCurPage(1); //페이지 버튼 클릭시 현재 페이지를 1로 초기화
     setList(10);
-    setInterest('관심사');
+    setInterest(interest);
   };
   //관심사 목록기반으로 조회하는 함수
   const selectInterest = (event) =>{
     console.log(event.target.value);
     setInterest(event.target.value);
-    // setCurPage(1);
+    setCurPage(1);
     setList(10);
 
   }
@@ -94,15 +94,15 @@ const StageList = () => {
     <>
       <h1>스테이지 조회</h1>
       <div>
-        <button onClick={handleButtonClick} value='전체'>전체</button>
-        <button onClick={handleButtonClick} value='2500000'>250만원</button>
-        <button onClick={handleButtonClick} value='3500000'>350만원</button>
-        <button onClick={handleButtonClick} value='5000000'>500만원</button>
-        <button onClick={handleButtonClick} value='7000000'>700만원</button>
+        <button class='sel-deposit' onClick={handleButtonClick} value='전체'>전체</button>
+        <button class='sel-deposit' onClick={handleButtonClick} value='2500000'>250만원</button>
+        <button class='sel-deposit' onClick={handleButtonClick} value='3500000'>350만원</button>
+        <button class='sel-deposit' onClick={handleButtonClick} value='5000000'>500만원</button>
+        <button class='sel-deposit' onClick={handleButtonClick} value='7000000'>700만원</button>
       </div>
 
       <div>
-        <select class='sel-btn' onChange={selectInterest} >
+        <select class='sel-int' onChange={selectInterest}>
           <option value='관심사'>관심사</option>
           <option value='목돈'>목돈</option>
           <option value='여행'>여행</option>
