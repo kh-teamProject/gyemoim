@@ -24,9 +24,9 @@
     <select id="searchCountBoard" parameterType="com.team.gyemoim.vo.PageVO" resultType="int">
         SELECT COUNT(*)
         FROM BOARD
-        WHERE title LIKE '%' || #{keyword} || '%'
-        OR content LIKE '%' || #{keyword} || '%'
-        OR name = #{keyword}
+        WHERE title LIKE '%' || #{searchKeyword} || '%'
+        OR content LIKE '%' || #{searchKeyword} || '%'
+        OR name = #{searchKeyword}
     </select>
 
 
@@ -52,9 +52,9 @@
         FROM (SELECT rownum RN, A.*
               FROM (SELECT *
                     FROM BOARD
-                    WHERE title LIKE '%' || #{keyword} || '%'
-                       OR content LIKE '%' || #{keyword} || '%'
-                       OR name = #{keyword}
+                    WHERE title LIKE '%' || #{searchKeyword} || '%'
+                       OR content LIKE '%' || #{searchKeyword} || '%'
+                       OR name = #{searchKeyword}
                     ORDER BY bid DESC) A)
         WHERE RN BETWEEN ${start} AND ${end}
     </select>
@@ -76,7 +76,7 @@
 
     <!-- 게시글 Update -->
     <!-- 수정 전 원래 글 세부내용 가져오기 -->
-    <select id="modify" resultType="com.team.gyemoim.vo.BoardVO">
+    <select id="modify" resultType="com.team.gyemoim.vo.BoardVO" parameterType="int">
         SELECT * FROM BOARD WHERE bid = #{bid}
     </select>
 

@@ -2,6 +2,7 @@ package com.team.gyemoim.controller;
 
 import com.team.gyemoim.dto.board.BoardDeleteDTO;
 import com.team.gyemoim.dto.board.BoardListDTO;
+import com.team.gyemoim.dto.board.BoardModifyDTO;
 import com.team.gyemoim.dto.board.BoardWriteDTO;
 import com.team.gyemoim.service.BoardService;
 import com.team.gyemoim.service.ReplyService;
@@ -49,11 +50,14 @@ public class BoardController {
     }
 
 
-    /* 읽기 Read */
-    @GetMapping("/board/notice/read/${bid}")
+    /* 게시글 읽기 API (Read) [GET /board/notice/read/{bid}]
+    * @PathVariable 어노테이션은 URL 경로 변수 값을 매개변수에 매핑할 때 사용함
+    * @RequestParam 어노테이션은 요청 파라미터의 값을 매개변수에 매핑될 때 사용된
+    * `bid` 매개변수에는 `bid` 라는 요청 파라미터의 값이 매핑된다. */
+    @GetMapping("/board/notice/read")
     public BoardVO read(@RequestParam("bid") int bid) throws Exception {
 
-        List<ReplyVO> replyVOList = replyService.reply(bid);
+        /*List<ReplyVO> replyVOList = replyService.reply(bid);*/
         BoardVO boardVO = boardService.readDetail(bid);
 
 
@@ -62,6 +66,35 @@ public class BoardController {
 
 
     /* 수정 Update */
+
+    // 수정 전 기존 글 가져오기 (첨부파일은 일단 제외)
+    @GetMapping("/board/notice/modify")
+    public BoardVO modify(@RequestParam("bid") int bid) throws Exception {
+        System.out.println("bid 들어오니? : " + bid);
+        return boardService.modify(bid);
+
+        /*try {
+            return ResponseEntity.ok("BoardController 글 수정 전 내용 가져오기 완료  :D");
+        } catch (Exception e) {
+            System.out.println("BoardController 글 수정 전 페이지 끌어오기 실패 :< ");
+            System.out.println("error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController 글 modify 수정 실패 :< ");
+        }*/
+    }
+
+    // 글 수정하기
+    @PostMapping("/board/notice/modifyPost")
+    public ResponseEntity<String> modifyPost(@RequestParam BoardModifyDTO boardModifyDTO) {
+        try {
+            boardService.modifyUpdate(boardModifyDTO);
+            return ResponseEntity.ok("BoardController 글 수정하기 완료  :D");
+        } catch (Exception e) {
+            System.out.println("BoardController 글 수정 실패 :< ");
+            System.out.println("error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController 글 수정 실패 :< ");
+        }
+    }
+
 
 
     /* 삭제 Delete */

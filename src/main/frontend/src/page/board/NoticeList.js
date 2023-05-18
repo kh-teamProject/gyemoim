@@ -115,13 +115,13 @@ const NoticeList = () => {
                             {/* 검색 시작 */}
                             <div className="search-container row justify-content-center">
                                 <form className="col-8 search-box" name="search_form" onSubmit={handleFormSubmit}>
-                                    <select name="type" id="search-type" className="search-item" defaultValue="title">
+                                    <select name="searchType" id="search-type" className="search-item" defaultValue="title">
                                         <option value="title">제목</option>
                                         <option value="content">내용</option>
                                         <option value="name">작성자</option>
                                     </select>
                                     <input className="form-control search-item" type="text" id="search-keyword"
-                                           name="keyword" placeholder="검색어를 입력하세요."/>
+                                           name="searchKeyword" placeholder="검색어를 입력하세요."/>
                                     <button type="submit" className="btn btn-primary search-item"
                                             onSubmit={handleFormSubmit}>검색
                                     </button>
@@ -159,7 +159,7 @@ const NoticeList = () => {
                                     <tr key={index}>
                                         <td className="text-center">{item.bid}</td>
                                         <td>
-                                            <Link to={`/board/notice/detail?${item.bid}`}>{item.title}</Link>
+                                            <Link to={`/board/notice/detail/${item.bid}`}>{item.title}</Link>
                                         </td>
                                         <td className="text-center">{item.name}</td>
                                         <td className="text-center">{item.writeDate}</td>
@@ -167,11 +167,12 @@ const NoticeList = () => {
                                     </tr>
                                 ))}
                                 <div>
-                                    <p>
-                                        <button className="boardList-more-view"
-                                                onClick={() => handlePageClick({target: {value: curPage}})}>게시글 더보기
-                                        </button>
-                                    </p>
+                                    <button onClick={() => handlePageClick({target: {value: curPage - 1}})}>《</button>
+                                    {/*어레이로 숫자를 클릭해서 페이지 전환을 할 수 있게함.*/}
+                                    {Array.from({length: totalPage}, (_, i) => (
+                                      <button key={i + 1} value={i + 1} onClick={handlePageClick}
+                                              className={curPage === i + 1 ? 'active' : ''}>{i + 1}</button>
+                                    ))}
                                 </div>
                             </table>
 

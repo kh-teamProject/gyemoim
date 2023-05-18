@@ -26,6 +26,7 @@ public interface BoardService {
 
 
 
+
     /* 게시글 삭제 D */
     void delete(BoardDeleteDTO boardDeleteDTO) throws Exception; // 게시글 삭제하기
 
@@ -36,10 +37,10 @@ public interface BoardService {
     BoardVO modify(int bid) throws Exception; // 수정 전 원래 글 정보 끌고오기
 
     // 수정페이지 첨부파일 불러오기
-    AttachedVO attached(int bid) throws Exception; // 수정 전 원래 글에 있는 첨부파일 끌고오기
+    //AttachedVO attached(int bid) throws Exception; // 수정 전 원래 글에 있는 첨부파일 끌고오기
 
     // 기존 첨부파일 삭제
-    AttachedVO deleteFile(String fileName) throws Exception;
+    //AttachedVO deleteFile(String fileName) throws Exception;
 
     // 게시글 및 첨부파일 수정하기
     public void modifyUpdate(BoardModifyDTO boardModifyDTO) throws Exception; // 게시글 정보 수정하기

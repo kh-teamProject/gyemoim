@@ -60,11 +60,11 @@ const App = () => {
               element: <NoticeWritePost />
             },
             {
-              path: 'notice/detail',
+              path: 'notice/detail/:bid',
               element: <NoticeDetail />
             },
             {
-              path: 'notice/modify',
+              path: 'notice/modify/:bid',
               element: <NoticeModify />
             },
             {

@@ -32,8 +32,8 @@ public interface BoardMapper {
 
     /* BoardModifyDAO (Update) */
     BoardVO modify(int bid); // 원래 글 정보 끌고오기
-    AttachedVO attached(int bid); // 원래 글에 있는 첨부파일 끌고오기
     void modifyUpdate(BoardModifyDTO boardModifyDTO) throws Exception; // 게시글 정보 수정하기
+    AttachedVO attached(int bid); // 원래 글에 있는 첨부파일 끌고오기
     void addAttachedUpdate(BoardModifyDTO boardModifyDTO) throws Exception; // 새로운 첨부파일 추가하기
 
 

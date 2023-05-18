@@ -106,6 +106,7 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public BoardVO readDetail(int bid) throws Exception {
         boardMapper.updateViewCnt(bid);
+
         return boardMapper.readDetail(bid);
     }
 
@@ -123,10 +124,40 @@ public class BoardServiceImpl implements BoardService{
     // 수정 페이지 불러오기
     @Override
     public BoardVO modify(int bid) throws Exception {
+        System.out.println("서비스 bid: " + bid);
         return boardMapper.modify(bid);
     }
 
-    // 수정 페이지 첨부파일 불러오기
+
+    // 게시글 및 첨부파일 수정하기
+    @Override
+    public void modifyUpdate(BoardModifyDTO boardModifyDTO) throws Exception {
+        // 글 수정하기
+        boardMapper.modifyUpdate(boardModifyDTO);
+        System.out.println("BoardServiceImpl.modifyUpdate 수정 왜 안돼 악 " + boardModifyDTO);
+        System.out.println("BoardServiceImpl.modifyUpdate 수정 서비스야 bid 좀 가져와줘.. " + boardModifyDTO.getBid());
+
+        /* 첨부파일
+        MultipartFile newFile = boardModifyDTO.getUploadFile();
+
+        if (!newFile.isEmpty() && newFile != null) {// 업로드된 파일이 있는 경우
+            UUID uid = UUID.randomUUID();
+            String savedName = uid.toString() + "_" + newFile.getOriginalFilename();
+            // savedName 은 유니크 네임
+            newFile.transferTo(new File(uploadPath + filePath + savedName)); // 서버에 파일 저장
+
+            // savedName 을 modifyDTO 에 넣어주기
+            boardModifyDTO.setFileName(savedName);
+
+            // new 첨부파일 추가
+            boardMapper.addAttachedUpdate(boardModifyDTO);
+
+         */
+        }
+
+
+
+    /* 수정 페이지 첨부파일 불러오기
     @Override
     public AttachedVO attached(int bid) throws Exception {
         return boardMapper.attached(bid);
@@ -143,31 +174,9 @@ public class BoardServiceImpl implements BoardService{
         }
         return null;
     }
+     */
 
-    // 게시글 및 첨부파일 수정하기
-    @Override
-    public void modifyUpdate(BoardModifyDTO boardModifyDTO) throws Exception {
-        // 글 수정하기
-        boardMapper.modifyUpdate(boardModifyDTO);
-        System.out.println("BoardServiceImpl.modifyUpdate 왜 안돼 악 " + boardModifyDTO);
-        System.out.println("BoardServiceImpl.modifyUpdate bid 좀 가져와줘.. " + boardModifyDTO.getBid());
 
-        // 첨부파일
-        MultipartFile newFile = boardModifyDTO.getUploadFile();
-
-        if (!newFile.isEmpty() && newFile != null) {// 업로드된 파일이 있는 경우
-            UUID uid = UUID.randomUUID();
-            String savedName = uid.toString() + "_" + newFile.getOriginalFilename();
-            // savedName 은 유니크 네임
-            newFile.transferTo(new File(uploadPath + filePath + savedName)); // 서버에 파일 저장
-            
-            // savedName 을 modifyDTO 에 넣어주기
-            boardModifyDTO.setFileName(savedName);
-
-            // new 첨부파일 추가
-            boardMapper.addAttachedUpdate(boardModifyDTO);
-        }
-    }
 
 
     /* (Delete) BoardDeleteServiceImpl */
