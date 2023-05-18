@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +25,6 @@ public class StageController {
     @ResponseBody
     public HashMap<String, Object> stage(@RequestParam Integer pfID, StageRollDTO dto) {
         log.info("*******찬희 컨트롤러");
-
         HashMap<String,Object> map = new HashMap<String,Object>();
         map.put("pf", stageService.getPfList(pfID));
         Integer myBalance = stageService.getMyAccount(dto);
@@ -52,6 +52,7 @@ public class StageController {
     public String stageDeposit(StageRollDTO dto){
         log.info("deposit 컨트롤러" + dto);
         stageService.stageDeposit(dto);
+        //stageService.performUpdate();
         return "success";
     }
 

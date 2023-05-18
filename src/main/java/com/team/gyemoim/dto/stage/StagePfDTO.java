@@ -18,4 +18,5 @@ public class StagePfDTO {
   private Date endDate; //계모임 종료날짜
   private String startDay; // 계모임 시작 날짜의 '일'
   private Integer StageBalance; //계모임 잔액
+  private Integer paymentOrder; // 지급 순서
 }

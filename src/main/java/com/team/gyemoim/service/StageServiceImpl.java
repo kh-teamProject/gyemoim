@@ -4,7 +4,9 @@ import com.team.gyemoim.dto.stage.*;
 import com.team.gyemoim.mapper.StageMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @Log4j2
 @Transactional
+@EnableScheduling
+@Component
 public class StageServiceImpl implements StageService {
 
   private final StageMapper stageMapper;
+  private StageRollDTO stageRollDTO;
 
 
   //(찬희) 스테이지 PF 정보 갖고오기
@@ -38,7 +43,7 @@ public class StageServiceImpl implements StageService {
   }
   //(찬희)수령예정표 갖고오기
   @Override
-  public List<StageImportDTO> getImportList(Integer pfID) {
+  public List<StageReceiptDTO> getImportList(Integer pfID) {
     return stageMapper.getImportList(pfID);
   }
   //(찬희)stageSelect페이지-> stage 참여할때
@@ -88,6 +93,7 @@ public class StageServiceImpl implements StageService {
   //(찬희) 스테이지 입금하기
   @Override
   public void stageDeposit(StageRollDTO dto) {
+    log.info("+++++++++++++++++서비스" + dto);
     //1. 계좌잔액 업데이트 -> uPayment 금액을 insert
       stageMapper.stageBalanceUpdate(dto);
     //2. my계좌 잔액 -> 현금액 - uPayment
@@ -98,15 +104,32 @@ public class StageServiceImpl implements StageService {
     //5. 입금 누적 금액 update
       stageMapper.stageAmountUpdate(dto);
     //6. 입금식별 -> update
-
-
-    //stageMapper.stageDeposit(dto);
+      stageMapper.stagePaymentCheckUpdate(dto);
+    //7. 현재 dto를 저장
+    //(현재 paymentOrder 값 조회)
+    this.stageRollDTO = dto;
+    this.stageRollDTO.setPaymentOrder(stageMapper.getPaymentOrderValue(stageRollDTO));
   }
-  //7. 스테이지 금액 -> my계좌로 순서에 맞게 update
-  @Scheduled(cron = "0 0 0 25 * ?") // 매달 25일 0시 0분 0초에 실행
+  //(찬희). 스테이지 금액 -> my계좌로 순서에 맞게 update
+  @Override
+  @Scheduled(cron = "0 08 17 18 * ?") // 매달 25일 0시 0분 0초에 실행
   public void performUpdate() {
-    // <update> 문 실행 코드 작성
-    // 실행할 로직을 구현합니다.
-  }
+      log.info("제발 실행이 되어주세요 플리즈" + stageRollDTO);
+      if( stageRollDTO != null) {
+        int currentStageBalance = stageMapper.getStageBalance(stageRollDTO);
+        int stageDeposit = stageMapper.getStageDeposit(stageRollDTO);
+        // stageBalance >= deposit : stageBalance -> uPayment 이동
 
+        if (currentStageBalance >= stageDeposit) {
+          //stageBalance - *번의 uPayment
+          stageMapper.stageBalanceMinus(stageRollDTO);
+          //*번의 uPayment + stageBalance
+          stageMapper.stagePaymentOrder(stageRollDTO);
+          // 지급순서 올리기 if(pfEntry >= paymentOrder)
+
+        }
+      }
+    }
 }
+
+

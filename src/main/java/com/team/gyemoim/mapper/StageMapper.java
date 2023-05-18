@@ -15,7 +15,7 @@ public interface StageMapper {
   //(찬희) 참여중인 Member 리스트 정보 갖고오기
   List<StageRollListDTO> getMemList(Integer pfID);
   //(찬희) 수령예정표 갖고오기
-  List<StageImportDTO> getImportList(Integer pfID);
+  List<StageReceiptDTO> getImportList(Integer pfID);
     //(찬희)스테이지 참여 시 roll insert
   void rollIn(StageINDTO dto);
   //(찬희)Roll의 uNo 갯수 조회
@@ -44,4 +44,16 @@ public interface StageMapper {
   void depositCntPlus(StageRollDTO dto);
   //(찬희)5. 입금 누적 금액 update
   void stageAmountUpdate(StageRollDTO dto);
+  //(찬희)6. 입금식별 Y로 update
+  void stagePaymentCheckUpdate(StageRollDTO dto);
+  //(찬희)현재 pf의 잔액 조회
+  int getStageBalance(StageRollDTO dto);
+  //(찬희) 현재 pf의 약정금 조회
+  int getStageDeposit(StageRollDTO dto);
+  //(찬희) stageBalance - *번의 uPayment
+  void stageBalanceMinus(StageRollDTO dto);
+  //(찬희)*번의 uPayment + stageBalance
+  void stagePaymentOrder(StageRollDTO dto);
+  //(찬희) 현재 pf의 지급순서 조회
+  int getPaymentOrderValue(StageRollDTO dto);
 }

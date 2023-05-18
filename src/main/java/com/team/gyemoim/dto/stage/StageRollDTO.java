@@ -15,4 +15,7 @@ public class StageRollDTO {
   private Integer uPayment; //개인별 월 입금액
   private String pfMaster; //계모임 장
   private Integer myBalance; //myAccount 잔액
+  private Integer paymentOrder;//지급순서
+  private Integer pfEntry; //계모임 참가자 수
+
 }

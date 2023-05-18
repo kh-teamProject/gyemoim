@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
-import classes from './css/Stage.module.css';
-import BoxButton from "../component/UI/stage/BoxButton";
-import StageSequence from "../component/UI/stage/StageSequence";
-import MemberList from "../component/UI/stage/StageMemberList";
-import StageDeposit from "../component/UI/stage/StageDeposit";
-import StageModal from "../component/UI/stage/StageModal";
+import classes from '../css/Stage.module.css';
+import BoxButton from "../../component/UI/stage/BoxButton";
+import StageSequence from "../../component/UI/stage/StageSequence";
+import MemberList from "../../component/UI/stage/StageMemberList";
+import StageDeposit from "../../component/UI/stage/StageDeposit";
+import StageModal from "../../component/UI/stage/StageModal";
 import moment from 'moment';
 
 
@@ -26,7 +26,7 @@ const Stage = () => {
   useEffect(() => {
     axios.get('/stage', {
       params: {
-        uNo: 1,
+        uNo: 3,
         pfID: 1
       }
     })
@@ -76,13 +76,15 @@ const Stage = () => {
         const RollReceiveTurn = res.data.roll.map((item) => item.receiveTurn);
         const RollUPayment = res.data.roll.map((item) => item.upayment);
         const RollMyBalance = res.data.roll.map((item) => item.myBalance);
+        const RollPaymentCheck = res.data.roll.map((item) => item.paymentCheck);
 
         const rollData = {
         depositCnt: RollDepositCnt.join(''),
         uNo: RollUno.join(''),
         receiveTurn: RollReceiveTurn.join(''),
         uPayment: RollUPayment.join(''),
-        myBalance: RollMyBalance.join('')
+        myBalance: RollMyBalance.join(''),
+        paymentCheck: RollPaymentCheck.join('')
         };
         setRollData(rollData);
 
@@ -132,7 +134,13 @@ const Stage = () => {
                                 <li><span>총 입금</span><br />{rollData.depositCnt}회</li>
                                 <li><span>약정금</span><br />{pfData.deposit}원</li>
                                 <li><span>이율(세후)</span><br />{pfData.pfRate}%</li>
-                                <li><span>상태</span><br />입금 전</li>
+                                <li><span>상태</span><br />
+                                {
+                                    rollData.paymentCheck === 'N'
+                                    ? <div>입금 전</div>
+                                    : <div>입금 완</div>
+                                }
+                                </li>
                             </ul>
 
                         </div>
