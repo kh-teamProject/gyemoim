@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 
@@ -8,6 +8,8 @@ const NoticeDetail = () => {
     const [boardDetail, setBoardDetail] = useState({});
     // 파라미터 가져오기
     const {bid} = useParams();
+
+    const navigate = useNavigate();
 
     const getNoticeDetail = async () => {
 
@@ -44,11 +46,31 @@ const NoticeDetail = () => {
         window.location.href = `/board/notice/modify/${bid}`;
     }
 
+
+
     // 글 삭제하는 함수
-    const moveToNoticeDelete = () => {
+    const moveToNoticeDelete = async () => {
 
+        const deleteDTO = {
+            bid: boardDetail.bid,
+            uno: boardDetail.uno,
+        };
 
-    }
+        // post 는 주로 데이터 생성 또는 업데이트 할 때 사용
+        await axios.delete('/board/notice/delete', {data: deleteDTO})
+            .then((response) => {
+                console.log("moveToNoticeDelete 글 삭제 성공 :D");
+                console.log(response.data);
+
+                alert("글 삭제되었습니다.");
+                navigate("/board/notice");
+            }).catch((error) => {
+                console.log("moveToNoticeDelete 글 삭제 실패 :<");
+                console.log("글 삭제 에러: " + error);
+
+            });
+
+    };
 
 
     useEffect(() => {

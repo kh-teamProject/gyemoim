@@ -37,7 +37,7 @@ public interface BoardMapper {
     void addAttachedUpdate(BoardModifyDTO boardModifyDTO) throws Exception; // 새로운 첨부파일 추가하기
 
 
-    /* BoardDeleteDAO (Delete) */
+    /* 삭제 BoardDeleteDAO (Delete) */
     void delete(BoardDeleteDTO boardDeleteDTO) throws Exception; // 게시글 삭제하기
 
 

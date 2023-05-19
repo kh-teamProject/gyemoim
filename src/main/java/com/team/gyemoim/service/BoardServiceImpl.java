@@ -179,7 +179,7 @@ public class BoardServiceImpl implements BoardService{
 
 
 
-    /* (Delete) BoardDeleteServiceImpl */
+    /* 글 삭제 (Delete) BoardDeleteServiceImpl */
     @Override
     public void delete(BoardDeleteDTO boardDeleteDTO) throws Exception {
         boardMapper.delete(boardDeleteDTO);

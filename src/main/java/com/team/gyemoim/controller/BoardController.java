@@ -37,6 +37,7 @@ public class BoardController {
 
 
 
+    // 게시글 작성 API (Create)
     @PostMapping("/board/notice/writePost")
     public ResponseEntity<String> writePost(@RequestBody BoardWriteDTO boardWriteDTO) {
         try {
@@ -65,11 +66,11 @@ public class BoardController {
     }
 
 
-    /* 수정 Update */
+    /* 글 수정 API (Update) */
     // 수정 전 기존 글 가져오기 (첨부파일은 일단 제외)
     @GetMapping("/board/notice/modify")
     public BoardVO modify(@RequestParam("bid") int bid) throws Exception {
-        System.out.println("bid 들어오니? : " + bid);
+        System.out.println("수정 전 bid 들어오니? : " + bid);
         return boardService.modify(bid);
 
         /*try {
@@ -81,12 +82,12 @@ public class BoardController {
         }*/
     }
 
-    // 글 수정하기
+    // 글 수정 업데이트하기
     @PostMapping("/board/notice/modifyPost")
-    public ResponseEntity<String> modifyPost(@RequestParam BoardModifyDTO boardModifyDTO) {
+    public ResponseEntity<String> modifyPost(@RequestBody BoardModifyDTO boardModifyDTO) {
         try {
             boardService.modifyUpdate(boardModifyDTO);
-            return ResponseEntity.ok("BoardController 글 수정하기 완료  :D");
+            return ResponseEntity.ok("BoardController 글 수정 업뎃 완료  :D");
         } catch (Exception e) {
             System.out.println("BoardController 글 수정 실패 :< ");
             System.out.println("error: " + e.getMessage());
@@ -98,11 +99,17 @@ public class BoardController {
 
     /* 삭제 Delete */
     @DeleteMapping("/board/notice/delete")
-    public String delete(@RequestBody BoardDeleteDTO dto) throws Exception {
-        System.out.println("/board/delete BoardDeleteDTO = " + dto);
-        HttpHeaders headers = new HttpHeaders();
-        boardService.delete(dto);
-        return "";
+    public ResponseEntity<String> delete(@RequestBody BoardDeleteDTO boardDeleteDTO) {
+        try {
+            System.out.println("BoardController.delete 글 삭제 성공 :D!");
+            System.out.println("boardDelete 이리 오너라: " + boardDeleteDTO);
+            boardService.delete(boardDeleteDTO);
+            return ResponseEntity.ok("BoardController.delete 글 삭제 성공 :D");
+        } catch (Exception e) {
+            System.out.println("BoardController.delete 글 삭제 실패 :<");
+            System.out.println("BoardController 글 삭제 왜 안돼? 에러 이유: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController 글 삭제 실패 :< ");
+        }
     }
 
 

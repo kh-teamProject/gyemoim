@@ -86,7 +86,7 @@
     </select>
 
     <!-- 특정 bid 에 해당하는 게시글 수정하기 -->
-    <update id="modifyUpdate">
+    <update id="modifyUpdate" parameterType="com.team.gyemoim.dto.board.BoardModifyDTO">
         UPDATE BOARD
         SET uNo     = #{uNo},
             name    = #{name},
