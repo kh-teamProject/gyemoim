@@ -1,7 +1,7 @@
 package com.team.gyemoim.service.stage;
 
 import com.team.gyemoim.dto.stage.StageListDTO;
-import com.team.gyemoim.vo.ParticipationVO;
+import com.team.gyemoim.vo.RollVO;
 
 import java.util.List;
 
@@ -13,5 +13,5 @@ public interface StageService {
  List<StageListDTO> filterList(int deposit);
 
 // (유진) 수령순서 가져오기
- List<ParticipationVO> getRecTurn();
+ List<RollVO> getRecTurn();
 }

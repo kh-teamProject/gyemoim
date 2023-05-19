@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class ParticipationVO {
+public class RollVO {
   private int receiveTurn; //곗돈수령순서
   private int pfID; // 계모임 식별번호
   private int uNo; //회원번호
