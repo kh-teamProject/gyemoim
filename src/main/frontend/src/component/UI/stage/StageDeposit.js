@@ -50,7 +50,7 @@ function StageDeposit(props){
             {props.startFlag==='참여중' &&
             <>
                 <p>*매달 <span className={classes.red}>24일 전</span>에 입금해주세요.</p>
-                <p>*미납이 없을 때, 곗돈은 <span className={classes.red}>매달 30일</span>에 My계좌로 입금됩니다.</p>
+                <p>*곗돈은 <span className={classes.red}>매달 30일</span>에 My계좌로 입금됩니다.</p>
             </>}
             {props.startFlag==='완료' && <p>*스테이지의 이율표를 PDF 파일로 출력하실 수 있습니다.</p>}
 
