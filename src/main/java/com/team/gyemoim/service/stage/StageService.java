@@ -45,6 +45,6 @@ public interface StageService {
  Integer getMyAccount(StageRollDTO dto);
  //(찬희) 스테이지 입금하기
  void stageDeposit(StageRollDTO dto);
- //(찬희) 자동으로 곗돈 수령
+ //paymentCheck
  void performUpdate();
 }

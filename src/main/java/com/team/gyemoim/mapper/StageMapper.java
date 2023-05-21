@@ -81,7 +81,10 @@ public interface StageMapper {
     void stageBalanceMinus(StageRollDTO dto);
     //(찬희)*번의 uPayment + stageBalance
     void stagePaymentOrder(StageRollDTO dto);
-    //(찬희) 현재 pf의 지급순서 조회
+    //(찬희)현재 pf의 지급순서 조회
     int getPaymentOrderValue(StageRollDTO dto);
-
+    //(찬희)전원 입금식별자 'Y' -> 'N'
+    void AllPaymentCheckUpdate(StageRollDTO stageRollDTO);
+    //(찬희)지급 순서 저장
+    void paymentOrderSave(StageRollDTO stageRollDTO);
 }

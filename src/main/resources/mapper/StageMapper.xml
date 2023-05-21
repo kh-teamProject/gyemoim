@@ -234,14 +234,34 @@
 
     <!--(찬희)*번의 uPayment + stageBalance-->
     <update id="stagePaymentOrder">
-        UPDATE MyAccount
+        UPDATE myAccount
         SET myBalance = myBalance + (
-        SELECT COALESCE(SUM(im.uTotalReceipts), 0)
-        FROM receiptSchedule im
-        LEFT JOIN pf p ON im.deposit = p.deposit AND im.pfRate = p.pfRate
-        LEFT JOIN roll r ON p.pfID = r.pfID AND im.receiveTurn = r.receiveTurn
-        WHERE im.receiveTurn = p.paymentOrder
-        AND r.uNo = MyAccount.uNo
+        SELECT DISTINCT COALESCE(rs.uTotalReceipts, 0)
+        FROM receiptSchedule rs
+        JOIN PF pf ON pf.deposit = rs.deposit AND pf.pfRate = rs.pfRate
+        JOIN ROLL ro ON ro.pfID = pf.pfID
+        WHERE pf.paymentOrder = rs.receiveTurn
+        AND ro.pfID = #{pfID}
         )
+        WHERE EXISTS (
+        SELECT ro.uNo
+        FROM PF pf
+        JOIN Roll ro ON ro.pfID = pf.pfID
+        JOIN myAccount ma ON ma.uNo = ro.uNo
+        WHERE pf.paymentOrder = ro.receiveTurn
+        AND pf.pfID = #{pfID}
+        )
+    </update>
+
+    <!--(찬희)전원 입금식별자 'Y' -> 'N' -->
+    <update id="AllPaymentCheckUpdate">
+        UPDATE roll
+        SET paymentCheck = 'N'
+    </update>
+    <!--(찬희) 지급 순서 저장-->
+    <update id="paymentOrderSave">
+        UPDATE PF
+        SET paymentOrder = paymentOrder + 1
+        WHERE pfID = #{pfID}
     </update>
 </mapper>

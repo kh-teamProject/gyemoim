@@ -156,6 +156,7 @@ public class StageServiceImpl implements StageService {
     //2. my계좌 잔액 -> 현금액 - uPayment
     stageMapper.myAccountUPaymentUpdate(dto);
     //3. 계좌이력도 남겨야 함
+
     //4. 입금 횟수 mapper.xml에서 +1
     stageMapper.depositCntPlus(dto);
     //5. 입금 누적 금액 update
@@ -163,27 +164,33 @@ public class StageServiceImpl implements StageService {
     //6. 입금식별 -> update
     stageMapper.stagePaymentCheckUpdate(dto);
     //7. 현재 dto를 저장
+    // 전원이 다 입금하면 조건문 걸기
     //(현재 paymentOrder 값 조회)
     this.stageRollDTO = dto;
     this.stageRollDTO.setPaymentOrder(stageMapper.getPaymentOrderValue(stageRollDTO));
   }
   //(찬희). 스테이지 금액 -> my계좌로 순서에 맞게 update
   @Override
-  @Scheduled(cron = "0 08 17 18 * ?") // 매달 25일 0시 0분 0초에 실행
+  @Scheduled(cron = "0 52 19 20 * ?") // 매달 25일 0시 0분 0초에 실행
   public void performUpdate() {
     log.info("제발 실행이 되어주세요 플리즈" + stageRollDTO);
     if( stageRollDTO != null) {
+      log.info("실행이 됩니까? 1 : " + stageRollDTO);
       int currentStageBalance = stageMapper.getStageBalance(stageRollDTO);
       int stageDeposit = stageMapper.getStageDeposit(stageRollDTO);
       // stageBalance >= deposit : stageBalance -> uPayment 이동
 
       if (currentStageBalance >= stageDeposit) {
-        //stageBalance - *번의 uPayment
-        stageMapper.stageBalanceMinus(stageRollDTO);
-        //*번의 uPayment + stageBalance
-        stageMapper.stagePaymentOrder(stageRollDTO);
-        // 지급순서 올리기 if(pfEntry >= paymentOrder)
+        log.info("실행이 됩니까? 2 : " + currentStageBalance);
 
+        //1. stageBalance - *번의 uPayment
+        stageMapper.stageBalanceMinus(stageRollDTO);
+        //2. *번의 uPayment + stageBalance
+        stageMapper.stagePaymentOrder(stageRollDTO);
+        //3. 지급순서 올리기
+        stageMapper.paymentOrderSave(stageRollDTO);
+        //4. 전원 입금식별자 'Y' -> 'N'
+        stageMapper.AllPaymentCheckUpdate(stageRollDTO);
       }
     }
   }
