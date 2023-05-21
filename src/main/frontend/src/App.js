@@ -9,14 +9,13 @@ import MyPage from "./page/account/MyPage";
 import MyPageModify from "./page/account/MyPageModify";
 import Board from "./page/Board";
 import Stage from './page/Stage';
-import './App.css';
 import CheckedPwd from "./page/account/CheckedPwd";
 import Deposit from "./page/account/Deposit";
-import MyStage from "./page/account/MyStage";
 import Interest from "./page/account/Interest";
 import MemberDelete from "./page/account/MemberDelete";
 import Withdraw from "./page/account/Withdraw";
 import DetailsInquiry from "./page/account/DetailsInquiry";
+import './App.css';
 
 
 const App = () => {
@@ -69,10 +68,6 @@ const App = () => {
             {
               path: 'bankAccount/detailsInquiry',
               element: <DetailsInquiry />
-            },
-            {
-              path: 'stage',
-              element: <MyStage />
             }
           ]
         },
