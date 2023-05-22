@@ -16,8 +16,11 @@ import Withdraw from "./page/account/Withdraw";
 import DetailsInquiry from "./page/account/DetailsInquiry";
 import Board from "./page/Board";
 import Stage from './page/Stage';
-import './App.css';
 import AccountManagement from "./page/admin/AccountManagement";
+import AdminHome from "./page/AdminHome";
+import StageManagement from "./page/admin/StageManagement";
+import BoardManagement from "./page/admin/BoardManagement";
+import './App.css';
 
 
 const App = () => {
@@ -88,8 +91,20 @@ const App = () => {
       element: <AdminRoot />,
       children: [
         {
+          index: true,
+          element: <AdminHome />
+        },
+        {
           path: 'account',
           element: <AccountManagement />
+        },
+        {
+          path: 'stage',
+          element: <StageManagement />
+        },
+        {
+          path: 'board',
+          element: <BoardManagement />
         }
       ]
     }
