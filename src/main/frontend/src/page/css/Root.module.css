@@ -1,0 +1,27 @@
+.admin-bar {
+  position: relative;
+  width: 100%;
+  background: black;
+  color: white;
+  padding: 20px 0;
+}
+
+.admin-bar > p {
+  margin: 0;
+  text-align: center;
+}
+
+.admin-bar .link-wrap {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  color: white;
+}
+
+.admin-bar .link-wrap svg {
+  margin-left: 10px;
+}
+
+.admin-bar .link-wrap a:visited {
+  color: white;
+}

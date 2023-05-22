@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import axios from "axios";
 
 import classes from '../css/MyPageModify.module.css';
@@ -34,7 +34,8 @@ const MyPageModify = () => {
         phoneRef.current.value = res.data.phone ? res.data.phone : '';
         bankRef.current.value = res.data.bankName ? res.data.bankName : '';
         bankNumberRef.current.value = res.data.bankAccountNumber ? res.data.bankAccountNumber : '';
-        creditRatingRef.current.value = res.data.creditRating ? res.data.creditRating : '';
+        accountHolderRef.current.value = res.data.accountHolder ? res.data.accountHolder: '';
+        creditRatingRef.current.value = res.data.PRANK === 'A' ? '1' : res.data.PRANK === 'B' ? '4' : '7';
         enrollDateRef.current.value = `${year}-${month}-${day}`;
       })
       .catch((error) => {

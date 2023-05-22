@@ -94,7 +94,7 @@
     WHERE UNO = #{uNo}
   </update>
 
-  <!-- 계모임 계좌 잔액 충전하기 -->
+  <!-- 계모임 계좌 거래내역 저장 -->
   <insert id="deposit" parameterType="com.team.gyemoim.dto.BankHistoryDTO">
     INSERT INTO MYACCOUNTHISTORY(UNO, BANKNAME, BANKACCOUNTNUMBER, TRANSACTIONAMOUNT, BANKHISTORY, TRADINGHOURS)
     VALUES (#{uNo}, #{bankName}, #{bankAccountNumber}, #{transactionAmount}, #{bankHistory}, sysdate)

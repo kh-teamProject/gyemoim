@@ -50,6 +50,7 @@ public class AccountServiceImpl implements AccountService{
   @Override
   public void myInfoModify(MyPageDTO dto) {
     accountMapper.myInfoModify(dto);
+//    accountMapper.createMyAccount(bankHistoryDTO);
   }
 
   // 내 관심사 수정하기
@@ -62,7 +63,6 @@ public class AccountServiceImpl implements AccountService{
   @Override
   public void myAccountUpdate(BankHistoryDTO bankHistoryDTO) {
     accountMapper.myAccountUpdate(bankHistoryDTO);
-    accountMapper.createMyAccount(bankHistoryDTO);
   }
 
   // 내 계모임 계좌 거래내역 가져오기
