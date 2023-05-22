@@ -61,8 +61,8 @@ public class AccountServiceImpl implements AccountService{
   // 계모임 계좌 정보 수정
   @Override
   public void myAccountUpdate(BankHistoryDTO bankHistoryDTO) {
-    System.out.println(bankHistoryDTO);
     accountMapper.myAccountUpdate(bankHistoryDTO);
+    accountMapper.createMyAccount(bankHistoryDTO);
   }
 
   // 내 계모임 계좌 거래내역 가져오기

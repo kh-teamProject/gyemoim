@@ -26,7 +26,7 @@ const CheckedPwd = () => {
   });
 
   const checkedPwdHandler = (e) => {
-    setPasswordIsValid(e.target.value === password);
+    setPasswordIsValid(e.target.value == password);
   }
 
   const locationHandler = () => {

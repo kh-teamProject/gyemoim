@@ -15,6 +15,7 @@ const MyPageModify = () => {
   const phoneRef = useRef();
   const bankRef = useRef();
   const bankNumberRef = useRef();
+  const accountHolderRef = useRef();
   const creditRatingRef = useRef();
   const enrollDateRef = useRef();
 
@@ -30,7 +31,7 @@ const MyPageModify = () => {
         setUNo(res.data.uNo);
         emailRef.current.value = res.data.email;
         nameRef.current.value = res.data.name;
-        phoneRef.current.value = res.data.phone;
+        phoneRef.current.value = res.data.phone ? res.data.phone : '';
         bankRef.current.value = res.data.bankName ? res.data.bankName : '';
         bankNumberRef.current.value = res.data.bankAccountNumber ? res.data.bankAccountNumber : '';
         creditRatingRef.current.value = res.data.creditRating ? res.data.creditRating : '';
@@ -44,6 +45,17 @@ const MyPageModify = () => {
   const myInfoChangeHandler = (e) => {
     e.preventDefault();
 
+    if(
+      phoneRef.current.value == '' ||
+      bankNumberRef.current.value == '' ||
+      bankRef.current.value == '' ||
+      accountHolderRef.current.value == '' ||
+      creditRatingRef.current.value == ''
+    ) {
+      alert('빈칸이 존재합니다. 모두 입력해주세요.');
+      return;
+    }
+
     axios.post('/myInfoModify', null, {
       params: {
         uno: 3,
@@ -52,6 +64,7 @@ const MyPageModify = () => {
         phone: phoneRef.current.value,
         bankName: bankRef.current.value,
         bankAccountNumber: bankNumberRef.current.value,
+        accountHolder: accountHolderRef.current.value,
         creditRating: creditRatingRef.current.value,
         enrollDate: enrollDateRef.current.value
       }
@@ -102,17 +115,15 @@ const MyPageModify = () => {
             <input type="text" id="account-number" ref={bankNumberRef} />
           </div>
           <div className={classes.field}>
+            <label htmlFor="account-number">계좌명의</label>
+            <input type="text" id="account-number" ref={accountHolderRef}/>
+          </div>
+          <div className={classes.field}>
             <label htmlFor="credit-rating">신용등급</label>
             <select name="creditRating" id="credit-rating" ref={creditRatingRef}>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
+              <option value="1">1 ~ 3</option>
+              <option value="4">4 ~ 6</option>
+              <option value="7">7 ~ 9</option>
             </select>
           </div>
           <div className={classes.field}>

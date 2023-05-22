@@ -19,6 +19,9 @@ public interface AccountMapper {
   // 계모임 계좌 잔액 충전 이력 저장
   void deposit(BankHistoryDTO bankHistoryDTO);
 
+  // 정회원으로 변경시 myAccount 계모임계좌 생성
+  void createMyAccount(BankHistoryDTO bankHistoryDTO);
+
   // Reade
   // 내 정보 불러오기
   HashMap<String, Object> getMyInfo(Integer uNo);
@@ -41,6 +44,7 @@ public interface AccountMapper {
 
   // 내 계모임 계좌 거래내역 가져오기
   List<MyAccountHistory> getMyAccountHistory(Integer uNo);
+
 
   // Delete
 

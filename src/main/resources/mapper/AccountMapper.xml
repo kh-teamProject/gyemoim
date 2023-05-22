@@ -54,11 +54,21 @@
   <!-- 내 정보 수정 -->
   <update id="myInfoModify">
     UPDATE MEMBER
-    SET name              = #{name},
-        phone             = #{phone},
-        bankname          = #{bankName},
+    SET name = #{name},
+        phone = #{phone},
+        bankname = #{bankName},
         bankaccountnumber = #{bankAccountNumber},
-        creditrating      = #{creditRating}
+        accountHolder = #{accountHolder},
+        userRole = '정회원',
+        <if test="creditRating == 1">
+          pRank = 'A'
+        </if>
+        <if test="creditRating == 4">
+          pRank = 'B'
+        </if>
+        <if test="creditRating == 7">
+          pRank = 'C'
+        </if>
     WHERE uno = #{uno}
   </update>
 
@@ -88,6 +98,12 @@
   <insert id="deposit" parameterType="com.team.gyemoim.dto.BankHistoryDTO">
     INSERT INTO MYACCOUNTHISTORY(UNO, BANKNAME, BANKACCOUNTNUMBER, TRANSACTIONAMOUNT, BANKHISTORY, TRADINGHOURS)
     VALUES (#{uNo}, #{bankName}, #{bankAccountNumber}, #{transactionAmount}, #{bankHistory}, sysdate)
+  </insert>
+
+<!-- 정회원으로 변경시 myAccount에 계모임 계좌 생성 -->
+  <insert id="createMyAccount">
+    INSERT INTO MYACCOUNT
+    VALUES (#{uNo}, '0')
   </insert>
 
 </mapper>

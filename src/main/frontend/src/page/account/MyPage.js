@@ -15,8 +15,9 @@ const MyPage = () => {
   const phoneRef = useRef();
   const bankRef = useRef();
   const bankNumberRef = useRef();
-  const creditRatingRef = useRef();
-  const plusRateRef = useRef();
+  const pRankRef = useRef();
+  const accountHolderRef = useRef();
+  const userRoleRef = useRef();
   const enrollDateRef = useRef();
 
   useEffect(() => {
@@ -31,10 +32,12 @@ const MyPage = () => {
         setUNo(res.data.uNo);
         emailRef.current.value = res.data.email;
         nameRef.current.value = res.data.name;
-        phoneRef.current.value = res.data.phone;
+        phoneRef.current.value = res.data.phone ? res.data.phone : '';
         bankRef.current.value = res.data.bankName ? res.data.bankName : '';
         bankNumberRef.current.value = res.data.bankAccountNumber ? res.data.bankAccountNumber : '';
-        creditRatingRef.current.value = res.data.creditRating ? res.data.creditRating : '';
+        accountHolderRef.current.value = res.data.accountHolder ? res.data.accountHolder : '';
+        pRankRef.current.value = res.data.PRANK ? res.data.PRANK : '';
+        userRoleRef.current.value = res.data.USERROLE;
         enrollDateRef.current.value = `${year}-${month}-${day}`;
       })
       .catch((error) => {
@@ -83,8 +86,12 @@ const MyPage = () => {
           <input type="text" id="account-number" ref={bankNumberRef} readOnly/>
         </div>
         <div className={classes.field}>
-          <label htmlFor="credit-rating">신용등급</label>
-          <input type="text" id="credit-rating" ref={creditRatingRef} readOnly/>
+          <label htmlFor="account-number">계좌명의</label>
+          <input type="text" id="account-number" ref={accountHolderRef} readOnly/>
+        </div>
+        <div className={classes.field}>
+          <label htmlFor="credit-rating">계모임 등급</label>
+          <input type="text" id="credit-rating" ref={pRankRef} readOnly/>
         </div>
         <div className={classes.field}>
           <label htmlFor="enroll-date">가입일</label>
@@ -92,7 +99,7 @@ const MyPage = () => {
         </div>
         <div className={classes.field}>
           <label htmlFor="">회원구분</label>
-          <input type="text" id="" value={"가회원"} readOnly/>
+          <input type="text" id="" ref={userRoleRef} readOnly/>
         </div>
         <div className={classes.field}>
           <NavLink to={`/mypage/info/checkedPwd`} className={`${classes['link-btn']}`}>수정하기</NavLink>

@@ -15,7 +15,7 @@ public class MemberVO {
   private String bankAccountNumber; // 계좌번호
   private String accountHolder; // 예금주
   private String identifier; // 식별자
-  private double creditRating; // 신용등급
+  private String pRank; // 신용등급
   private String enrollDate; // 회원가입일
   private String isLeave; // 탈퇴여부
 }
