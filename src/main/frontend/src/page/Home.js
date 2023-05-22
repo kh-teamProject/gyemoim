@@ -1,7 +1,8 @@
 
 const Home = () => {
+
   return (
-      <h1>DB값 불러오기</h1>
+    <h1>홈</h1>
   );
 };
 

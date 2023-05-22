@@ -1,10 +1,12 @@
 import {Outlet} from "react-router-dom";
 
+import classes from '../css/MyPageRoot.module.css';
+
 const MyPageRootLayout = () => {
 
   return (
     <>
-      <main>
+      <main className={classes.container}>
         <Outlet />
       </main>
     </>
