@@ -77,7 +77,7 @@ const App = () => {
          element: <StagePartIn />
      },
      {
-          path: 'stage',
+          path: 'stage/:pfID',
           element: <Stage />
         },
         {

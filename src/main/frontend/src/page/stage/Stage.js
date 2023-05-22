@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import classes from '../css/Stage.module.css';
 import BoxButton from "../../component/UI/stage/BoxButton";
 import StageSequence from "../../component/UI/stage/StageSequence";
@@ -21,13 +21,14 @@ const Stage = () => {
     const [pfData, setPfData] = useState([]);
     const [rollData, setRollData] = useState([]);
 
-
+    const location = useLocation();
+    const pfIDNum = location.pathname.split('/');
 
   useEffect(() => {
     axios.get('/stage', {
       params: {
-        uNo: 3,
-        pfID: 1
+        uNo: 1,
+        pfID: pfIDNum[pfIDNum.length -1]
       }
     })
       .then((res) => {

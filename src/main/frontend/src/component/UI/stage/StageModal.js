@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import classes from '../../css/StageModal.module.css';
 import axios from "axios";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 
 const Backdrop = (props) => {
@@ -11,12 +11,14 @@ const Backdrop = (props) => {
 
 const ExitModalOverlay = (props) => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const pfIDNum = location.pathname.split('/');
 
     const exitButtonClick = () => {
       axios.delete('/stageOut', {
             params: {
               uNo: 1,
-              pfID: 1
+              pfID: pfIDNum[pfIDNum.length -1]
             }
           })
         .then(response => {
@@ -83,12 +85,20 @@ const ReceiptModalOverlay = (props) => {
 const DepositModalOverlay = (props) => {
     let uPayment =  props.rollData.uPayment.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     let myBalance = props.rollData.myBalance.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const [moneyCheck, setMoneyCheck] = useState(true);
+
+    useEffect(() => {
+        setMoneyCheck(props.rollData.uPayment > props.rollData.myBalance);
+    }, []);
+
+    const location = useLocation();
+    const pfIDNum = location.pathname.split('/');
 
     const depositButtonClick = () => {
       axios.post('/deposit',null, {
             params: {
-              uNo: 5,
-              pfID: 1,
+              uNo: 1,
+              pfID: pfIDNum[pfIDNum.length -1],
               uPayment: props.rollData.uPayment
             }
           })
@@ -125,10 +135,8 @@ return (
         ))}
           <div className={classes.depositUpdate}>
             <div className={classes.depositAmount}>이번 달 입금 금액 : {uPayment}원</div>
-            {props.roll.paymentCheck === 'N'
-            ? <button onClick={depositButtonClick} >입금하기</button>
-            : <button　className={classes.grayBtn}>입금완료</button>
-            }
+            <button onClick={depositButtonClick} >입금하기</button>
+
           </div>
 
       <div className={classes.myAccount}>
@@ -136,6 +144,7 @@ return (
         <p>my계좌잔액</p>
         <p>{myBalance}원</p>
         </div>
+        {moneyCheck && <p>계좌잔액이 부족합니다.</p>}
         <p className={classes.caution}>*계좌에 금액이 부족하실 경우 마이페이지에서 충전해주시기 바랍니다. <Link to={'/mypage'}>마이페이지 ></Link></p>
       </div>
 
