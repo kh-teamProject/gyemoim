@@ -13,6 +13,7 @@ import Account from "./page/account/Account";
 import Logout from "./page/account/Logout";
 import './App.css';
 import Test from "./page/Test";
+import AdminStageDetail from "./page/admin/AdminStageDetail";
 
 const App = () => {
 
@@ -62,6 +63,11 @@ const App = () => {
                 {
                     path :'test/:pfID',
                     element:<Test/>
+                },
+            //     관리자 경로
+                {
+                    path :'admin/stage/detail',
+                    element:<AdminStageDetail/>
                 }
 
             ]

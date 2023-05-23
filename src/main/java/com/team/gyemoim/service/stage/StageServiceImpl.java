@@ -3,7 +3,8 @@ package com.team.gyemoim.service.stage;
 
 import com.team.gyemoim.dto.stage.StageListDTO;
 import com.team.gyemoim.mapper.StageMapper;
-import com.team.gyemoim.vo.ParticipationVO;
+import com.team.gyemoim.vo.RollVO;
+import com.team.gyemoim.vo.RollVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,6 @@ public class StageServiceImpl implements StageService {
 
 //  (유진)수령순서가져오기
   @Override
-  public List<ParticipationVO> getRecTurn() {
+  public List<RollVO> getRecTurn() {
     return stageMapper.getRecTurn();}
 }

@@ -1,7 +1,7 @@
 package com.team.gyemoim.mapper;
 
 import com.team.gyemoim.dto.stage.StageListDTO;
-import com.team.gyemoim.vo.ParticipationVO;
+import com.team.gyemoim.vo.RollVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,6 +14,6 @@ public interface StageMapper {
   List<StageListDTO> filterList(int deposit);
 
 // (유진) 수령순서 가져오기.
-  List<ParticipationVO> getRecTurn();
+  List<RollVO> getRecTurn();
 
 }
