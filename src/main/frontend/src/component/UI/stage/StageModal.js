@@ -135,8 +135,10 @@ return (
         ))}
           <div className={classes.depositUpdate}>
             <div className={classes.depositAmount}>이번 달 입금 금액 : {uPayment}원</div>
-            <button onClick={depositButtonClick} >입금하기</button>
-
+            {props.rollData.paymentCheck === 'N'
+            ? <button onClick={depositButtonClick} >입금하기</button>
+            : <button　className={classes.grayBtn}>입금완료</button>
+            }
           </div>
 
       <div className={classes.myAccount}>

@@ -14,6 +14,7 @@ import Account from "./page/account/Account";
 import Logout from "./page/account/Logout";
 import Stage from './page/stage/Stage';
 import ChanHeeTest from './page/ChanHeeTest';
+import StageReport from "./component/UI/stage/StageReport";
 import './App.css';
 import Test from "./page/Test";
 
@@ -83,6 +84,10 @@ const App = () => {
         {
           path: 'ChanHeeTest',
           element: <ChanHeeTest />
+        },
+        {
+          path: 'StageReport',
+          element: <StageReport />
         }
       ]
     },

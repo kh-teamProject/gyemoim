@@ -1,16 +1,20 @@
-import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import classes from '../../../page/css/Stage.module.css';
 import StageModal from "./StageModal";
 import modalClasses from '../../css/StageModal.module.css';
-
+import StageReport from "./StageReport";
 
 function StageDeposit(props){
     let uPayment;
     let myBalance;
+    let uTotalReceipts;
+
     if(props.startFlag === '대기중' || props.startFlag === '참여중'){
     myBalance = props.rollData.myBalance.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     uPayment =  props.rollData.uPayment.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }else{
+    uTotalReceipts =  props.rollData.uTotalReceipts.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     };
 
     const [deposit, setDeposit] = useState(false);
@@ -21,14 +25,33 @@ function StageDeposit(props){
     setDeposit(null);
     };
 
+    const [showStageReport, setShowStageReport] = useState(false);
+    const navigate = useNavigate();
+
+    const pdfHandler = () => {
+    console.log("들?")
+    // StageReport 컴포넌트를 표시하도록 상태 업데이트
+     navigate('/stageReport');
+  };
+
+
+
 	return (
 	<div classes={classes.depositArea}>
         <p className={classes.boxTitle}>{props.subTitle}</p>
         <div className={[classes.boxBtn, classes.depositBox].join(' ')}>
             <div className={classes.depositLogo}><img src={require('../../assert/images/gyemoim_character.png')} alt="logo" /></div>
             <div className={classes.depositDesc}>
+            { props.startFlag === '대기중' || props.startFlag === '참여중'
+                ? <>
                 <p>My 계좌 잔액: {myBalance}원</p>
                 <p>이번 달 입금 할 금액 : {uPayment}원</p>
+                </>
+                : <>
+                <p>수령금액 : {uTotalReceipts}원 </p>
+                <p>나의 이율표 출력하기</p>
+                </>
+            }
             </div>
             { props.startFlag === '대기중' &&
             <button className={[classes.depositBtn, classes.grayBtn].join(' ')}>{props.btn}</button>
@@ -37,6 +60,12 @@ function StageDeposit(props){
             <>
             <button onClick={depositHandler} className={classes.depositBtn}>{props.btn}</button>
             {deposit && <StageModal roll={props.roll} rollData={props.rollData} id={'deposit'} title={props.title} onConfirm={errorDepositHandler} />}
+            </>
+            }
+            { props.startFlag === '완료' &&
+            <>
+            <button onClick={pdfHandler} className={classes.depositBtn}>{props.btn}</button>
+            {showStageReport && <StageReport />}
             </>
             }
         </div>
