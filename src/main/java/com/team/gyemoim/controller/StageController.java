@@ -75,10 +75,9 @@ public class StageController {
     }
   
       //(현지) <스테이지생성>_수령예정표
-    @GetMapping(value ="/stageCreate")
-
-    public List<ImportDTO> importTableGet(@RequestParam BigDecimal pfRate){
-        return stageService.importGet(pfRate);
+    @GetMapping(value ="/stageCreateImportTable")
+    public List<ImportDTO> importTableGet(ImportDTO importDTO){
+        return stageService.importGet(importDTO);
     }
 
     //(찬희) stage 컨트롤러

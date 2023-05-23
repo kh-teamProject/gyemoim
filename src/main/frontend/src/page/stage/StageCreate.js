@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +9,7 @@ import styles from "../css/StageCreate.module.css";
 
 import Participants from "../../component/UI/stage/Participants";
 import Rate from "../../component/UI/stage/Rate";
+
 import Turn from "../../component/UI/stage/Turn";
 
 import Agree from "../../component/UI/stage/Agree";
@@ -24,13 +24,13 @@ const StageCreate = () => {
   const [importTable, setImportTable] = useState([]);
   const [isImportTable, setIsImportTable] = useState(false);
 
-
 const [createButton, setCreateButton] = useState(false);
 
 
  const [turn, setTurn] = useState("");
 
  const [deposit, setDeposit] = useState("");
+
 
  const [category, setCategory] = useState("");
 
@@ -56,7 +56,7 @@ const [isDuplicate, setIsDuplicate] = useState(false);
           pfName: name,
           pfEntry: count,
           pfRate: rate,
-          Deposit: deposit,
+          deposit: deposit,
           interest: category,
           pRank:rank,
          receiveTurn : turn,
@@ -74,6 +74,11 @@ const [isDuplicate, setIsDuplicate] = useState(false);
     setDeposit(participantsData);
   };
 
+  const depositInputHandler = (depositData) => {
+    setDeposit(depositData);
+  };
+
+
   const rateHandler = (rateData) => {
     setRate(rateData);
   };
@@ -84,9 +89,10 @@ const [isDuplicate, setIsDuplicate] = useState(false);
       setRateTable("이율표 닫기");
 
       axios
-        .get("/stageCreate", {
+        .get("/stageCreateImportTable",{
           params: {
             pfRate: rate,
+            deposit: deposit,
           },
         })
         .then((res) => {
@@ -138,6 +144,7 @@ const movePage = useNavigate("");
       .post("/checkPfName",null, {
         params: {
           pfName: name,
+
         },
       })
       .then((response) => {
@@ -290,14 +297,22 @@ const movePage = useNavigate("");
                     <td>이율</td>
                     <td>수령순서</td>
                     <td>약정금</td>
+                    <td>개인별 월입금액</td>
+                    <td>개인별 총입금액</td>
+                    <td>개인별 적용이율</td>
+                    <td>개인별 실지급금</td>
                   </tr>
                 </thead>
                 <tbody>
                   {importTable.map((value, index) => (
                     <tr key={index}>
-                      <td>{value.pfRate}</td>
+                      <td>{value.pfRate}%</td>
                       <td>{value.receiveTurn}</td>
-                      <td>{value.deposit}</td>
+                      <td>{value.deposit.toLocaleString()}</td>
+                      <td>{value.upayment.toLocaleString()}</td>
+                      <td>{value.utotalPayment.toLocaleString()}</td>
+                      <td>{value.urate}%</td>
+                     <td>{value.utotalReceipts.toLocaleString()}</td>
                     </tr>
                   ))}
                 </tbody>

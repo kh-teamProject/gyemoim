@@ -66,9 +66,9 @@ public class StageServiceImpl implements StageService {
   }
 
   @Override
-  public List<ImportDTO> importGet(BigDecimal pfRate) {
+  public List<ImportDTO> importGet(ImportDTO importDTO) {
     System.out.println("[서비스] 수령예정표 가져오기");
-    return stageMapper.importGet(pfRate);
+    return stageMapper.importGet(importDTO);
   }
 
   @Override

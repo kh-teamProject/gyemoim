@@ -13,7 +13,7 @@ public class ImportDTO {
     private  Integer pfEntry;//초기 몇명
     private Integer uPayment; //개인별월입금액
     private Integer uTotalPayment; //개인별총입금액
-    private Integer uRate; //개인별 적용이율
+    private BigDecimal uRate; //개인별 적용이율
     private Integer uInterest; //개인별 실 이자
 
     private Integer uTotalReceipts; //개인별 실 지급금

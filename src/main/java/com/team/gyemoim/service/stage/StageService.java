@@ -20,7 +20,7 @@ public interface StageService {
   void stageParticipate(StageParticipateDTO stageParticipateDTO);
 
   int checkPfName(String pfName);
-  List <ImportDTO> importGet(BigDecimal pfRate);
+  List <ImportDTO> importGet(ImportDTO importDTO);
 
 
   //Read
