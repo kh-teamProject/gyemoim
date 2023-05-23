@@ -9,3 +9,11 @@ input, button, div {
 a {
   text-decoration: none;
 }
+
+a:visited {
+  color: black;
+}
+
+li {
+  list-style: none;
+}

@@ -9,7 +9,7 @@ h2 {
 .field {
   font-size: 1.25rem;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .field label {
@@ -19,31 +19,11 @@ h2 {
   text-align: left;
 }
 
-.field input {
+.field input, .field select {
   width: 300px;
   height: 30px;
   padding: 5px 10px;
   box-sizing: border-box;
-}
-
-.field:nth-child(9) div {
-  display: inline-block;
-  position: relative;
-}
-
-.field:nth-child(9), .field:nth-child(10) {
-  margin-bottom: 0;
-}
-
-.field:nth-child(9) button {
-  position: absolute;
-  right: 0;
-  width: 80px;
-  height: 30px;
-  background: skyblue;
-  color: white;
-  border: 1px solid rgba(118, 118, 118);
-  font-weight: bold;
 }
 
 .field .submit-btn {

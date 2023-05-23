@@ -1,0 +1,97 @@
+.field {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 105px;
+}
+
+.field h3 {
+  margin-top: 50px;
+}
+
+.field .myAccount {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 30px;
+  padding: 0;
+}
+
+.field .myAccount li {
+  position: relative;
+  width: 140px;
+  height: 40px;
+  font-size: 1.5rem;
+  color: gray;
+  cursor: pointer;
+}
+
+.field .myAccount li  a.isActive {
+  color: black;
+  font-weight: bold;
+}
+
+.field .myAccount li  a.isActive::after{
+  content: '';
+  display: inline-block;
+  width: 150px;
+  border-bottom: 2px solid gray;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.account-money {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+  height: 60px;
+  padding: 0 20px;
+  background: #f4f422;
+  border-radius: 8px;
+}
+
+.my-account {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  width: 600px;
+  margin: 40px 0 20px;
+}
+
+.my-account div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.my-account div:last-child {
+  display: flex;
+  justify-content: flex-start;
+  gap: 50px;
+}
+
+.my-account div:last-child span {
+  font-weight: 500;
+}
+
+.my-account button {
+  width: 80px;
+  height: 30px;
+  border: 0;
+  border-radius: 4px;
+}
+
+.my-account input {
+  width: 400px;
+  height: 30px;
+  border: 0;
+  border-bottom: 1px solid gray;
+}
+
+.warning-msg {
+  font-size: 0.75rem;
+  color: red;
+}

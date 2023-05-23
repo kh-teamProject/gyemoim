@@ -19,13 +19,10 @@ public class MemberVO {
     private String bankName; //은행명
     private String bankAccountNumber; //계좌번호
     private String accountHolder; //예금주
-    private double creditRating; //신용등급
-    private int interest; //관심사
+    private String pRank; //신용등급
+    private String interest; //관심사
     private String enrollDate; //회원가입일
     private String isLeave; // 탈퇴여부
     private String userRole;// 권한
 
-    public MemberVO(String subject, String string, Collection<? extends GrantedAuthority> authorities) {
-    }
-    
 }
