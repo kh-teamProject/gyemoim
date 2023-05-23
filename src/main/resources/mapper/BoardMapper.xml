@@ -11,16 +11,26 @@
         FROM BOARD
     </select>
 
-    <!-- 페이징 처리 후 게시글 조회하기 -->
-    <select id="selectBoard" resultType="com.team.gyemoim.dto.board.BoardListDTO">
+    <!-- 게시글 목록 가져오기 -->
+    <select id="selectBoard" resultType="com.team.gyemoim.vo.BoardVO">
         SELECT *
-        FROM (SELECT *
-              FROM BOARD
-              ORDER BY bid DESC)
+        FROM BOARD
     </select>
 
+    <!-- 페이징 처리 후 게시글 조회하기
+    <select id="selectBoard" resultType="com.team.gyemoim.vo.BoardVO">
+        SELECT *
+        FROM (SELECT rownum RN, A.*
+              FROM (SELECT *
+                    FROM BOARD
+                    ORDER BY bid DESC) A)
+        WHERE RN BETWEEN ${start} AND ${end}
+    </select> -->
 
-    <!-- 검색 후 게시글 갯수 구하기 -->
+
+
+
+    <!-- 검색 후 페이징 된 게시글 갯수 구하기 -->
     <select id="searchCountBoard" parameterType="com.team.gyemoim.vo.PageVO" resultType="int">
         SELECT COUNT(*)
         FROM BOARD
@@ -28,6 +38,32 @@
         OR content LIKE '%' || #{searchKeyword} || '%'
         OR name = #{searchKeyword}
     </select>
+
+
+
+    <!-- 검색 후 검색에 해당하는 게시글 리스트 조회하기 (페이징 동시에 검색)
+    <select id="searchList" parameterType="com.team.gyemoim.vo.PageVO" resultType="com.team.gyemoim.vo.BoardVO">
+        SELECT *
+        FROM (SELECT rownum RN, A.*
+              FROM (SELECT *
+                    FROM BOARD
+                    WHERE title LIKE '%' || #{searchKeyword} || '%'
+                       OR content LIKE '%' || #{searchKeyword} || '%'
+                       OR name = #{searchKeyword}
+                    ORDER BY bid DESC) A)
+        WHERE RN BETWEEN ${start} AND ${end}
+    </select>-->
+
+    <!-- 검색된 게시글 리스트 조회하기 -->
+    <select id="searchList" parameterType="com.team.gyemoim.vo.PageVO" resultType="com.team.gyemoim.vo.BoardVO">
+        SELECT *
+        FROM BOARD
+        WHERE title LIKE '%' || #{searchKeyword} || '%'
+           OR content LIKE '%' || #{searchKeyword} || '%'
+           OR name = #{searchKeyword}
+    </select>
+
+
 
 
     <!-- 특정 게시글 상세보기 -->
@@ -46,18 +82,7 @@
     </update>
 
 
-    <!-- 검색 후 검색에 해당하는 게시글 리스트 조회하기 (페이징 동시에 검색)-->
-    <select id="searchList" parameterType="com.team.gyemoim.vo.PageVO" resultType="com.team.gyemoim.vo.BoardVO">
-        SELECT *
-        FROM (SELECT rownum RN, A.*
-              FROM (SELECT *
-                    FROM BOARD
-                    WHERE title LIKE '%' || #{searchKeyword} || '%'
-                       OR content LIKE '%' || #{searchKeyword} || '%'
-                       OR name = #{searchKeyword}
-                    ORDER BY bid DESC) A)
-        WHERE RN BETWEEN ${start} AND ${end}
-    </select>
+
 
 
     <!-- 게시글 Create -->

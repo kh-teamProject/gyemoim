@@ -1,19 +1,17 @@
 package com.team.gyemoim.controller;
 
 import com.team.gyemoim.dto.board.BoardDeleteDTO;
-import com.team.gyemoim.dto.board.BoardListDTO;
 import com.team.gyemoim.dto.board.BoardModifyDTO;
 import com.team.gyemoim.dto.board.BoardWriteDTO;
 import com.team.gyemoim.service.BoardService;
 import com.team.gyemoim.service.ReplyService;
 import com.team.gyemoim.vo.BoardVO;
-import com.team.gyemoim.vo.ReplyVO;
+import com.team.gyemoim.vo.PageVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.http.HttpHeaders;
 
 import java.util.List;
 
@@ -25,14 +23,20 @@ public class BoardController {
 
     public final ReplyService replyService;
 
-    // 게시글 목록 API [GET /board/notice/list?type
+    // 전체 게시글 목록 조회하는 API
     @GetMapping("/board/notice/list")
-    public List<BoardListDTO> getBoardList() throws Exception {
-        int total = boardService.countBoard();// 게시글 전체 갯수
+    public List<BoardVO> getBoardList() throws Exception {
 
-        System.out.println("BoardController.getBoardList 들어왔다 :D ");
+        return boardService.selectBoard();
+    }
 
-        return boardService.selectBoard();// 게시글 조회하기
+
+    // 검색어, 검색 타입 받아서 그 검색된 게시글 리스트 조회하기
+    @GetMapping("/board/notice/searchList")
+    public List<BoardVO> searchList(@RequestBody String searchKeyword, @RequestBody String searchType) throws Exception {
+        PageVO spv = new PageVO(searchType, searchKeyword);
+
+        return boardService.searchList(spv);
     }
 
 
@@ -60,7 +64,6 @@ public class BoardController {
 
         /*List<ReplyVO> replyVOList = replyService.reply(bid);*/
         BoardVO boardVO = boardService.readDetail(bid);
-
 
         return boardVO;
     }

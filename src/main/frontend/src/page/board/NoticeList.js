@@ -2,56 +2,47 @@ import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import styleTable from "../../component/styleTable";
 import axios from "axios";
-import NoticeSearchList from "./NoticeSearchList";
 
 const NoticeList = () => {
 
-    // 게시글 데이터 받는 변수
+    // 전체 게시글 리스트 받는 변수
     const [boardList, setBoardList] = useState([]);
 
     // 페이징 관련 변수
-    // 1. 현재페이지 : curPage
-    const [curPage, setCurPage] = useState(1);
-    // 2. 전체 페이지 수 : totalPage
+    // 1) 현재페이지 : nowPage
+    const [nowPage, setNowPage] = useState(1);
+    // 2) 전체 페이지 수 : totalPage
     const [totalPage, setTotalPage] = useState(0);
-    // 3. 현재 게시글 수 : list
-    const [list, setList] = useState(10);
-
-    useEffect(() => {
-        fetchList();
-    }, []);
 
 
-    // 게시글 목록 가져오기
+
+
+    // API 호출하여 전체 게시글 목록 가져오기
     const fetchList = async () => {
 
-        await axios.get('/board/notice/list', {})
+        // List<BoardVO> 리턴받음
+        await axios.get("/board/notice/list", {})
             .then((response) => {
                 console.log("NoticeList_fetchList_컨트롤러로 들어갑니다~ :D");
-                console.log("NoticeList_fetchList_컨트롤러에서 받아온 res: " + response);
                 console.log("게시글 목록 response.data.list: " + response.data);
 
                 setBoardList(response.data);
-                setTotalPage(Math.ceil(response.data.bid.length / 10)); // 전체 페이지 수 (bid 개수 가지고) 계산
+                setTotalPage(Math.ceil(response.data.length /10 )); // total 값을 가져와서 업데이트
             })
             .catch((error) => {
                 console.log("NoticeList_fetchList 게시글 불러오기 에러발생 :< ");
                 console.log(error);
             })
 
-        try {
-            const response = await axios.get('/board/notice/list', {});
-
-            setBoardList(response.data);
-
-            console.log("NoticeList_fetchList_컨트롤러로 들어갑니다~ :D");
-            console.log("NoticeList_fetchList_컨트롤러에서 받아온 res: " + response);
-            console.log("게시글 목록 response.data.list: " + response.data);
-        } catch (error) {
-            console.log("NoticeList_fetchList 게시글 불러오기 에러발생 :< ");
-            console.log(error);
-        }
     };
+
+
+
+    // 초기 렌더링 시 게시글 목록과 전체 페이지 수를 가져온다.
+    useEffect(() => {
+        fetchList();
+    }, []);
+
 
     // keyword (검색어), type (검색타입) 기반으로 조회하는 함수
     const handleFormSubmit = (event) => {
@@ -68,31 +59,32 @@ const NoticeList = () => {
 
 
         // 페이지 버튼 클릭 시 현재 페이지를 1로 초기화
-        setCurPage(1);
-        setList(10);
-
+        setNowPage(1);
     };
 
 
-    // 페이징 함수
+    // 페이지 변경할 때 호출되는 함수
+    // 클릭한 페이지에 해당하는 게시글 목록 가져오도록 설정함
     const handlePageClick = (e) => {
         // 클릭한 페이지
         const targetPage = Number(e.target.value);
 
         // 클릭한 targetPage 가 0보다 크고 totalPage 보다 작거나 같으면
         // 즉, 클릭한 페이지가 유효 범위에 있을 때
-        // 현재페이지 setCurPage 를 클릭한 페이지 targetPage 로 변경해준다.
+        // 현재페이지 setNowPage 를 클릭한 페이지 targetPage 로 변경해준다.
         if (targetPage > 0 && targetPage <= totalPage) {
-            setCurPage(targetPage);
-            setList(list + 10); // 현재 게시글 수를 +10한 상태로 변경해준다.
+            setNowPage(targetPage);
+
         }
     }
 
 
+    // (board.secret == 'S') && (board.uNo != login.uNo) 인 경우 발생하는 함수
     const handleSecretClick = () => {
         alert("다른 사람의 비밀글은 볼 수 없습니다.");
     };
 
+    // 글쓰기 버튼 클릭시 발생하는 함수 (글쓰기 버튼 클릭 -> 글쓰기 page 로 이동)
     const moveNoticeWrite = () => {
         window.location.href = 'notice/write';
     };
@@ -115,7 +107,8 @@ const NoticeList = () => {
                             {/* 검색 시작 */}
                             <div className="search-container row justify-content-center">
                                 <form className="col-8 search-box" name="search_form" onSubmit={handleFormSubmit}>
-                                    <select name="searchType" id="search-type" className="search-item" defaultValue="title">
+                                    <select name="searchType" id="search-type" className="search-item"
+                                            defaultValue="title">
                                         <option value="title">제목</option>
                                         <option value="content">내용</option>
                                         <option value="name">작성자</option>
@@ -154,27 +147,57 @@ const NoticeList = () => {
                                     <th className="text-center">조회수</th>
                                 </tr>
                                 </thead>
+
+                                <tbody>
                                 {/* 게시글 목록 (적용시켜야하는 것 : 비밀글인 경우, 로그인 되어있는 사람의 uNo와 글의 uNo가 같으면 글 제목 눌렀을 때 글 상세보기로 이동하게하고 uNo가 서로 같지 않으면 '비밀글입니다.' 라고 alert() 띄워주기 / 공개글인 경우 그냥 제목 누르면 상세보기로 이동시키기 ) */}
-                                {boardList.map((item, index) => (
+                                {boardList.slice((nowPage - 1) * 10, nowPage * 10)
+                                    .map((item, index) => (
                                     <tr key={index}>
                                         <td className="text-center">{item.bid}</td>
                                         <td>
-                                            <Link to={`/board/notice/detail/${item.bid}`}>{item.title}</Link>
+                                            {item.secret === 'S' ? (
+                                                    <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>) :
+                                                (<Link to={`/board/notice/detail/${item.bid}`}>{item.title}</Link>)}
                                         </td>
                                         <td className="text-center">{item.name}</td>
                                         <td className="text-center">{item.writeDate}</td>
                                         <td className="text-center">{item.views}</td>
                                     </tr>
                                 ))}
-                                <div>
-                                    <button onClick={() => handlePageClick({target: {value: curPage - 1}})}>《</button>
-                                    {/*어레이로 숫자를 클릭해서 페이지 전환을 할 수 있게함.*/}
-                                    {Array.from({length: totalPage}, (_, i) => (
-                                      <button key={i + 1} value={i + 1} onClick={handlePageClick}
-                                              className={curPage === i + 1 ? 'active' : ''}>{i + 1}</button>
-                                    ))}
-                                </div>
+                                </tbody>
+                                {/* 게시글 목록 끝 */}
+
                             </table>
+
+                            {/* 페이징 시작 */}
+                            <div>
+                                <nav aria-label="Page navigation" style={{ display: "flex", justifyContent: "center", flex: 10}}>
+                                    <div className="pagination">
+                                        {nowPage > 1 && (
+                                            <span className="page-item">
+                                                <button className="page-link"
+                                                        value={nowPage - 1}
+                                                        onClick={handlePageClick}>
+                                                    {"<<"}
+                                                </button>
+                                            </span>
+                                        )}
+                                        {Array.from({length: totalPage}, (_, i) => (
+                                            <button key={i + 1} value={i + 1} onClick={handlePageClick}
+                                                    className={nowPage === i + 1 ? 'active' : ''}>{i + 1}</button>
+                                        ))}
+                                        {nowPage < totalPage && (
+                                            <span className="page-item">
+                                                <button className="page-link" value={nowPage + 1}
+                                                        onClick={handlePageClick}>
+                                                    {">>"}
+                                                </button>
+                                            </span>
+                                        )}
+                                    </div>
+                                </nav>
+                            </div>
+                            {/* 페이징 끝 */}
 
                         </div>
                     </div>

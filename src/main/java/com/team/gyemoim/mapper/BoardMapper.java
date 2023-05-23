@@ -21,12 +21,17 @@ public interface BoardMapper {
 
 
     /* BoardDAO (Read) */
+    // 검색 후 페이징 된 게시글 갯수 구하기 (사용 o)
+    int searchCountBoard(PageVO spv);
+
+    // 검색 후 검색에 해당하는 게시글 리스트 조회하기(사용 o)
+    List<BoardVO> searchList(PageVO spv) throws Exception;
+
     int countBoard(); // 게시글 총 갯수 구하기
-    List<BoardListDTO> selectBoard(); // 게시글 조회하기
-    int searchCountBoard(PageVO spv); // 검색 후 게시글 갯수 구하기
+    //List<BoardVO> selectBoard(PageVO vo); // 게시글 조회하기
+    List<BoardVO> selectBoard(); // 게시글 조회하기
     BoardVO readDetail(int bid); // 특정 게시글 상세보기
     void updateViewCnt(int bid) throws Exception; // 조회수 올리기
-    List<BoardVO> searchList(PageVO spv) throws Exception; // 검색 후 검색에 해당하는 게시글 리스트 조회하기(페이징 동시에 검색)
 
 
 

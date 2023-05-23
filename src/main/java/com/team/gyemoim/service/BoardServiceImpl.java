@@ -1,23 +1,16 @@
 package com.team.gyemoim.service;
 
 import com.team.gyemoim.dto.board.BoardDeleteDTO;
-import com.team.gyemoim.dto.board.BoardListDTO;
 import com.team.gyemoim.dto.board.BoardModifyDTO;
 import com.team.gyemoim.dto.board.BoardWriteDTO;
 import com.team.gyemoim.mapper.BoardMapper;
-import com.team.gyemoim.vo.AttachedVO;
 import com.team.gyemoim.vo.BoardVO;
 import com.team.gyemoim.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -81,6 +74,22 @@ public class BoardServiceImpl implements BoardService{
 
 
     /* (Read) BoardServiceImpl */
+    // 검색 후 페이징 된 게시글 갯수 구하기 (사용 o)
+    @Override
+    public int searchCountBoard(PageVO spv) throws Exception {
+        System.out.println("BoardServiceImpl.searchCountBoard_검색한 게시글 갯수 : " + boardMapper.searchCountBoard(spv));
+        return boardMapper.searchCountBoard(spv);
+    }
+
+    // 검색 후 검색에 해당하는 게시글 리스트 조회하기 (페이징 동시에 검색, 사용 o)
+    @Override
+    public List<BoardVO> searchList(PageVO spv) throws Exception {
+        System.out.println("BoardServiceImpl.searchList_검색 후 해당 게시글 리스트로 뽑아봄 : " + boardMapper.searchList(spv));
+        return boardMapper.searchList(spv);
+    }
+
+
+
     // 게시글 총 갯수 구하기
     @Override
     public int countBoard() throws Exception {
@@ -88,16 +97,17 @@ public class BoardServiceImpl implements BoardService{
         return boardMapper.countBoard();
     }
 
-    // 검색 후 게시글 갯수 구하기
-    @Override
-    public int searchCountBoard(PageVO spv) throws Exception {
-        System.out.println("BoardServiceImpl.searchCountBoard_검색한 게시글 갯수 : " + boardMapper.searchCountBoard(spv));
-        return boardMapper.searchCountBoard(spv);
-    }
 
-    // 게시글 조회하기
+
+    /*게시글 조회하기
     @Override
-    public List<BoardListDTO> selectBoard() throws Exception {
+    public List<BoardVO> selectBoard(PageVO vo) throws Exception {
+        System.out.println("BoardSereviceImpl.selectBoard_게시글 조회 : " + boardMapper.selectBoard(vo));
+        return boardMapper.selectBoard(vo);
+    }*/
+
+    @Override
+    public List<BoardVO> selectBoard() throws Exception {
         System.out.println("BoardSereviceImpl.selectBoard_게시글 조회 : " + boardMapper.selectBoard());
         return boardMapper.selectBoard();
     }
@@ -110,12 +120,7 @@ public class BoardServiceImpl implements BoardService{
         return boardMapper.readDetail(bid);
     }
 
-    // 검색 후 검색에 해당하는 게시글 리스트 조회하기 (페이징 동시에 검색)
-    @Override
-    public List<BoardVO> searchList(PageVO spv) throws Exception {
-        System.out.println("BoardServiceImpl.searchList_검색 후 해당하는 게시글 페이징해서 리스트로 뽑아봄 : " + boardMapper.searchList(spv));
-        return boardMapper.searchList(spv);
-    }
+
 
 
 
