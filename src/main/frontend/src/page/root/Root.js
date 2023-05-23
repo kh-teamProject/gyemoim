@@ -13,7 +13,7 @@ const RootLayout = () => {
   useEffect(() => {
     axios.get('/mypage', {
       params: {
-        uNo: 1
+        uNo: 0
       }
     })
       .then((res) => {

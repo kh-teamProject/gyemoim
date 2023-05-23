@@ -81,8 +81,8 @@ const App = () => {
               element: <Interest/>
             },
             {
-              path: 'info/delete',
-              element: <MemberDelete/>
+              path: 'info/delete/:uNo',
+              element: <MemberDelete />
             },
             {
               path: 'bankAccount/deposit',

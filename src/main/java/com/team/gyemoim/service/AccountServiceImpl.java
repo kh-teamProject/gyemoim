@@ -70,6 +70,12 @@ public class AccountServiceImpl implements AccountService{
     accountMapper.myAccountUpdate(bankHistoryDTO);
   }
 
-  // MemberDelete
+  // Delete
+
+  // 회원 탈퇴
+  @Override
+  public void memberDelete(Integer uNo) {
+    accountMapper.memberDelete(uNo);
+  }
 
 }

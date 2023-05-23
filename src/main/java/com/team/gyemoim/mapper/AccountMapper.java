@@ -46,6 +46,10 @@ public interface AccountMapper {
   List<MyAccountHistory> getMyAccountHistory(Integer uNo);
 
 
+
   // Delete
+
+  // 회원 탈퇴
+  void memberDelete(Integer uNo);
 
 }

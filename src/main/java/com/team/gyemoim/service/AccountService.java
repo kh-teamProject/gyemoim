@@ -38,6 +38,9 @@ public interface AccountService {
   // 내 계모임 계좌 거래내역 가져오기
   List<MyAccountHistory> getMyAccountHistory(Integer uNo);
 
+
   // Delete
 
+  // 회원 탈퇴
+  void memberDelete(Integer uNo);
 }

@@ -47,11 +47,11 @@ const MyPageModify = () => {
     e.preventDefault();
 
     if(
-      phoneRef.current.value == '' ||
-      bankNumberRef.current.value == '' ||
-      bankRef.current.value == '' ||
-      accountHolderRef.current.value == '' ||
-      creditRatingRef.current.value == ''
+      phoneRef.current.value === '' ||
+      bankNumberRef.current.value === '' ||
+      bankRef.current.value === '' ||
+      accountHolderRef.current.value === '' ||
+      creditRatingRef.current.value === ''
     ) {
       alert('빈칸이 존재합니다. 모두 입력해주세요.');
       return;

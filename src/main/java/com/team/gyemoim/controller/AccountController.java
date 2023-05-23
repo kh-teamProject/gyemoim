@@ -70,4 +70,10 @@ public class AccountController {
 
 
   // Delete
+  
+  // 회원 탈퇴
+  @PostMapping("/memberDelete/{uNo}")
+  public void memberDelete(@PathVariable Integer uNo) {
+    accountService.memberDelete(uNo);
+  }
 }

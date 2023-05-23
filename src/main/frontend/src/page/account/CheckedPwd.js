@@ -42,7 +42,7 @@ const CheckedPwd = () => {
       <div>
         <MyPageSidebar />
       </div>
-      <div>
+      <div className={`${classes['checkPwd-wrap']}`}>
         <h2>비밀번호 확인</h2>
         <input
           type="password"
