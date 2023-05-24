@@ -31,7 +31,7 @@ public class StageController {
     // (현지)<스테이지생성>_참가 데이터(pfID,receiveTurn,pfMaster) 생성(ROLL)
     @PostMapping(value ="/stageAgree")
     public void stageCreate(StageParticipateDTO stageParticipateDTO) throws Exception{
-        System.out.println("[컨트롤러] 스테이지 생성 ");
+        System.out.println("[컨트롤러] 스테이지 참가 ");
         stageService.stageParticipate(stageParticipateDTO);
     }
   

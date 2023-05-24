@@ -35,6 +35,7 @@ import AccountManagement from "./page/admin/AccountManagement";
 import AdminHome from "./page/AdminHome";
 import StageManagement from "./page/admin/StageManagement";
 import BoardManagement from "./page/admin/BoardManagement";
+import AdminStageDetail from "./page/admin/AdminStageDetail";
 import Test from "./page/Test";
 
 const App = () => {
@@ -176,7 +177,11 @@ const App = () => {
         },
         {
           path: 'stage',
-          element: <StageManagement/>
+          element: <StageManagement/>,
+        },
+         {
+          path: 'stage/detail',
+          element: <AdminStageDetail/>
         },
         {
           path: 'board',

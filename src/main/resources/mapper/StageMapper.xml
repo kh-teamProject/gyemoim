@@ -3,12 +3,9 @@
 <mapper namespace="com.team.gyemoim.mapper.StageMapper">
 <!--(유진)리스트 띄우기  -->
     <select id="getPFList" resultType="com.team.gyemoim.dto.stage.StageListDTO">
-        SELECT * FROM PF
-        JOIN ROLL
-        ON PF.PFID = ROLL.PFID
-        -- WHERE STARTFLAG ='대기중'
-        -- SELECT * FROM PF
-        -- WHERE STARTFLAG ='N'
+        SELECT pf.pfID,pf.pfName,pfentry, pf.payment,pf.interest,pf.startFlag,roll.receiveTurn, roll.uno
+        FROM pf
+        JOIN roll ON PF.PFID = roll.PFID
     </select>
 
     <!--(유진)deposit에 따라 값 달리 가져오기.-->
@@ -27,15 +24,15 @@
     </select>
     <!--(현지) <스테이지 생성> _스테이지 생성(PF)-->
     <insert id="stageCreate" >
-        INSERT  INTO PF(pfID,pfName,pfEntry,pfRate,deposit,interest,receiveTurn,pRank)
-        VALUES(PFID_PF_SEQ.NEXTVAL,#{pfName},#{pfEntry},#{pfRate},#{deposit},#{interest},#{receiveTurn},#{pRank})
+        INSERT  INTO PF(pfID,pfName,pfEntry,pfRate,deposit,interest,pRank)
+        VALUES(PFID_PF_SEQ.NEXTVAL,#{pfName},#{pfEntry},#{pfRate},#{deposit},#{interest},#{pRank})
     </insert>
 
     <!--(현지) <스테이지 생성> _참가 데이터 -->
 
     <insert id="stageParticipate">
-        INSERT INTO Roll(pfID,receiveTurn,pfMaster)
-        VALUES(PFID_PF_SEQ.CURRVAL,#{receiveTurn},'M')
+        INSERT INTO Roll(pfID,uno,receiveTurn,pfMaster)
+        VALUES(PFID_PF_SEQ.CURRVAL,1,#{receiveTurn},'M')
     </insert>
 
     <!--(현지) <스테이지 생성> _중복체크 -->
@@ -60,13 +57,14 @@
 
     <!--(현지) <스테이지 생성> _스테이지 정보 가져오기-->
     <select id="stagePartIn2" parameterType="java.util.HashMap" resultType="com.team.gyemoim.dto.stage.ImportDTO">
-        SELECT uPayment,uTotalReceipts,uRate,uTotalPayment
-        FROM  receiptSchedule r, PF p
-        WHERE pfName=#{pfName}
-        AND r.pfEntry = p.pfEntry
-        AND r.pfRate = p.pfRate
-        AND r.deposit= p.deposit
-        AND r.receiveTurn= p.receiveTurn
+        SELECT DISTINCT i.uPayment,i.uTotalReceipts,i.uRate,i.uTotalPayment
+        FROM ROLL r
+        JOIN receiptSchedule i ON i.receiveTurn = r.receiveTurn
+        JOIN PF p ON p.pfRate = i.pfRate
+        WHERE p.pfName = #{pfName}
+        AND r.uNo = 1
+        AND p.pfID = r.pfID
+        AND p.deposit = i.deposit
     </select>
 
     <!--(찬희)스테이지 참여 시 roll insert-->
