@@ -1,6 +1,7 @@
 package com.team.gyemoim.service;
 
 import com.team.gyemoim.dto.board.BoardDeleteDTO;
+import com.team.gyemoim.dto.board.BoardListDTO;
 import com.team.gyemoim.dto.board.BoardModifyDTO;
 import com.team.gyemoim.dto.board.BoardWriteDTO;
 import com.team.gyemoim.mapper.BoardMapper;
@@ -83,9 +84,10 @@ public class BoardServiceImpl implements BoardService{
 
     // 검색에 해당하는 게시글 리스트 조회하기 (사용 o)
     @Override
-    public List<BoardVO> searchList(PageVO spv) throws Exception {
-        System.out.println("BoardServiceImpl.searchList_검색 후 해당 게시글 리스트로 뽑아봄 : " + boardMapper.searchList(spv));
-        return boardMapper.searchList(spv);
+    public List<BoardVO> searchList(BoardListDTO dto) throws Exception {
+        System.out.println("BoardServiceImpl.searchList_검색 후 해당 게시글 리스트로 가져오기 성공! :D");
+        System.out.println("무슨 게시글을 가져오려나? " + dto.getType());
+        return boardMapper.searchList(dto);
     }
 
 

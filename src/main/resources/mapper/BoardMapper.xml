@@ -63,19 +63,20 @@
            OR name = #{searchKeyword}
     </select>-->
 
-    <!-- 게시글 리스트 조회하기 (검색 O) -->
-    <select id="searchList" parameterType="com.team.gyemoim.vo.PageVO" resultType="com.team.gyemoim.vo.BoardVO">
+    <!-- 게시글 리스트 조회하기 (검색 O & 게시글 타입에 따라 조회) -->
+    <select id="searchList" parameterType="com.team.gyemoim.dto.board.BoardListDTO" resultType="com.team.gyemoim.vo.BoardVO">
         SELECT *
         FROM BOARD
-        <if test="searchType != null and searchType != '' and searchKeyword != null and searchKeyword != '' ">
+        WHERE type = #{type}
+        <if test="searchType != ''  and searchKeyword != '' ">
             <if test="searchType == 'title'">
-                WHERE title LIKE '%' || #{searchKeyword} || '%'
+                AND title LIKE '%' || #{searchKeyword} || '%'
             </if>
             <if test="searchType == 'content'">
-                WHERE content LIKE '%' || #{searchKeyword} || '%'
+                AND content LIKE '%' || #{searchKeyword} || '%'
             </if>
             <if test="searchType == 'name'">
-                WHERE name LIKE '%' || #{searchKeyword} || '%'
+                AND name LIKE '%' || #{searchKeyword} || '%'
             </if>
         </if>
         ORDER BY writeDate ASC
@@ -105,8 +106,8 @@
     <!-- 게시글 Create -->
     <!-- 글 작성하기 -->
     <insert id="write" parameterType="com.team.gyemoim.dto.board.BoardWriteDTO">
-        INSERT INTO board (bid, uNo, name, title, content, type, views, writeDate, secret)
-        VALUES (BID_BOA_SEQ.NEXTVAL, #{uNo}, #{name}, #{title}, #{content}, '공지사항', 0, sysdate, #{secret})
+        INSERT INTO board (bid, uNo, type, name, title, content, views, writeDate, secret)
+        VALUES (BID_BOA_SEQ.NEXTVAL, #{uNo}, #{type}, #{name}, #{title}, #{content}, 0, sysdate, #{secret})
     </insert>
 
     <!-- 첨부파일 작성하기 -->

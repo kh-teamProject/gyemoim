@@ -8,6 +8,7 @@ import com.team.gyemoim.vo.AttachedVO;
 import com.team.gyemoim.vo.BoardVO;
 import com.team.gyemoim.vo.PageVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface BoardMapper {
     int searchCountBoard(PageVO spv);
 
     // 검색 후 검색에 해당하는 게시글 리스트 조회하기(사용 o)
-    List<BoardVO> searchList(PageVO spv) throws Exception;
+    List<BoardVO> searchList(BoardListDTO dto) throws Exception;
 
     int countBoard(); // 게시글 총 갯수 구하기
     //List<BoardVO> selectBoard(PageVO vo); // 게시글 조회하기

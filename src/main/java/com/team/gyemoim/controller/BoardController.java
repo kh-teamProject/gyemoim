@@ -1,6 +1,7 @@
 package com.team.gyemoim.controller;
 
 import com.team.gyemoim.dto.board.BoardDeleteDTO;
+import com.team.gyemoim.dto.board.BoardListDTO;
 import com.team.gyemoim.dto.board.BoardModifyDTO;
 import com.team.gyemoim.dto.board.BoardWriteDTO;
 import com.team.gyemoim.service.BoardService;
@@ -32,20 +33,18 @@ public class BoardController {
 
 
     // 검색어, 검색 타입 받아서 그 검색된 게시글 리스트 조회 API
-    // [GET /board/notice/searchList?searchType={searchType}&searchKeyword={searchKeyword}]
-    @GetMapping("/board/notice/searchList")
-    public List<BoardVO> searchList(@RequestParam("searchType") String searchType, @RequestParam("searchKeyword") String searchKeyword) throws Exception {
-        PageVO spv = new PageVO(searchType, searchKeyword);
+    // [GET /board/searchList?type={type}&searchType={searchType}&searchKeyword={searchKeyword}]
+    @GetMapping("/board/searchList")
+    public List<BoardVO> searchList(BoardListDTO dto) throws Exception {
+        System.out.println("무슨 게시글이 나오려나? " + dto.getType());
 
-
-        return boardService.searchList(spv);
-
+        return boardService.searchList(dto);
     }
 
 
 
     // 게시글 작성 API (Create)
-    @PostMapping("/board/notice/writePost")
+    @PostMapping("/board/writePost")
     public ResponseEntity<String> writePost(BoardWriteDTO boardWriteDTO) {
         try {
             boardService.write(boardWriteDTO);
