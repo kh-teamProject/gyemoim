@@ -1,8 +1,7 @@
 import Login from "../page/Login";
-<<<<<<< HEAD
-=======
+
 import BoardList from "../page/board/Board";
->>>>>>> bc212f2fa68ae43541d953d31bce5771c9ac9555
+
 
 const LoginForm = () => {
   const handler = (event) => {
@@ -32,41 +31,7 @@ const BoardForm = () => {
   );
 };
 
-<<<<<<< HEAD
-=======
-/* 글 검색하는 검색창 폼
-const NoticeList = () => {
 
-    const SearchContainer = () => {
-        const handleSubmit = (event) => {
-            event.preventDefault();
-            const form = event.target;
-            const formData = new FormData(form);
-            const searchType = formData.get('type');
-            const keyword = formData.get('keyword');
-            const searchUrl = `/board/getSearchList?type=${searchType}&keyword=${keyword}`;
-            window.location.href = searchUrl;
-        }
-    }
-
-    return (
-        <div className="search-container row justify-content-center">
-            <form className="col-8 search-box" name="search_form" onClick={handleSubmit}>
-                <select name="type" className="search-item">
-                    <option selected value="title">제목</option>
-                    <option value="content">내용</option>
-                    <option value="name">작성자</option>
-                </select>
-                <input className="form-control search-item" type="text" id="search-input" name="keyword" placeholder="검색어를 입력하세요." />
-                <button id="search-button" type="submit" className="btn btn-primary search-item">검색</button>
-            </form>
-        </div>
-    );
-}
-*/
-
-
->>>>>>> bc212f2fa68ae43541d953d31bce5771c9ac9555
 const Formm = (props) => {
   console.log(props.title);
 

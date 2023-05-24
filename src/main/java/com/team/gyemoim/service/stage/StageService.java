@@ -17,8 +17,6 @@ public interface StageService {
  List<StageListDTO> getPFList();
  List<StageListDTO> filterList(int deposit);
 
-// (유진) 수령순서 가져오기
-
 
   void stageCreate(StageCreateDTO stageCreateDTO);
   void stageParticipate(StageParticipateDTO stageParticipateDTO);
