@@ -74,14 +74,14 @@ public class BoardServiceImpl implements BoardService{
 
 
     /* (Read) BoardServiceImpl */
-    // 검색 후 페이징 된 게시글 갯수 구하기 (사용 o)
+    // 검색 해당하는 게시글 갯수 구하기 (사용 o)
     @Override
     public int searchCountBoard(PageVO spv) throws Exception {
         System.out.println("BoardServiceImpl.searchCountBoard_검색한 게시글 갯수 : " + boardMapper.searchCountBoard(spv));
         return boardMapper.searchCountBoard(spv);
     }
 
-    // 검색 후 검색에 해당하는 게시글 리스트 조회하기 (페이징 동시에 검색, 사용 o)
+    // 검색에 해당하는 게시글 리스트 조회하기 (사용 o)
     @Override
     public List<BoardVO> searchList(PageVO spv) throws Exception {
         System.out.println("BoardServiceImpl.searchList_검색 후 해당 게시글 리스트로 뽑아봄 : " + boardMapper.searchList(spv));

@@ -12,12 +12,12 @@ public class PageVO {
     private int nowPage, startPage, endPage, total, cntPerPage, lastPage, start, end;
     private int cntPage = 10;
      */
-    private String type, keyword; // 검색어 타입 & 검색어
+    private String searchType, searchKeyword; // 검색어 타입 & 검색어
 
 
-    public PageVO(String type, String keyword) {
-        setType(type);
-        setKeyword(keyword);
+    public PageVO(String searchType, String searchKeyword) {
+        setSearchType(searchType);
+        setSearchKeyword(searchKeyword);
     }
 
 

@@ -31,12 +31,15 @@ public class BoardController {
     }
 
 
-    // 검색어, 검색 타입 받아서 그 검색된 게시글 리스트 조회하기
+    // 검색어, 검색 타입 받아서 그 검색된 게시글 리스트 조회 API
+    // [GET /board/notice/searchList?searchType={searchType}&searchKeyword={searchKeyword}]
     @GetMapping("/board/notice/searchList")
-    public List<BoardVO> searchList(@RequestBody String searchKeyword, @RequestBody String searchType) throws Exception {
+    public List<BoardVO> searchList(@RequestParam("searchType") String searchType, @RequestParam("searchKeyword") String searchKeyword) throws Exception {
         PageVO spv = new PageVO(searchType, searchKeyword);
 
+
         return boardService.searchList(spv);
+
     }
 
 
