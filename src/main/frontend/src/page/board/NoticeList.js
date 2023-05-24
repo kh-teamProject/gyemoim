@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import styleTable from "../../component/styleTable";
+import "../../component/css/Board.module.css";
+import "../../component/css/Page.module.css";
 import axios from "axios";
 
 const NoticeList = () => {
@@ -75,7 +77,6 @@ const NoticeList = () => {
         navigate("/board/notice");
         fetchList(searchTypeVal, searchKeywordVal);
 
-
         // 페이지 버튼 클릭 시 현재 페이지를 1로 초기화
         setNowPage(1);
     };
@@ -124,7 +125,11 @@ const NoticeList = () => {
 
 
                             {/* 검색 시작 */}
-                            <table className="search">
+                            <table className="search" style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginBottom: '10px',
+                            }}>
                                 <tbody>
                                 <tr>
                                     <td>
@@ -166,29 +171,37 @@ const NoticeList = () => {
                                 <tbody>
                                 {/* 게시글 목록 (적용시켜야하는 것 : 비밀글인 경우, 로그인 되어있는 사람의 uNo와 글의 uNo가 같으면 글 제목 눌렀을 때 글 상세보기로 이동하게하고 uNo가 서로 같지 않으면 '비밀글입니다.' 라고 alert() 띄워주기 / 공개글인 경우 그냥 제목 누르면 상세보기로 이동시키기 ) */}
                                 {boardList.slice((nowPage - 1) * 10, nowPage * 10)
-                                    .map((item, index) => (
-                                        <tr key={index}>
-                                            <td className="text-center">{item.bid}</td>
-                                            <td>
-                                                {item.secret === 'S' ? (
-                                                        <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>) :
-                                                    (<Link to={`/board/notice/detail/${item.bid}`}>{item.title}</Link>)}
-                                            </td>
-                                            <td className="text-center">{item.name}</td>
-                                            <td className="text-center">{item.writeDate}</td>
-                                            <td className="text-center">{item.views}</td>
-                                        </tr>
-                                    ))}
+                                    .map((item, index) => {
+                                        // 작성일을 Date 객체로 변환
+                                        const writeDate = new Date(item.writeDate);
+                                        // 원하는 형식 ('YYYY-MM-DD') 으로 날짜 구성
+                                        const formattedWriteDate = writeDate.toISOString().split('T')[0];
+
+                                        return (
+                                            <tr key={index}>
+                                                <td className="text-center">{item.bid}</td>
+                                                <td>
+                                                    {item.secret === 'S' ? (
+                                                            <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>) :
+                                                        (<Link
+                                                            to={`/board/notice/detail/${item.bid}`}>{item.title}</Link>)}
+                                                </td>
+                                                <td className="text-center">{item.name}</td>
+                                                <td className="text-center">{formattedWriteDate}</td>
+                                                <td className="text-center">{item.views}</td>
+                                            </tr>
+                                        );
+                                    })}
                                 </tbody>
                                 {/* 게시글 목록 끝 */}
 
                             </table>
 
                             {/* 페이징 시작 */}
-                            <div>
+                            <div className="pagination">
                                 <nav aria-label="Page navigation"
                                      style={{display: "flex", justifyContent: "center", flex: 10}}>
-                                    <div className="pagination">
+                                    <div>
                                         {nowPage > 1 && (
                                             <span className="page-item">
                                                 <button className="page-link"
@@ -217,7 +230,10 @@ const NoticeList = () => {
 
 
                             {/* 글쓰기 버튼 */}
-                            <div className="my-5 d-flex justify-content-center">
+                            <div className="my-5 d-flex justify-content-center" style={{
+                                marginTop: '10px',
+                                marginBottom: '10px',
+                            }}>
                                 {/* 적용시켜야 할 것: 로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화(/board/notice/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기 */}
                                 <Link to={"/notice/write"}><i className="fas fa-pen"></i> &nbsp; 글쓰기</Link>
                             </div>

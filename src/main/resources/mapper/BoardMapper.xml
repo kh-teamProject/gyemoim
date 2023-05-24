@@ -69,7 +69,7 @@
         FROM BOARD
         <if test="searchType != null and searchType != '' and searchKeyword != null and searchKeyword != '' ">
             <if test="searchType == 'title'">
-                WHERE title LIKE '%' ||  #{searchKeyword} || '%'
+                WHERE title LIKE '%' || #{searchKeyword} || '%'
             </if>
             <if test="searchType == 'content'">
                 WHERE content LIKE '%' || #{searchKeyword} || '%'
@@ -78,6 +78,7 @@
                 WHERE name LIKE '%' || #{searchKeyword} || '%'
             </if>
         </if>
+        ORDER BY writeDate ASC
     </select>
 
 
