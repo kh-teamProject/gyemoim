@@ -38,7 +38,7 @@ public class BoardController {
 
 
     @PostMapping("/board/notice/writePost")
-    public ResponseEntity<String> writePost(@RequestBody BoardWriteDTO boardWriteDTO) {
+    public ResponseEntity<String> writePost(BoardWriteDTO boardWriteDTO) {
         try {
             boardService.write(boardWriteDTO);
             return ResponseEntity.ok("BoardController 글 작성 돌아간닷! :D");
@@ -66,7 +66,6 @@ public class BoardController {
 
 
     /* 수정 Update */
-
     // 수정 전 기존 글 가져오기 (첨부파일은 일단 제외)
     @GetMapping("/board/notice/modify")
     public BoardVO modify(@RequestParam("bid") int bid) throws Exception {

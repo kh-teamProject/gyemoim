@@ -98,7 +98,7 @@ const NoticeModify = () => {
                                 <p>공지사항 세부내용</p>
                             </div>
 
-                            <form onSubmit={modifyPost} id="noticeModifyPost">
+                            <form id="noticeModifyPost">
 
                                 <input type="hidden" id="write-input-bid" name="bid" value={noticeModify.bid}/>
                                 <input type="hidden" id="write-input-uno" name="uno" value={noticeModify.uno}/>
@@ -137,7 +137,7 @@ const NoticeModify = () => {
                                 </div>
 
                                 <div>
-                                    <button type="submit">수정하기</button>
+                                    <button type="submit" onSubmit={modifyPost}>수정하기</button>
                                     <button onChange={moveToNoticeDetail}>취소하기</button>
                                 </div>
                             </form>

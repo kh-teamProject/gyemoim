@@ -45,7 +45,7 @@ const NoticeWritePost = () => {
 
 
         // API 요청을 보내는 코드
-        axios.post('/board/notice/writePost', formData)
+        /*axios.post('/board/notice/writePost', formData)
             .then((response) => {
                 console.log("NoticeWritePost_handleSubmit 성공 :D" + response.data);
                 window.location.href = '/board/notice';
@@ -54,7 +54,23 @@ const NoticeWritePost = () => {
                 console.log("NoticeWritePost_handleSubmit axios 실패 :< ");
                 console.log("이것은 uno 인가 uNo 인가 : " + formData.uno);
                 console.log(error);
-            })
+            })*/
+
+        try {
+            await axios.post('/board/notice/writePost', formData, {
+                headers: {
+                    Authorization: 'Bearer <your_access_token>',
+                }
+            });
+            console.log("NoticeWritePost_handleSubmit 성공 :D");
+            window.location.href = '/board/notice';
+        } catch (error) {
+            console.log("NoticeWritePost_handleSubmit axios 실패 :<");
+            console.log("글 작성자의 uNo 또는 uno: " +formData.uno);
+            console.log("NoticeWritePost_handleSubmit axios 에러: " + error);
+
+        }
+
     }
 
     return (

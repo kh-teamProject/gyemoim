@@ -5,36 +5,36 @@
     <select id="getPFList" resultType="com.team.gyemoim.dto.stage.StageListDTO">
         SELECT * FROM PF
         JOIN ROLL
-            ON PF.PFID = ROLL.PFID
---         WHERE STARTFLAG ='대기중'
---         SELECT * FROM PF
---         WHERE STARTFLAG ='N'
+        ON PF.PFID = ROLL.PFID
+        -- WHERE STARTFLAG ='대기중'
+        -- SELECT * FROM PF
+        -- WHERE STARTFLAG ='N'
     </select>
 
-<!--(유진)deposit에 따라 값 달리 가져오기.-->
+    <!--(유진)deposit에 따라 값 달리 가져오기.-->
     <select id="filterList" resultType="com.team.gyemoim.dto.stage.StageListDTO">
-    SELECT * FROM PF
-    JOIN ROLL
-    ON PF.PFID = ROLL.PFID
-    WHERE DEPOSIT IN #{deposit}
---     AND STARTFLAG ='대기중'
+        SELECT * FROM PF
+        JOIN ROLL
+        ON PF.PFID = ROLL.PFID
+        WHERE DEPOSIT IN #{deposit}
+        -- AND STARTFLAG ='대기중'
     </select>
 
-<!--(유진) 수령순서 가져오기  -->
+    <!--(유진) 수령순서 가져오기  -->
     <select id="getRecTurn" resultType="com.team.gyemoim.vo.PFVO">
         SELECT RECEIVETURN,pfID
         FROM PARTICIPATION
     </select>
-  
+
     <!--(현지) <스테이지 생성> _스테이지 생성(PF)-->
-    <insert id="stageCreate" >
-        INSERT  INTO PF(pfID,pfName,pfEntry,pfRate,deposit,interest,receiveTurn,pRank)
+    <insert id="stageCreate">
+        INSERT INTO PF(pfID,pfName,pfEntry,pfRate,deposit,interest,receiveTurn,pRank)
         VALUES(PFID_PF_SEQ.NEXTVAL,#{pfName},#{pfEntry},#{pfRate},#{deposit},#{interest},#{receiveTurn},#{pRank})
     </insert>
 
     <!--(현지) <스테이지 생성> _참가 데이터 -->
-    <insert id="stageParticipate" >
-        INSERT  INTO Roll2(pfID,receiveTurn,pfMaster)
+    <insert id="stageParticipate">
+        INSERT INTO Roll2(pfID,receiveTurn,pfMaster)
         VALUES(PFID_PF_SEQ.CURRVAL,#{receiveTurn},'M')
     </insert>
 
@@ -67,4 +67,181 @@
         AND i.deposit= p.deposit
         AND i.receiveTurn= p.receiveTurn
     </select>
+
+    <!--(찬희)스테이지 참여 시 roll insert-->
+    <insert id="rollIn">
+        INSERT INTO roll(uNo, pfID, receiveTurn)
+        VALUES (#{uNo} , #{pfID}, #{receiveTurn})
+    </insert>
+
+    <!--(찬희)roll의 uNo 갯수 조회 -->
+    <select id="RollUnoCount" resultType="int">
+        SELECT COUNT(uNo)
+        FROM roll
+        WHERE pfID = #{pfID}
+    </select>
+
+    <!--(찬희)PF의 pfEntry 값 조회 -->
+    <select id="pfEntryValue" resultType="int">
+        SELECT pfEntry
+        FROM PF
+        WHERE pfID = #{pfID}
+    </select>
+
+    <!--(찬희)PF의 startDate 값 조회 -->
+    <select id="getStartDate" resultType="java.util.Date">
+        SELECT startDate
+        FROM PF
+        WHERE pfID = #{pfID}
+    </select>
+
+    <!--(찬희)PF의 startFlag를 '참여중'으로 update-->
+    <update id="stageStart" parameterType="com.team.gyemoim.dto.stage.StagePfDTO">
+        UPDATE PF
+        SET startFlag = '참여중'
+        WHERE pfID = #{pfID}
+    </update>
+
+    <!--(찬희)PF의 startDate를 SYSDATE update-->
+    <update id="startDateInsert" parameterType="com.team.gyemoim.dto.stage.StagePfDTO">
+        UPDATE PF
+        SET startDate = SYSDATE
+        WHERE pfID = #{pfID}
+    </update>
+
+    <!--(찬희)PF의 endDate를 SYSDATE update-->
+    <update id="endDateInsert" parameterType="com.team.gyemoim.dto.stage.StagePfDTO">
+        UPDATE PF
+        SET endDate = #{endDate}
+        WHERE pfID = #{pfID}
+    </update>
+
+    <!--(찬희)스테이지에 관한 pfList -->
+    <select id="getPfList" resultType="com.team.gyemoim.dto.stage.StagePfDTO">
+        SELECT * FROM pf
+        WHERE pfID = #{pfID}
+    </select>
+
+    <!--(찬희)개인 RollList -->
+    <select id="getRollList" resultType="com.team.gyemoim.dto.stage.StageRollDTO"
+            parameterType="com.team.gyemoim.dto.stage.StageRollDTO">
+        SELECT DISTINCT r.*, i.uPayment, i.uTotalPayment, i.uTotalReceipts
+        FROM ROLL r
+        JOIN receiptSchedule i ON i.receiveTurn = r.receiveTurn
+        JOIN PF p ON p.pfRate = i.pfRate
+        WHERE p.deposit = i.deposit
+        AND r.pfID = #{pfID}
+        AND uNo = #{uNo}
+    </select>
+
+    <!--(찬희)참여중인 MemberList -->
+    <select id="getMemList" resultType="com.team.gyemoim.dto.stage.StageRollListDTO">
+        SELECT DISTINCT p.pfEntry, r.uNo, r.receiveTurn, r.pfMaster, CASE WHEN r.uNo IS NULL THEN NULL ELSE m.name END AS
+        name
+        FROM pf p
+        LEFT JOIN roll r ON p.pfID = r.pfID
+        LEFT JOIN member m ON r.uNo = m.uNo
+        WHERE r.pfID = #{pfID}
+        ORDER BY r.receiveTurn
+    </select>
+
+    <!--(찬희)수령예정표 갖고오기-->
+    <select id="getImportList" resultType="com.team.gyemoim.dto.stage.StageReceiptDTO">
+        SELECT i.*
+        FROM receiptSchedule i, pf p
+        WHERE i.deposit = p.deposit
+        AND i.pfRate = p.pfRate
+        AND p.pfID = #{pfID}
+    </select>
+
+    <!--(찬희) MyAccount 정보 갖고오기-->
+    <select id="getMyAccount" resultType="Integer">
+        SELECT mybalance FROM MyAccount
+        WHERE uNo = #{uNo}
+    </select>
+
+    <!--(찬희)스테이지 나갈 때 roll_uNo:delete-->
+    <delete id="rollDelete" parameterType="com.team.gyemoim.dto.stage.StageRollDTO">
+        DELETE FROM roll
+        WHERE uNo = #{uNo}
+        AND pfID = #{pfID}
+    </delete>
+
+    <!--(찬희)입금하기:pf 계모임잔액에 uPayment만큼 update-->
+    <update id="stageBalanceUpdate" parameterType="com.team.gyemoim.dto.stage.StageRollDTO">
+        UPDATE pf
+        SET stageBalance = stageBalance + #{uPayment}
+        WHERE pfID = #{pfID}
+    </update>
+
+    <!--(찬희)입금하기:My계좌에서 uPayment만큼 빼기-->
+    <update id="myAccountUPaymentUpdate" parameterType="com.team.gyemoim.dto.stage.StageRollDTO">
+        UPDATE MyAccount
+        SET myBalance = myBalance - #{uPayment}
+        WHERE uNo = #{uNo}
+    </update>
+
+    <!--(찬희)입금하기:입금 횟수 mapper.xml에서 +1-->
+    <update id="depositCntPlus" parameterType="com.team.gyemoim.dto.stage.StageRollDTO">
+        UPDATE roll
+        SET depositCnt = depositCnt + 1
+        WHERE uNo = #{uNo}
+        AND pfID = #{pfID}
+    </update>
+
+    <!--(찬희)입금하기:입금 누적 금액 update-->
+    <update id="stageAmountUpdate" parameterType="com.team.gyemoim.dto.stage.StageRollDTO">
+        UPDATE roll
+        SET stageAmount = stageAmount + #{uPayment}
+        WHERE uNo = #{uNo}
+        AND pfID = #{pfID}
+    </update>
+
+    <!--(찬희) 입금식별 Y로 update-->
+    <update id="stagePaymentCheckUpdate">
+        UPDATE roll
+        SET paymentCheck = 'Y'
+        WHERE uNo = #{uNo}
+        AND pfID = #{pfID}
+    </update>
+    <!--(찬희) pf테이블의 현재 stageBalance 값 조회하기-->
+    <select id="getStageBalance" parameterType="com.team.gyemoim.dto.stage.StageRollDTO" resultType="Integer">
+        SELECT stageBalance
+        FROM pf
+        WHERE pfID = #{pfID}
+    </select>
+
+    <!--(찬희) pf테이블의 약정금 조회하기-->
+    <select id="getStageDeposit" parameterType="com.team.gyemoim.dto.stage.StageRollDTO" resultType="Integer">
+        SELECT deposit
+        FROM pf
+        WHERE pfID = #{pfID}
+    </select>
+
+    <!--(찬희) pf테이블의 지급순서 조회하기-->
+    <select id="getPaymentOrderValue" parameterType="com.team.gyemoim.dto.stage.StageRollDTO" resultType="Integer">
+        SELECT paymentOrder
+        FROM pf
+        WHERE pfID = #{pfID}
+    </select>
+
+    <!--(찬희)stageBalance - *번의 uPayment-->
+    <update id="stageBalanceMinus">
+        UPDATE PF
+        SET stageBalance = stageBalance - deposit
+        WHERE pfID = #{pfID}
+    </update>
+
+    <!--(찬희)*번의 uPayment + stageBalance-->
+    <update id="stagePaymentOrder">
+        UPDATE MyAccount
+        SET myBalance = myBalance + (
+        SELECT COALESCE(SUM(im.uTotalReceipts), 0)
+        FROM receiptSchedule im
+        LEFT JOIN pf p ON im.deposit = p.deposit AND im.pfRate = p.pfRate
+        LEFT JOIN roll r ON p.pfID = r.pfID AND im.receiveTurn = r.receiveTurn
+        WHERE im.receiveTurn = p.paymentOrder
+        AND r.uNo = MyAccount.uNo
+        )
+    </update>
 </mapper>

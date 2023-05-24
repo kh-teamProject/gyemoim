@@ -1,0 +1,65 @@
+.field {
+  font-size: 1.25rem;
+  font-weight: bold;
+  min-height: 620px;
+}
+
+.field h3 {
+  margin-top: 50px;
+}
+
+.field .myAccount {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 30px;
+  padding: 0;
+}
+
+.field .myAccount li {
+  position: relative;
+  width: 140px;
+  height: 40px;
+  font-size: 1.5rem;
+  color: gray;
+  cursor: pointer;
+}
+
+.field .myAccount li  a.isActive {
+  color: black;
+  font-weight: bold;
+}
+
+.field .myAccount li  a.isActive::after{
+  content: '';
+  display: inline-block;
+  width: 150px;
+  border-bottom: 2px solid gray;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.detailsInquiry-table {
+  width: 650px;
+  border-collapse: collapse;
+}
+
+.detailsInquiry-table thead th {
+  border-bottom: 1px solid black;
+  height: 40px;
+}
+
+.detailsInquiry-table thead tr th:not(:last-child) {
+  text-align: left;
+}
+
+.detailsInquiry-table tbody td {
+  border-bottom: 1px solid black;
+  text-align: left;
+  height: 40px;
+}
+
+.detailsInquiry-table tbody tr td:last-child {
+  text-align: center;
+}

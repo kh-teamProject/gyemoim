@@ -36,7 +36,6 @@ import AdminHome from "./page/AdminHome";
 import StageManagement from "./page/admin/StageManagement";
 import BoardManagement from "./page/admin/BoardManagement";
 import Test from "./page/Test";
-import AccountModify from "./page/admin/AccountModify";
 
 const App = () => {
 
@@ -174,10 +173,6 @@ const App = () => {
         {
           path: 'account',
           element: <AccountManagement/>
-        },
-        {
-          path: 'account/modify/:uNo',
-          element: <AccountModify />
         },
         {
           path: 'stage',

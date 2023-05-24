@@ -4,12 +4,45 @@ main {
 
 h2 {
   font-size: 2.5rem;
+  margin: 20px 0;
 }
 
 .field {
   font-size: 1.25rem;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.field ul {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 30px;
+  padding: 0;
+}
+
+.field ul li {
+  position: relative;
+  width: 140px;
+  height: 40px;
+  font-size: 1.5rem;
+  color: gray;
+  cursor: pointer;
+}
+
+.field ul li  a.isActive {
+  color: black;
+  font-weight: bold;
+}
+
+.field ul li  a.isActive::after{
+  content: '';
+  display: inline-block;
+  width: 150px;
+  border-bottom: 2px solid gray;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 
 .field label {
@@ -24,25 +57,6 @@ h2 {
   height: 30px;
   padding: 5px 10px;
   box-sizing: border-box;
-}
-
-.field:nth-child(10) div {
-  display: inline-block;
-  position: relative;
-}
-
-.field:nth-child(10), .field:nth-child(11) {
-  margin-bottom: 0;
-}
-
-.field:nth-child(10) button {
-  position: absolute;
-  right: 0;
-  width: 80px;
-  height: 30px;
-  background: skyblue;
-  color: white;
-  border: 1px solid rgba(118, 118, 118);
 }
 
 .field .link-btn, .field .submit-btn {

@@ -1,7 +1,6 @@
 package com.team.gyemoim.vo;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
@@ -25,7 +24,4 @@ public class MemberVO {
     private String isLeave; // 탈퇴여부
     private String userRole;// 권한
 
-    public MemberVO(String subject, String string, Collection<? extends GrantedAuthority> authorities) {
-    }
-    
 }
