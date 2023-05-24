@@ -113,4 +113,9 @@
     WHERE uNo = #{uNo}
   </update>
 
+<!-- 계모임계좌 존재하는지 확인 -->
+<!--  <select id="getMyAccount" resultType="Integer">-->
+<!--    SELECT UNO-->
+<!--    FROM MYACCOUNT-->
+<!--  </select>-->
 </mapper>

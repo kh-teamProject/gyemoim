@@ -1,0 +1,30 @@
+.detailsInquiry-table {
+  margin: 0 auto;
+  width: 850px;
+  border-collapse: collapse;
+}
+
+.detailsInquiry-table thead th {
+  border-bottom: 1px solid black;
+  height: 40px;
+  text-align: center;
+  font-weight: 400;
+}
+
+.detailsInquiry-table tbody td {
+  border-bottom: 1px solid black;
+  text-align: center;
+  height: 40px;
+  font-weight: 400;
+  padding: 8px 0;
+}
+
+.detailsInquiry-table tbody td > a {
+  display: inline-block;
+  width: 80px;
+  height: 100%;
+  line-height: 40px;
+  color: white;
+  background: skyblue;
+  border-radius: 8px;
+}

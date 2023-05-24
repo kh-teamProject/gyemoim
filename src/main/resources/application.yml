@@ -13,7 +13,7 @@ spring:
 #    secret: UYQsWgov3efG4ezU7gwptV3mGyQwf0cUAz5baMO9jhQ7wb__wnMOT1vZN8sUQnm1b0MO7s1vKn4EQ5vBuxBovQ
 
 mybatis:
-  mapper-locations: classpath:mapper/**.xml
+  mapper-locations: classpath:mapper/**/**.xml
 
 
 upload:
