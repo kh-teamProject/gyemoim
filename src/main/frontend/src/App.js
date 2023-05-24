@@ -1,3 +1,4 @@
+
 import React from "react";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import './App.css';
@@ -36,8 +37,6 @@ import AdminHome from "./page/AdminHome";
 import StageManagement from "./page/admin/StageManagement";
 import BoardManagement from "./page/admin/BoardManagement";
 import Test from "./page/Test";
-import AdminStageDetail from "./page/admin/AdminStageDetail";
-import TestAdminAccountDetail from "./page/admin/TestAdminAccountDetail";
 
 const App = () => {
 
@@ -177,16 +176,8 @@ const App = () => {
           element: <AccountManagement/>
         },
         {
-          path: 'account/detail/:uno',
-          element: <TestAdminAccountDetail/>
-        },
-        {
           path: 'stage',
           element: <StageManagement/>
-        },
-        {
-          path: 'stage/detail/:pfID',
-          element: <AdminStageDetail/>
         },
         {
           path: 'board',
