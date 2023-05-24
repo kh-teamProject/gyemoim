@@ -4,8 +4,8 @@ import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.mapper.AccountMapper;
-import com.team.gyemoim.vo.MyAccount;
-import com.team.gyemoim.vo.MyAccountHistory;
+import com.team.gyemoim.vo.MyAccountVO;
+import com.team.gyemoim.vo.MyAccountHistoryVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,13 +40,13 @@ public class AccountServiceImpl implements AccountService{
     return accountMapper.getPassword(uNo);
   }
 
-  public List<MyAccount> getMyAccount(Integer uNo) {
+  public List<MyAccountVO> getMyAccount(Integer uNo) {
     return accountMapper.getMyAccount(uNo);
   }
 
   // 내 계모임 계좌 거래내역 가져오기
   @Override
-  public List<MyAccountHistory> getMyAccountHistory(Integer uNo) {
+  public List<MyAccountHistoryVO> getMyAccountHistory(Integer uNo) {
     return accountMapper.getMyAccountHistory(uNo);
   }
 

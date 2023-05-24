@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MyAccountHistory {
+public class MyAccountHistoryVO {
   private Integer uNo;
   private String bankName;
   private String bankAccountNumber;

@@ -131,7 +131,8 @@ const Withdraw = () => {
           </div>
           <div>
             <input
-              type="text"
+              type="number"
+              value={enteredMoney}
               onChange={moneyChangeHandler}
               onBlur={isWithdrawHandler}
               style={{borderColor: isWithdrawValid ? 'red' : 'gray'}}

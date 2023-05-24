@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MyAccount {
+public class MyAccountVO {
   private Integer uNo;
   private Integer myBalance;
 }

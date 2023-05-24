@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 
 import classes from '../css/MyPageModify.module.css';
@@ -35,7 +35,7 @@ const MyPageModify = () => {
         bankRef.current.value = res.data.bankName ? res.data.bankName : '';
         bankNumberRef.current.value = res.data.bankAccountNumber ? res.data.bankAccountNumber : '';
         accountHolderRef.current.value = res.data.accountHolder ? res.data.accountHolder: '';
-        creditRatingRef.current.value = res.data.PRANK === 'A' ? '1' : res.data.PRANK === 'B' ? '4' : '7';
+        creditRatingRef.current.value = res.data.PRANK === 'A' ? '1' : res.data.PRANK === 'B' ? '4' : res.data.PRANK === 'B' ? '7' : '';
         enrollDateRef.current.value = `${year}-${month}-${day}`;
       })
       .catch((error) => {
@@ -71,7 +71,7 @@ const MyPageModify = () => {
       }
     })
       .then((res) => {
-        console.log(res);
+        alert('회원정보 수정이 완료되었습니다.');
         navigate('/');
       })
       .catch((error) => {

@@ -3,8 +3,8 @@ package com.team.gyemoim.service;
 import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
-import com.team.gyemoim.vo.MyAccount;
-import com.team.gyemoim.vo.MyAccountHistory;
+import com.team.gyemoim.vo.MyAccountVO;
+import com.team.gyemoim.vo.MyAccountHistoryVO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +23,7 @@ public interface AccountService {
   String getPassword(Integer uNo);
 
   // 계모임 계좌 정보 가져오기
-  List<MyAccount> getMyAccount(Integer uNo);
+  List<MyAccountVO> getMyAccount(Integer uNo);
 
   // Update
   // 내 정보 수정하기
@@ -36,7 +36,7 @@ public interface AccountService {
   void myAccountUpdate(BankHistoryDTO bankHistoryDTO);
 
   // 내 계모임 계좌 거래내역 가져오기
-  List<MyAccountHistory> getMyAccountHistory(Integer uNo);
+  List<MyAccountHistoryVO> getMyAccountHistory(Integer uNo);
 
 
   // Delete
