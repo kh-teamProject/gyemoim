@@ -1,0 +1,77 @@
+main {
+  min-height: 587px;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin: 20px 0;
+}
+
+.field {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.field ul {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 30px;
+  padding: 0;
+}
+
+.field ul li {
+  position: relative;
+  width: 140px;
+  height: 40px;
+  font-size: 1.5rem;
+  color: gray;
+  cursor: pointer;
+}
+
+.field ul li  a.isActive {
+  color: black;
+  font-weight: bold;
+}
+
+.field ul li  a.isActive::after{
+  content: '';
+  display: inline-block;
+  width: 150px;
+  border-bottom: 2px solid gray;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.field label {
+  display: inline-block;
+  margin-right: 20px;
+  width: 120px;
+  text-align: left;
+}
+
+.field input {
+  width: 300px;
+  height: 30px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+}
+
+.field .link-btn, .field .submit-btn {
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  color: white;
+  background: skyblue;
+  line-height: 40px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.field .submit-btn {
+  border: 0;
+  font-size: 1rem;
+  font-weight: bold;
+}

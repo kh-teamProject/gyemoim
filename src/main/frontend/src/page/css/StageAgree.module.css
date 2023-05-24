@@ -1,0 +1,122 @@
+ul{
+    padding: 0;
+}
+
+ul li {
+  list-style-type:none;
+  margin: 0;
+  padding: 0;
+}
+
+.won ul li {
+text-align: right;
+}
+
+body{
+ background: #F7F7F7;
+  text-align: center;
+}
+
+.title {
+   color: #373f57;
+}
+
+.gap{
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    justify-content: space-between;
+
+}
+/*flex*/
+.flexD{
+    display: flex;
+}
+
+.flex6{
+    flex:6;
+    padding: 2rem;
+
+}
+
+.flex2{
+    flex:2;
+     padding: 1rem;
+
+}
+
+.flex1{
+    flex:1;
+     padding: 0.5rem;
+
+}
+
+.font{
+    text-align: left;
+}
+
+/*버튼*/
+.button {
+  text-align: center;
+   border: 3px solid  #004DC1;
+    background-color: #004DC1;
+    color: white ;
+    width: 300px;
+    height: 68px;
+    border-radius: 10px;
+    font-size: 1.3rem;
+}
+
+.inputStage {
+  border-radius: 4px;
+  border: 1px solid #8491a7;
+    width: 300px;
+  height: 48px;
+  font-size: 16px;
+  line-height: 24px
+}
+
+
+
+.margin{
+text-align : right;
+}
+
+/*제목*/
+.sixth { position: relative; }
+
+.sixth:before,
+.sixth:after {
+  content: '[';
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  height: 100%;
+  font-size: 1.25em;
+  color: blue;
+
+  transition: all 0.5s ease;
+}
+
+.sixth:after { content: ']'; }
+
+.sixth:hover:before {
+  transform: translateX(-5px);
+}
+
+.sixth:hover:after {
+  transform: translateX(5px);
+}
+
+/*박스 */
+.box {
+  background: #fff;
+  border-radius: 7px;
+  display: inline-block;
+  height: 100%;
+  margin: 1rem;
+  position: relative;
+  width: 90%;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+

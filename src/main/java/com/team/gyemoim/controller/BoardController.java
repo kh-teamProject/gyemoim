@@ -46,7 +46,7 @@ public class BoardController {
 
     // 게시글 작성 API (Create)
     @PostMapping("/board/notice/writePost")
-    public ResponseEntity<String> writePost(@RequestBody BoardWriteDTO boardWriteDTO) {
+    public ResponseEntity<String> writePost(BoardWriteDTO boardWriteDTO) {
         try {
             boardService.write(boardWriteDTO);
             return ResponseEntity.ok("BoardController 글 작성 돌아간닷! :D");

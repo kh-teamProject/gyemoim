@@ -1,0 +1,17 @@
+.adminHeader-wrap {
+  border-bottom: 1px solid black;
+  background: white;
+  height: 50px;
+}
+
+.adminHeader-wrap > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.adminHeader-wrap > div > span {
+  line-height: 57px;
+  font-size: 1.5rem;
+  margin-right: 20px;
+}
