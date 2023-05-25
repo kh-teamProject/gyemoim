@@ -1,8 +1,5 @@
 import classes from './css/Footer.module.css';
 import logo from './assert/images/logo0306.png';
-/*=======
-import logo from './assert/images/logo0301.png';
->>>>>>> feature/hyunji*/
 
 const Footer = () => {
 
