@@ -1,4 +1,4 @@
-package com.team.gyemoim.dto;
+package com.team.gyemoim.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

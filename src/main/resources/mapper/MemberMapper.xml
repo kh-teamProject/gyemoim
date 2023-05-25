@@ -1,62 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.team.gyemoim.mapper.MemberMapper">
 
+    <!-- 회원가입 -->
+    <insert id="account">
+        INSERT INTO MEMBER
+            (uNo, email, password, name)
+        VALUES (uno_mem_seq.nextVal, #{email}, #{password}, #{name})
+    </insert>
 
+    <!-- 회원 권한 정보 -->
+    <select id="findByEmail" resultType="com.team.gyemoim.dto.MemberDTO">
+        SELECT *
+        FROM MEMBER
+        WHERE email = #{email}
+    </select>
 
+<!--    &lt;!&ndash; email 찾기 &ndash;&gt;-->
+<!--    <select id="memberEmailSearch" resultType="com.team.gyemoim.vo.MemberVO">-->
+<!--        SELECT *-->
+<!--        FROM Member-->
+<!--        WHERE name = #{name}-->
+<!--&#45;&#45;           AND phone = #{phone}-->
+<!--    </select>-->
 
-  <insert id="account">
-    INSERT INTO MEMBER
-      (uNo, email, password, name, userRole)
-    VALUES(uno_mem_seq.nextVal, #{email}, #{password},#{name}, #{userRole})
-  </insert>
-
-<!--  <insert id="addRole" parameterType="com.team.gyemoim.dto.MemberDTO">-->
-<!--    INSERT INTO MEMBER_AUTHORITY-->
-<!--    (MEMBER_FK, AUTHORITY_FK)-->
-<!--    VALUES(-->
-<!--      (SELECT uNo FROM MEMBER WHERE EMAIL = #{EMAIL}),-->
-<!--      (SELECT authority_PK FROM AUTHORITY WHERE authority_PK = #{userRole})-->
-<!--    );-->
-<!--  </insert>-->
-
-  <select id="findUser" resultType="com.team.gyemoim.dto.MemberDTO">
-    SELECT email
-    FROM MEMBER
-    WHERE email = #{email}
-  </select>
-
-  <select id="findUserId" resultType="com.team.gyemoim.dto.MemberDTO">
-    SELECT UNO
-    FROM MEMBER
-    WHERE email = #{email}
-  </select>
-
-<select id="getUserPassword" resultType="String">
-  SELECT password
-    FROM MEMBER
-    WHERE email = #{email}
-</select>
-
-  <select id="getName" resultType="String">
-    SELECT name
-    FROM MEMBER
-    WHERE email = #{email}
-  </select>
-
-
-
-  <!--회원가입 정보 저장-->
-<!--  <insert id="registerMember"  >-->
-<!--    INSERT  INTO Member(uNo,email,password,name,ssn,phone,addresscode,address,addressdetail)-->
-<!--    VALUES(uno_mem_seq.nextVal ,#{email},#{password},#{name},#{ssn},#{phone},#{addresscode},#{address},#{addressdetail})-->
-<!--  </insert>-->
-
-<!--  &lt;!&ndash;중복이메일 확인&ndash;&gt;-->
-<!--  <select id="checkMember" parameterType="String" resultType="Integer">-->
-<!--    SELECT COUNT(*) FROM Member-->
-<!--    WHERE email = #{email}-->
-<!--  </select>-->
+<!--&lt;!&ndash;     password 찾기&ndash;&gt;-->
+<!--    <select id="memberPwdSearch" resultType="com.team.gyemoim.vo.MemberVO">-->
+<!--        SELECT *-->
+<!--        FROM Member-->
+<!--        WHERE name = #{name}-->
+<!--          AND email = #{email}-->
+<!--    </select>-->
 
 </mapper>

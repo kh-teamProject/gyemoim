@@ -1,19 +1,22 @@
 package com.team.gyemoim.mapper;
 
-import com.team.gyemoim.dto.LoginDTO;
 import com.team.gyemoim.dto.MemberDTO;
+import com.team.gyemoim.vo.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.Optional;
 
 @Mapper
 public interface MemberMapper {
-    void account(MemberDTO memberDTO);
-//     void addRole(MemberDTO memberDTO);
-    // Optional<UserVo> findUserById(String userId);
-    Optional<MemberDTO> findUser(String email);
-    Optional<MemberDTO> findUserId(String email);
-    String getUserPassword(LoginDTO loginDTO);
 
-    String getName(LoginDTO loginDTO);
+    // 회원 권한 정보
+    MemberDTO findByEmail(String email);
+
+    // 회원가입
+    void account(MemberDTO memberDTO);
+
+
+//    // email 찾기
+//    MemberVO memberEmailSearch(String email);
+//
+//    // password 찾기
+//    MemberVO MemberPwdSearch(MemberVO memberVO);
 }

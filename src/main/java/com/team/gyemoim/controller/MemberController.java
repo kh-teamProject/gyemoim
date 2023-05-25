@@ -1,150 +1,161 @@
 package com.team.gyemoim.controller;
 
-import com.team.gyemoim.dto.*;
+import com.team.gyemoim.dto.LoginDTO;
+import com.team.gyemoim.dto.MemberDTO;
+import com.team.gyemoim.dto.response.BaseResponse;
+import com.team.gyemoim.dto.response.SingleDataResponse;
 import com.team.gyemoim.exception.DuplicatedUsernameException;
 import com.team.gyemoim.exception.LoginFailedException;
 import com.team.gyemoim.exception.UserNotFoundException;
-import com.team.gyemoim.jwt.TokenProvider;
+import com.team.gyemoim.jwt.JwtProvider;
 import com.team.gyemoim.service.MemberService;
 import com.team.gyemoim.service.ResponseService;
+import com.team.gyemoim.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
-@Slf4j
 @RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
-@CrossOrigin(origins = "*")
 public class MemberController {
-    @Autowired
-    MemberService memberService;
-    @Autowired
-    ResponseService responseService;
-    @Autowired
-    TokenProvider tokenProvider;
+
+    private final MemberService memberService;
+    private final ResponseService responseService;
+
+    private final JwtProvider jwtProvider;
+
+    private final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
 
-    @PostMapping(value="/account")
-    public ResponseEntity<?> account(@RequestBody MemberDTO memberDTO) {
+    // 회원가입
+    @PostMapping("/account")
+    public ResponseEntity account(@RequestBody MemberDTO memberDTO) {
         ResponseEntity responseEntity = null;
 
         try {
-            memberService.account(memberDTO);
-
-            SingleDataResponse<String> response = responseService.getSingleDataResponse(true, memberDTO.getEmail(), null);
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body(response);
-
-        } catch(DuplicatedUsernameException exception) {
-            BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        return responseEntity;
-    }
-
-    @PostMapping(value="/login")
-    public ResponseEntity login(@RequestBody LoginDTO loginDTO) {
-        Map<String, Object> responseData = new HashMap<>();
-        ResponseEntity responseEntity = null;
-
-        try {
-            String email = memberService.login(loginDTO);
-            TokenDTO token = memberService.tokenGenerator(email);
-            ResponseCookie responseCookie =
-                    ResponseCookie.from(HttpHeaders.SET_COOKIE, token.getRefreshToken())///new Cookie("refreshToken", token.getRefreshToken());
-                            .path("/")
-                            .maxAge(Duration.ofDays(14))
-                            .httpOnly(true)
-                             .secure(true)
-                            .build();
-//            System.out.println("RefreshToken in Cookie : " + responseCookie);
-            System.out.println("RefreshToken in Cookie : " + token.getRefreshToken());
-
-            SingleDataResponse<String> response = responseService.getSingleDataResponse(true, email, token.getAccessToken());
-            responseEntity = ResponseEntity.status(HttpStatus.OK)
-                    .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                    .body(response);
-            System.out.println("AccessToken : " + token.getAccessToken());
-
-            responseData.put("refreshToken", token.getRefreshToken());
-            responseData.put("accessToken", token.getAccessToken());
-            responseData.put("responseEntity", responseEntity);
-
-            String name = memberService.getName(loginDTO);
-            responseData.put("name", name);
-
-
-        } catch (LoginFailedException exception) {
-            log.debug(exception.getMessage());
-            BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());
-
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        return ResponseEntity.ok(responseData);
-    }
-
-    @PostMapping(value="/logout")
-    public ResponseEntity<Map<String, Object>> logout(
-            @CookieValue(value = HttpHeaders.SET_COOKIE) Cookie refreshCookie
-    ) {
-        ResponseEntity responseEntity = null;
-        try {
-            ResponseCookie responseCookie =
-                    ResponseCookie.from(HttpHeaders.SET_COOKIE, "")///new Cookie("refreshToken", token.getRefreshToken());
-                            .path("/")
-                            .httpOnly(true)
-                            .secure(true)
-                            .maxAge(0).build();
-            BaseResponse response =
-                    responseService.getBaseResponse(true, "로그아웃 성공");
-            System.out.println("로그아웃 성공");
-            responseEntity = ResponseEntity.status(HttpStatus.OK)
-                    .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                    .body(response);
-
-        } catch (LoginFailedException exception) {
-            log.debug(exception.getMessage());
-            BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());
-
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        return responseEntity;
-    }
-
-
-    /**
-     * @param email 전송을 위한 DTO
-     * @return email 있다면 success값을 true, 없다면 false를 리턴.
-     */
-    @GetMapping(value="/get")
-    public ResponseEntity isHaveUser(@RequestParam String email) {
-        ResponseEntity responseEntity = null;
-        // Cookie cookie = new Cookie("name", value)
-        try {
-            boolean isHaveUser = memberService.haveUser(email);
-            String message = isHaveUser ? "회원가입된 유저입니다." : "회원가입 안된 유저입니다.";
-            SingleDataResponse<Boolean> response = responseService.getSingleDataResponse(true, message, isHaveUser);
+            MemberDTO account = memberService.account(memberDTO);
+            SingleDataResponse<MemberDTO> response = responseService.getSingleDataResponse(true, "회원가입 성공", account);
             responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(response);
 
+            System.out.println("회원가입 성공");
+            System.out.println(account);
+//            ResponseEntity.ok(account + "::(Controller) 회원가입이 완료되었습니다.");
 
-        }catch(UserNotFoundException exception) {
-            log.debug(exception.getMessage());
+        } catch (DuplicatedUsernameException exception) {
+            logger.debug(exception.getMessage());
             BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());
+
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+            System.out.println("회원가입 실패");
+//            ResponseEntity.badRequest().body("(Controller) 회원가입에 실패하였습니다.");
         }
+
+        return responseEntity;
+
+    }
+
+
+    // 로그인
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody LoginDTO loginDTO) {
+
+        ResponseEntity responseEntity = null;
+
+        try {
+            String token = memberService.login(loginDTO);
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("Gyemoim", "Bearer " + token);
+
+
+            SingleDataResponse<String> response = responseService.getSingleDataResponse(true, "로그인 성공", token);
+
+            responseEntity = ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(response);
+
+            System.out.println("로그인 성공");
+            System.out.println(httpHeaders);
+            System.out.println(responseEntity);
+
+        } catch (LoginFailedException exception) {
+            logger.debug(exception.getMessage());
+            BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());
+
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+            System.out.println("로그인 실패");
+        }
+
         return responseEntity;
     }
+
+    // 로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+
+        String token = jwtProvider.resolveToken(request);
+
+        System.out.println(token);
+
+        jwtProvider.isInBlacklist(token); // 토큰을 블랙리스트에 추가하여 로그아웃 처리
+
+        System.out.println("로그아웃 성공");
+        System.out.println(token);
+
+        return ResponseEntity.ok("로그아웃 성공");
+    }
+
+
+
+//    // Email 찾기
+//    @PostMapping("/emailSearch")
+//    public ResponseEntity<MemberVO> memberEmailSearch(@RequestBody MemberVO memberVO) {
+//
+//        try {
+//            MemberVO memberEmailSearch = memberService.memberEmailSearch(memberVO);
+//
+//            System.out.println("이메일 찾기");
+//            System.out.println("memberVO = " + memberVO);
+//            System.out.println("MemberController.memberEmailSearch");
+//            System.out.println("memberEmailSearch = " + memberEmailSearch);
+//
+//            return ResponseEntity.ok(memberEmailSearch);
+//
+//        } catch (UserNotFoundException e) {
+//
+//            System.out.println("이메일 찾기 실패");
+//
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//
+//        }
+//    }
+//
+//
+//    // 비밀번호 찾기
+//    @PostMapping("/pwdSearch")
+//    public ResponseEntity<MemberVO> memberPwdSearch(@RequestBody MemberVO memberVO) {
+//
+//        try {
+//            MemberVO memberPwdSearch = memberService.memberPwdSearch(memberVO);
+//
+//            System.out.println("비밀번호 찾기");
+//            System.out.println("memberPwdSearch = " + memberPwdSearch);
+//
+//            return ResponseEntity.ok(memberPwdSearch);
+//
+//        }catch (UserNotFoundException e) {
+//
+//            System.out.println("비밀번호 찾기 실패");
+//
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
+//    }
 }

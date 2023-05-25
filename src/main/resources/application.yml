@@ -6,11 +6,11 @@ spring:
     driverClassName: oracle.jdbc.driver.OracleDriver
 
 jwt:
-  secret: us8QRhOdbh3W4IXIAFxZNNrPQCAYFkfU1WuhjPgT6vFXlkRVpKQnamQ0JG5YFU0ZtQFJTy0UGWqYfTNBdwus8QRhOdbh3W4IXIAFxZNNrPQCAYFkfU1WuhjPgT6vFXlkRVpKQnamQ0JG5YFU0ZtQFJTy0UGWqYfTNBdw
-  access-token-validity-in-seconds: 1800
-  refresh-token-validity-in-seconds: 3600
+  header: Gyemoim
+  secret: GyemoimChickenMumani
+  token-validity-in-seconds: 3600000
 
-#    secret: UYQsWgov3efG4ezU7gwptV3mGyQwf0cUAz5baMO9jhQ7wb__wnMOT1vZN8sUQnm1b0MO7s1vKn4EQ5vBuxBovQ
 
 mybatis:
   mapper-locations: classpath:mapper/**.xml
+#  type-aliases-package: com.team.gyemoim.mapper

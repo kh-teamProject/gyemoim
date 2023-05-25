@@ -1,35 +1,51 @@
 import React, {useState} from 'react'
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
+import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {doLogin} from "../../store/loginStore";
 
 
 const Login = () => {
+
+    const dispatch = useDispatch();
+    const checkedLogin = useSelector((state) => state.checkedLogin);
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
     const navigate = useNavigate();
 
     const handleLogin = async () => {
         try {
-            await axios.post('/api/v1/login', {
+            await axios.post('/api/login', {
                 email,
-                password
+                password,
+
             })
                 .then((res) => {
-                    Cookies.set('Set-Cookie', res.data.responseEntity.body.data);
-                    const refreshToken = res.data.refreshToken.split('.');
-                    const accessToken = res.data.accessToken.split('.');
-                    localStorage.setItem("accessToken", accessToken[accessToken.length - 1]);
-                    localStorage.setItem("refreshToken", refreshToken[refreshToken.length - 1]);
+                    // console.log(res);
+                    Cookies.set('Set-Cookie', res.data.data);
+                    // console.log('Set-Cookie', res.data.data);
+                    // console.log('Set-Cookie', res.data.data.uNo)
+                    // console.log(jwtDecode(res.data.data));
+
+                    const  decodedToken = jwtDecode(res.data.data);
+                    const name = decodedToken.name;
+
+                    dispatch({type: 'login'});
+                    console.log(checkedLogin);
+                    console.log('이름', name)
+//                    alert(`${name}님 환영합니다.);
+                    alert(`${name} 어서와ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ`);
                     navigate("/")
-                    alert(`${res.data.name}님 환영합니다.`);
+                    // window.location.reload("/");
+
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-
-
-
             // TODO: 토큰을 저장하거나 사용해야 할 작업 수행
         } catch (error) {
             console.error(error);

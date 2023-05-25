@@ -1,11 +1,12 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.BaseResponse;
-import com.team.gyemoim.dto.ListDataResponse;
-import com.team.gyemoim.dto.SingleDataResponse;
+import com.team.gyemoim.dto.response.BaseResponse;
+import com.team.gyemoim.dto.response.ListDataResponse;
+import com.team.gyemoim.dto.response.SingleDataResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class ResponseService {
     public <T> SingleDataResponse<T> getSingleDataResponse(boolean success, String message, T data) {
