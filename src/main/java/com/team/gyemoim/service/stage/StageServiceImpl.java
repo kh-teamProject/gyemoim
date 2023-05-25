@@ -3,6 +3,7 @@ package com.team.gyemoim.service.stage;
 
 import com.team.gyemoim.dto.stage.*;
 import com.team.gyemoim.mapper.StageMapper;
+import com.team.gyemoim.vo.MemberVO;
 import com.team.gyemoim.vo.ParticipationVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -13,9 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -141,6 +140,15 @@ public class StageServiceImpl implements StageService {
   //(찬희)스테이지 나가기
   public void stageOut(StageINDTO dto){
     stageMapper.rollDelete(dto); // roll 테이블 uNo 삭제
+    log.info(dto.getPfMaster());
+      // 나가는 사람이 방장이면,
+    if (dto.getPfMaster() != null) {
+      Date latestRollDate = stageMapper.getLatestStageInDate();
+      Map<String, Object> parameterMap = new HashMap<>();
+      parameterMap.put("stageInDate", latestRollDate);
+      parameterMap.put("pfMaster", "M");
+      stageMapper.pfMasterUpdate(parameterMap);
+    }
   }
   //(찬희) 스테이지 my계좌 정보 불러오기
   @Override
@@ -155,7 +163,7 @@ public class StageServiceImpl implements StageService {
     stageMapper.stageBalanceUpdate(dto);
     //2. my계좌 잔액 -> 현금액 - uPayment
     stageMapper.myAccountUPaymentUpdate(dto);
-    //3. 계좌이력도 남겨야 함
+    //3. 계좌이력도 남겨야 함 (출금, 입금)
 
     //4. 입금 횟수 mapper.xml에서 +1
     stageMapper.depositCntPlus(dto);
@@ -169,7 +177,7 @@ public class StageServiceImpl implements StageService {
     this.stageRollDTO = dto;
     this.stageRollDTO.setPaymentOrder(stageMapper.getPaymentOrderValue(stageRollDTO));
   }
-  //(찬희). 스테이지 금액 -> my계좌로 순서에 맞게 update
+  //(찬희). 스테이지 금액 -> my계좌로 순서에 맞게 update / 자동으로 곗돈 지급
   @Override
   @Scheduled(cron = "0 52 19 20 * ?") // 매달 25일 0시 0분 0초에 실행
   public void performUpdate() {
@@ -194,4 +202,11 @@ public class StageServiceImpl implements StageService {
       }
     }
   }
+  //(찬희) 수익보고서 member 정보 불러오기
+  @Override
+  public List<MemberVO> getMemberInfo(StageRollDTO dto) {
+    return stageMapper.getMemberInfo(dto);
+  }
+
+
 }

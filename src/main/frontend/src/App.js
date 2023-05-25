@@ -84,13 +84,13 @@ const App = () => {
         {
           path: 'ChanHeeTest',
           element: <ChanHeeTest />
-        },
-        {
-          path: 'StageReport',
-          element: <StageReport />
         }
       ]
     },
+      {
+        path: 'StageReport/:pfID',
+        element: <StageReport />
+      }
   ]);
 
 

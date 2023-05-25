@@ -264,4 +264,23 @@
         SET paymentOrder = paymentOrder + 1
         WHERE pfID = #{pfID}
     </update>
+
+    <!--(찬희) member 정보 불러오기-->
+    <select id="getMemberInfo" parameterType="com.team.gyemoim.dto.stage.StageRollDTO" resultType="com.team.gyemoim.vo.MemberVO">
+        SELECT *
+        FROM MEMBER
+        WHERE uNo = #{uNo}
+    </select>
+
+    <!--(찬희)getLatestStageInDate-->
+    <select id="getLatestStageInDate" resultType="java.util.Date">
+        SELECT MAX(stageInDate)
+        FROM roll
+    </select>
+
+    <update id="pfMasterUpdate"  parameterType="java.util.Map">
+        UPDATE roll
+        SET pfMaster = 'M'
+        WHERE stageInDate = #{stageInDate}
+    </update>
 </mapper>

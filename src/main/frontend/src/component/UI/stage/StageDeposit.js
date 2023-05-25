@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import classes from '../../../page/css/Stage.module.css';
 import StageModal from "./StageModal";
 import modalClasses from '../../css/StageModal.module.css';
 import StageReport from "./StageReport";
+
 
 function StageDeposit(props){
     let uPayment;
@@ -26,13 +27,15 @@ function StageDeposit(props){
     };
 
     const [showStageReport, setShowStageReport] = useState(false);
+    const location = useLocation();
+    const pfIDNum = location.pathname.split('/');
     const navigate = useNavigate();
 
     const pdfHandler = () => {
-    console.log("들?")
-    // StageReport 컴포넌트를 표시하도록 상태 업데이트
-     navigate('/stageReport');
-  };
+        navigate('/StageReport/' + pfIDNum[pfIDNum.length -1],'_blank');
+        setShowStageReport(true);
+    };
+
 
 
 
@@ -63,10 +66,10 @@ function StageDeposit(props){
             </>
             }
             { props.startFlag === '완료' &&
-            <>
-            <button onClick={pdfHandler} className={classes.depositBtn}>{props.btn}</button>
-            {showStageReport && <StageReport />}
-            </>
+                <>
+                    <button onClick={pdfHandler} className={classes.depositBtn}>{props.btn}</button>
+                    {showStageReport && <StageReport rollData={props.rollData} title="sdfsdfs" />}
+                </>
             }
         </div>
 
