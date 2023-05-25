@@ -22,7 +22,6 @@ import StageCreate from './page/stage/StageCreate';
 import StagePartIn from './page/stage/StagePartIn';
 import StageList from './page/stage/StageList';
 import Account from "./page/account/Account";
-import Logout from "./page/account/Logout";
 import Stage from './page/stage/Stage';
 import ChanHeeTest from './page/ChanHeeTest';
 import CheckedPwd from "./page/account/CheckedPwd";
@@ -38,6 +37,7 @@ import BoardManagement from "./page/admin/BoardManagement";
 import Test from "./page/Test";
 
 const App = () => {
+    
 
   const router = createBrowserRouter([
     {
@@ -51,10 +51,6 @@ const App = () => {
         {
           path: 'login',
           element: <Login/>
-        },
-        {
-          path: 'logout',
-          element: <Logout/>
         },
         {
           path: 'account',
