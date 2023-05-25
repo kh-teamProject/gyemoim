@@ -273,14 +273,24 @@
     </select>
 
     <!--(찬희)getLatestStageInDate-->
-    <select id="getLatestStageInDate" resultType="java.util.Date">
-        SELECT MAX(stageInDate)
+    <select id="getLatestStageInDate" resultType="java.util.Date" parameterType="com.team.gyemoim.dto.stage.StageINDTO">
+        SELECT MIN(stageInDate)
         FROM roll
+        WHERE pfID = #{pfID}
     </select>
-
+    <!--(찬희) -->
     <update id="pfMasterUpdate"  parameterType="java.util.Map">
         UPDATE roll
         SET pfMaster = 'M'
         WHERE stageInDate = #{stageInDate}
     </update>
+
+    <!--(찬희) getPfMasterInfo-->
+    <select id="getPfMasterInfo" resultType="String" parameterType="com.team.gyemoim.dto.stage.StageINDTO">
+        SELECT pfMaster
+        FROM roll
+        WHERE uNo = #{uNo}
+        AND pfID = #{pfID}
+    </select>
+
 </mapper>

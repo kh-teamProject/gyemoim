@@ -141,6 +141,7 @@ public class StageController {
   @DeleteMapping("/stageOut")
   public String stageOut(StageINDTO dto) {
       stageService.stageOut(dto); // 버튼 누르면 roll_uNo:delete
+      log.info("stageOutOoooooooooooooooo"+dto);
       return "success";
   }
 }

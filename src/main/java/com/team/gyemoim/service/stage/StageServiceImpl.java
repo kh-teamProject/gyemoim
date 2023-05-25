@@ -139,15 +139,23 @@ public class StageServiceImpl implements StageService {
   }
   //(찬희)스테이지 나가기
   public void stageOut(StageINDTO dto){
-    stageMapper.rollDelete(dto); // roll 테이블 uNo 삭제
-    log.info(dto.getPfMaster());
-      // 나가는 사람이 방장이면,
-    if (dto.getPfMaster() != null) {
-      Date latestRollDate = stageMapper.getLatestStageInDate();
-      Map<String, Object> parameterMap = new HashMap<>();
-      parameterMap.put("stageInDate", latestRollDate);
-      parameterMap.put("pfMaster", "M");
-      stageMapper.pfMasterUpdate(parameterMap);
+    //1. 삭제 전 pfMaster가 맞는지 확인해야 함
+    String pfMaster = stageMapper.getPfMasterInfo(dto);
+    //2.  roll 테이블 uNo 삭제
+    stageMapper.rollDelete(dto);
+    //3. 나가는 사람이 방장이면 다음사람에게 방장을 넘겨주기
+    log.info("pfMaster:::::::::::::::::::"+pfMaster);
+    if (pfMaster != null) {
+      Date latestRollDate = stageMapper.getLatestStageInDate(dto);
+      if(latestRollDate == null){
+        //마지막 사람이면 return
+        return;
+      }else {
+        Map<String, Object> parameterMap = new HashMap<>();
+        parameterMap.put("stageInDate", latestRollDate);
+        parameterMap.put("pfMaster", "M");
+        stageMapper.pfMasterUpdate(parameterMap);
+      }
     }
   }
   //(찬희) 스테이지 my계좌 정보 불러오기

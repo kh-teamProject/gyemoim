@@ -1,7 +1,6 @@
 package com.team.gyemoim.vo;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 

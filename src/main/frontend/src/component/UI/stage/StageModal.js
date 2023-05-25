@@ -17,7 +17,7 @@ const ExitModalOverlay = (props) => {
     const exitButtonClick = () => {
       axios.delete('/stageOut', {
             params: {
-              uNo: 1,
+              uNo: 5,
               pfID: pfIDNum[pfIDNum.length -1]
             }
           })
@@ -97,7 +97,7 @@ const DepositModalOverlay = (props) => {
     const depositButtonClick = () => {
       axios.post('/deposit',null, {
             params: {
-              uNo: 1,
+              uNo: 5,
               pfID: pfIDNum[pfIDNum.length -1],
               uPayment: props.rollData.uPayment
             }

@@ -28,7 +28,7 @@ const Stage = () => {
   useEffect(() => {
     axios.get('/stage', {
       params: {
-        uNo: 2,
+        uNo: 5,
         pfID: pfIDNum[pfIDNum.length -1]
       }
     })
