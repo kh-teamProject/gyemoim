@@ -99,6 +99,25 @@ public class StageController {
 
         return map;
     }
+    //(찬희) 수익보고서
+    @GetMapping("/StageReport")
+    @ResponseBody
+    public HashMap<String, Object> stageReport(@RequestParam Integer pfID, StageRollDTO dto) {
+        log.info("*******stageReport 컨트롤러 + " + pfID);
+        HashMap<String,Object> map = new HashMap<String,Object>();
+        map.put("pf", stageService.getPfList(pfID));
+        Integer myBalance = stageService.getMyAccount(dto);
+        List<StageRollDTO> rollList = stageService.getRollList(dto);
+        for (StageRollDTO rollDTO : rollList) {
+            rollDTO.setMyBalance(myBalance);
+        }
+        map.put("roll", rollList);
+        map.put("import", stageService.getImportList(pfID));
+        map.put("memberInfo", stageService.getMemberInfo(dto));
+
+        return map;
+    }
+
   
   //U
   //(찬희) stage 들어오기
@@ -122,6 +141,7 @@ public class StageController {
   @DeleteMapping("/stageOut")
   public String stageOut(StageINDTO dto) {
       stageService.stageOut(dto); // 버튼 누르면 roll_uNo:delete
+      log.info("stageOutOoooooooooooooooo"+dto);
       return "success";
   }
 }

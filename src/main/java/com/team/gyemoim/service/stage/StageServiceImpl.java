@@ -3,6 +3,7 @@ package com.team.gyemoim.service.stage;
 
 import com.team.gyemoim.dto.stage.*;
 import com.team.gyemoim.mapper.StageMapper;
+import com.team.gyemoim.vo.MemberVO;
 import com.team.gyemoim.vo.ParticipationVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -13,9 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -140,7 +139,24 @@ public class StageServiceImpl implements StageService {
   }
   //(찬희)스테이지 나가기
   public void stageOut(StageINDTO dto){
-    stageMapper.rollDelete(dto); // roll 테이블 uNo 삭제
+    //1. 삭제 전 pfMaster가 맞는지 확인해야 함
+    String pfMaster = stageMapper.getPfMasterInfo(dto);
+    //2.  roll 테이블 uNo 삭제
+    stageMapper.rollDelete(dto);
+    //3. 나가는 사람이 방장이면 다음사람에게 방장을 넘겨주기
+    log.info("pfMaster:::::::::::::::::::"+pfMaster);
+    if (pfMaster != null) {
+      Date latestRollDate = stageMapper.getLatestStageInDate(dto);
+      if(latestRollDate == null){
+        //마지막 사람이면 return
+        return;
+      }else {
+        Map<String, Object> parameterMap = new HashMap<>();
+        parameterMap.put("stageInDate", latestRollDate);
+        parameterMap.put("pfMaster", "M");
+        stageMapper.pfMasterUpdate(parameterMap);
+      }
+    }
   }
   //(찬희) 스테이지 my계좌 정보 불러오기
   @Override
@@ -155,7 +171,8 @@ public class StageServiceImpl implements StageService {
     stageMapper.stageBalanceUpdate(dto);
     //2. my계좌 잔액 -> 현금액 - uPayment
     stageMapper.myAccountUPaymentUpdate(dto);
-    //3. 계좌이력도 남겨야 함
+    //3. 계좌이력도 남겨야 함 (출금, 입금)
+
     //4. 입금 횟수 mapper.xml에서 +1
     stageMapper.depositCntPlus(dto);
     //5. 입금 누적 금액 update
@@ -163,28 +180,41 @@ public class StageServiceImpl implements StageService {
     //6. 입금식별 -> update
     stageMapper.stagePaymentCheckUpdate(dto);
     //7. 현재 dto를 저장
+    // 전원이 다 입금하면 조건문 걸기
     //(현재 paymentOrder 값 조회)
     this.stageRollDTO = dto;
     this.stageRollDTO.setPaymentOrder(stageMapper.getPaymentOrderValue(stageRollDTO));
   }
-  //(찬희). 스테이지 금액 -> my계좌로 순서에 맞게 update
+  //(찬희). 스테이지 금액 -> my계좌로 순서에 맞게 update / 자동으로 곗돈 지급
   @Override
-  @Scheduled(cron = "0 08 17 18 * ?") // 매달 25일 0시 0분 0초에 실행
+  @Scheduled(cron = "0 52 19 20 * ?") // 매달 25일 0시 0분 0초에 실행
   public void performUpdate() {
     log.info("제발 실행이 되어주세요 플리즈" + stageRollDTO);
     if( stageRollDTO != null) {
+      log.info("실행이 됩니까? 1 : " + stageRollDTO);
       int currentStageBalance = stageMapper.getStageBalance(stageRollDTO);
       int stageDeposit = stageMapper.getStageDeposit(stageRollDTO);
       // stageBalance >= deposit : stageBalance -> uPayment 이동
 
       if (currentStageBalance >= stageDeposit) {
-        //stageBalance - *번의 uPayment
-        stageMapper.stageBalanceMinus(stageRollDTO);
-        //*번의 uPayment + stageBalance
-        stageMapper.stagePaymentOrder(stageRollDTO);
-        // 지급순서 올리기 if(pfEntry >= paymentOrder)
+        log.info("실행이 됩니까? 2 : " + currentStageBalance);
 
+        //1. stageBalance - *번의 uPayment
+        stageMapper.stageBalanceMinus(stageRollDTO);
+        //2. *번의 uPayment + stageBalance
+        stageMapper.stagePaymentOrder(stageRollDTO);
+        //3. 지급순서 올리기
+        stageMapper.paymentOrderSave(stageRollDTO);
+        //4. 전원 입금식별자 'Y' -> 'N'
+        stageMapper.AllPaymentCheckUpdate(stageRollDTO);
       }
     }
   }
+  //(찬희) 수익보고서 member 정보 불러오기
+  @Override
+  public List<MemberVO> getMemberInfo(StageRollDTO dto) {
+    return stageMapper.getMemberInfo(dto);
+  }
+
+
 }

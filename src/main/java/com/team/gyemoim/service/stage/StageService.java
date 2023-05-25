@@ -1,6 +1,7 @@
 package com.team.gyemoim.service.stage;
 
 import com.team.gyemoim.dto.stage.*;
+import com.team.gyemoim.vo.MemberVO;
 import com.team.gyemoim.vo.ParticipationVO;
 
 import java.math.BigDecimal;
@@ -45,6 +46,8 @@ public interface StageService {
  Integer getMyAccount(StageRollDTO dto);
  //(찬희) 스테이지 입금하기
  void stageDeposit(StageRollDTO dto);
- //(찬희) 자동으로 곗돈 수령
+ //(찬희) 자동으로 곗돈 지급
  void performUpdate();
+ //(찬희) 수익보고서 user 정보 갖고오기
+ List<MemberVO> getMemberInfo(StageRollDTO dto);
 }

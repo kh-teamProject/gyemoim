@@ -3,6 +3,7 @@ package com.team.gyemoim.dto.stage;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 public class StageRollDTO {
@@ -17,5 +18,7 @@ public class StageRollDTO {
   private Integer myBalance; //myAccount 잔액
   private Integer paymentOrder;//지급순서
   private Integer pfEntry; //계모임 참가자 수
-
+  private Integer uTotalReceipts; //개인별 실 지급금
+  private Integer uTotalPayment; //개인별 총 입금액
+  private Date stageInDate;
 }

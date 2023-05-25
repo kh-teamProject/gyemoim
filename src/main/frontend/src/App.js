@@ -34,6 +34,8 @@ import AccountManagement from "./page/admin/AccountManagement";
 import AdminHome from "./page/AdminHome";
 import StageManagement from "./page/admin/StageManagement";
 import BoardManagement from "./page/admin/BoardManagement";
+import StageReport from "./component/UI/stage/StageReport";
+import './App.css';
 import Test from "./page/Test";
 
 const App = () => {
@@ -95,7 +97,7 @@ const App = () => {
           ]
         },
         {
-          path: 'stage',
+          path: 'stage/:pfID',
           element: <Stage/>
         },
         {
@@ -179,7 +181,11 @@ const App = () => {
           element: <BoardManagement/>
         }
       ]
-    }
+    },
+      {
+        path: 'StageReport/:pfID',
+        element: <StageReport />
+      }
   ]);
 
   return (

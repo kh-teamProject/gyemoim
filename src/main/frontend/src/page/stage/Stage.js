@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import classes from '../css/Stage.module.css';
 import BoxButton from "../../component/UI/stage/BoxButton";
 import StageSequence from "../../component/UI/stage/StageSequence";
@@ -21,13 +21,15 @@ const Stage = () => {
     const [pfData, setPfData] = useState([]);
     const [rollData, setRollData] = useState([]);
 
+    const location = useLocation();
+    const pfIDNum = location.pathname.split('/');
 
 
   useEffect(() => {
     axios.get('/stage', {
       params: {
-        uNo: 3,
-        pfID: 1
+        uNo: 5,
+        pfID: pfIDNum[pfIDNum.length -1]
       }
     })
       .then((res) => {
@@ -77,6 +79,7 @@ const Stage = () => {
         const RollUPayment = res.data.roll.map((item) => item.upayment);
         const RollMyBalance = res.data.roll.map((item) => item.myBalance);
         const RollPaymentCheck = res.data.roll.map((item) => item.paymentCheck);
+        const RollUTotalReceipts = res.data.roll.map((item) => item.utotalReceipts);
 
         const rollData = {
         depositCnt: RollDepositCnt.join(''),
@@ -84,7 +87,8 @@ const Stage = () => {
         receiveTurn: RollReceiveTurn.join(''),
         uPayment: RollUPayment.join(''),
         myBalance: RollMyBalance.join(''),
-        paymentCheck: RollPaymentCheck.join('')
+        paymentCheck: RollPaymentCheck.join(''),
+        uTotalReceipts: RollUTotalReceipts.join('')
         };
         setRollData(rollData);
 
@@ -162,7 +166,7 @@ const Stage = () => {
                         <div>
                         {startFlag==='대기중' && <StageDeposit roll={roll} rollData={rollData} startFlag={startFlag} title={pfData.pfName} subTitle="입금하기" btn="입금하기" />}
                         {startFlag==='참여중' && <StageDeposit  roll={roll} rollData={rollData} startFlag={startFlag} title={pfData.pfName}subTitle="입금하기" btn="입금하기" />}
-                        {startFlag==='완료' && <StageDeposit startFlag={startFlag} title={pfData.pfName} subTitle="출력하기" btn="출력하기" />}
+                        {startFlag==='완료' && <StageDeposit rollData={rollData} startFlag={startFlag} title={pfData.pfName} subTitle="출력하기" btn="출력하기" />}
                         </div>
 
 

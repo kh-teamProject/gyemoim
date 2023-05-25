@@ -4,6 +4,7 @@ import com.team.gyemoim.dto.stage.StageListDTO;
 import com.team.gyemoim.dto.stage.ImportDTO;
 import com.team.gyemoim.dto.stage.StageCreateDTO;
 import com.team.gyemoim.dto.stage.StageParticipateDTO;
+import com.team.gyemoim.vo.MemberVO;
 import com.team.gyemoim.vo.ParticipationVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,6 +13,7 @@ import com.team.gyemoim.dto.stage.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface StageMapper {
@@ -81,7 +83,18 @@ public interface StageMapper {
     void stageBalanceMinus(StageRollDTO dto);
     //(찬희)*번의 uPayment + stageBalance
     void stagePaymentOrder(StageRollDTO dto);
-    //(찬희) 현재 pf의 지급순서 조회
+    //(찬희)현재 pf의 지급순서 조회
     int getPaymentOrderValue(StageRollDTO dto);
-
+    //(찬희)전원 입금식별자 'Y' -> 'N'
+    void AllPaymentCheckUpdate(StageRollDTO stageRollDTO);
+    //(찬희)지급 순서 저장
+    void paymentOrderSave(StageRollDTO stageRollDTO);
+    //(찬희) member 정보 불러오기
+    List<MemberVO> getMemberInfo(StageRollDTO dto);
+    //(찬희) 방장 : 제일 최근 들어온 사람 정보
+    Date getLatestStageInDate(StageINDTO dto);
+    //(찬희) 방장 : 다음사람 pfMaster 업데이트
+    void pfMasterUpdate(Map<String, Object> parameterMap);
+   //(찬희) 방장 : 방장이 맞는지 확인하기 위해 정보 갖고오기
+    String getPfMasterInfo(StageINDTO dto);
 }
