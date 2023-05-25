@@ -19,7 +19,7 @@ public interface BoardService {
     /* 게시글 조회 R */
     int searchCountBoard(PageVO spv) throws Exception; // 검색 후 게시글 갯수 구하기
     List<BoardVO> searchList(BoardListDTO dto) throws Exception; // 검색 후 검색에 해당하는 게시글 리스트로 조회하기 (페이징 동시에 검색)
-    BoardVO readDetail(int bid) throws Exception; // 특정 게시글 상세보기
+    BoardVO readDetail(int bid) throws Exception; // 특정 게시글 상세보기(+ 조회수 올리기)
 
     //List<BoardVO> selectBoard(PageVO vo) throws Exception; //게시글 조회하기
     List<BoardVO> selectBoard() throws Exception; //게시글 조회하기

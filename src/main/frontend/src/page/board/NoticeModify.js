@@ -19,7 +19,7 @@ const NoticeModify = () => {
     // 수정 전 기존 게시글 내용들 가져오기
     const getNoticeModify = async () => {
 
-        await axios.get("/board/notice/modify", {params: {bid: bid}})
+        await axios.get("/board/modify/", {params: {bid: bid}})
             .then((response) => {
                 console.log("NoticeModify_getNoticeModify 수정 전 세부내용 가져오기 성공 :D");
                 console.log("NoticeModify_가져온 데이터 : " + response.data);
@@ -63,7 +63,7 @@ const NoticeModify = () => {
 
     // 수정 업데이트 하기
     // 수정하기 버튼 누르면 글 수정했습니다 alert 띄워주고 글 detail 페이지로 이동
-    const modifyUpdatePost = async (e) => {
+    const modifyUpdateNoticePost = async (e) => {
         e.preventDefault();
 
         console.log("글 수정 업데이트 가보자구~");
@@ -81,7 +81,7 @@ const NoticeModify = () => {
 
         console.log("업데이트 할 데이터 : " + updateNotice);
 
-        await axios.post("/board/notice/modifyPost", updateNotice, {
+        await axios.post("/board/modifyPost", updateNotice, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -92,11 +92,11 @@ const NoticeModify = () => {
                 console.log("bid 가져와지니? " + bid);
 
                 alert("글 수정하였습니다.");
-                navigate('/board/notice');// 글 수정 완료 후 업데이트된 글 상세보기로 이동 (안되서 그냥 공지사항 리스트 페이지로 이동)
+                navigate(`/board/notice/detail/${bid}`);// 글 수정 완료 후 업데이트된 글 상세보기로 이동
             })
             .catch((error) => {
                 console.log("NoticeModify_getNoticeModify 수정 왜 안되는거얏 :<");
-                console.log("NoticeModify_글 수정 axios 에러사항: " + error);
+                console.log("axios 에러사항: " + error);
             });
 
     }
@@ -114,7 +114,7 @@ const NoticeModify = () => {
                             </div>
 
                             <div>
-                                <form onSubmit={modifyUpdatePost}>
+                                <form onSubmit={modifyUpdateNoticePost}>
                                     <div>
 
                                         <input type="hidden" id="write-input-bid" name="bid" value={noticeModify.bid}/>

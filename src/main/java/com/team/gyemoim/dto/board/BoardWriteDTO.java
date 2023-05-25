@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 @ToString
 public class BoardWriteDTO {
 
-    private Integer uNo; // 글 작성자 회원번호
+    private Integer uno; // 글 작성자 회원번호
     private String name; // 글 작성자 이름
     private String type; // 게시글 타입
     private String title; // 게시글 제목

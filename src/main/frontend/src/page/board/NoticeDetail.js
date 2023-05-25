@@ -5,7 +5,7 @@ import axios from "axios";
 
 const NoticeDetail = () => {
 
-    const [boardDetail, setBoardDetail] = useState({});
+    const [noticeDetail, setNoticeDetail] = useState({});
     // 파라미터 가져오기
     const {bid} = useParams();
 
@@ -13,13 +13,13 @@ const NoticeDetail = () => {
 
     const getNoticeDetail = async () => {
 
-        await axios.get("/board/notice/read", {params: {bid: bid}})
+        await axios.get("/board/read", {params: {bid: bid}})
             .then((response) => {
-                console.log("NoticeDetail_getNoticeDetail 게시글 세부내용 가져오기 성공 :D");
+                console.log("NoticeDetail_공지사항 게시글 세부내용 가져오기 성공 :D");
                 console.log("NoticeDetail_가져온 데이터 : " + response.data);
                 console.log("bid 가져와지니? " + bid);
 
-                setBoardDetail(response.data);
+                setNoticeDetail(response.data);
             })
             .catch((error) => {
                 console.log("NoticeDetail_getNoticeDetail 게시글 못가져옴 :<");
@@ -27,14 +27,14 @@ const NoticeDetail = () => {
             });
     }
 
-    // 글 목록으로 이동하는 함수
+    // 공지사항 목록으로 이동하는 함수
     const moveToNoticeList = (event) => {
         window.location.href = '/board/notice';
-    }
+    };
 
     // 글 수정 페이지로 이동하는 함수
     const moveToNoticeModify = async () => {
-        await axios.get("/board/notice/modify", {params: {bid: bid}})
+        await axios.get("/board/modify", {params: {bid: bid}})
             .then((response) => {
                 console.log("NoticeDetail.moveToNoticeModify 글 수정 페이지로 이동 :D ");
 
@@ -44,7 +44,7 @@ const NoticeDetail = () => {
                 console.log(error);
             })
         window.location.href = `/board/notice/modify/${bid}`;
-    }
+    };
 
 
 
@@ -52,12 +52,12 @@ const NoticeDetail = () => {
     const moveToNoticeDelete = async () => {
 
         const deleteDTO = {
-            bid: boardDetail.bid,
-            uno: boardDetail.uno,
+            bid: noticeDetail.bid,
+            uno: noticeDetail.uno,
         };
 
         // post 는 주로 데이터 생성 또는 업데이트 할 때 사용
-        await axios.delete('/board/notice/delete', {data: deleteDTO})
+        await axios.delete('/board/delete', {data: deleteDTO})
             .then((response) => {
                 console.log("moveToNoticeDelete 글 삭제 성공 :D");
                 console.log(response.data);
@@ -92,14 +92,14 @@ const NoticeDetail = () => {
                                     <tbody>
                                     <tr>
                                         <td className="read-detail">
-                                            <div><b>작성자: </b>{boardDetail.name}</div>
-                                            <div><b>제목: </b>{boardDetail.title}</div>
-                                            <div><b>작성일자: </b>{boardDetail.writeDate}</div>
-                                            <div><b>조회수: </b>{boardDetail.views}</div>
+                                            <div><b>작성자: </b>{noticeDetail.name}</div>
+                                            <div><b>제목: </b>{noticeDetail.title}</div>
+                                            <div><b>작성일자: </b>{noticeDetail.writeDate}</div>
+                                            <div><b>조회수: </b>{noticeDetail.views}</div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="read-content p-3">{boardDetail.content}</td>
+                                        <td className="read-content p-3"><b>내용: </b>{noticeDetail.content}</td>
                                     </tr>
                                     <tr>
                                         <td className="text-start AttachedFile">
@@ -115,7 +115,7 @@ const NoticeDetail = () => {
                                     <div className="card-body">
                                         <textarea className="form-control" name="comm" id="newReplyComm" cols="30" rows="3"
                                                   placeholder="댓글을 입력해주세요"></textarea>
-                                        <input className="form-control" type="hidden" id="newReplyBid" name="bid" value={boardDetail.bid} />
+                                        <input className="form-control" type="hidden" id="newReplyBid" name="bid" value={noticeDetail.bid} />
                                         <input className="form-control" type="hidden" id="newReplyUNo" name="uno" value="{login.uno}" />
                                         <input className="form-control" type="hidden" id="newReplyName" name="name" value="{login.name}" />
 

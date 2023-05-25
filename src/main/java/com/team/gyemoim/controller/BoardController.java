@@ -36,7 +36,9 @@ public class BoardController {
     // [GET /board/searchList?type={type}&searchType={searchType}&searchKeyword={searchKeyword}]
     @GetMapping("/board/searchList")
     public List<BoardVO> searchList(BoardListDTO dto) throws Exception {
-        System.out.println("무슨 게시글이 나오려나? " + dto.getType());
+        System.out.println("****************** 게시글 리스트 searchList 컨트롤러 성공 :D ******************");
+        System.out.println("가져오는 게시글 종류: " + dto.getType());
+        System.out.println("가져오는 검색어: " + dto.getSearchKeyword());
 
         return boardService.searchList(dto);
     }
@@ -45,14 +47,19 @@ public class BoardController {
 
     // 게시글 작성 API (Create)
     @PostMapping("/board/writePost")
-    public ResponseEntity<String> writePost(BoardWriteDTO boardWriteDTO) {
+    public ResponseEntity<String> writePost(@RequestBody BoardWriteDTO boardWriteDTO) {
         try {
+            System.out.println("*************** 글 작성 writePost 컨트롤러 성공 >< *****************");
+            System.out.println("글 종류 type: " + boardWriteDTO.getType());
+            System.out.println("작성자 uNo: " + boardWriteDTO.getUno());
+            System.out.println("작성자 이름: " + boardWriteDTO.getName());
             boardService.write(boardWriteDTO);
-            return ResponseEntity.ok("BoardController 글 작성 돌아간닷! :D");
+            return ResponseEntity.ok("BoardController 글 작성 writePost 돌아간닷! :D");
         } catch (Exception e) {
-            System.out.println("BoardController 글 작성 실패 writePost 에러 발생함 :< ");
-            System.out.println("error: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController 글 작성 실패 :< ");
+            System.out.println("*************** 글 작성 writePost 컨트롤러 실패 :< *****************");
+            System.out.println("작성자 uNo: " + boardWriteDTO.getUno());
+            System.out.println("error 메시지: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("글 작성 실패 :< -FROM BoardController-");
         }
     }
 
@@ -61,8 +68,9 @@ public class BoardController {
     * @PathVariable 어노테이션은 URL 경로 변수 값을 매개변수에 매핑할 때 사용함
     * @RequestParam 어노테이션은 요청 파라미터의 값을 매개변수에 매핑될 때 사용된
     * `bid` 매개변수에는 `bid` 라는 요청 파라미터의 값이 매핑된다. */
-    @GetMapping("/board/notice/read")
+    @GetMapping("/board/read")
     public BoardVO read(@RequestParam("bid") int bid) throws Exception {
+        System.out.println("*************** 글 읽기 read 컨트롤러 성공 >< *****************");
 
         /*List<ReplyVO> replyVOList = replyService.reply(bid);*/
         BoardVO boardVO = boardService.readDetail(bid);
@@ -73,29 +81,25 @@ public class BoardController {
 
     /* 글 수정 API (Update) */
     // 수정 전 기존 글 가져오기 (첨부파일은 일단 제외)
-    @GetMapping("/board/notice/modify")
+    @GetMapping("/board/modify")
     public BoardVO modify(@RequestParam("bid") int bid) throws Exception {
+        System.out.println("*************** 글 수정 modify 컨트롤러 성공 >< *****************");
         System.out.println("수정 전 bid 들어오니? : " + bid);
-        return boardService.modify(bid);
 
-        /*try {
-            return ResponseEntity.ok("BoardController 글 수정 전 내용 가져오기 완료  :D");
-        } catch (Exception e) {
-            System.out.println("BoardController 글 수정 전 페이지 끌어오기 실패 :< ");
-            System.out.println("error: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController 글 modify 수정 실패 :< ");
-        }*/
+        return boardService.modify(bid);
     }
 
+
     // 글 수정 업데이트하기
-    @PostMapping("/board/notice/modifyPost")
+    @PostMapping("/board/modifyPost")
     public ResponseEntity<String> modifyPost(@RequestBody BoardModifyDTO boardModifyDTO) {
         try {
+            System.out.println("*************** 글 수정 modifyPost 컨트롤러 성공 >< *****************");
             boardService.modifyUpdate(boardModifyDTO);
             return ResponseEntity.ok("BoardController 글 수정 업뎃 완료  :D");
         } catch (Exception e) {
-            System.out.println("BoardController 글 수정 실패 :< ");
-            System.out.println("error: " + e.getMessage());
+            System.out.println("*************** 글 수정 modify 컨트롤러 실패 :< *****************");
+            System.out.println("에러 이유: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController 글 수정 실패 :< ");
         }
     }
@@ -103,16 +107,16 @@ public class BoardController {
 
 
     /* 삭제 Delete */
-    @DeleteMapping("/board/notice/delete")
+    @DeleteMapping("/board/delete")
     public ResponseEntity<String> delete(@RequestBody BoardDeleteDTO boardDeleteDTO) {
         try {
-            System.out.println("BoardController.delete 글 삭제 성공 :D!");
+            System.out.println("*************** 글 삭제 delete 컨트롤러 성공 >< *****************");
             System.out.println("boardDelete 이리 오너라: " + boardDeleteDTO);
             boardService.delete(boardDeleteDTO);
             return ResponseEntity.ok("BoardController.delete 글 삭제 성공 :D");
         } catch (Exception e) {
-            System.out.println("BoardController.delete 글 삭제 실패 :<");
-            System.out.println("BoardController 글 삭제 왜 안돼? 에러 이유: " + e.getMessage());
+            System.out.println("*************** 글 삭제 delete 컨트롤러 실패 :< *****************");
+            System.out.println("에러 이유: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController 글 삭제 실패 :< ");
         }
     }

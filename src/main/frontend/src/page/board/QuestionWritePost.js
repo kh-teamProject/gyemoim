@@ -4,20 +4,21 @@ import axios from "axios";
 
 const QuestionWritePost = () => {
 
+    // 문자열 1 을 10진수로 나타내주는
+    //const uno = parseInt("1", 10);
 
     const [questionFormData, setQuestionFormData] = useState({
-        uno: 1, // 글 작성자 회원번호
-        name: '', // 글 작성자 이름
-        type: '1:1 문의사항', // 게시글 타입
-        title: '', // 게시글 제목
-        content: '', // 게시글 내용
-        secret: 'P', // 글 여부 (공개/비공개)
+        uno: 1,
+        name: "현지", // 글 작성자 이름
+        type: "1:1 문의사항", // 게시글 타입
+        title: "", // 게시글 제목
+        content: "", // 게시글 내용
+        secret: "P", // 글 여부 (공개/비공개)
     });
 
 
     const handleChange = (e) => {
         const {name, value} = e.target;// 변경된 요소의 'name' 과 'value' 속성을 추출함
-
 
         setQuestionFormData((prevFormData) => ({
             ...prevFormData,
@@ -38,25 +39,41 @@ const QuestionWritePost = () => {
     };
 
 
-
     const handleQuestionSubmit = async (e) => {
         e.preventDefault();// 리로드 방지
 
 
-        try {
-            await axios.post('/board/writePost', questionFormData, {
-                headers: {
-                    Authorization: 'Bearer <your_access_token>',// 모든 권한을 가진 사용자의 액세스 토큰
-                }
-            });
-            console.log("QuestionWritePost_handleSubmit 성공 :D");
-            window.location.href = '/board/notice';
-        } catch (error) {
-            console.log("NoticeWritePost_handleSubmit axios 실패 :<");
-            console.log("글 작성자의 uNo 또는 uno: " +questionFormData.uno);
-            console.log("QuestionWritePost_handleSubmit axios 에러: " + error);
+        axios.post('/board/writePost', questionFormData)
+            .then((response) => {
+                console.log("QuestionWritePost_handleSubmit 성공 :D");
+                console.log("글 작성자의 uNo 또는 uno: " + questionFormData.uno);
+                console.log("글 작성자의 name: " + questionFormData.name);
+                console.log("글 게시물 종류: " + questionFormData.type);
+                console.log("글 게시물 제목: " + questionFormData.title);
+                console.log("글 게시물 내용: " + questionFormData.content);
+                console.log("글 게시물 공개여부: " + questionFormData.secret);
+                window.location.href = '/board/question';
+            })
+            .catch((error) => {
+                console.log("QuestionWritePost_handleSubmit axios 실패 :<");
+                console.log("글 작성자의 uNo 또는 uno: " + questionFormData.uno);
+                console.log("글 작성자의 name: " + questionFormData.name);
+                console.log("글 게시물 종류: " + questionFormData.type);
+                console.log("글 게시물 제목: " + questionFormData.title);
+                console.log("글 게시물 내용: " + questionFormData.content);
+                console.log("글 게시물 공개여부: " + questionFormData.secret);
+                console.log("QuestionWritePost_handleSubmit axios 에러: " + error)
 
-        }
+                /*console.log("QuestionWritePost_handleSubmit 성공 :D");
+                console.log("글 작성자의 uNo 또는 uno: " + questionFormData.uno);
+                console.log("글 작성자의 name: " + questionFormData.name);
+                console.log("글 게시물 종류: " + questionFormData.type);
+                console.log("글 게시물 제목: " + questionFormData.title);
+                console.log("글 게시물 내용: " + questionFormData.content);
+                console.log("글 게시물 공개여부: " + questionFormData.secret);
+                console.log("QuestionWritePost_handleSubmit 글 작성 컨트롤러로 가즈앗! ><");
+                //window.location.href = '/board/question';*/
+            });
 
     }
 
@@ -78,7 +95,8 @@ const QuestionWritePost = () => {
                                 </div>
                                 <div>
                                     <label htmlFor="write-input-title">제목</label>
-                                    <input type="text" id="write-input-title" name="title" value={questionFormData.title}
+                                    <input type="text" id="write-input-title" name="title"
+                                           value={questionFormData.title}
                                            placeholder="제목을 입력해주세요" onChange={handleChange} required/>
                                 </div>
                                 <div>

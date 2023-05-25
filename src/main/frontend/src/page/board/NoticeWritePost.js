@@ -5,7 +5,7 @@ const NoticeWritePost = () => {
 
     const [formData, setFormData] = useState({
         uno: 1, // 글 작성자 회원번호
-        name: '', // 글 작성자 이름
+        name: '운영자님', // 글 작성자 이름
         type: '공지사항', // 게시글 타입
         title: '', // 게시글 제목
         content: '', // 게시글 내용

@@ -106,8 +106,8 @@
     <!-- 게시글 Create -->
     <!-- 글 작성하기 -->
     <insert id="write" parameterType="com.team.gyemoim.dto.board.BoardWriteDTO">
-        INSERT INTO board (bid, uNo, type, name, title, content, views, writeDate, secret)
-        VALUES (BID_BOA_SEQ.NEXTVAL, #{uNo}, #{type}, #{name}, #{title}, #{content}, 0, sysdate, #{secret})
+        INSERT INTO board (bid, uNo, name, type, title, views, content, writeDate, secret)
+        VALUES (BID_BOA_SEQ.NEXTVAL, #{uno}, #{name}, #{type}, #{title}, 0, #{content}, sysdate, #{secret})
     </insert>
 
     <!-- 첨부파일 작성하기 -->

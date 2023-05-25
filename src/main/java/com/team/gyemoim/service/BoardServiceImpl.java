@@ -58,9 +58,15 @@ public class BoardServiceImpl implements BoardService{
     }*/
 
     @Override
-    public void write(BoardWriteDTO boardWriteDTO) throws Exception{
-        System.out.println("BoardServiceImpl.write 글 작성 되는건가? " + boardWriteDTO);
-        boardMapper.write(boardWriteDTO);
+    public void write(BoardWriteDTO boardWriteDTO) {
+        try {
+            System.out.println("******************** 글 작성 write 서비스 성공 ********************");
+            System.out.println("글 작성 boardWriteDTO 나와랏 : " +boardWriteDTO);
+            boardMapper.write(boardWriteDTO);
+        } catch (Exception e) {
+            System.out.println("******************** 글 작성 write 서비스 실패 ********************");
+            System.out.println("아악 :< 에러 원인 : " + e.getMessage());
+        }
     }
 
 
@@ -85,8 +91,8 @@ public class BoardServiceImpl implements BoardService{
     // 검색에 해당하는 게시글 리스트 조회하기 (사용 o)
     @Override
     public List<BoardVO> searchList(BoardListDTO dto) throws Exception {
-        System.out.println("BoardServiceImpl.searchList_검색 후 해당 게시글 리스트로 가져오기 성공! :D");
-        System.out.println("무슨 게시글을 가져오려나? " + dto.getType());
+        System.out.println("******************** 게시글 리스트 searchList 서비스 성공 :D ********************");
+        System.out.println("가져오는 게시글 종류: " + dto.getType());
         return boardMapper.searchList(dto);
     }
 
@@ -121,8 +127,6 @@ public class BoardServiceImpl implements BoardService{
 
         return boardMapper.readDetail(bid);
     }
-
-
 
 
 
