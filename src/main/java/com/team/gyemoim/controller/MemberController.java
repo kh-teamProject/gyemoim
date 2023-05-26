@@ -7,6 +7,7 @@ import com.team.gyemoim.dto.response.SingleDataResponse;
 import com.team.gyemoim.exception.DuplicatedUsernameException;
 import com.team.gyemoim.exception.LoginFailedException;
 import com.team.gyemoim.jwt.JwtProvider;
+import com.team.gyemoim.mapper.MemberMapper;
 import com.team.gyemoim.service.MemberService;
 import com.team.gyemoim.service.ResponseService;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,8 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberMapper memberMapper;
     private final ResponseService responseService;
-
     private final JwtProvider jwtProvider;
 
     private final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -94,6 +92,7 @@ public class MemberController {
             System.out.println("로그인 실패");
         }
 
+
         return responseEntity;
     }
 
@@ -114,48 +113,17 @@ public class MemberController {
     }
 
 
+    // Email 찾기
+    @GetMapping("/member-email-search")
+    public String memberEmailSearch(@RequestBody MemberDTO memberDTO) {
+        System.out.println("Email Search: " +memberDTO);
+        return memberService.memberEmailSearch(memberDTO);
+    }
 
-//    // Email 찾기
-//    @PostMapping("/emailSearch")
-//    public ResponseEntity<MemberVO> memberEmailSearch(@RequestBody MemberVO memberVO) {
-//
-//        try {
-//            MemberVO memberEmailSearch = memberService.memberEmailSearch(memberVO);
-//
-//            System.out.println("이메일 찾기");
-//            System.out.println("memberVO = " + memberVO);
-//            System.out.println("MemberController.memberEmailSearch");
-//            System.out.println("memberEmailSearch = " + memberEmailSearch);
-//
-//            return ResponseEntity.ok(memberEmailSearch);
-//
-//        } catch (UserNotFoundException e) {
-//
-//            System.out.println("이메일 찾기 실패");
-//
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//
-//        }
-//    }
-//
-//
-//    // 비밀번호 찾기
-//    @PostMapping("/pwdSearch")
-//    public ResponseEntity<MemberVO> memberPwdSearch(@RequestBody MemberVO memberVO) {
-//
-//        try {
-//            MemberVO memberPwdSearch = memberService.memberPwdSearch(memberVO);
-//
-//            System.out.println("비밀번호 찾기");
-//            System.out.println("memberPwdSearch = " + memberPwdSearch);
-//
-//            return ResponseEntity.ok(memberPwdSearch);
-//
-//        }catch (UserNotFoundException e) {
-//
-//            System.out.println("비밀번호 찾기 실패");
-//
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
-//    }
+    // Password 찾기
+    @GetMapping("/member-pwd-search")
+    public String memberPwdSearch(@RequestBody MemberDTO memberDTO) {
+        System.out.println("Password Search: " +memberDTO);
+        return memberService.memberPwdSearch(memberDTO);
+    }
 }
