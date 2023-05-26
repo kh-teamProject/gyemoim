@@ -60,27 +60,27 @@ public class MemberService {
             throw new LoginFailedException("잘못된 비밀번호입니다.");
         }
 
-        return jwtProvider.createToken(memberDTO.getUNo(), memberDTO.getName(),memberDTO.getEmail(), Collections.singletonList(memberDTO.getUserRole()));
+        return jwtProvider.createToken(memberDTO.getUNo(), memberDTO.getName(), memberDTO.getEmail(), Collections.singletonList(memberDTO.getUserRole()));
+    }
+
+
+    // 이메일 찾기
+    public String memberEmailSearch(MemberDTO memberDTO) {
+        String result = memberMapper.memberEmailSearch(memberDTO);
+        if (result == null) {
+            throw new UserNotFoundException("이메일 찾기(Service) : 입력 정보가 일치하지 않습니다.");
+        }
+        return result;
     }
 
 
 
-//    // 이메일 찾기
-//    public MemberVO memberEmailSearch(MemberVO memberVO) {
-//        if (memberVO == null) {
-//            throw new UserNotFoundException("없는 이메일 입니다.");
-//        }
-//
-//        return memberMapper.memberEmailSearch(memberVO);
-//    }
-//
-//
-//    // 비밀번호 찾기
-//    public MemberVO memberPwdSearch(MemberVO memberVO){
-//        if (memberVO == null) {
-//            throw new UserNotFoundException("없는 이메일 입니다.");
-//        }
-//
-//        return memberMapper.MemberPwdSearch(memberVO);
-//    }
+    // 비밀번호 찾기
+    public String memberPwdSearch(MemberDTO memberDTO) {
+        String result = memberMapper.memberPwdSearch(memberDTO);
+        if (result == null) {
+            throw new UserNotFoundException("비밀번호 찾기(Service) : 입력 정보가 일치하지 않습니다.");
+        }
+        return result;
+    }
 }

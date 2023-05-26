@@ -7,8 +7,8 @@
     <!-- 회원가입 -->
     <insert id="account">
         INSERT INTO MEMBER
-            (uNo, email, password, name)
-        VALUES (uno_mem_seq.nextVal, #{email}, #{password}, #{name})
+            (uNo, email, password, name, phone)
+        VALUES (uno_mem_seq.nextVal, #{email}, #{password}, #{name}, #{phone})
     </insert>
 
     <!-- 회원 권한 정보 -->
@@ -18,20 +18,21 @@
         WHERE email = #{email}
     </select>
 
-<!--    &lt;!&ndash; email 찾기 &ndash;&gt;-->
-<!--    <select id="memberEmailSearch" resultType="com.team.gyemoim.vo.MemberVO">-->
-<!--        SELECT *-->
-<!--        FROM Member-->
-<!--        WHERE name = #{name}-->
-<!--&#45;&#45;           AND phone = #{phone}-->
-<!--    </select>-->
+    <!-- email 찾기 -->
+    <select id="memberEmailSearch" resultType="string">
+        SELECT email
+        FROM Member
+        WHERE name = #{name}
+          AND phone = #{phone}
+    </select>
 
-<!--&lt;!&ndash;     password 찾기&ndash;&gt;-->
-<!--    <select id="memberPwdSearch" resultType="com.team.gyemoim.vo.MemberVO">-->
-<!--        SELECT *-->
-<!--        FROM Member-->
-<!--        WHERE name = #{name}-->
-<!--          AND email = #{email}-->
-<!--    </select>-->
+<!--     password 찾기-->
+    <select id="memberPwdSearch" resultType="string">
+        SELECT password
+        FROM Member
+        WHERE name = #{name}
+          AND email = #{email}
+          AND phone = #{phone}
+    </select>
 
 </mapper>

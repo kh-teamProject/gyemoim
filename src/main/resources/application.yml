@@ -8,7 +8,7 @@ spring:
 jwt:
   header: Gyemoim
   secret: GyemoimChickenMumani
-  token-validity-in-seconds: 3600000
+  token-validity-in-seconds: 1800000  # 30분
 
 
 mybatis:
