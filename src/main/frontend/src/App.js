@@ -1,6 +1,5 @@
 import React from "react";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import './App.css';
 import NoticeList from "./page/board/NoticeList";
 import QuestionWritePost from './page/board/QuestionWritePost';
 import QuestionDetail from "./page/board/QuestionDetail";
@@ -35,8 +34,10 @@ import AdminHome from "./page/AdminHome";
 import StageManagement from "./page/admin/StageManagement";
 import BoardManagement from "./page/admin/BoardManagement";
 import StageReport from "./component/UI/stage/StageReport";
-import './App.css';
+import AdminStageList from "./page/admin/AdminStageList";
+import AdminStageDetail from "./page/admin/AdminStageDetail";
 import Test from "./page/Test";
+import './App.css';
 
 const App = () => {
     
@@ -174,7 +175,15 @@ const App = () => {
         },
         {
           path: 'stage',
-          element: <StageManagement/>
+          element: <StageManagement/>,
+        },
+        {
+          path: 'stage/list',
+          element: <AdminStageList/>
+          },
+        {
+          path: 'stage/detail/:pfID',
+          element: <AdminStageDetail/>
         },
         {
           path: 'board',

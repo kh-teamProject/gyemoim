@@ -45,6 +45,7 @@ public class StageServiceImpl implements StageService {
     return stageMapper.getRecTurn();
   }
 
+  //(현지) <스테이지 생성> _스테이지 생성(PF)
   @Override
   public void stageCreate(StageCreateDTO stageCreateDTO) {
     System.out.println("[서비스] 스테이지 생성 ");
@@ -52,30 +53,34 @@ public class StageServiceImpl implements StageService {
 
   }
 
+  // (현지)<스테이지생성>_참가 데이터(pfID,receiveTurn,pfMaster) 생성(ROLL)
   @Override
   public void stageParticipate(StageParticipateDTO stageParticipateDTO) {
     System.out.println("[서비스] 스테이지 참가 ");
     stageMapper.stageParticipate(stageParticipateDTO);
   }
 
+  // (현지)<스테이지생성>_중복체크
   @Override
   public int checkPfName(String pfName) {
     System.out.println("[서비스] 스테이지 이름 중복체크 ");
     return stageMapper.checkPfName(pfName);
   }
 
+  // (현지)  <스테이지생성>_수령예정표
   @Override
-  public List<ImportDTO> importGet(BigDecimal pfRate) {
+  public List<ImportDTO> importGet(ImportDTO importDTO) {
     System.out.println("[서비스] 수령예정표 가져오기");
-    return stageMapper.importGet(pfRate);
+    return stageMapper.importGet(importDTO);
   }
 
+  //(현지)<스테이지생성>_스테이지 pfID 가져오기
   @Override
   public List<StageCreateDTO> stagePartIn1(String pfName) {
     System.out.println("[서비스] 참가스테이지 번호 가져오기");
     return stageMapper.stagePartIn1(pfName);
   }
-
+  //(현지)<스테이지생성>_스테이지 정보 가져오기
   @Override
   public List<ImportDTO> stagePartIn2(String pfName) {
     System.out.println("[서비스] 참가스테이지 정보 가져오기");

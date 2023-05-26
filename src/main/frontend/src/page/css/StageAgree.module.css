@@ -31,11 +31,12 @@ body{
 /*flex*/
 .flexD{
     display: flex;
+    justify-content: space-evenly;
 }
 
 .flex6{
     flex:6;
-    padding: 2rem;
+    padding: 4rem;
 
 }
 
@@ -114,9 +115,20 @@ text-align : right;
   border-radius: 7px;
   display: inline-block;
   height: 100%;
-  margin: 1rem;
+  margin: 6rem;
+   padding: 2rem;
   position: relative;
-  width: 90%;
+
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
+.box2 {
+  background: #fff;
+  border-radius: 7px;
+  display: inline-block;
 
+  margin: 1rem;
+   padding: 1rem;
+  position: relative;
+
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}

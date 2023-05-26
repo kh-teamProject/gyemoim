@@ -32,7 +32,7 @@ public interface StageMapper {
   // (현지)
     int checkPfName(String pfName);
   // (현지)
-    List<ImportDTO> importGet(BigDecimal pfRate);
+    List<ImportDTO> importGet(ImportDTO importDTO);
   // (현지)
     List<StageCreateDTO> stagePartIn1(String pfName);
     // (현지)
