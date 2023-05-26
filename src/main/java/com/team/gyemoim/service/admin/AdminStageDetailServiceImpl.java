@@ -16,9 +16,25 @@ import java.util.List;
 public class AdminStageDetailServiceImpl implements AdminStageDetailService {
 
    private final AdminStageDetailMapper adminStageDetailMapper;
-    @Override
+
+    //(현지) 계모임 리스트 조회
+   @Override
     public List<AdminStageDetailDTO> getStageList() {
         System.out.println("[서비스] 스테이지 가져오기");
         return adminStageDetailMapper.getStageList();
     }
+    //(현지) 계모임 상세정보 조회(pf테이블)
+    @Override
+    public List<AdminStageDetailDTO> getStageListDetail1(Integer pfID) {
+        System.out.println("[서비스] 스테이지 디테일 가져오기");
+        return adminStageDetailMapper.getStageListDetail1(pfID);
+    }
+    //(현지) 계모임 상세정보 조회(roll테이블)
+    @Override
+    public List<AdminStageDetailDTO> getStageListDetail2(Integer pfID) {
+        System.out.println("[서비스] 스테이지 디테일 가져오기");
+        return adminStageDetailMapper.getStageListDetail2(pfID);
+    }
+
+
 }

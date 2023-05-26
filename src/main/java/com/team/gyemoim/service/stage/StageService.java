@@ -16,15 +16,20 @@ public interface StageService {
 // (유진) 수령순서 가져오기
  List<ParticipationVO> getRecTurn();
 
+ //(현지) <스테이지 생성> _스테이지 생성(PF)
   void stageCreate(StageCreateDTO stageCreateDTO);
+ // (현지)<스테이지생성>_참가 데이터(pfID,receiveTurn,pfMaster) 생성(ROLL)
   void stageParticipate(StageParticipateDTO stageParticipateDTO);
-
+ // (현지)<스테이지생성>_중복체크
   int checkPfName(String pfName);
+ // (현지)  <스테이지생성>_수령예정표
   List <ImportDTO> importGet(ImportDTO importDTO);
 
 
   //Read
+  //(현지)<스테이지생성>_스테이지 pfID 가져오기
   List <StageCreateDTO> stagePartIn1(String pfName);
+ //(현지)<스테이지생성>_스테이지 정보 가져오기
   List <ImportDTO> stagePartIn2(String pfName);
 
   //(찬희) 스테이지 PF 정보 갖고오기

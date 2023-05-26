@@ -1,36 +1,38 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from 'react-router-dom';
+import styles from "../../page/css/StageAgree.module.css";
 
 
 const AdminStageDetail = () => {
 
-const [stageListTable, setStageListTable] = useState([]);
 
-//페이징
-const [curPage, setCurPage] = useState(1); //현재페이지
-const [totalPage, setTotalPage] = useState(0); //전체 페이지 수
-const [list, setList ] = useState(10);//현재 스테이지 수
+const { pfID } = useParams();
+console.log(pfID);
+
+//스테이지 기존정보 조회
+const [stageDetail1, setStageDetail1] = useState([]);
 
 
+//스테이지 상세정보 조회
+const [stageDetail2, setStageDetail2] = useState([]);
 
-//페이징 함수
-const handlePageClick = (event) => {
-const targetPage = Number(event.target.value); //클릭한 페이지
-if (targetPage > 0 && targetPage <= totalPage) {
-  //클릭한 타겟페이지가 0보다 크고 totalPage보다 작거나 같으면 -> 즉, 클릭한 페이지가 유효범위에 있을때
-  setCurPage(targetPage); //현재페이지를 클릭페이지로 설정
-  setList(list+10);
-}
-};
 
+//스테이지 기본정보 조회 기능
 useEffect(() => {
   try {
     axios
-      .get("/admin/stage/detail", {})
+      .get("/admin/stage/detail", {
+       params: {
+         pfID: pfID,
+       },
+
+      })
       .then((res) => {
-        console.log(res.data.Stage);
-        setStageListTable(res.data.Stage);
-        setTotalPage(Math.ceil(res.data.Stage.length / list)); //전체 페이지 수 계산
+        console.log(res.data.StageDetail1);
+        setStageDetail1(res.data.StageDetail1);
+        console.log(res.data.StageDetail2);
+        setStageDetail2(res.data.StageDetail2);
       })
       .catch((error) => {
         console.log(error);
@@ -41,49 +43,80 @@ useEffect(() => {
 }, []);
 
 
-
   return (
     <>
-      <h1>스테이지 페이지</h1>
+      <h1>스테이지 디테일 페이지</h1>
+        <div className={styles.flex1}>
+         {stageDetail1
+                          .map((value, index) => (
+        <h3>[{value.pfName}] 스테이지 정보입니다.</h3>
+             ))}
+        </div>
 
-      <h2>스테이지 기본 정보</h2>
+       <div><h3>스테이지 기본 정보(pf테이블)</h3></div>
 
-      <p>스테이지 등급 / 이율 / 시작일 / 종료일(종료되었다면)</p>
+    <div className={styles.flexD}>
+
+                  <div className={styles.flex1}>
+                    <ul >
+                      <li>번호</li>
+                      <li>이름</li>
+                      <li>약정금</li>
+                      <li>등급</li>
+                      <li>이율</li>
+                      <li>관심사</li>
+                      <li>상태</li>
+                      <li>시작일</li>
+                      <li>잔액</li>
+                     </ul>
+                    </div>
 
 
-                  <div>
-                    <table>
+                  {stageDetail1
+                  .map((value, index) => (
+                  <div className={styles.flex1}>
+                    <ul key={index}>
+                    <li>{value.pfID}</li>
+                    <li>{value.pfName}</li>
+                    <li>{value.deposit.toLocaleString()}원</li>
+                     <li>{value.prank}</li>
+                     <li>{value.pfRate}%</li>
+                     <li>{value.interest}</li>
+                      <li>{value.startFlag}</li>
+                     <li>{value.startDate}</li>
+                     <li>{value.endDate}</li>
+                     <li>{value.stageBalance}</li>
+                    </ul>
+                    </div>
 
-                      <thead>
-                        <tr>
-                        <td>이름</td>
-                        <td>약정금</td>
-                          <td>등급</td>
-                          <td>이율</td>
-                          <td>관심사</td>
-                          <td>상태</td>
-                          <td>시작일</td>
-                          <td>종료일</td>
-                        </tr>
-                      </thead>
+              ))}
+     </div>
 
-                      <tbody>
-                        {stageListTable.map((value, index) => (
-                          <tr key={index}>
-                          <td>{value.pfName}</td>
-                          <td>{value.deposit.toLocaleString()}원</td>
-                           <td>{value.prank}</td>
-                           <td>{value.pfRate}%</td>
-                           <td>{value.interest}</td>
-                            <td>{value.startFlag}</td>
-                           <td>{value.startDate}</td>
-                           <td>{value.endDate}</td>
-                          </tr>
-                        ))}
-                      </tbody>
 
-                    </table>
-                     </div>
+
+       <div><h3>스테이지 상세 정보(roll테이블)</h3></div>
+        <div className={styles.flexD}>
+              <div className={styles.flex1}>
+                <ul >
+                  <li>입금횟수</li>
+                  <li>입금누적</li>
+
+                 </ul>
+                </div>
+
+
+
+              {stageDetail2
+                  .map((value, index) => (
+                  <div className={styles.flex1}>
+                    <ul key={index}>
+                    <li>{value.depositCnt}</li>
+                    <li>{value.stageAmount}</li>
+                    </ul>
+
+                    </div>
+                    ))}
+        </div>
 
     </>
   );
