@@ -12,10 +12,10 @@ public interface MemberMapper {
     // 회원가입
     void account(MemberDTO memberDTO);
 
-
     // email 찾기
     String memberEmailSearch(MemberDTO memberDTO);
 
-    // password 찾기
-    String memberPwdSearch(MemberDTO memberDTO);
+    // password 찾기 (임시 비밀번호 발급)
+    void updatePassword(MemberDTO memberDTO);
+
 }
