@@ -154,13 +154,14 @@ public class MemberController {
     @PostMapping("/password/forgot")
     public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");
+        String name = requestBody.get("name");
 
-        if (email == null || email.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{'error': '이메일이 제공되지 않았습니다.'}");
+        if ((email == null || email.isEmpty() || name == null || name.isEmpty())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{'error': '이메일이나 이름이 제공되지 않았습니다.'}");
 
         }
         try {
-            memberService.resetPassword(email);
+            memberService.resetPassword(email, name);
             return ResponseEntity.ok("{'message': '임시 비밀번호 발급 이메일이 전송되었습니다.'}");
 
         } catch (NoSuchElementException e) {
