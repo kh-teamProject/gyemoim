@@ -30,27 +30,45 @@ const AdminStageDetail = () => {
   return (
     <>
     <h1>관리자 스테이지 상세</h1>
-    {/*유진 회원정보 띄우기*/}
+      <div>
+        <h3>스테이지 정보</h3>
+          <div>
+          {/*stageDetail이 배열값이니까 배열중에 걍 첫번째 인덱스만 가져오면 된다.. 천재네,, gpt,,,모든건 자바로 통한다,,,*/}
+          {stageDetail.length >0 &&(
+            <div>
+              <ul key={pfID}>
+              스테이지 이름 : {stageDetail[0].pfName}
+              스테이지 상태 : {stageDetail[0].startFlag}
+              스테이지 등급 : {stageDetail[0].prank}
+              스테이지 이율 : {stageDetail[0].pfRate}
+              스테이지 시작일 : {stageDetail[0].startDate}
+              </ul>
+            </div>
+          )}
+          </div>
+      {/*유진 회원정보 띄우기*/}
       <div>
         <h3>회원정보</h3>
         {stageDetail.map((value,index) =>(
-          <Link to={`/admin/account/detail/${value.uno}`}>
-            <ul>
-              <li>
+          <div>
+             <Link to={`/admin/account/detail/${value.uno}`}>
+              <ul>
+                <li>
                 방장여부 : {value.pfMaster} |
                 회원번호 : {value.uno} |
                 이름 : {value.name} |
                 월 입금액 : {formatNum(Number(value.upayment))} |
                 실 수령액 : {formatNum(Number(value.utotalReceipts))} |
                 실 이득 : {formatNum(Number(value.ureceipt))}
-              </li>
-            </ul>
-          </Link>
-
+                </li>
+              </ul>
+            </Link>
+          </div>
         ))}
-
-
-
+      </div>
+        <button>
+          완료처리
+        </button>
       </div>
     </>
 
