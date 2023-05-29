@@ -2,6 +2,7 @@ import {NavLink, useLocation} from "react-router-dom";
 
 import classes from './css/MyPageSidebar.module.css';
 import SidebarLogo from './assert/images/hiyoko0305.png';
+import MyRank from "./MyRank";
 
 const MyPageSidebar = () => {
   const location = useLocation();
@@ -22,6 +23,7 @@ const MyPageSidebar = () => {
             <li><NavLink to={'/mypage/stage'} className={`${location.pathname.includes('stage') ? classes.isActive : undefined}`}>나의 스테이지</NavLink></li>
           </ul>
         </div>
+        <MyRank pRank={'A'}/>
       </div>
     </>
   );

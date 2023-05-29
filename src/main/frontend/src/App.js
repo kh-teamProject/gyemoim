@@ -1,6 +1,5 @@
 import React from "react";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import './App.css';
 import NoticeList from "./page/board/NoticeList";
 import QuestionWritePost from './page/board/QuestionWritePost';
 import QuestionDetail from "./page/board/QuestionDetail";
@@ -22,7 +21,6 @@ import StageCreate from './page/stage/StageCreate';
 import StagePartIn from './page/stage/StagePartIn';
 import StageList from './page/stage/StageList';
 import Account from "./page/account/Account";
-import Logout from "./page/account/Logout";
 import Stage from './page/stage/Stage';
 import ChanHeeTest from './page/ChanHeeTest';
 import CheckedPwd from "./page/account/CheckedPwd";
@@ -37,6 +35,7 @@ import StageManagement from "./page/admin/StageManagement";
 import BoardManagement from "./page/admin/BoardManagement";
 import Test from "./page/Test";
 import AccountModify from "./page/admin/AccountModify";
+import './App.css';
 
 const App = () => {
 
@@ -52,10 +51,6 @@ const App = () => {
         {
           path: 'login',
           element: <Login/>
-        },
-        {
-          path: 'logout',
-          element: <Logout/>
         },
         {
           path: 'account',
