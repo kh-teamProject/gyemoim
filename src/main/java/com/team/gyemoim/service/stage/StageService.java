@@ -1,7 +1,14 @@
 package com.team.gyemoim.service.stage;
 
+
+import com.team.gyemoim.dto.stage.StageListDTO;
+import com.team.gyemoim.vo.RollVO;
+
 import com.team.gyemoim.dto.stage.*;
-import com.team.gyemoim.vo.ParticipationVO;
+
+import com.team.gyemoim.vo.MemberVO;
+
+
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,18 +20,21 @@ public interface StageService {
  List<StageListDTO> getPFList();
  List<StageListDTO> filterList(int deposit);
 
-// (유진) 수령순서 가져오기
- List<ParticipationVO> getRecTurn();
 
+ //(현지) <스테이지 생성> _스테이지 생성(PF)
   void stageCreate(StageCreateDTO stageCreateDTO);
+ // (현지)<스테이지생성>_참가 데이터(pfID,receiveTurn,pfMaster) 생성(ROLL)
   void stageParticipate(StageParticipateDTO stageParticipateDTO);
-
+ // (현지)<스테이지생성>_중복체크
   int checkPfName(String pfName);
-  List <ImportDTO> importGet(BigDecimal pfRate);
+ // (현지)  <스테이지생성>_수령예정표
+  List <ImportDTO> importGet(ImportDTO importDTO);
 
 
   //Read
+  //(현지)<스테이지생성>_스테이지 pfID 가져오기
   List <StageCreateDTO> stagePartIn1(String pfName);
+ //(현지)<스테이지생성>_스테이지 정보 가져오기
   List <ImportDTO> stagePartIn2(String pfName);
 
   //(찬희) 스테이지 PF 정보 갖고오기
@@ -45,6 +55,10 @@ public interface StageService {
  Integer getMyAccount(StageRollDTO dto);
  //(찬희) 스테이지 입금하기
  void stageDeposit(StageRollDTO dto);
- //(찬희) 자동으로 곗돈 수령
+ //(찬희) 자동으로 곗돈 지급
  void performUpdate();
+
+ //(찬희) 수익보고서 user 정보 갖고오기
+ List<MemberVO> getMemberInfo(StageRollDTO dto);
+
 }

@@ -31,7 +31,7 @@ public class StageController {
     // (현지)<스테이지생성>_참가 데이터(pfID,receiveTurn,pfMaster) 생성(ROLL)
     @PostMapping(value ="/stageAgree")
     public void stageCreate(StageParticipateDTO stageParticipateDTO) throws Exception{
-        System.out.println("[컨트롤러] 스테이지 생성 ");
+        System.out.println("[컨트롤러] 스테이지 참가 ");
         stageService.stageParticipate(stageParticipateDTO);
     }
   
@@ -75,10 +75,9 @@ public class StageController {
     }
   
       //(현지) <스테이지생성>_수령예정표
-    @GetMapping(value ="/stageCreate")
-
-    public List<ImportDTO> importTableGet(@RequestParam BigDecimal pfRate){
-        return stageService.importGet(pfRate);
+    @GetMapping(value ="/stageCreateImportTable")
+    public List<ImportDTO> importTableGet(ImportDTO importDTO){
+        return stageService.importGet(importDTO);
     }
 
     //(찬희) stage 컨트롤러
@@ -99,6 +98,25 @@ public class StageController {
 
         return map;
     }
+    //(찬희) 수익보고서
+    @GetMapping("/StageReport")
+    @ResponseBody
+    public HashMap<String, Object> stageReport(@RequestParam Integer pfID, StageRollDTO dto) {
+        log.info("*******stageReport 컨트롤러 + " + pfID);
+        HashMap<String,Object> map = new HashMap<String,Object>();
+        map.put("pf", stageService.getPfList(pfID));
+        Integer myBalance = stageService.getMyAccount(dto);
+        List<StageRollDTO> rollList = stageService.getRollList(dto);
+        for (StageRollDTO rollDTO : rollList) {
+            rollDTO.setMyBalance(myBalance);
+        }
+        map.put("roll", rollList);
+        map.put("import", stageService.getImportList(pfID));
+        map.put("memberInfo", stageService.getMemberInfo(dto));
+
+        return map;
+    }
+
   
   //U
   //(찬희) stage 들어오기
@@ -122,6 +140,7 @@ public class StageController {
   @DeleteMapping("/stageOut")
   public String stageOut(StageINDTO dto) {
       stageService.stageOut(dto); // 버튼 누르면 roll_uNo:delete
+      log.info("stageOutOoooooooooooooooo"+dto);
       return "success";
   }
 }

@@ -13,13 +13,13 @@ const ChanHeeTest = () => {
     console.log(value);
     axios.post('/stageIn', null, {
       params: {
-        uNo: 4,
+        uNo: 5,
         receiveTurn: value,
         pfID: 1
       }
     })
       .then(response => {
-          navigate('/stage');
+          navigate('/stage/1');
       })
       .catch(error => {
         // 에러 처리

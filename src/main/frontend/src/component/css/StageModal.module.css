@@ -50,10 +50,14 @@
     background: #444;
 }
 /* receipt */
+.modal.receipt{
+    top: 15vh;
+    padding: 2rem 2rem 4rem;
+}
 .modal.receipt p:first-child{
-  font-size: 1.5rem;
-  text-align: center;
-  line-height: 2;
+    font-size: 1.5rem;
+    text-align: center;
+    line-height: 2;
 }
 .modal.receipt table{
     border-collapse: collapse;
@@ -66,6 +70,9 @@
     height: 40px;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
+}
+.modal.receipt table thead th:first-child{
+    width: 7%;
 }
 .modal.receipt table tbody td{
     text-align: center;
@@ -143,6 +150,12 @@
     background-color: #004DC1;
     border: 1px solid #004DC1;
     cursor: pointer;
+}
+.grayBtn{
+    background-color: #939393 !important;
+    border: 1px solid #939393 !important;
+    color: white !important;
+    cursor: unset !important;
 }
 .modal.deposit .myAccount > div{
     display: flex;

@@ -24,22 +24,19 @@ const StagePartIn = () => {
 
   return (
     <>
-      <div className={styles.flexD}>
-        <div className={styles.flex1}>
 
-        </div>
-      </div>
-
+     <div className={styles.flex6}>
       <div className={styles.box}>
         <div className={styles.flexD}>
           <div>
+
             <div className={styles.flex1}>
-              <h2 className={styles.sixth}>스테이지 생성 동의서</h2>
+              <h3 className={styles.sixth}>스테이지 생성 동의서</h3>
             </div>
 
             <div className={styles.flex1}>
               <div className={styles.font}>
-                <h3>[{parameter}] 스테이지 생성 전, 필수 확인 사항</h3>
+                <h4>[{parameter}] 스테이지 생성 전, 필수 확인 사항</h4>
 
                 <h4>1)입금</h4>
 
@@ -66,7 +63,7 @@ const StagePartIn = () => {
         <button className={styles.button} onClick={modalHandler}>스테이지 확인 </button>
          {page && <StageCreateModal onConfirm={pageHandler}/>}
         </div>
-
+     </div>
           </>
                 );
         }

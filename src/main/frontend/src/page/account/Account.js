@@ -41,7 +41,7 @@ const Account = () => {
 
         const user = {email, password, name};
         try {
-            const res = await axios.post("api/v1/account", user);
+            const res = await axios.post("api/account", user);
             console.log(user);
             console.log(res);
             alert(user.name + "님 회원가입을 축하합니다")

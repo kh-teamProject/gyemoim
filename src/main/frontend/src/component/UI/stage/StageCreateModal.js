@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import { Link } from 'react-router-dom';
 
 import Agree from './Agree';
 import classes from '../../css/StageCreateModal.module.css';
@@ -13,8 +13,9 @@ const ModalOverlay = (props) => {
   return (
     <div className={classes.modal}>
       <Agree />
+      <Link to={`/stageList`}>
       <button onClick={props.onConfirm}>다음</button>
-
+    </Link>
     </div>
   );
 };

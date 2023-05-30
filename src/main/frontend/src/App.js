@@ -1,6 +1,5 @@
 import React from "react";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import './App.css';
 import NoticeList from "./page/board/NoticeList";
 import QuestionWritePost from './page/board/QuestionWritePost';
 import QuestionDetail from "./page/board/QuestionDetail";
@@ -22,7 +21,6 @@ import StageCreate from './page/stage/StageCreate';
 import StagePartIn from './page/stage/StagePartIn';
 import StageList from './page/stage/StageList';
 import Account from "./page/account/Account";
-import Logout from "./page/account/Logout";
 import Stage from './page/stage/Stage';
 import ChanHeeTest from './page/ChanHeeTest';
 import CheckedPwd from "./page/account/CheckedPwd";
@@ -35,9 +33,15 @@ import AccountManagement from "./page/admin/AccountManagement";
 import AdminHome from "./page/AdminHome";
 import StageManagement from "./page/admin/StageManagement";
 import BoardManagement from "./page/admin/BoardManagement";
+import StageReport from "./component/UI/stage/StageReport";
+import AdminStageList from "./page/admin/AdminStageList";
+import AdminStageDetail from "./page/admin/AdminStageDetail";
 import Test from "./page/Test";
+import TestAdminAccountDetail from "./page/admin/TestAdminAccountDetail";
+
 
 const App = () => {
+    
 
   const router = createBrowserRouter([
     {
@@ -51,10 +55,6 @@ const App = () => {
         {
           path: 'login',
           element: <Login/>
-        },
-        {
-          path: 'logout',
-          element: <Logout/>
         },
         {
           path: 'account',
@@ -99,7 +99,7 @@ const App = () => {
           ]
         },
         {
-          path: 'stage',
+          path: 'stage/:pfID',
           element: <Stage/>
         },
         {
@@ -175,15 +175,35 @@ const App = () => {
           element: <AccountManagement/>
         },
         {
+          path: 'account/detail/:uno',
+          element: <TestAdminAccountDetail/>
+        },
+        {
           path: 'stage',
-          element: <StageManagement/>
+          element: <StageManagement/>,
+        },
+        {
+          path: 'stage/list',
+          element: <AdminStageList/>
+          },
+        {
+          path: 'stage/detail/:pfID',
+          element: <AdminStageDetail/>
+        },
+        {
+          path: 'stage/detail1/:pfID',
+          element: <AdminStageDetail/>
         },
         {
           path: 'board',
           element: <BoardManagement/>
         }
       ]
-    }
+    },
+      {
+        path: 'StageReport/:pfID',
+        element: <StageReport />
+      }
   ]);
 
   return (
@@ -191,6 +211,7 @@ const App = () => {
       <RouterProvider router={router}/>
     </div>
   );
+
 };
 
 export default App;
