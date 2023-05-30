@@ -1,16 +1,19 @@
 .stage{
     background: transparent;
     border: 0;
-    -webkit-box-sizing: border-box;
+    /*webkit-box-sizing: border-box;*/
     box-sizing: border-box;
     letter-spacing: -.5px;
-    margin: 0;
+    margin: auto;
     padding: 0;
     vertical-align: baseline;
     text-decoration: none;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    max-width: 1100px;
+    align-content: center;
+    justify-content: center;
     /*border-bottom: 1px solid #f0f0f0;*/
     /*border-left: 1px solid #f0f0f0;*/
 }
@@ -51,7 +54,7 @@
 }
 .more-stage{
     background: url(../../component/images/verti_ellipsis.png) center top no-repeat;
-    height: 85px;
+    height: 190px;
     margin: 60px auto 0;
     padding-top: 0;
     position: relative;
@@ -72,13 +75,15 @@
     margin-top: 100px;
     border: 0
 }
-.sel-btn{
+.sel-int{
     position: absolute;
     right: 3rem;
 }
-/*.sel-deposit{*/
-/*    position:fixed;*/
-/*}*/
+
+.sel-deposit{
+    padding:0 50px;
+    /*position:fixed;*/
+}
 
 
 /*.stage-wrap{*/

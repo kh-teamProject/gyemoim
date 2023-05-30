@@ -1,8 +1,14 @@
 package com.team.gyemoim.service.stage;
 
+
+import com.team.gyemoim.dto.stage.StageListDTO;
+import com.team.gyemoim.vo.RollVO;
+
 import com.team.gyemoim.dto.stage.*;
+
 import com.team.gyemoim.vo.MemberVO;
-import com.team.gyemoim.vo.ParticipationVO;
+
+
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,8 +20,6 @@ public interface StageService {
  List<StageListDTO> getPFList();
  List<StageListDTO> filterList(int deposit);
 
-// (유진) 수령순서 가져오기
- List<ParticipationVO> getRecTurn();
 
  //(현지) <스테이지 생성> _스테이지 생성(PF)
   void stageCreate(StageCreateDTO stageCreateDTO);
@@ -53,6 +57,8 @@ public interface StageService {
  void stageDeposit(StageRollDTO dto);
  //(찬희) 자동으로 곗돈 지급
  void performUpdate();
+
  //(찬희) 수익보고서 user 정보 갖고오기
  List<MemberVO> getMemberInfo(StageRollDTO dto);
+
 }

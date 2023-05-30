@@ -4,7 +4,9 @@ package com.team.gyemoim.service.stage;
 import com.team.gyemoim.dto.stage.*;
 import com.team.gyemoim.mapper.StageMapper;
 import com.team.gyemoim.vo.MemberVO;
-import com.team.gyemoim.vo.ParticipationVO;
+
+import com.team.gyemoim.vo.RollVO;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -40,10 +42,9 @@ public class StageServiceImpl implements StageService {
   }
 
 //  (유진)수령순서가져오기
-  @Override
-  public List<ParticipationVO> getRecTurn() {
-    return stageMapper.getRecTurn();
-  }
+
+
+
 
   //(현지) <스테이지 생성> _스테이지 생성(PF)
   @Override
@@ -215,11 +216,13 @@ public class StageServiceImpl implements StageService {
       }
     }
   }
+
   //(찬희) 수익보고서 member 정보 불러오기
   @Override
   public List<MemberVO> getMemberInfo(StageRollDTO dto) {
     return stageMapper.getMemberInfo(dto);
   }
+
 
 
 }

@@ -37,7 +37,8 @@ import StageReport from "./component/UI/stage/StageReport";
 import AdminStageList from "./page/admin/AdminStageList";
 import AdminStageDetail from "./page/admin/AdminStageDetail";
 import Test from "./page/Test";
-import './App.css';
+import TestAdminAccountDetail from "./page/admin/TestAdminAccountDetail";
+
 
 const App = () => {
     
@@ -174,6 +175,10 @@ const App = () => {
           element: <AccountManagement/>
         },
         {
+          path: 'account/detail/:uno',
+          element: <TestAdminAccountDetail/>
+        },
+        {
           path: 'stage',
           element: <StageManagement/>,
         },
@@ -183,6 +188,10 @@ const App = () => {
           },
         {
           path: 'stage/detail/:pfID',
+          element: <AdminStageDetail/>
+        },
+        {
+          path: 'stage/detail1/:pfID',
           element: <AdminStageDetail/>
         },
         {
@@ -202,6 +211,7 @@ const App = () => {
       <RouterProvider router={router}/>
     </div>
   );
+
 };
 
 export default App;

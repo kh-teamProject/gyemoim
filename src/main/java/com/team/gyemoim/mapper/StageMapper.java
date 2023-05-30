@@ -1,11 +1,15 @@
 package com.team.gyemoim.mapper;
 
 import com.team.gyemoim.dto.stage.StageListDTO;
+
+import com.team.gyemoim.vo.RollVO;
+
 import com.team.gyemoim.dto.stage.ImportDTO;
 import com.team.gyemoim.dto.stage.StageCreateDTO;
 import com.team.gyemoim.dto.stage.StageParticipateDTO;
 import com.team.gyemoim.vo.MemberVO;
-import com.team.gyemoim.vo.ParticipationVO;
+
+
 import org.apache.ibatis.annotations.Mapper;
 
 import java.math.BigDecimal;
@@ -23,8 +27,7 @@ public interface StageMapper {
   
   List<StageListDTO> filterList(int deposit);
 
-// (유진) 수령순서 가져오기.
-  List<ParticipationVO> getRecTurn();
+
   // (현지)
     void stageCreate(StageCreateDTO stageCreateDTO);
     // (현지)
@@ -85,6 +88,7 @@ public interface StageMapper {
     void stagePaymentOrder(StageRollDTO dto);
     //(찬희)현재 pf의 지급순서 조회
     int getPaymentOrderValue(StageRollDTO dto);
+
     //(찬희)전원 입금식별자 'Y' -> 'N'
     void AllPaymentCheckUpdate(StageRollDTO stageRollDTO);
     //(찬희)지급 순서 저장
@@ -97,4 +101,6 @@ public interface StageMapper {
     void pfMasterUpdate(Map<String, Object> parameterMap);
    //(찬희) 방장 : 방장이 맞는지 확인하기 위해 정보 갖고오기
     String getPfMasterInfo(StageINDTO dto);
+
+
 }
