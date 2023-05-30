@@ -1,23 +1,14 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.board.BoardDeleteDTO;
-import com.team.gyemoim.dto.board.BoardListDTO;
-import com.team.gyemoim.dto.board.BoardModifyDTO;
-import com.team.gyemoim.dto.board.BoardWriteDTO;
+import com.team.gyemoim.dto.board.*;
 import com.team.gyemoim.mapper.BoardMapper;
-import com.team.gyemoim.vo.AttachedVO;
 import com.team.gyemoim.vo.BoardVO;
 import com.team.gyemoim.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,9 +55,15 @@ public class BoardServiceImpl implements BoardService{
     }*/
 
     @Override
-    public void write(BoardWriteDTO boardWriteDTO) throws Exception{
-        System.out.println("BoardServiceImpl.write 글 작성 되는건가? " + boardWriteDTO);
-        boardMapper.write(boardWriteDTO);
+    public void write(BoardWriteDTO boardWriteDTO) {
+        try {
+            System.out.println("******************** 글 작성 write 서비스 성공 ********************");
+            System.out.println("글 작성 boardWriteDTO 나와랏 : " +boardWriteDTO);
+            boardMapper.write(boardWriteDTO);
+        } catch (Exception e) {
+            System.out.println("******************** 글 작성 write 서비스 실패 ********************");
+            System.out.println("아악 :< 에러 원인 : " + e.getMessage());
+        }
     }
 
 
@@ -81,43 +78,74 @@ public class BoardServiceImpl implements BoardService{
 
 
     /* (Read) BoardServiceImpl */
-    // 게시글 총 갯수 구하기
-    @Override
-    public int countBoard() throws Exception {
-        System.out.println("BoardServiceImpl.countBoard_게시글 총 갯수 : " + boardMapper.countBoard());
-        return boardMapper.countBoard();
-    }
-
-    // 검색 후 게시글 갯수 구하기
+    // 검색 해당하는 게시글 갯수 구하기 (사용 o)
     @Override
     public int searchCountBoard(PageVO spv) throws Exception {
         System.out.println("BoardServiceImpl.searchCountBoard_검색한 게시글 갯수 : " + boardMapper.searchCountBoard(spv));
         return boardMapper.searchCountBoard(spv);
     }
 
-    // 게시글 조회하기
+    // 검색에 해당하는 게시글 리스트 조회하기 (사용 o)
     @Override
-    public List<BoardListDTO> selectBoard() throws Exception {
+    public List<BoardVO> searchList(BoardListDTO dto) throws Exception {
+        System.out.println("******************** 게시글 리스트 searchList 서비스 성공 :D ********************");
+        System.out.println("가져오는 게시글 종류: " + dto.getType());
+        return boardMapper.searchList(dto);
+    }
+
+
+
+    // 게시글 총 갯수 구하기
+//    @Override
+//    public int countBoard() throws Exception {
+//        System.out.println("BoardServiceImpl.countBoard_게시글 총 갯수 : " + boardMapper.countBoard());
+//        return boardMapper.countBoard();
+//    }
+
+
+
+    /*게시글 조회하기
+    @Override
+    public List<BoardVO> selectBoard(PageVO vo) throws Exception {
+        System.out.println("BoardSereviceImpl.selectBoard_게시글 조회 : " + boardMapper.selectBoard(vo));
+        return boardMapper.selectBoard(vo);
+    }*/
+
+    @Override
+    public List<BoardVO> selectBoard() throws Exception {
         System.out.println("BoardSereviceImpl.selectBoard_게시글 조회 : " + boardMapper.selectBoard());
         return boardMapper.selectBoard();
     }
 
     // 특정 게시글 상세보기
+    /*@Override
+    public BoardVO readDetail(BoardReadCountDTO boardReadCountDTO) throws Exception {
+        // 로그인 한 사용자의 조회수만 카운팅
+        if (boardReadCountDTO.getReaderUno() != null) {
+            Integer result = boardMapper.createBoardRecordCountHistory(boardReadCountDTO); // 조회수 히스토리 처리 (insert: 1, update: 2)
+
+            // 특정 게시글을 로그인 한 사용자가 처음 읽은 경우일 때 (result == 1 인 경우)
+            if (result == 1) {
+                Integer updatedRecordCount = boardMapper.updateViewCnt(boardReadCountDTO.getBoardBid()); // 조회수 증가
+            }
+        }
+
+        return boardMapper.readDetail(boardReadCountDTO.getBoardBid());
+    }
+*/
+
     @Override
     public BoardVO readDetail(int bid) throws Exception {
-        boardMapper.updateViewCnt(bid);
+        //boardMapper.updateViewCnt(bid); // 조회수 올리기
 
         return boardMapper.readDetail(bid);
     }
 
-    // 검색 후 검색에 해당하는 게시글 리스트 조회하기 (페이징 동시에 검색)
+    // 조회수 올리기
     @Override
-    public List<BoardVO> searchList(PageVO spv) throws Exception {
-        System.out.println("BoardServiceImpl.searchList_검색 후 해당하는 게시글 페이징해서 리스트로 뽑아봄 : " + boardMapper.searchList(spv));
-        return boardMapper.searchList(spv);
+    public void updateViewCnt(int bid) throws Exception {
+        boardMapper.updateViewCnt(bid);
     }
-
-
 
 
     /* (Update) */
@@ -179,7 +207,7 @@ public class BoardServiceImpl implements BoardService{
 
 
 
-    /* (Delete) BoardDeleteServiceImpl */
+    /* 글 삭제 (Delete) BoardDeleteServiceImpl */
     @Override
     public void delete(BoardDeleteDTO boardDeleteDTO) throws Exception {
         boardMapper.delete(boardDeleteDTO);

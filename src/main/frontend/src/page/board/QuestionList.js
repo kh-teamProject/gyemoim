@@ -1,74 +1,115 @@
-import {useState} from "react";
-import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import styleTable from "../../component/styleTable";
+import axios from "axios";
 
 const QuestionList = () => {
 
-    const [list, setList] = useState([
-        {
-            title: "title1",
-            uNo: "1",
-            writeDate: "2023-05-05",
-            views: 0
-        },
-        {
-            title: "title2",
-            uNo: "1",
-            writeDate: "2023-05-06",
-            views: 0
-        },
-        {
-            title: "title3",
-            uNo: "1",
-            writeDate: "2023-05-07",
-            views: 0
-        },
-        {
-            title: "title4",
-            uNo: "1",
-            writeDate: "2023-05-08",
-            views: 0
-        },
-        {
-            title: "title5",
-            uNo: "1",
-            writeDate: "2023-05-09",
-            views: 0
-        },
-    ]);
-    const [paging, setPaging] = useState({
-        total: 5,
-        nowPage: 1,
-        cntPage: 5,
-        startPage: 0,
-        cntPerPage: 5,
-        /*endPage: paging.startPage + 10,
-        lastPage: paging.endPage,
-        start: paging.end - paging.cntPerPage + 1,
-        end: paging.nowPage * paging.cntPerPage,*/
-    });
+    // 전체 게시글 리스트 받는 변수
+    const [questionList, setQuestionList] = useState([]);
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        const searchInput = document.getElementById('search-input').value;
+    // 게시글 타입 : 1:1 문의사항
+    const type = "1:1 문의사항";
 
-        if (searchInput === '') {
-            alert('검색어를 입력해주세요.');
-            return;
-        }
-        // 검색 로직 구현
+    // 페이징 관련 변수
+    // 1) 현재페이지 : nowPage
+    const [nowPage, setNowPage] = useState(1);
+    // 2) 전체 페이지 수 : totalPage
+    const [totalPage, setTotalPage] = useState(0);
+
+
+    // 검색용 변수
+    const [searchTypeVal, setSearchTypeVal] = useState("");
+    const [searchKeywordVal, setSearchKeywordVal] = useState("");
+
+
+    // Link 용 (함수)
+    let navigate = useNavigate();
+
+
+    // API 호출하여 게시글 목록 가져오기
+    const fetchQuestionList = async (searchType, searchKeyword) => {
+
+        // 검색된 List<BoardVO> 리턴받음
+        await axios.get("/board/searchList", {
+            params: {
+                "type": type,
+                "searchType": searchType,
+                "searchKeyword": searchKeyword,
+            }
+        })
+            .then((response) => {
+                console.log("QuestionList_fetchQuestionList_컨트롤러로 들어갑니다~ :D");
+                console.log("게시글 목록 response.data.list: " + response.data);
+                console.log(response);
+
+                setQuestionList(response.data); // 검색된 게시글 리스트 가져오기
+                setTotalPage(Math.ceil(response.data.length / 10)); // total 값을 가져와서 업데이트
+            })
+            .catch((error) => {
+                console.log("QuestionList_fetchQuestionList 게시글 불러오기 에러발생 :< ");
+                console.log(error);
+            })
 
     };
 
-    /* 다른 사람글이 비밀글인 경우 상세보기 하려고 할 때 작동하는 컴포넌트 */
+
+    // 초기 렌더링 시 게시글 목록과 전체 페이지 수를 가져온다.
+    useEffect(() => {
+        fetchQuestionList("", "");
+    }, []);
+
+
+    // 검색 타입 변경하는 함수
+    const changeSearchType = (e) => {
+        setSearchTypeVal(e.target.value);
+    }
+
+
+    // 검색어 변경하는 함수
+    const changeSearchKeyword = (e) => {
+        setSearchKeywordVal(e.target.value);
+    }
+
+
+    // searchKeyword (검색어), searchType (검색타입) 기반으로 조회하는 함수
+    const handleFormSubmit = () => {
+        console.log("QuestionList_handleFormSubmit_searchTypeVal= " + searchTypeVal + ", searchKeywordVal= " + searchKeywordVal);
+
+        fetchQuestionList(searchTypeVal, searchKeywordVal);
+        navigate("/board/question");
+
+        // 페이지 버튼 클릭 시 현재 페이지를 1로 초기화
+        setNowPage(1);
+    };
+
+
+    // 페이지 변경할 때 호출되는 함수
+    // 클릭한 페이지에 해당하는 게시글 목록 가져오도록 설정함
+    const handlePageClick = (e) => {
+        // 클릭한 페이지
+        const targetPage = Number(e.target.value);
+
+        // 클릭한 targetPage 가 0보다 크고 totalPage 보다 작거나 같으면
+        // 즉, 클릭한 페이지가 유효 범위에 있을 때
+        // 현재페이지 setNowPage 를 클릭한 페이지 targetPage 로 변경해준다.
+        if (targetPage > 0 && targetPage <= totalPage) {
+            setNowPage(targetPage);
+
+        }
+    }
+
+
+    // (board.secret == 'S') && (board.uNo != login.uNo) 인 경우 발생하는 함수
     const handleSecretClick = () => {
         alert("다른 사람의 비밀글은 볼 수 없습니다.");
     };
 
-    /* 문의사항 글 쓰는 화면으로 이동 */
+    // 글쓰기 버튼 클릭시 발생하는 함수 (글쓰기 버튼 클릭 -> 글쓰기 page 로 이동)
     const moveQuestionWrite = () => {
-      window.location.href = 'question/write';
+        window.location.href = 'question/write';
     };
+
 
     return (
         <>
@@ -81,66 +122,145 @@ const QuestionList = () => {
                         <div className="col-11">
                             <div className="title">
                                 <h1>1:1 문의사항</h1>
-                                <p>문의사항이 필요하시면 작성해주세요~</p>
+                                <p>문의사항을 상세하게 적어주세요.</p>
                             </div>
+
 
                             {/* 검색 시작 */}
-                            <div className="search-container row justify-content-center">
-                                <form className="col-8 search-box" name="search_form" onSubmit={handleFormSubmit}>
-                                    <select name="type" className="search-item">
-                                        <option selected value="title">제목</option>
-                                        <option value="content">내용</option>
-                                        <option value="name">작성자</option>
-                                    </select>
-                                    <input className="form-control search-item" type="text" id="search-input"
-                                           name="keyword" placeholder="검색어를 입력하세요."/>
-                                    <button type="submit" className="btn btn-primary search-item">검색</button>
-                                </form>
-                            </div>
+                            <table className="search" style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginBottom: '10px',
+                            }}>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <select className="custom-select" value={searchTypeVal}
+                                                onChange={changeSearchType}>
+                                            <option>검색 옵션 선택</option>
+                                            <option value="title">제목</option>
+                                            <option value="content">내용</option>
+                                            <option value="name">작성자</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" className="form-control" placeholder="검색어를 입력하세요."
+                                               value={searchKeywordVal} onChange={changeSearchKeyword}/>
+                                    </td>
+                                    <td>
+                                        <button type="button" className="btn btn-outline-secondary"
+                                                onClick={handleFormSubmit}><i className="fas fa-search"></i> 검색
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
                             {/* 검색 끝 */}
 
-                            <table className="table table-hover" style={styleTable}>
+
+                            <table className="table table-hover">
+                                <thead className="table table-hover">
                                 <colgroup>
-                                    <col width="10%"/>
-                                    <col width="40%"/>
-                                    <col width="15%"/>
-                                    <col width="25%"/>
-                                    <col width="10%"/>
+                                    <col width="10%" />
+                                    <col width="40%" />
+                                    <col width="15%" />
+                                    <col width="25%" />
+                                    <col width="10%" />
                                 </colgroup>
-                                <thead>
                                 <tr>
-                                    <th className="text-center">글번호</th>
-                                    <th>제목</th>
-                                    <th className="text-center">작성자</th>
-                                    <th className="text-center">작성일</th>
-                                    <th className="text-center">조회수</th>
+                                    <th className="col-1">글번호</th>
+                                    <th className="col-8">제목</th>
+                                    <th className="col-3">작성자</th>
+                                    <th className="col-3">작성일</th>
+                                    <th className="col-3">조회수</th>
                                 </tr>
                                 </thead>
-                                {/* 게시글 목록 */}
-                                {list.map((item, index) => (
-                                    <tr key={index}>
-                                        <td className="text-center">{(paging.total - index) - ((paging.nowPage - 1) * 10)}</td>
-                                        <td>{/* 아래에 글이 비밀글일때 로그인한 사람의 uNo와 글의 uNo 가 같을때만 상세글로 이동하게 만든다. */}
-                                            <Link to={'/board/detail?${bid}'}>{item.title}</Link>
+
+                                <tbody className="table table-hover">
+                                {/* 게시글 목록 (적용시켜야하는 것 : 비밀글인 경우, 로그인 되어있는 사람의 uNo와 글의 uNo가 같으면 글 제목 눌렀을 때 글 상세보기로 이동하게하고 uNo가 서로 같지 않으면 '비밀글입니다.' 라고 alert() 띄워주기 / 공개글인 경우 그냥 제목 누르면 상세보기로 이동시키기 ) */}
+                                {questionList.length > 0 ? (
+                                    questionList
+                                        .slice((nowPage - 1) * 10, nowPage * 10)
+                                        .map((item, index) => {
+                                            // 작성일을 Date 객체로 변환
+                                            const writeDate = new Date(item.writeDate);
+                                            // 원하는 형식 ('YYYY-MM-DD') 으로 날짜 구성
+                                            const formattedWriteDate = writeDate.toISOString().split('T')[0];
+
+                                            return (
+                                                <tr key={index}>
+                                                    <td className="text-center">{item.bid}</td>
+                                                    <td>
+                                                        {item.secret === 'S' ? (
+                                                                <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>) :
+                                                            (<Link
+                                                                to={`/board/question/detail/${item.bid}`}>{item.title}</Link>)}
+                                                    </td>
+                                                    <td className="text-center">{item.name}</td>
+                                                    <td className="text-center">{formattedWriteDate}</td>
+                                                    <td className="text-center">{item.views}</td>
+                                                </tr>
+                                            );
+                                        })
+                                ) : (
+                                    <tr>
+                                        <td colSpan="5" style={{textAlign: "center"}}>
+                                            게시글이 없습니다.
                                         </td>
-                                        <td className="text-center">{item.uNo}</td>
-                                        <td className="text-center">{item.writeDate}</td>
-                                        <td className="text-center">{item.views}</td>
                                     </tr>
-                                ))}
+                                )}
+                                </tbody>
+                                {/* 게시글 목록 끝 */}
+
                             </table>
-                            <div className="list-btn-area">
-                                {/* 로그인 되어있는 경우에만 글쓰기 버튼 활성화(/board/question/write 로 이동하게 하기) */}
-                                <input type="button" value="글쓰기" className="btn btn-primary btn-lg px-4 me-sm-3" onClick={moveQuestionWrite}/>
+
+                            {/* 페이징 시작 */}
+                            <div className="pagination">
+                                <nav aria-label="Page navigation"
+                                     style={{display: "flex", justifyContent: "center", flex: 10}}>
+                                    <div>
+                                        {nowPage > 1 && (
+                                            <span className="page-item">
+                                                <button className="page-link"
+                                                        value={nowPage - 1}
+                                                        onClick={handlePageClick}>
+                                                    {"<<"}
+                                                </button>
+                                            </span>
+                                        )}
+                                        {Array.from({length: totalPage}, (_, i) => (
+                                            <button key={i + 1} value={i + 1} onClick={handlePageClick}
+                                                    className={nowPage === i + 1 ? 'active' : ''}>{i + 1}</button>
+                                        ))}
+                                        {nowPage < totalPage && (
+                                            <span className="page-item">
+                                                <button className="page-link" value={nowPage + 1}
+                                                        onClick={handlePageClick}>
+                                                    {">>"}
+                                                </button>
+                                            </span>
+                                        )}
+                                    </div>
+                                </nav>
                             </div>
-                            <ul className="page-list">
-                                {/* 페이지 번호 목록 */}
-                            </ul>
+                            {/* 페이징 끝 */}
+
+
+                            {/* 글쓰기 버튼 */}
+                            <div className="my-5 d-flex justify-content-center" style={{
+                                marginTop: '10px',
+                                marginBottom: '10px',
+                            }}>
+                                {/* 적용시켜야 할 것: 로그인한 경우에만 글쓰기 버튼 활성화(/board/question/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기 */}
+                                <Link to={"/board/question/write"}><i className="fas fa-pen"></i> &nbsp; 글쓰기</Link>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </section>
-            
+
             {/* 푸터 */}
         </>
     );

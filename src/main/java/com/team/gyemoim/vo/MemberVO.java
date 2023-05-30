@@ -2,7 +2,6 @@ package com.team.gyemoim.vo;
 
 import lombok.*;
 
-
 @Data
 @Builder
 @AllArgsConstructor

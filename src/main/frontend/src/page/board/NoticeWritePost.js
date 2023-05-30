@@ -5,7 +5,8 @@ const NoticeWritePost = () => {
 
     const [formData, setFormData] = useState({
         uno: 1, // 글 작성자 회원번호
-        name: '', // 글 작성자 이름
+        name: '운영자님', // 글 작성자 이름
+        type: '공지사항', // 게시글 타입
         title: '', // 게시글 제목
         content: '', // 게시글 내용
         secret: 'P', // 글 여부 (공개/비공개)
@@ -40,24 +41,12 @@ const NoticeWritePost = () => {
     };*/
 
 
-    const handleSubmit = async (e) => {
+    const handleNoticeSubmit = async (e) => {
         e.preventDefault();// 리로드 방지
 
 
-        // API 요청을 보내는 코드
-        /*axios.post('/board/notice/writePost', formData)
-            .then((response) => {
-                console.log("NoticeWritePost_handleSubmit 성공 :D" + response.data);
-                window.location.href = '/board/notice';
-            })
-            .catch((error) => {
-                console.log("NoticeWritePost_handleSubmit axios 실패 :< ");
-                console.log("이것은 uno 인가 uNo 인가 : " + formData.uno);
-                console.log(error);
-            })*/
-
         try {
-            await axios.post('/board/notice/writePost', formData, {
+            await axios.post('/board/writePost', formData, {
                 headers: {
                     Authorization: 'Bearer <your_access_token>',
                 }
@@ -83,7 +72,7 @@ const NoticeWritePost = () => {
                                 <h1>공지사항 글쓰기</h1>
                                 <p>반갑습니다 운영자님, 공지사항을 적어주세요</p>
                             </div>
-                            <form onSubmit={handleSubmit} id="writeConn">
+                            <form onSubmit={handleNoticeSubmit} id="writeConn">
                                 <div>
                                     <label htmlFor="uno">회원번호</label>
                                     <input type="number" id="uno" name="uno" value={formData.uno}
