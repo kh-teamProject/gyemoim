@@ -13,7 +13,7 @@ const MyPageSidebar = () => {
         <div className={`${classes['myinfo-wrap']}`}>
           <img src={SidebarLogo} alt="Sidebar Logo" width={100}/>
           <br/>
-          <span>김찬희님</span>
+          <span>민재홍님</span>
           <h2>마이페이지</h2>
         </div>
         <div className={`${classes['myinfo-sidebar-wrap']}`}>

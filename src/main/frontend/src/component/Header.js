@@ -15,7 +15,7 @@ const Header = () => {
         </div>
         <NavLink to={'/'}><img src={logo} alt="logo" width={'200'} height={'100'}/></NavLink>
         <div>
-          <NavLink to={'login'}>로그인</NavLink>
+          <NavLink to={'login'}>로그아웃</NavLink>
           <NavLink to={'mypage/info'}>내 정보</NavLink>
           <NavLink to={'/board/notice'}>공지사항</NavLink>
         </div>

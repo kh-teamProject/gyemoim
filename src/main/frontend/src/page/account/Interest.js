@@ -106,7 +106,7 @@ const Interest = () => {
                 <label htmlFor="car"><FaCarAlt />자동차</label>
               </div>
             </div>
-            <button type={"submit"}>수정하기</button>
+            <button type={"submit"} className={`${classes['interest-btn']}`}>수정하기</button>
           </form>
         </div>
       </div>
