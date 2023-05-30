@@ -52,7 +52,8 @@ const NoticeModify = () => {
 
         try {
             console.log("수정 취소하겠습니다!! ");
-            navigate(`/board/notice/detail/${bid}`);
+            //navigate(`/board/notice/detail/${bid}`);
+            navigate(-1);
         } catch (error) {
             console.log("수정 취소 불가합니다 에러발생 :<");
             console.log(error);
@@ -92,7 +93,8 @@ const NoticeModify = () => {
                 console.log("bid 가져와지니? " + bid);
 
                 alert("글 수정하였습니다.");
-                navigate(`/board/notice/detail/${bid}`);// 글 수정 완료 후 업데이트된 글 상세보기로 이동
+                //navigate(`/board/notice/detail/${bid}`);// 글 수정 완료 후 업데이트된 글 상세보기로 이동(이때 조회수가 또 올라감)
+                navigate('/board/notice');// 글 수정 완료 후 업데이트된 글 상세보기로 이동(이때 조회수가 또 올라감)
             })
             .catch((error) => {
                 console.log("NoticeModify_getNoticeModify 수정 왜 안되는거얏 :<");

@@ -1,9 +1,6 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.board.BoardDeleteDTO;
-import com.team.gyemoim.dto.board.BoardListDTO;
-import com.team.gyemoim.dto.board.BoardModifyDTO;
-import com.team.gyemoim.dto.board.BoardWriteDTO;
+import com.team.gyemoim.dto.board.*;
 import com.team.gyemoim.vo.AttachedVO;
 import com.team.gyemoim.vo.BoardVO;
 import com.team.gyemoim.vo.PageVO;
@@ -19,11 +16,13 @@ public interface BoardService {
     /* 게시글 조회 R */
     int searchCountBoard(PageVO spv) throws Exception; // 검색 후 게시글 갯수 구하기
     List<BoardVO> searchList(BoardListDTO dto) throws Exception; // 검색 후 검색에 해당하는 게시글 리스트로 조회하기 (페이징 동시에 검색)
-    BoardVO readDetail(int bid) throws Exception; // 특정 게시글 상세보기(+ 조회수 올리기)
+    //BoardVO readDetail(BoardReadCountDTO boardReadCountDTO) throws Exception; // 특정 게시글 상세보기(+ 조회수 올리기)
+    BoardVO readDetail(int bid) throws Exception; // 특정 게시글 상세보기
 
-    //List<BoardVO> selectBoard(PageVO vo) throws Exception; //게시글 조회하기
+    void updateViewCnt(int bid) throws Exception; // 조회수 올리기
+
     List<BoardVO> selectBoard() throws Exception; //게시글 조회하기
-    int countBoard() throws Exception; //게시글 총 갯수 구하기
+    //int countBoard() throws Exception; //게시글 총 갯수 구하기
 
 
 

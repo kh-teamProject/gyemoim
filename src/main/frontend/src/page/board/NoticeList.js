@@ -28,6 +28,8 @@ const NoticeList = () => {
     let navigate = useNavigate();
 
 
+
+
     // API 호출하여 게시글 목록 가져오기
     const fetchNoticeList = async (searchType, searchKeyword) => {
 
@@ -77,11 +79,11 @@ const NoticeList = () => {
     const handleFormSubmit = () => {
         console.log("NoticeList_handleFormSubmit_searchTypeVal= " + searchTypeVal + ", searchKeywordVal= " + searchKeywordVal);
 
-        fetchNoticeList(searchTypeVal, searchKeywordVal);
         navigate("/board/notice");
-
+        fetchNoticeList(searchTypeVal, searchKeywordVal);
         // 페이지 버튼 클릭 시 현재 페이지를 1로 초기화
         setNowPage(1);
+
     };
 
 
@@ -128,11 +130,7 @@ const NoticeList = () => {
 
 
                             {/* 검색 시작 */}
-                            <table className="search" style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                marginBottom: '10px',
-                            }}>
+                            <table className="search">
                                 <tbody>
                                 <tr>
                                     <td>
@@ -161,24 +159,18 @@ const NoticeList = () => {
 
 
                             <table className="table table-hover">
-                                <thead className="table table-hover">
-                                <colgroup>
-                                    <col width="10%" />
-                                    <col width="40%" />
-                                    <col width="15%" />
-                                    <col width="25%" />
-                                    <col width="10%" />
-                                </colgroup>
+                                <thead>
                                 <tr>
                                     <th className="col-1">글번호</th>
                                     <th className="col-8">제목</th>
                                     <th className="col-3">작성자</th>
-                                    <th className="col-3">작성일</th>
-                                    <th className="col-3">조회수</th>
+                                    <th className="col-8">작성일</th>
+                                    <th className="col-1">조회수</th>
                                 </tr>
                                 </thead>
 
-                                <tbody className="table table-hover">
+                                <tbody>
+
                                 {/* 게시글 목록 (적용시켜야하는 것 : 비밀글인 경우, 로그인 되어있는 사람의 uNo와 글의 uNo가 같으면 글 제목 눌렀을 때 글 상세보기로 이동하게하고 uNo가 서로 같지 않으면 '비밀글입니다.' 라고 alert() 띄워주기 / 공개글인 경우 그냥 제목 누르면 상세보기로 이동시키기 ) */}
                                 {noticeList.length > 0 ? (
                                     noticeList
@@ -191,16 +183,16 @@ const NoticeList = () => {
 
                                             return (
                                                 <tr key={index}>
-                                                    <td className="text-center">{item.bid}</td>
+                                                    <td>{item.bid}</td>
                                                     <td>
                                                         {item.secret === 'S' ? (
                                                                 <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>) :
                                                             (<Link
                                                                 to={`/board/notice/detail/${item.bid}`}>{item.title}</Link>)}
                                                     </td>
-                                                    <td className="text-center">{item.name}</td>
-                                                    <td className="text-center">{formattedWriteDate}</td>
-                                                    <td className="text-center">{item.views}</td>
+                                                    <td>{item.name}</td>
+                                                    <td>{formattedWriteDate}</td>
+                                                    <td>{item.views}</td>
                                                 </tr>
                                             );
                                         })

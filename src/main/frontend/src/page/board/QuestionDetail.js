@@ -10,11 +10,16 @@ const QuestionDetail = () => {
     // 파라미터 가져오기
     const {bid} = useParams();
 
+
     const navigate = useNavigate();
 
     const getQuestionDetail = async () => {
 
-        await axios.get("/board/read", {params: {bid: bid}})
+        await axios.get("/board/read", {
+            params: {
+                "bid": bid,
+            }
+        })
             .then((response) => {
                 console.log("QuestionDetail_문의사항 게시글 세부내용 가져오기 성공 :D");
                 console.log("QuestionDetail_가져온 데이터: " + response.data);
@@ -47,7 +52,6 @@ const QuestionDetail = () => {
             })
         window.location.href = `/board/question/modify/${bid}`;
     };
-
 
 
     // 글 삭제하는 함수
@@ -113,13 +117,20 @@ const QuestionDetail = () => {
                                 {/* 댓글 시작 */}
                                 <div id="replyArea">
                                     <div className="card-body">
-                                        <textarea className="form-control" name="comm" id="newReplyComm" cols="30" rows="3"
+                                        <textarea className="form-control" name="comm" id="newReplyComm" cols="30"
+                                                  rows="3"
                                                   placeholder="댓글을 입력해주세요"></textarea>
-                                        <input className="form-control" type="hidden" id="newReplyBid" name="bid" value={questionDetail.bid} />
-                                        <input className="form-control" type="hidden" id="newReplyUNo" name="uno" value="{login.uno}" />
-                                        <input className="form-control" type="hidden" id="newReplyName" name="name" value="{login.name}" />
+                                        <input className="form-control" type="hidden" id="newReplyBid" name="bid"
+                                               value={questionDetail.bid}/>
+                                        <input className="form-control" type="hidden" id="newReplyUNo" name="uno"
+                                               value="{login.uno}"/>
+                                        <input className="form-control" type="hidden" id="newReplyName" name="name"
+                                               value="{login.name}"/>
 
-                                        <button type="submit" className="btn btn-primary btn-md px-3 mt-2 me-sm-3 replyAddBtn" id="replyAddBtn">댓글 작성</button>
+                                        <button type="submit"
+                                                className="btn btn-primary btn-md px-3 mt-2 me-sm-3 replyAddBtn"
+                                                id="replyAddBtn">댓글 작성
+                                        </button>
 
 
                                         {/* 댓글 테이블 */}
@@ -130,9 +141,15 @@ const QuestionDetail = () => {
 
                                 {/* 수정,삭제,목록보기 버튼 */}
                                 <div>
-                                    <button className="btn btn-primary btn-lg px-4 me-sm-3" onClick={moveToQuestionList}>목록보기</button>
-                                    <button className="btn btn-primary btn-lg px-4 me-sm-3" onClick={moveToQuestionModify}>수정하기</button>
-                                    <button className="btn btn-primary btn-lg px-4 me-sm-3" onClick={moveToQuestionDelete}>삭제하기</button>
+                                    <button className="btn btn-primary btn-lg px-4 me-sm-3"
+                                            onClick={moveToQuestionList}>목록보기
+                                    </button>
+                                    <button className="btn btn-primary btn-lg px-4 me-sm-3"
+                                            onClick={moveToQuestionModify}>수정하기
+                                    </button>
+                                    <button className="btn btn-primary btn-lg px-4 me-sm-3"
+                                            onClick={moveToQuestionDelete}>삭제하기
+                                    </button>
                                 </div>
                                 <br/><br/>
 

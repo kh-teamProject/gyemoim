@@ -1,9 +1,6 @@
 package com.team.gyemoim.controller;
 
-import com.team.gyemoim.dto.board.BoardDeleteDTO;
-import com.team.gyemoim.dto.board.BoardListDTO;
-import com.team.gyemoim.dto.board.BoardModifyDTO;
-import com.team.gyemoim.dto.board.BoardWriteDTO;
+import com.team.gyemoim.dto.board.*;
 import com.team.gyemoim.service.BoardService;
 import com.team.gyemoim.service.ReplyService;
 import com.team.gyemoim.vo.BoardVO;
@@ -68,15 +65,51 @@ public class BoardController {
     * @PathVariable 어노테이션은 URL 경로 변수 값을 매개변수에 매핑할 때 사용함
     * @RequestParam 어노테이션은 요청 파라미터의 값을 매개변수에 매핑될 때 사용된
     * `bid` 매개변수에는 `bid` 라는 요청 파라미터의 값이 매핑된다. */
+   /* @GetMapping("/board/read")
+    public BoardVO read(@RequestParam("bid") int bid, @RequestParam(value = "increaseViews", defaultValue = "true") boolean increaseViews) throws Exception {
+        System.out.println("*************** 글 읽기 read 컨트롤러 성공 >< *****************");
+
+        *//*List<ReplyVO> replyVOList = replyService.reply(bid);*//*
+        BoardVO boardVO = boardService.readDetail(bid);
+
+        // 조회수 증가 여부에 따른 조회수 증가하기
+//        if (increaseViews) {
+//            boardService.updateViewCnt(bid);
+//        }
+
+        return boardVO;
+    }*/
+
     @GetMapping("/board/read")
-    public BoardVO read(@RequestParam("bid") int bid) throws Exception {
+    public BoardVO read(@RequestParam("bid") int bid, @RequestParam(value = "increaseViews", defaultValue = "true") boolean increaseViews) throws Exception {
         System.out.println("*************** 글 읽기 read 컨트롤러 성공 >< *****************");
 
         /*List<ReplyVO> replyVOList = replyService.reply(bid);*/
         BoardVO boardVO = boardService.readDetail(bid);
 
+
         return boardVO;
     }
+
+
+    // 조회수 증가 API
+    @GetMapping("/board/read/{bid}/increase-views")
+    public void increaseViews(@RequestParam("bid") int bid) throws Exception {
+        boardService.updateViewCnt(bid);
+    }
+
+
+
+    /*@GetMapping("/board/read")
+    public BoardVO read(BoardReadCountDTO boardReadCountDTO) throws Exception {
+        System.out.println("*************** 글 읽기 read 컨트롤러 성공 >< *****************");
+        System.out.println("가져온 파라미터 boardBid= " + boardReadCountDTO.getBoardBid() + ", readerUNo= " + boardReadCountDTO.getReaderUno());
+
+        *//*List<ReplyVO> replyVOList = replyService.reply(bid);*//*
+        BoardVO boardVO = boardService.readDetail(boardReadCountDTO);
+
+        return boardVO;
+    }*/
 
 
     /* 글 수정 API (Update) */

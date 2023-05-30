@@ -1,9 +1,6 @@
 package com.team.gyemoim.service;
 
-import com.team.gyemoim.dto.board.BoardDeleteDTO;
-import com.team.gyemoim.dto.board.BoardListDTO;
-import com.team.gyemoim.dto.board.BoardModifyDTO;
-import com.team.gyemoim.dto.board.BoardWriteDTO;
+import com.team.gyemoim.dto.board.*;
 import com.team.gyemoim.mapper.BoardMapper;
 import com.team.gyemoim.vo.BoardVO;
 import com.team.gyemoim.vo.PageVO;
@@ -99,11 +96,11 @@ public class BoardServiceImpl implements BoardService{
 
 
     // 게시글 총 갯수 구하기
-    @Override
-    public int countBoard() throws Exception {
-        System.out.println("BoardServiceImpl.countBoard_게시글 총 갯수 : " + boardMapper.countBoard());
-        return boardMapper.countBoard();
-    }
+//    @Override
+//    public int countBoard() throws Exception {
+//        System.out.println("BoardServiceImpl.countBoard_게시글 총 갯수 : " + boardMapper.countBoard());
+//        return boardMapper.countBoard();
+//    }
 
 
 
@@ -121,14 +118,34 @@ public class BoardServiceImpl implements BoardService{
     }
 
     // 특정 게시글 상세보기
+    /*@Override
+    public BoardVO readDetail(BoardReadCountDTO boardReadCountDTO) throws Exception {
+        // 로그인 한 사용자의 조회수만 카운팅
+        if (boardReadCountDTO.getReaderUno() != null) {
+            Integer result = boardMapper.createBoardRecordCountHistory(boardReadCountDTO); // 조회수 히스토리 처리 (insert: 1, update: 2)
+
+            // 특정 게시글을 로그인 한 사용자가 처음 읽은 경우일 때 (result == 1 인 경우)
+            if (result == 1) {
+                Integer updatedRecordCount = boardMapper.updateViewCnt(boardReadCountDTO.getBoardBid()); // 조회수 증가
+            }
+        }
+
+        return boardMapper.readDetail(boardReadCountDTO.getBoardBid());
+    }
+*/
+
     @Override
     public BoardVO readDetail(int bid) throws Exception {
-        boardMapper.updateViewCnt(bid);
+        //boardMapper.updateViewCnt(bid); // 조회수 올리기
 
         return boardMapper.readDetail(bid);
     }
 
-
+    // 조회수 올리기
+    @Override
+    public void updateViewCnt(int bid) throws Exception {
+        boardMapper.updateViewCnt(bid);
+    }
 
 
     /* (Update) */
