@@ -162,8 +162,10 @@ public class MemberService {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // 비밀번호 리셋, 임시 비밀번호 발송
-    public void resetPassword(String email, String name) {
-        MemberDTO memberDTO = memberMapper.findByEmailAndName(email, name);
+    public void resetPassword(String email, String name, String phone) {
+        MemberDTO memberDTO = memberMapper.findByEmailAndName(email, name, phone);
+
+
 
         if (memberDTO == null) {
             throw new NoSuchElementException("일치하는 회원이 없습니다.");
@@ -175,6 +177,9 @@ public class MemberService {
         memberDTO.setPassword(encodedPassword);
         memberMapper.updatePassword(memberDTO);
         sendPasswordResetEmail(memberDTO.getEmail(), newPassword);
+
+        System.out.println("보내는 대상 : " + email);
+        System.out.println("임시 비밀번호 : " + newPassword);
 
     }
 

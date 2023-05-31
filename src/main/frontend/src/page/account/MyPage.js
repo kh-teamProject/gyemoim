@@ -23,7 +23,7 @@ const MyPage = () => {
   useEffect(() => {
     axios.get('/mypage', {
       params: {
-        uNo: 3
+        uNo: 83
       }
     })
       .then((res) => {

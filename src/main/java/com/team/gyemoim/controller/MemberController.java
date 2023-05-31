@@ -63,7 +63,7 @@ public class MemberController {
     }
 
 
-    // 회원가입 메일 인증
+    // 회원가입 메일 인증 번호 발송
     @PostMapping("/account/mailConfirm")
     public ResponseEntity<String> mailConfirm(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");
@@ -74,6 +74,7 @@ public class MemberController {
 
         try {
             memberService.sendSimpleMessage(email);
+            // React로 인증번호 보내는 코드 작성
             return ResponseEntity.ok("{\"message\": \"회원가입 인증 이메일이 전송되었습니다.\"}");
 
         } catch (Exception e) {
@@ -141,8 +142,8 @@ public class MemberController {
 
 
     // Email 찾기
-    @GetMapping("/member-email-search")
-    public String memberEmailSearch(@RequestBody MemberDTO memberDTO) {
+    @GetMapping("/account/member-email-search")
+    public String memberEmailSearch(MemberDTO memberDTO) {
 
         System.out.println("Email Search: " + memberDTO);
 
@@ -155,13 +156,14 @@ public class MemberController {
     public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");
         String name = requestBody.get("name");
+        String phone = requestBody.get("phone");
 
-        if ((email == null || email.isEmpty() || name == null || name.isEmpty())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{'error': '이메일이나 이름이 제공되지 않았습니다.'}");
+        if (email == null || email.isEmpty() || name == null || name.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{'error': '이메일이 제공되지 않았습니다.'}");
 
         }
         try {
-            memberService.resetPassword(email, name);
+            memberService.resetPassword(email, name, phone);
             return ResponseEntity.ok("{'message': '임시 비밀번호 발급 이메일이 전송되었습니다.'}");
 
         } catch (NoSuchElementException e) {

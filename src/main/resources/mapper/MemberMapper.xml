@@ -7,8 +7,8 @@
     <!-- 회원가입 -->
     <insert id="account">
         INSERT INTO MEMBER
-            (uNo, email, password, name, phone)
-        VALUES (uno_mem_seq.nextVal, #{email}, #{password}, #{name}, #{phone})
+            (uNo, email, password, name, phone, userRole)
+        VALUES (uno_mem_seq.nextVal, #{email}, #{password}, #{name}, #{phone}, #{userRole})
     </insert>
 
     <!-- 회원 권한 정보 -->
@@ -39,6 +39,7 @@
         FROM MEMBER
         WHERE email = #{email}
           AND name = #{name}
+          AND phone = #{phone}
     </select>
 
 
