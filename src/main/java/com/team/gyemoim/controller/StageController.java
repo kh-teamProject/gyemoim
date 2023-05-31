@@ -42,7 +42,6 @@ public class StageController {
   public HashMap<String,Object> stage() {
     HashMap<String,Object> map = new HashMap<>();
     map.put("PF",stageService.getPFList());
-//    map.put("Participation",stageService.getRecTurn());
     System.out.println("참가테이블 잘 들어가나욘");
     return map;
   }
