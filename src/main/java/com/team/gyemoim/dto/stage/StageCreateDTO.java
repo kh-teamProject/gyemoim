@@ -11,6 +11,7 @@ public class StageCreateDTO {
     private  Integer pfEntry;//참가자 수(5,7)
     private  BigDecimal pfRate; //이율
     private Integer deposit;//약정금
+    private Integer payment; //월 입금액
     //private Integer receiveTurn; //순번
     private String  interest; //관심사
     private String pRank; //신용등급

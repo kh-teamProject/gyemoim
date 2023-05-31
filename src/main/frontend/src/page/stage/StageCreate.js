@@ -4,10 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { useParams} from 'react-router-dom';
 
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 import styles from "../css/StageCreate.module.css";
 
 import Participants from "../../component/UI/stage/Participants";
+
+
+
 import Rate from "../../component/UI/stage/Rate";
 
 import Turn from "../../component/UI/stage/Turn";
@@ -15,6 +20,9 @@ import Turn from "../../component/UI/stage/Turn";
 import Agree from "../../component/UI/stage/Agree";
 
 const StageCreate = () => {
+ const token = jwtDecode(Cookies.get('Set-Cookie'));
+   const uNo = token.uNo;
+
   const [name, setName] = useState("");
   const [count, setCount] = useState("");
 
@@ -30,7 +38,7 @@ const [createButton, setCreateButton] = useState(false);
  const [turn, setTurn] = useState("");
 
  const [deposit, setDeposit] = useState("");
-
+ const [payment, setPayment] = useState("");
 
  const [category, setCategory] = useState("");
 
@@ -53,10 +61,13 @@ const [isDuplicate, setIsDuplicate] = useState(false);
     axios
       .post("/stageCreate", null, {
         params: {
+
+           uNo : uNo,
           pfName: name,
           pfEntry: count,
           pfRate: rate,
           deposit: deposit,
+          payment : payment,
           interest: category,
           pRank:rank,
          receiveTurn : turn,
@@ -70,9 +81,11 @@ const [isDuplicate, setIsDuplicate] = useState(false);
       });
   };
 
-  const depositHandler = (participantsData) => {
+  const depositHandler = (participantsData, payment) => {
     setDeposit(participantsData);
+    setPayment(payment);
   };
+
 
   const depositInputHandler = (depositData) => {
     setDeposit(depositData);
@@ -233,22 +246,20 @@ const movePage = useNavigate("");
           {count === "5" && (
             <>
 
-              <Participants name="deposit" value="2500000" onClick={depositHandler}>
-                250만원(월50만원)
-              </Participants>
-              <Participants name="deposit" value="5000000" onClick={depositHandler}>
-                500만원(월100만원)
-              </Participants>
+            <Participants name="deposit" value="500000"  onClick={depositHandler} >50만원(월10만원) </Participants>
+            <Participants name="deposit" value="1000000" onClick={depositHandler}>100만원(월20만원) </Participants>
+            <Participants name="deposit" value="1500000" onClick={depositHandler}>150만원(월30만원) </Participants>
+            <Participants name="deposit" value="2000000" onClick={depositHandler}>200만원(월40만원) </Participants>
+            <Participants name="deposit" value="2500000" onClick={depositHandler}>250만원(월50만원) </Participants>
             </>
           )}
           {count === "7" && (
             <>
-              <Participants name="deposit" value="3500000" onClick={depositHandler}>
-                350만원(월50만원)
-              </Participants>
-              <Participants name="deposit" value="7000000" onClick={depositHandler}>
-                700만원(월100만원)
-              </Participants>
+            <Participants name="deposit" value="700000" onClick={depositHandler}>70만원(월10만원) </Participants>
+            <Participants name="deposit" value="1400000" onClick={depositHandler}>140만원(월20만원) </Participants>
+            <Participants name="deposit" value="2100000" onClick={depositHandler}>210만원(월30만원) </Participants>
+            <Participants name="deposit" value="2800000" onClick={depositHandler}>280만원(월40만원) </Participants>
+            <Participants name="deposit" value="3500000" onClick={depositHandler}>350만원(월50만원) </Participants>
             </>
           )}
         </div>

@@ -24,15 +24,15 @@
     </select>
     <!--(현지) <스테이지 생성> _스테이지 생성(PF)-->
     <insert id="stageCreate" >
-        INSERT  INTO PF(pfID,pfName,pfEntry,pfRate,deposit,interest,pRank)
-        VALUES(PFID_PF_SEQ.NEXTVAL,#{pfName},#{pfEntry},#{pfRate},#{deposit},#{interest},#{pRank})
+        INSERT  INTO PF(pfID,pfName,pfEntry,pfRate,deposit,payment,interest,pRank)
+        VALUES(PFID_PF_SEQ.NEXTVAL,#{pfName},#{pfEntry},#{pfRate},#{deposit},#{payment},#{interest},#{pRank})
     </insert>
 
     <!--(현지) <스테이지 생성> _참가 데이터 -->
 
     <insert id="stageParticipate">
         INSERT INTO Roll(pfID,uno,receiveTurn,pfMaster)
-        VALUES(PFID_PF_SEQ.CURRVAL,1,#{receiveTurn},'M')
+        VALUES(PFID_PF_SEQ.CURRVAL,#{uNo},#{receiveTurn},'M')
     </insert>
 
     <!--(현지) <스테이지 생성> _중복체크 -->
@@ -61,8 +61,8 @@
         FROM ROLL r
         JOIN receiptSchedule i ON i.receiveTurn = r.receiveTurn
         JOIN PF p ON p.pfRate = i.pfRate
-        WHERE p.pfName = #{pfName}
-        AND r.uNo = 1
+        WHERE r.uNo =#{uNo}
+        AND p.pfName = #{pfName}
         AND p.pfID = r.pfID
         AND p.deposit = i.deposit
     </select>

@@ -3,22 +3,32 @@ import { useParams, useLocation } from 'react-router-dom';
 import axios from "axios";
 import styles from "../../../page/css/StageAgree.module.css";
 
+
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
+
+
 /* 스테이지 확인 화면 */
 const Agree = () => {
+
+ const token = jwtDecode(Cookies.get('Set-Cookie'));
+ const uNo = token.uNo;
+
   const [data1, setData1] = useState([]);
   const [data2, setData2] = useState([]);
 
   const location = useLocation();
   const locationArr = location.pathname.split('/');
   const parameter = decodeURIComponent(locationArr[locationArr.length - 1]);
-  const name = parameter;
+  const pfName = parameter;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response1 = await axios.get("/stageAgree", {
           params: {
-            name: name
+            pfName: pfName
+
           }
         });
         setData1(response1.data);
@@ -26,7 +36,8 @@ const Agree = () => {
 
         const response2 = await axios.get("/stageAgree2", {
           params: {
-            name: name
+            uNo : uNo,
+            pfName: pfName
           }
         });
         setData2(response2.data);
@@ -36,7 +47,7 @@ const Agree = () => {
       }
     };
     fetchData();
-  }, [name]);
+  }, [pfName]);
 
   return (
     <>
@@ -46,7 +57,7 @@ const Agree = () => {
         <div className={styles.flex1}>
         <div className={styles.box2}>
           <div className={styles.flex1}>
-            <h3>{name} 스테이지 생성</h3>
+            <h3>{pfName} 스테이지 생성</h3>
           </div>
 
           <div className={styles.flex1}>

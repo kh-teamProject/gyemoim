@@ -7,6 +7,26 @@ body{
    color: #373f57;
 }
 
+
+input.aa{
+    display: none;
+}
+input.aa:checked{
+    color: white;
+}
+/*버튼*/
+
+input.aa + label {
+    border: 1px solid #8fbcff;
+     padding: 1rem 2rem;
+     font-size: 1.4rem;
+     border-radius: 10px;
+     color: #004dc1;
+    display: inline-block;
+ }
+
+
+
 /*flex*/
 .flexD{
     display: flex;

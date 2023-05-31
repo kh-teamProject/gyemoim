@@ -31,7 +31,7 @@ public interface StageService {
   //(현지)<스테이지생성>_스테이지 pfID 가져오기
   List <StageCreateDTO> stagePartIn1(String pfName);
  //(현지)<스테이지생성>_스테이지 정보 가져오기
-  List <ImportDTO> stagePartIn2(String pfName);
+  List <ImportDTO> stagePartIn2(ImportDTO importDTO);
 
   //(찬희) 스테이지 PF 정보 갖고오기
  List<StagePfDTO> getPfList(Integer pfID);
