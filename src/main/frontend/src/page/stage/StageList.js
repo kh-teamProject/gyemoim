@@ -3,8 +3,12 @@ import axios from "axios";
 import ErrorModal from "../../component/UI/ErrorModal";
 import {Link} from "react-router-dom";
 import classes from '../css/StageList.modlue.css';
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 const StageList = () => {
+
+  console.log(uNo);
   const [error, setError] = useState();
   // 계모임 값 뿌리기
   const [stage, setStage] = useState([]);
@@ -57,9 +61,16 @@ const StageList = () => {
       setList(list+10);
     }
   };
+  //추천기능 함수
+  const token = jwtDecode(Cookies.get('Set-Cookie'));
+  const uNo = token.uNo;
+  const recommend = (uNo) =>{
+    axios.get()
+  }
 
   useEffect(() => {
     // 버튼 클릭으로 스테이지 조회하는 구문
+  console.log(token);
     if (isClicked === '전체') {
       axios
         .get('/stagelist', {})
@@ -79,6 +90,7 @@ const StageList = () => {
           },
         })
         .then((res) => {
+          console.log(res.data);
           setStage(res.data);
           setTotalPage(Math.ceil(res.data.length / list)); //전체 페이지 수 계산
 
@@ -88,17 +100,22 @@ const StageList = () => {
         });
     }
   }, [isClicked]);
-  // const recTurn=[value.receiveTurn];
 
+ // if(uNo===null){
   return (
     <>
+      <div>
+        {uNo &&
+          <div>유노윤호?</div>
+        }
+      </div>
       <h1>스테이지 조회</h1>
       <div>
         <button class='sel-deposit' onClick={handleButtonClick} value='전체'>전체</button>
-        <button class='sel-deposit' onClick={handleButtonClick} value='2500000'>250만원</button>
-        <button class='sel-deposit' onClick={handleButtonClick} value='3500000'>350만원</button>
-        <button class='sel-deposit' onClick={handleButtonClick} value='5000000'>500만원</button>
-        <button class='sel-deposit' onClick={handleButtonClick} value='7000000'>700만원</button>
+        <button class='sel-deposit' onClick={handleButtonClick} value='70'>~70만원</button>
+        <button class='sel-deposit' onClick={handleButtonClick} value='150'>100~150만원</button>
+        <button class='sel-deposit' onClick={handleButtonClick} value='250'>200~250만원</button>
+        <button class='sel-deposit' onClick={handleButtonClick} value='350'>280~350만원</button>
       </div>
 
       <div>
@@ -113,9 +130,6 @@ const StageList = () => {
           <option value='자동차'>자동차</option>
         </select>
       </div>
-
-      {/*value.interest !== interest
-      ㅇ어찌할지 생각해보기...*/}
 
 
       <div class="stage-wrap">
@@ -148,7 +162,6 @@ const StageList = () => {
                     return(
               <div key={index} >
                 {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
-                {/*&& value.interest==={}*/}
                 {value.startFlag ==='대기중'?(
                 <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
                   <div id="select-deposit">
@@ -245,19 +258,9 @@ const StageList = () => {
         </p>
       </div>
 
-      {/*<div>*/}
-      {/*  <button onClick={modalHandler} >Modal</button>*/}
-      {/*  {error && <ErrorModal title={'Modal'} onConfirm={errorHandler}/>}*/}
-      {/*</div>*/}
-      {/*<button onClick={() => handlePageClick({target: {value: curPage - 1}})}>《</button>*/}
-      {/*/!*어레이로 숫자를 클릭해서 페이지 전환을 할 수 있게함.*!/*/}
-      {/*{Array.from({length: totalPage}, (_, i) => (*/}
-      {/*  <button key={i + 1} value={i + 1} onClick={handlePageClick}*/}
-      {/*          className={curPage === i + 1 ? 'active' : ''}>{i + 1}</button>*/}
-      {/*))}*/}
     </>
-  );
+  );}
+// }
 
-}
 
 export default StageList;

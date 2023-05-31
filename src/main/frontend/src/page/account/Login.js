@@ -33,10 +33,13 @@ const Login = () => {
 
                     const  decodedToken = jwtDecode(res.data.data);
                     const name = decodedToken.name;
+                    const uNo = decodedToken.uNo;
 
                     dispatch({type: 'login'});
                     console.log(checkedLogin);
                     console.log('이름', name)
+                    console.log('이름', uNo)
+
 //                    alert(`${name}님 환영합니다.);
                     alert(`${name} 어서와ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ`);
                     navigate("/")
