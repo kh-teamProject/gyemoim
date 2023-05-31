@@ -15,7 +15,7 @@ const CheckedPwd = () => {
   useEffect(() => {
     axios.get('/getPassword', {
       params: {
-        uNo: 3
+        uNo: 1
       }
     }).then(res => {
       setPassword(res.data);
@@ -34,7 +34,7 @@ const CheckedPwd = () => {
       alert('비밀번호를 입력해주세요.');
       return;
     }
-    navigate('/mypage/info/modify/3')
+    navigate('/mypage/info/modify/1')
   }
 
   return (

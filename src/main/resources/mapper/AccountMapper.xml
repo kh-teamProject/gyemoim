@@ -102,8 +102,8 @@
 
 <!-- 정회원으로 변경시 myAccount에 계모임 계좌 생성 -->
   <insert id="createMyAccount">
-    INSERT INTO MYACCOUNT
-    VALUES (#{uNo}, '0')
+    INSERT INTO MYACCOUNT(uNo)
+    VALUES (#{uNo})
   </insert>
 
 <!-- 회원 탈퇴 -->

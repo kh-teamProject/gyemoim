@@ -22,6 +22,7 @@ const MemberInfo = () => {
   const accountHolderRef = useRef();
   const creditRatingRef = useRef();
   const enrollDateRef = useRef();
+  const userRoleRef = useRef();
 
   useEffect(() => {
     axios.get('/mypage', {
@@ -63,7 +64,7 @@ const MemberInfo = () => {
 
     axios.post('/myInfoModify', null, {
       params: {
-        uNo: 3,
+        uNo: 1,
         email: emailRef.current.value,
         name: nameRef.current.value,
         phone: phoneRef.current.value,

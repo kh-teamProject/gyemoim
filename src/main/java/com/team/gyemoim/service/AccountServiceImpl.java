@@ -55,8 +55,10 @@ public class AccountServiceImpl implements AccountService{
   @Override
   public void myInfoModify(MyPageDTO myPageDTO) {
     accountMapper.myInfoModify(myPageDTO);
+
+    // 계모임 계좌가 없다면 생성
     List<MyAccountVO> myAccountVO = accountMapper.getMyAccount(myPageDTO.getUNo());
-    if(myAccountVO == null) {
+    if(myAccountVO.isEmpty()) {
       accountMapper.createMyAccount(myPageDTO);
     }
   }
