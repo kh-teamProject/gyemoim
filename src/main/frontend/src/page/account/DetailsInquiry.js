@@ -10,6 +10,7 @@ const DetailsInquiry = () => {
   const options = {year: 'numeric', month: 'long', day: 'numeric'};
 
   const [myAccountHistory, setMyAccountHistory] = useState([]);
+  const [myAccountHistoryIsValid, setMyAccountHistoryIsValid] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10); // 페이지당 아이템 수
 
@@ -20,8 +21,8 @@ const DetailsInquiry = () => {
       }
     })
       .then((res) => {
-        console.log(res.data);
         setMyAccountHistory(res.data);
+        setMyAccountHistoryIsValid(res.data[0] === undefined);
       })
       .catch((error) => {
         console.log(error);
@@ -62,38 +63,44 @@ const DetailsInquiry = () => {
             </li>
           </ul>
         </div>
-        <table className={`${classes['detailsInquiry-table']}`}>
-          <colgroup>
-            <col style={{width: '30%'}}/>
-            <col style={{width: '30%'}}/>
-            <col style={{width: '30%'}}/>
-            <col style={{width: '10%'}}/>
-          </colgroup>
-          <thead>
-          <tr>
-            <th>날짜</th>
-            <th>은행</th>
-            <th>금액</th>
-            <th>상태</th>
-          </tr>
-          </thead>
-          <tbody>
-          {getDataForCurrentPage().map((value, index) => (
-            <tr key={index}>
-              <td>{new Date(value.tradingHours).toLocaleString('ko-KR', options)}</td>
-              <td>{value.bankName}</td>
-              <td>{value.bankHistory === '출금' ? -value.transactionAmount : value.transactionAmount}</td>
-              <td>{value.bankHistory}</td>
-            </tr>
-          ))}
-          </tbody>
-        </table>
-        <Paging
-          page={currentPage}
-          itemsCountPerPage={itemsPerPage}
-          count={myAccountHistory.length}
-          onChange={pageChangeHandler}
-        />
+        {myAccountHistoryIsValid ? (
+          <p className={classes.explanation}>거래내역이 존재하지 않습니다.</p>
+        ) : (
+          <>
+            <table className={`${classes['detailsInquiry-table']}`}>
+              <colgroup>
+                <col style={{width: '30%'}}/>
+                <col style={{width: '30%'}}/>
+                <col style={{width: '25%'}}/>
+                <col style={{width: '15%'}}/>
+              </colgroup>
+              <thead>
+              <tr>
+                <th>날짜</th>
+                <th>은행</th>
+                <th>금액</th>
+                <th>상태</th>
+              </tr>
+              </thead>
+              <tbody>
+              {getDataForCurrentPage().map((value, index) => (
+                <tr key={index}>
+                  <td>{new Date(value.tradingHours).toLocaleString('ko-KR', options)}</td>
+                  <td>{value.bankName}</td>
+                  <td>{value.bankHistory === '출금' ? -value.transactionAmount : value.transactionAmount}</td>
+                  <td>{value.bankHistory}</td>
+                </tr>
+              ))}
+              </tbody>
+            </table>
+            <Paging
+              page={currentPage}
+              itemsCountPerPage={itemsPerPage}
+              count={myAccountHistory.length}
+              onChange={pageChangeHandler}
+            />
+          </>
+        )}
       </div>
     </section>
   );

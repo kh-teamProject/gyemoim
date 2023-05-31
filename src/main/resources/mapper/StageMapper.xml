@@ -3,10 +3,17 @@
 <mapper namespace="com.team.gyemoim.mapper.StageMapper">
 <!--(유진)리스트 띄우기  -->
     <select id="getPFList" resultType="com.team.gyemoim.dto.stage.StageListDTO">
-        SELECT pf.pfID,pf.pfName,pfentry, pf.payment,pf.deposit,pf.interest,pf.startFlag,roll.receiveTurn, roll.uno
-        FROM pf
-        JOIN roll ON PF.PFID = roll.PFID
-
+      SELECT pf.pfID,
+             pf.pfName,
+             pfentry,
+             pf.payment,
+             pf.deposit,
+             pf.interest,
+             pf.startFlag,
+             roll.receiveTurn,
+             roll.uno
+      FROM pf
+             JOIN roll ON PF.PFID = roll.PFID
     </select>
 
     <!--(유진)deposit에 따라 값 달리 가져오기.-->

@@ -37,14 +37,14 @@
   </select>
 
   <!-- 계모임 계좌 정보 가져오기 -->
-  <select id="getMyAccount" resultType="com.team.gyemoim.vo.MyAccount">
+  <select id="getMyAccount" resultType="com.team.gyemoim.vo.MyAccountVO">
     SELECT *
     FROM MYACCOUNT
     WHERE uNo = #{uNo}
   </select>
 
   <!-- 내 계모임 계좌 거래내역 가져오기 -->
-  <select id="getMyAccountHistory" resultType="com.team.gyemoim.vo.MyAccountHistory">
+  <select id="getMyAccountHistory" resultType="com.team.gyemoim.vo.MyAccountHistoryVO">
     SELECT *
     FROM MYACCOUNTHISTORY
     WHERE uNo = #{uNo}
@@ -80,7 +80,7 @@
   </update>
 
   <!-- 계모임 계좌 정보 수정 -->
-  <update id="myAccountUpdate" parameterType="com.team.gyemoim.vo.MyAccount">
+  <update id="myAccountUpdate" parameterType="com.team.gyemoim.vo.MyAccountVO">
     update MYACCOUNT
     SET
         <choose>
@@ -102,8 +102,20 @@
 
 <!-- 정회원으로 변경시 myAccount에 계모임 계좌 생성 -->
   <insert id="createMyAccount">
-    INSERT INTO MYACCOUNT
-    VALUES (#{uNo}, '0')
+    INSERT INTO MYACCOUNT(uNo)
+    VALUES (#{uNo})
   </insert>
 
+<!-- 회원 탈퇴 -->
+  <update id="memberDelete">
+    UPDATE MEMBER
+    SET ISLEAVE = 'Y'
+    WHERE uNo = #{uNo}
+  </update>
+
+<!-- 계모임계좌 존재하는지 확인 -->
+<!--  <select id="getMyAccount" resultType="Integer">-->
+<!--    SELECT UNO-->
+<!--    FROM MYACCOUNT-->
+<!--  </select>-->
 </mapper>

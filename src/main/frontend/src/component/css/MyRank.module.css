@@ -1,0 +1,19 @@
+.myRank-wrap {
+  margin: 0 auto;
+  width: 200px;
+  height: 120px;
+  border: 1px solid blue;
+  border-radius: 8px;
+}
+
+.myRank-wrap > span {
+  margin-top: 10px;
+  display: inline-block;
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: blue;
+}
+
+.myRank-wrap > p {
+  margin: 10px 0 0;
+}

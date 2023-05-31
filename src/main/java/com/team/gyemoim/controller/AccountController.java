@@ -4,8 +4,8 @@ import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.service.AccountService;
-import com.team.gyemoim.vo.MyAccount;
-import com.team.gyemoim.vo.MyAccountHistory;
+import com.team.gyemoim.vo.MyAccountVO;
+import com.team.gyemoim.vo.MyAccountHistoryVO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,13 +38,13 @@ public class AccountController {
 
   // 계모임 계좌 정보 가져오기
   @GetMapping("/getMyAccount")
-  public List<MyAccount> getMyAccount(@RequestParam Integer uNo) {
+  public List<MyAccountVO> getMyAccount(@RequestParam Integer uNo) {
     return accountService.getMyAccount(uNo);
   }
 
   // 계모임 계좌 거래내역 가져오기
   @GetMapping("/getMyAccountHistory")
-  public List<MyAccountHistory> getMyAccountHistory(@RequestParam Integer uNo) {
+  public List<MyAccountHistoryVO> getMyAccountHistory(@RequestParam Integer uNo) {
     return accountService.getMyAccountHistory(uNo);
   }
 
@@ -70,4 +70,10 @@ public class AccountController {
 
 
   // Delete
+  
+  // 회원 탈퇴
+  @PostMapping("/memberDelete/{uNo}")
+  public void memberDelete(@PathVariable Integer uNo) {
+    accountService.memberDelete(uNo);
+  }
 }

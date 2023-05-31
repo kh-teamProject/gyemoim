@@ -38,7 +38,8 @@ import AdminStageList from "./page/admin/AdminStageList";
 import AdminStageDetail from "./page/admin/AdminStageDetail";
 import Test from "./page/Test";
 import TestAdminAccountDetail from "./page/admin/TestAdminAccountDetail";
-
+import AccountModify from "./page/admin/AccountModify";
+import './App.css';
 
 const App = () => {
     
@@ -81,8 +82,8 @@ const App = () => {
               element: <Interest/>
             },
             {
-              path: 'info/delete',
-              element: <MemberDelete/>
+              path: 'info/delete/:uNo',
+              element: <MemberDelete />
             },
             {
               path: 'bankAccount/deposit',
@@ -177,6 +178,10 @@ const App = () => {
         {
           path: 'account/detail/:uno',
           element: <TestAdminAccountDetail/>
+        },
+        {
+          path: 'account/modify/:uNo',
+          element: <AccountModify />
         },
         {
           path: 'stage',

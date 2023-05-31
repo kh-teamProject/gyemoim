@@ -40,6 +40,10 @@
   bottom: 0;
 }
 
+.explanation {
+  font-size: 2rem;
+}
+
 .detailsInquiry-table {
   width: 650px;
   border-collapse: collapse;
@@ -48,18 +52,13 @@
 .detailsInquiry-table thead th {
   border-bottom: 1px solid black;
   height: 40px;
-}
-
-.detailsInquiry-table thead tr th:not(:last-child) {
-  text-align: left;
+  text-align: center;
+  font-weight: 400;
 }
 
 .detailsInquiry-table tbody td {
   border-bottom: 1px solid black;
-  text-align: left;
-  height: 40px;
-}
-
-.detailsInquiry-table tbody tr td:last-child {
   text-align: center;
+  height: 40px;
+  font-weight: 400;
 }
