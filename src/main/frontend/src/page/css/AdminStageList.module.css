@@ -1,0 +1,221 @@
+body{
+ background: #F7F7F7;
+  text-align: center;
+}
+
+tr{
+
+font-size: 1.3rem;
+}
+
+.title {
+   color: #373f57;
+}
+
+
+
+input.aa{
+    display: none;
+}
+input.aa:checked{
+    color: white;
+}
+/*버튼*/
+
+input.aa + label {
+    border: 1px solid #8fbcff;
+     padding: 1rem 2rem;
+     font-size: 1.4rem;
+     border-radius: 10px;
+     color: #004dc1;
+    display: inline-block;
+ }
+
+
+
+/*flex*/
+.flexD{
+    display: flex;
+     gap: 1rem;
+     padding: 1rem 2rem;
+     justify-content: space-between;
+}
+
+.flex6{
+    flex:6;
+    padding: 2rem;
+
+}
+
+.flex2{
+    flex:2;
+     padding: 1rem;
+
+}
+
+.flex1{
+    flex:1;
+     padding: 1rem;
+
+}
+
+/* 마진*/
+.margin1{
+   margin: 1rem;
+
+}
+
+
+/*대기중 슬라이스*/
+.slice{
+  position: relative;
+    padding: 0.5rem 0 3rem;
+    left: 40rem;
+    display: inline-block;
+
+}
+
+.slice > select{
+
+       position: absolute;
+       font-size: 1.2rem;
+       border: 1px solid #004DC1;
+       padding: 0.5rem 1rem;
+       width: 10rem;
+
+}
+
+
+
+/*버튼*/
+.button {
+  text-align: center;
+   border: 3px solid  #004DC1;
+    background-color: #004DC1;
+    color: white ;
+    width: 300px;
+    height: 68px;
+    border-radius: 10px;
+    font-size: 1.3rem;
+}
+
+
+.buttonSmall {
+  text-align: center;
+   border: 3px solid #004DC1;
+    background-color:  white;
+    color: #004DC1 ;
+    width: 8rem;
+    height: 3.5rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.buttonSmall:hover {
+  text-align: center;
+   border: 3px solid  #004DC1;
+    background-color: #004DC1;
+    color: white ;
+    width: 8rem;
+        height: 3.5rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.margin1 button {
+  text-align: center;
+   border: 3px solid #004DC1;
+    background-color:  white;
+    color: #004DC1 ;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    margin :0.5rem;
+}
+
+.buttonPageSelect {
+border: 3px solid #004DC1 !important;
+    background-color: #004DC1 !important;
+    color: white !important;
+}
+
+
+
+
+.inputStage {
+  border-radius: 4px;
+  border: 1px solid #8491a7;
+    width: 200px;
+  height: 50px;
+  font-size: 16px;
+  line-height: 24px
+}
+
+
+
+
+/*박스 */
+.box {
+  background: #fff;
+  border-radius: 7px;
+  display: inline-block;
+  height: 100%;
+  margin: 1rem;
+  position: relative;
+  width: 90%;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+
+/*테이블*/
+
+.table{
+   margin: auto;
+  min-width: 300px;
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead{
+   border-top: 1px solid #ddd;
+   border-bottom: 1px solid #ddd;
+  background: #004DC1;
+  color: #fff;
+  background-color:#004DC1;
+}
+
+.table tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.table td:first-child {
+  margin-top: .5em;
+}
+
+.table td:last-child {
+  margin-bottom: .5em;
+}
+
+.table {
+  color: #333;
+  border-radius: .4em;
+  overflow: hidden;
+}
+.table th,
+table td {
+  padding: .5em 1em;
+}
+
+
+.small{
+    font-size: small;
+    text-align: left;
+}
+  .warningMsg{
+    color: red;
+  }

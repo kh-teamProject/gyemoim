@@ -42,7 +42,7 @@ const [createButton, setCreateButton] = useState(false);
 
  const [category, setCategory] = useState("");
 
-const [rank, setRank] = useState("");
+
 
 const [pfName, setPfName] = useState("");
 const [isDuplicate, setIsDuplicate] = useState(false);
@@ -69,7 +69,7 @@ const [isDuplicate, setIsDuplicate] = useState(false);
           deposit: deposit,
           payment : payment,
           interest: category,
-          pRank:rank,
+
          receiveTurn : turn,
         },
       })
@@ -135,11 +135,6 @@ const [isDuplicate, setIsDuplicate] = useState(false);
 
   const turnHandler = (turnData) => {
     setTurn(turnData);
-  };
-
-  const rankHandler = (event) => {
-    setRank(event.target.value);
-    console.log(event.target.value);
   };
 
   const categoryHandler = (event) => {
@@ -360,12 +355,7 @@ const movePage = useNavigate("");
             </>
           )}
         </div>
-        <div className={styles.flex1}>
-         <h4>신용등급</h4>
-          <input type="radio" name="rank"  value="A" onChange={rankHandler} />A등급(1~2)
-          <input type="radio" name="rank"  value="B" onChange={rankHandler} />B등급(3~5)
-          <input type="radio" name="rank"  value="C" onChange={rankHandler} />C 등급(6~9)
-        </div>
+
 
          <div className={styles.flex1}>
           <h4>관심사</h4>
