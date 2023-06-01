@@ -42,7 +42,7 @@ public interface StageMapper {
   // (현지)
     List<StageCreateDTO> stagePartIn1(String pfName);
     // (현지)
-    List<ImportDTO> stagePartIn2(String pfName);
+    List<ImportDTO> stagePartIn2(ImportDTO importDTO);
     //(찬희) 스테이지 Pf 정보 갖고오기
     List<StagePfDTO> getPfList(Integer pfID);
     //(찬희) 개인 Roll 정보 갖고오기

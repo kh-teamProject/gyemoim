@@ -85,9 +85,9 @@ public class StageServiceImpl implements StageService {
   }
   //(현지)<스테이지생성>_스테이지 정보 가져오기
   @Override
-  public List<ImportDTO> stagePartIn2(String pfName) {
+  public List<ImportDTO> stagePartIn2(ImportDTO importDTO) {
     System.out.println("[서비스] 참가스테이지 정보 가져오기");
-    return stageMapper.stagePartIn2(pfName);
+    return stageMapper.stagePartIn2(importDTO);
   }
 
   //(찬희) 스테이지 PF 정보 갖고오기

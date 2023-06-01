@@ -1,126 +1,136 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
+import styles from "../css/AdminStageList.module.css";
 
 const AdminStageList = () => {
+  const [stageListTable, setStageListTable] = useState([]);
+  const [startFlag, setStartFlag] = useState("전체");
+  const [curPage, setCurPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const itemsPerPage = 10;
 
-//스테이지 리스트
-const [stageListTable, setStageListTable] = useState([]);
-
-//페이징
-const [curPage, setCurPage] = useState(1); //현재페이지
-const [totalPage, setTotalPage] = useState(0); //전체 페이지 수
-const [list, setList ] = useState(10);//현재 스테이지 수
-
-// 상태
-const [startFlag, setStartFlag] = useState();
-
-
-
-//페이징 함수
-const handlePageClick = (event) => {
-const targetPage = Number(event.target.value); //클릭한 페이지
-if (targetPage > 0 && targetPage <= totalPage) {
-  //클릭한 타겟페이지가 0보다 크고 totalPage보다 작거나 같으면 -> 즉, 클릭한 페이지가 유효범위에 있을때
-  setCurPage(targetPage); //현재페이지를 클릭페이지로 설정
-  setList(list+10);
-}
-};
-
-//상태 기반으로 조회 함수
-  const selectStartFlag = (event) =>{
-    console.log(event.target.value);
+  const selectStartFlag = (event) => {
     setStartFlag(event.target.value);
-    setList(10);
-  }
+    setCurPage(1);
+  };
 
-//스테이지 리스트 조회 함수
-useEffect(() => {
-  try {
-    axios
-      .get("/admin/stage/list", {})
-      .then((res) => {
-        console.log(res.data.Stage);
-        setStageListTable(res.data.Stage);
-        setTotalPage(Math.ceil(res.data.Stage.length / list)); //전체 페이지 수 계산
+  const handlePageClick = (event) => {
+    const targetPage = Number(event.target.value);
+    if (targetPage > 0 && targetPage <= totalPage) {
+      setCurPage(targetPage);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      axios
+        .get("/admin/stage/list", {})
+        .then((res) => {
+          console.log(res.data.Stage);
+          setStageListTable(res.data.Stage);
+          setTotalPage(Math.ceil(res.data.Stage.length / itemsPerPage));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  const getCurrentStageList = () => {
+    const startIndex = (curPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    return stageListTable
+      .filter((value) => {
+        if (startFlag === "전체") {
+         if(value.startFlag === "대기중"){
+               value.endDate = "-";
+               return true;
+               }
+        } else if (startFlag === "대기중") {
+          return value.startFlag === "대기중";
+        } else if (startFlag === "참여중") {
+          return value.startFlag === "참여중";
+        } else if (startFlag === "완료") {
+          return value.startFlag === "완료";
+        }
+        return true;
       })
-      .catch((error) => {
-        console.log(error);
-      });
-  } catch (error) {
-    console.log(error);
-  }
-}, []);
-
-
+      .slice(startIndex, endIndex);
+  };
 
   return (
     <>
-      <h1>스테이지 페이지</h1>
 
-      <h2>스테이지 기본 정보</h2>
+      <h2>스테이지 리스트</h2>
+      <div className={styles.slice}>
+        <select onChange={selectStartFlag} >
+          <option value="전체">전체</option>
+          <option value="대기중">대기중</option>
+          <option value="참여중">참여중</option>
+          <option value="완료">완료</option>
+        </select>
+      </div>
+      <div>
+        <table className={styles.table} style={{width: '100rem'}} >
+        <colgroup>
+        <col style={{width: '3%'}} />
+         <col style={{width: '10%'}} />
+          <col style={{width: '10%'}} />
 
+            <col style={{width: '5%'}} />
+             <col style={{width: '10%'}} />
+              <col style={{width: '10%'}} />
+               <col style={{width: '10%'}} />
+        </colgroup>
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>이름</th>
+              <th>약정금</th>
 
-                <div>
-                <select  onChange={selectStartFlag} >
-                  <option value='대기중'>대기중</option>
-                  <option value='참여중'>참여중</option>
-                  <option value='완료'>완료</option>
-                </select>
-                </div>
+              <th>상태</th>
+              <th>시작일</th>
+              <th>종료일</th>
+              <th>버튼</th>
+            </tr>
+          </thead>
+          <tbody>
+            {getCurrentStageList().map((value, index) => (
+              <tr key={index}>
+                <td>{value.pfID}</td>
+                <td>{value.pfName}</td>
+                <td>{value.deposit.toLocaleString()}원</td>
 
-                  <div>
-                    <table>
-
-                      <thead>
-                      <div>
-                        <tr>
-                        <td>번호</td>
-                        <td>이름</td>
-                        <td>약정금</td>
-                          <td>등급</td>
-                          <td>상태</td>
-                          <td>시작일</td>
-                          <td>종료일</td>
-                        </tr>
-                        </div>
-                      </thead>
-
-                      <tbody>
-                        {stageListTable
-                     .filter(value => {
-                          if (startFlag === '대기중') {
-                            return value.startFlag === '대기중';
-                          } else if (startFlag === '참여중') {
-                            return value.startFlag === '참여중';
-                          } else if (startFlag === '완료') {
-                            return value.startFlag === '완료';
-                          }
-                          return true; // 기본적으로 모든 데이터를 보여주도록 설정
-                        })
-
-
-                        .map((value, index) => (
-                        <Link to={`/admin/stage/detail/${value.pfID}`}>
-                        <div>
-                          <tr key={index}>
-                          <td>{value.pfID}</td>
-                          <td>{value.pfName}</td>
-                          <td>{value.deposit.toLocaleString()}원</td>
-                           <td>{value.prank}</td>
-                            <td>{value.startFlag}</td>
-                           <td>{value.startDate}</td>
-                           <td>{value.endDate}</td>
-                          </tr>
-                          </div>
-                          </Link>
-                        ))}
-                      </tbody>
-
-                    </table>
-                     </div>
-
+                <td>{value.startFlag}</td>
+                <td>{value.startDate}</td>
+                <td>{value.endDate}</td>
+                <td>
+                  <Link to={`/admin/stage/detail/${value.pfID}`}>
+                      <button className={styles.buttonSmall} >상세보기</button>
+                   </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className={styles.margin1}>
+        {Array.from({ length: totalPage }, (_, index) => index + 1).map((page) => (
+          <button
+            key={page}
+            value={page}
+            onClick={handlePageClick}
+            className={page === curPage ? styles.buttonPageSelect : ''}
+          >
+            {page}
+          </button>
+        ))}
+      </div>
     </>
   );
 };

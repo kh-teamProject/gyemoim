@@ -5,7 +5,13 @@ import { useParams, useLocation} from 'react-router-dom';
 import styles from "../css/StageAgree.module.css";
 import StageCreateModal from "../../component/UI/stage/StageCreateModal";
 
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
+
 const StagePartIn = () => {
+   const token = jwtDecode(Cookies.get('Set-Cookie'));
+   const uNo = token.uNo;
+
     const location = useLocation();
     const locationArr = location.pathname.split('/');
     const parameter = decodeURIComponent(locationArr[locationArr.length - 1]);

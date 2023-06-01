@@ -3,9 +3,15 @@ body{
   text-align: center;
 }
 
+tr{
+
+font-size: 1.3rem;
+}
+
 .title {
    color: #373f57;
 }
+
 
 
 input.aa{
@@ -53,6 +59,34 @@ input.aa + label {
 
 }
 
+/* 마진*/
+.margin1{
+   margin: 1rem;
+
+}
+
+
+/*대기중 슬라이스*/
+.slice{
+  position: relative;
+    padding: 0.5rem 0 3rem;
+    left: 40rem;
+    display: inline-block;
+
+}
+
+.slice > select{
+
+       position: absolute;
+       font-size: 1.2rem;
+       border: 1px solid #004DC1;
+       padding: 0.5rem 1rem;
+       width: 10rem;
+
+}
+
+
+
 /*버튼*/
 .button {
   text-align: center;
@@ -65,16 +99,52 @@ input.aa + label {
     font-size: 1.3rem;
 }
 
+
 .buttonSmall {
+  text-align: center;
+   border: 3px solid #004DC1;
+    background-color:  white;
+    color: #004DC1 ;
+    width: 8rem;
+    height: 3.5rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.buttonSmall:hover {
   text-align: center;
    border: 3px solid  #004DC1;
     background-color: #004DC1;
     color: white ;
-    width: 100px;
-    height: 50px;
+    width: 8rem;
+        height: 3.5rem;
     border-radius: 10px;
     font-size: 1.3rem;
+    cursor: pointer;
 }
+
+.margin1 button {
+  text-align: center;
+   border: 3px solid #004DC1;
+    background-color:  white;
+    color: #004DC1 ;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    margin :0.5rem;
+}
+
+.buttonPageSelect {
+border: 3px solid #004DC1 !important;
+    background-color: #004DC1 !important;
+    color: white !important;
+}
+
+
+
 
 .inputStage {
   border-radius: 4px;
@@ -86,31 +156,7 @@ input.aa + label {
 }
 
 
-/*제목*/
-.sixth { position: relative; }
 
-.sixth:before,
-.sixth:after {
-  content: '[';
-  display: inline-block;
-  position: relative;
-  top: 1px;
-  height: 100%;
-  font-size: 1.25em;
-  color: blue;
-
-  transition: all 0.5s ease;
-}
-
-.sixth:after { content: ']'; }
-
-.sixth:hover:before {
-  transform: translateX(-5px);
-}
-
-.sixth:hover:after {
-  transform: translateX(5px);
-}
 
 /*박스 */
 .box {
@@ -165,10 +211,7 @@ table td {
   padding: .5em 1em;
 }
 
-  .table tr:hover {
-    background-color: #d8e7f3;
-    color : blue;
-  }
+
 .small{
     font-size: small;
     text-align: left;
