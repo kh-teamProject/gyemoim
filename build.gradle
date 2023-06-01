@@ -41,6 +41,10 @@ dependencies {
     // SMTP
     implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.1'
 
+    // REDIS
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+
 }
 
 

@@ -40,6 +40,22 @@ h2 {
     text-align: center;
 }
 
+.emailConfirmCheck{
+    position: absolute;
+    right: 0;
+    display: inline-block;
+    height: 50px;
+    background: #85a7da;
+    cursor: pointer;
+    width: 100px;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 13px;
+    line-height: 50px;
+    text-align: center;
+}
+
 .field > .confirms {
     width: 200px;
 }

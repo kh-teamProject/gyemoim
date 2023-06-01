@@ -44,7 +44,7 @@ const Login = () => {
                     console.log('userRole', userRole);
 
                     alert(`${name} 어서와ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ`);
-                    navigate(-1)
+                    navigate('/');
 
                 })
                 .catch((error) => {

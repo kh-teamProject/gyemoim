@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom';
-import account from "../css/Account.module.css";
+import { useNavigate } from 'react-router-dom';
+import account from '../css/Account.module.css';
 
 const Account = () => {
     const [email, setEmail] = useState('');
@@ -10,9 +10,11 @@ const Account = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
 
-    // // 이메일 인증
-    // const [emailConfirm, setEmailConfirm] = useState('');
-    // const [emailConfirmMsg, setEmailConfirmMsg] = useState('');
+    // 이메일 인증
+    // const [isEmailSent, setIsEmailSent] = useState(false);
+    const [verificationCode, setVerificationCode] = useState('');
+    const [isCodeVerified, setIsCodeVerified] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     // 이용약관
     const [ageConfirmation, setAgeConfirmation] = useState(false);
@@ -22,42 +24,61 @@ const Account = () => {
 
     const navigate = useNavigate();
 
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
+    // 이메일 인증 번호 발송
+    const handleEmailSubmit = async (e) => {
+        e.preventDefault();
+        if (email === '') {
+            setErrorMessage('이메일을 입력해주세요.');
+            alert('이메일을 입력해주세요.');
+            return;
+        }
+
+        try {
+            // Send email confirmation request to the server
+            await axios.post('/api/account/mailConfirm', { email });
+            // setIsEmailSent(true);
+            alert('해당 이메일로 인증 번호가 전송되었습니다.');
+        } catch (error) {
+            setErrorMessage('서버 오류로 인해 이메일 전송에 실패했습니다.');
+            alert('서버 오류로 인해 이메일 전송에 실패했습니다.');
+        }
     };
 
-    // const handleEmailConfirmChange = (event) => {
-    //     setEmailConfirm(event.target.value);
-    // };
-    //
-    // // 이메일 인증 번호 발송
-    // const sendEmailConfirmation = () => {
-    //     axios
-    //         .post('/api/account/mailConfirm', {email: email})
-    //         .then((response) => {
-    //             alert('해당 이메일로 인증번호 발송이 완료되었습니다. 확인 부탁드립니다.');
-    //             setEmailConfirmMsg('');
-    //             checkEmailConfirmation(response.data);
-    //             console.log(response.data)
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // };
+    const handleVerificationSubmit = async (e) => {
+        e.preventDefault();
+        if (verificationCode === '') {
+            setErrorMessage('인증 번호를 입력해주세요.');
+            return;
+        }
 
-    // const checkEmailConfirmation = (data) => {
-    //     if (data !== emailConfirm) {
-    //         setEmailConfirmMsg('인증번호가 잘못되었습니다.');
-    //     } else {
-    //         setEmailConfirmMsg('인증번호 확인 완료');
-    //     }
-    // };
+        try {
+            // Verify email confirmation code
+            await axios.post('/api/account/verifyEmailCode', { email, ePw: verificationCode });
+            setIsCodeVerified(true);
+            alert('인증 되었습니다.');
+        } catch (error) {
+            setErrorMessage('서버 오류로 인해 인증 번호 확인에 실패했습니다.');
+            alert('서버 오류로 인해 인증 번호 확인에 실패했습니다.');
+        }
+    };
 
-    const handleSubmit = async (e) => {
+    const handleRegistrationSubmit = async (e) => {
         e.preventDefault();
 
+        if (!isCodeVerified) {
+            alert('이메일 인증이 완료되어야 회원가입이 가능합니다.');
+            return;
+        }
+
+        if (password === '' || confirmPassword === '') {
+            setErrorMessage('비밀번호를 입력해주세요.');
+            alert('비밀번호를 입력해주세요.');
+            return;
+        }
+
         if (password !== confirmPassword) {
-            alert('비밀번호가 일치하지 않습니다.');
+            setErrorMessage('비밀번호와 확인용 비밀번호가 일치하지 않습니다.');
+            alert('비밀번호와 확인용 비밀번호가 일치하지 않습니다.');
             return;
         }
 
@@ -77,7 +98,7 @@ const Account = () => {
         }
 
         // 회원가입
-        const user = {email, password, name, phone};
+        const user = { email, password, name, phone };
         try {
             const res = await axios.post('api/account', user);
             console.log(user);
@@ -94,7 +115,7 @@ const Account = () => {
         <section>
             <div className={account.main}>
                 <h2>회원가입</h2>
-                <form onSubmit={handleSubmit}>
+                <form>
                     <div className={account.field}>
                         <input
                             type="email"
@@ -102,32 +123,30 @@ const Account = () => {
                             placeholder="이메일을 입력해 주세요."
                             className={account.email}
                             value={email}
-                            onChange={handleEmailChange}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
                         />
-                        {/*<button className={account.emailConfirm} type="button" onClick={sendEmailConfirmation}>*/}
-                        {/*    이메일 인증*/}
-                        {/*</button>*/}
+                        <button className={account.emailConfirm} type="submit" onClick={handleEmailSubmit}>
+                            이메일 인증
+                        </button>
                     </div>
 
 
-                    {/*<div className={account.field}>*/}
-                    {/*    <input*/}
-                    {/*        className={account.confirms}*/}
-                    {/*        type="text"*/}
-                    {/*        id="confirm-input"*/}
-                    {/*        placeholder="인증번호를 입력해 주세요."*/}
-                    {/*        value={emailConfirm}*/}
-                    {/*        onChange={handleEmailConfirmChange}*/}
-                    {/*        required*/}
-                    {/*    />*/}
-                    {/*    <span*/}
-                    {/*        id="confirm-check"*/}
-                    {/*        className={account.confirmCheck}*/}
-                    {/*    >*/}
-                    {/*     {emailConfirmMsg}*/}
-                    {/*    </span>*/}
-                    {/*</div>*/}
+                        <div className={account.field}>
+                            <input
+                                type="text"
+                                value={verificationCode}
+                                className={account.email}
+                                placeholder="인증번호를 입력해 주세요."
+                                onChange={(e) => setVerificationCode(e.target.value)}
+                            />
+                            <button className={account.emailConfirmCheck}
+                                    type="submit"
+                                    onClick={handleVerificationSubmit}>
+                                인증 번호 확인
+                            </button>
+                        </div>
+
 
                     <div className={account.field}>
                         <input
@@ -220,7 +239,9 @@ const Account = () => {
                     </div>
 
                     <div>
-                        <button type="submit" className={account.btn}>회원가입</button>
+                        <button type="submit" className={account.btn} onClick={handleRegistrationSubmit}>
+                            회원가입
+                        </button>
                     </div>
                 </form>
             </div>

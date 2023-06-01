@@ -74,13 +74,30 @@ public class MemberController {
 
         try {
             memberService.sendSimpleMessage(email);
-            // React로 인증번호 보내는 코드 작성
             return ResponseEntity.ok("{\"message\": \"회원가입 인증 이메일이 전송되었습니다.\"}");
-
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"서버 오류로 인해 이메일 전송에 실패했습니다.\"}");
         }
+    }
 
+    @PostMapping("/account/verifyEmailCode")
+    public ResponseEntity<String> verifyEmailCode(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
+        String ePw = requestBody.get("ePw");
+
+        if (StringUtils.isEmpty(email) || StringUtils.isEmpty(ePw)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\": \"이메일과 인증 번호를 모두 제공해야 합니다.\"}");
+        }
+
+        boolean isValid = memberService.verifyEmailCode(email, ePw);
+
+        if (isValid) {
+            // 인증 번호 일치, 회원 가입 완료 처리
+            // ...
+            return ResponseEntity.ok("{\"message\": \"이메일 인증이 완료되었습니다. 회원 가입이 완료되었습니다.\"}");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\": \"유효하지 않은 인증 번호입니다.\"}");
+        }
     }
 
 
