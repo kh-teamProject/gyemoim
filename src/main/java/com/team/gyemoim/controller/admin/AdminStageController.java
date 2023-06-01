@@ -39,23 +39,10 @@ public HashMap<String,Object> stage() {
     return map;
 }
 
-// (현지)계모임 기본 정보조회
-@GetMapping("/admin/stage/detail")
-@ResponseBody
-public HashMap<String, Object> stageDetail1(@RequestParam Integer pfID) {
-    HashMap<String, Object> map = new HashMap<>();
-    map.put("StageDetail1", adminStageDetailService.getStageListDetail1(pfID));
-    map.put("StageDetail2", adminStageDetailService.getStageListDetail2(pfID));
-    System.out.println("[컨트롤러] 스테이지  정보 가져오기" + adminStageDetailService.getStageListDetail2(pfID));
-    return map;
-}
-
-
-
 
   private final AdminStageService adminStageService;
   //유진
-  @GetMapping("/admin/stage/detail1")
+  @GetMapping("/admin/stage/detail")
   @ResponseBody
     public List<AdminStageDetailDTO> getStageMemList(@RequestParam("pfID") int pfID){
       System.out.println("관리자 스테이지 상세" +pfID);

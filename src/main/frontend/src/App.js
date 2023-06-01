@@ -206,10 +206,6 @@ const App = () => {
           element: <AdminStageDetail/>
         },
         {
-          path: 'stage/detail1/:pfID',
-          element: <AdminStageDetail/>
-        },
-        {
           path: 'board',
           element: <BoardManagement/>
         }

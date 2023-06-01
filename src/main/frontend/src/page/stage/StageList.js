@@ -15,7 +15,8 @@ const StageList = () => {
   const [isClicked, setIsClicked] = useState('전체');
   // 관심사 기반으로 스테이지 세팅하는 State
   const [interest, setInterest] = useState('관심사');
-
+  //로그인 여부 체크
+  const checkedLogin = useSelector((state) => state.checkedLogin);
 
   //페이징 가보자고~
   const [curPage, setCurPage] = useState(1); //현재페이지
@@ -62,9 +63,10 @@ const StageList = () => {
     }
   };
 
-  // //chanhee
-  const checkedLogin = useSelector((state) => state.checkedLogin);
-
+//숫자를 천단위마다 쉼표로 끊어서 표시
+  const formatNum = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
 
 
 
@@ -100,9 +102,7 @@ const StageList = () => {
         });
     }
     //추천테이블 작동 코드
-
     if(checkedLogin){
-    // if(uNo !==null) {
   //추천기능 변수와 state
   const token = jwtDecode(Cookies.get('Set-Cookie'));
   const uNo = token.uNo;
@@ -122,6 +122,7 @@ const StageList = () => {
     }
   },[isClicked,checkedLogin] );
 
+  //추천테이블 값 뿌리는 스테이트
   const [recommend, setRecommend] = useState([])
 
   return (
@@ -176,7 +177,7 @@ const StageList = () => {
                 })}
               </ul>
               <div id="stage-payInfo">
-                <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                <p>약정금 :<strong>{formatNum(Number(value.deposit))}</strong> | 월 입금액 : <strong>{formatNum(Number(value.payment))}</strong></p>
               </div>
             </Link>
               </div>
@@ -257,7 +258,7 @@ const StageList = () => {
                   </ul>
 
                   <div id="stage-payInfo">
-                    <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                    <p>약정금 :<strong>{formatNum(Number(value.deposit))}</strong> | 월 입금액 : <strong>{formatNum(Number(value.payment))}</strong></p>
                   </div>
                 </Link>
                 )
