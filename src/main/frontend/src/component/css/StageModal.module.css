@@ -91,6 +91,13 @@
         top: 0;
         right: 2rem;
 }
+span.bubble{
+    background-color: #004DC1;
+    color: white;
+    padding: 0.5rem 0.9rem;
+    border-radius: 50%;
+}
+
 /* deposit */
 .modal.deposit p.title{
   font-size: 1.5rem;
@@ -184,6 +191,10 @@
     font-size: 1.3rem;
     width: fit-content;
     margin: 0 auto;
+}
+.modal.deposit .lack{
+    color: red;
+    margin-top: 5px;
 }
 @media (min-width: 768px) {
   .modal {

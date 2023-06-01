@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import classes from '../../css/StageModal.module.css';
 import axios from "axios";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 
 
@@ -10,6 +12,9 @@ const Backdrop = (props) => {
 };
 
 const ExitModalOverlay = (props) => {
+    const token = jwtDecode(Cookies.get('Set-Cookie'));
+    const uNo = token.uNo;
+
     const navigate = useNavigate();
     const location = useLocation();
     const pfIDNum = location.pathname.split('/');
@@ -17,7 +22,7 @@ const ExitModalOverlay = (props) => {
     const exitButtonClick = () => {
       axios.delete('/stageOut', {
             params: {
-              uNo: 5,
+              uNo: uNo,
               pfID: pfIDNum[pfIDNum.length -1]
             }
           })
@@ -48,12 +53,12 @@ const ReceiptModalOverlay = (props) => {
       const scheduleData = props.schedule[i];
       const schedule = (
         <tr key={i}>
-          <td>{scheduleData.receiveTurn}</td>
-          <td>{scheduleData.deposit}</td>
-          <td>{scheduleData.upayment}</td>
-          <td>{scheduleData.deposit}</td>
-          <td>{scheduleData.utotalPayment}</td>
-          <td>{scheduleData.utotalReceipts}</td>
+          <td><span className={classes.bubble}>{scheduleData.receiveTurn}</span></td>
+          <td>{scheduleData.upayment.toLocaleString()}</td>
+          <td>{scheduleData.utotalPayment.toLocaleString()}</td>
+          <td>{scheduleData.utotalReceipts.toLocaleString()}</td>
+          <td>{scheduleData.uRate}</td>
+          <td>{scheduleData.uReceipt}</td>
         </tr>
       );
 
@@ -83,12 +88,15 @@ const ReceiptModalOverlay = (props) => {
 };
 
 const DepositModalOverlay = (props) => {
+    const token = jwtDecode(Cookies.get('Set-Cookie'));
+    const uNo = token.uNo;
+
     let uPayment =  props.rollData.uPayment.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     let myBalance = props.rollData.myBalance.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     const [moneyCheck, setMoneyCheck] = useState(true);
 
     useEffect(() => {
-        setMoneyCheck(props.rollData.uPayment > props.rollData.myBalance);
+        setMoneyCheck(parseInt(props.rollData.uPayment) > parseInt(props.rollData.myBalance));
     }, []);
 
     const location = useLocation();
@@ -97,9 +105,10 @@ const DepositModalOverlay = (props) => {
     const depositButtonClick = () => {
       axios.post('/deposit',null, {
             params: {
-              uNo: 5,
+              uNo: uNo,
               pfID: pfIDNum[pfIDNum.length -1],
-              uPayment: props.rollData.uPayment
+              uPayment: props.rollData.uPayment,
+              pfName: props.title
             }
           })
         .then(response => {
@@ -119,7 +128,7 @@ return (
           <div className={classes.stageInfo}>
                 <div className={classes.whiteBox}>
                     <p>나의 순번</p>
-                    <div key={index} className={classes.seqNum}>{value.uno}</div>
+                    <div key={index} className={classes.seqNum}>{value.receiveTurn}</div>
                 </div>
 
                 <div className={classes.whiteBox}>
@@ -133,20 +142,22 @@ return (
           </div>
          </>
         ))}
-          <div className={classes.depositUpdate}>
+          <div className={classes.depositUpdate} style={{borderColor: moneyCheck ? 'red' : 'black'}}>
             <div className={classes.depositAmount}>이번 달 입금 금액 : {uPayment}원</div>
             {props.rollData.paymentCheck === 'N'
             ? <button onClick={depositButtonClick} >입금하기</button>
             : <button　className={classes.grayBtn}>입금완료</button>
             }
           </div>
+          {moneyCheck && <p className={classes.lack}>계좌잔액이 부족합니다.</p>}
+
+
 
       <div className={classes.myAccount}>
         <div>
         <p>my계좌잔액</p>
         <p>{myBalance}원</p>
         </div>
-        {moneyCheck && <p>계좌잔액이 부족합니다.</p>}
         <p className={classes.caution}>*계좌에 금액이 부족하실 경우 마이페이지에서 충전해주시기 바랍니다. <Link to={'/mypage'}>마이페이지 ></Link></p>
       </div>
 

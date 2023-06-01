@@ -97,4 +97,12 @@ public interface StageMapper {
     void pfMasterUpdate(Map<String, Object> parameterMap);
    //(찬희) 방장 : 방장이 맞는지 확인하기 위해 정보 갖고오기
     String getPfMasterInfo(StageINDTO dto);
+    //(찬희) 스테이지 출금 이력
+    void stageWithdraw(StageRollDTO dto);
+    //(찬희) 스테이지 입금 이력
+    void depositHistoryInsert(StageRollDTO dto);
+    //(찬희) 현재 *번째의 UTotalReceipts 정보 갖고오기
+    int getUTotalReceipts(StageRollDTO stageRollDTO);
+    //(찬희) 현재 *번째의 uNo 정보 갖고오기
+    int getUNoForMyAccount(StageRollDTO stageRollDTO);
 }

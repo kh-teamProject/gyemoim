@@ -1,17 +1,24 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Link, useLocation} from "react-router-dom";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
+import moment from 'moment';
+
 import classes from '../css/Stage.module.css';
 import BoxButton from "../../component/UI/stage/BoxButton";
 import StageSequence from "../../component/UI/stage/StageSequence";
 import MemberList from "../../component/UI/stage/StageMemberList";
 import StageDeposit from "../../component/UI/stage/StageDeposit";
 import StageModal from "../../component/UI/stage/StageModal";
-import moment from 'moment';
+
 
 
 
 const Stage = () => {
+
+    const token = jwtDecode(Cookies.get('Set-Cookie'));
+    const uNo = token.uNo;
 
     const [pf, setPf] = useState([]);
     const [roll, setRoll] = useState([]);
@@ -28,7 +35,7 @@ const Stage = () => {
   useEffect(() => {
     axios.get('/stage', {
       params: {
-        uNo: 5,
+        uNo: uNo,
         pfID: pfIDNum[pfIDNum.length -1]
       }
     })
@@ -99,7 +106,7 @@ const Stage = () => {
         console.log(error);
 
       });
-  }, []);
+  }, [roll]);
 
     const [receipt, setReceipt] = useState();
     const receiptHandler = () => {
@@ -128,6 +135,7 @@ const Stage = () => {
                   ? <p>기간 : -</p>
                   : <p>기간 : {pfData.startDate} ~ {pfData.endDate}</p>
               }
+
              <p>스테이지 잔액 : {pfData.stageBalance}원</p>
             <div id="contents" className={classes.areaLayout}>
                 <div>

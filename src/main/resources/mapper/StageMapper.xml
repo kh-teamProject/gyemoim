@@ -81,6 +81,17 @@
         WHERE pfID = #{pfID}
     </select>
 
+    <!--(찬희) 출금 이력 남기기 -->
+    <insert id="stageWithdraw">
+        INSERT INTO MYACCOUNTHISTORY(UNO, BANKNAME, BANKACCOUNTNUMBER, TRANSACTIONAMOUNT, BANKHISTORY, TRADINGHOURS)
+        VALUES (#{uNo},#{pfName}, #{pfID}, #{uPayment}, '출금', SYSDATE)
+    </insert>
+    <!--(찬희) 지급 이력 남기기 -->
+    <insert id="depositHistoryInsert">
+        INSERT INTO MYACCOUNTHISTORY(UNO, BANKNAME, BANKACCOUNTNUMBER, TRANSACTIONAMOUNT, BANKHISTORY, TRADINGHOURS)
+        VALUES (#{uNo},#{pfName}, #{pfID}, #{uTotalReceipts}, '곗돈 지급', SYSDATE)
+    </insert>
+
     <!--(찬희)PF의 pfEntry 값 조회 -->
     <select id="pfEntryValue" resultType="int">
         SELECT pfEntry
@@ -147,10 +158,10 @@
 
     <!--(찬희)수령예정표 갖고오기-->
     <select id="getImportList" resultType="com.team.gyemoim.dto.stage.StageReceiptDTO">
-        SELECT i.*
-        FROM receiptSchedule i, pf p
-        WHERE i.deposit = p.deposit
-        AND i.pfRate = p.pfRate
+        SELECT DISTINCT rs.*
+        FROM receiptSchedule rs, pf p
+        WHERE rs.pfRate = p.pfRate
+        AND rs.deposit = p.deposit
         AND p.pfID = #{pfID}
     </select>
 
@@ -232,25 +243,28 @@
         WHERE pfID = #{pfID}
     </update>
 
-    <!--(찬희)*번의 uPayment + stageBalance-->
+    <!--(찬희)현재 *번째의 UTotalReceipts 정보 갖고오기-->
+    <select id="getUTotalReceipts" parameterType="com.team.gyemoim.dto.stage.StageRollDTO" resultType="Integer">
+        SELECT rs.uTotalReceipts
+        FROM receiptSchedule rs, pf pf
+        WHERE rs.DEPOSIT = pf.DEPOSIT AND rs.pfRate = pf.pfRate AND rs.receiveTurn = pf.paymentOrder AND (
+        SELECT pf.pfID
+        FROM roll r
+        WHERE pf.pfID = r.pfID AND pf.paymentOrder = r.receiveTurn
+        ) = #{pfID}
+    </select>
+    <!--(찬희)현재 *번째의 uNo 정보 갖고오기-->
+    <select id="getUNoForMyAccount" parameterType="com.team.gyemoim.dto.stage.StageRollDTO" resultType="Integer">
+        SELECT uNo
+        FROM pf pf, roll r
+        WHERE pf.pfID = #{pfID} AND r.pfID = #{pfID} AND pf.paymentOrder = r.receiveTurn
+    </select>
+
+    <!--(찬희)순서에 맞게 지급 *번의 myBalance + stageBalance-->
     <update id="stagePaymentOrder">
-        UPDATE myAccount
-        SET myBalance = myBalance + (
-        SELECT DISTINCT COALESCE(rs.uTotalReceipts, 0)
-        FROM receiptSchedule rs
-        JOIN PF pf ON pf.deposit = rs.deposit AND pf.pfRate = rs.pfRate
-        JOIN ROLL ro ON ro.pfID = pf.pfID
-        WHERE pf.paymentOrder = rs.receiveTurn
-        AND ro.pfID = #{pfID}
-        )
-        WHERE EXISTS (
-        SELECT ro.uNo
-        FROM PF pf
-        JOIN Roll ro ON ro.pfID = pf.pfID
-        JOIN myAccount ma ON ma.uNo = ro.uNo
-        WHERE pf.paymentOrder = ro.receiveTurn
-        AND pf.pfID = #{pfID}
-        )
+        UPDATE MyAccount
+        SET myBalance = myBalance + #{uTotalReceipts}
+        WHERE uno = #{uNo}
     </update>
 
     <!--(찬희)전원 입금식별자 'Y' -> 'N' -->

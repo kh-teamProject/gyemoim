@@ -68,7 +68,7 @@ function StageDeposit(props){
             { props.startFlag === '완료' &&
                 <>
                     <button onClick={pdfHandler} className={classes.depositBtn}>{props.btn}</button>
-                    {showStageReport && <StageReport rollData={props.rollData} title="sdfsdfs" />}
+                    {showStageReport && <StageReport rollData={props.rollData} />}
                 </>
             }
         </div>

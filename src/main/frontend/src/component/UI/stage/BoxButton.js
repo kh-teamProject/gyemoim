@@ -1,5 +1,4 @@
 import classes from '../../../page/css/Stage.module.css';
-import {Link} from "react-router-dom";
 
 const BoxButton = (props) => {
   return (
