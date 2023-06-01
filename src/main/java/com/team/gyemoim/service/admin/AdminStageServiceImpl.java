@@ -9,6 +9,16 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor //생성자를 자동으로 생성해주는 어노테이션
 public class AdminStageServiceImpl implements AdminStageService{
+
+  //(현지) 계모임 리스트 조회
+  @Override
+  public List<AdminStageDetailDTO> getStageList() {
+    System.out.println("[서비스] 스테이지 가져오기");
+    return adminStageMapper.getStageList();
+  }
+
+
+
 //(유진) 스테이지 참여 회원정보 가져오기
 
   private final AdminStageMapper adminStageMapper;

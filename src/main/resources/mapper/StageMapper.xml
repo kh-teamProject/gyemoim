@@ -40,8 +40,8 @@
     </select>
     <!--(현지) <스테이지 생성> _스테이지 생성(PF)-->
     <insert id="stageCreate" >
-        INSERT  INTO PF(pfID,pfName,pfEntry,pfRate,deposit,payment,interest,pRank)
-        VALUES(PFID_PF_SEQ.NEXTVAL,#{pfName},#{pfEntry},#{pfRate},#{deposit},#{payment},#{interest},#{pRank})
+        INSERT  INTO PF(pfID,pfName,pfEntry,pfRate,deposit,payment,interest)
+        VALUES(PFID_PF_SEQ.NEXTVAL,#{pfName},#{pfEntry},#{pfRate},#{deposit},#{payment},#{interest})
     </insert>
 
     <!--(현지) <스테이지 생성> _참가 데이터 -->
