@@ -29,7 +29,7 @@ public class JwtProvider {
 
     private final MemberDetailsService memberDetailsService;
 
-    private Set<String> tokenBlacklist = new HashSet<>(); // 블랙리스트 관리를 위한 Set
+    private final Set<String> tokenBlacklist = new HashSet<>(); // 블랙리스트 관리를 위한 Set
 
     private final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 

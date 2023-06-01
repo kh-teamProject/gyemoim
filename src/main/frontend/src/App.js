@@ -15,6 +15,7 @@ import MyPageRootLayout from "./page/root/MyPageRoot";
 import AdminRoot from "./page/root/AdminRoot";
 import Home from "./page/Home";
 import Login from "./page/account/Login";
+import MemberEmailSearch from './page/account/MemberEmailSearch'
 import MyPage from "./page/account/MyPage";
 import MyPageModify from "./page/account/MyPageModify";
 import StageCreate from './page/stage/StageCreate';
@@ -40,9 +41,10 @@ import Test from "./page/Test";
 import TestAdminAccountDetail from "./page/admin/TestAdminAccountDetail";
 import AccountModify from "./page/admin/AccountModify";
 import './App.css';
+import MemberPwdSearch from "./page/account/MemberPwdSearch";
 
 const App = () => {
-    
+
 
   const router = createBrowserRouter([
     {
@@ -56,6 +58,14 @@ const App = () => {
         {
           path: 'login',
           element: <Login/>
+        },
+        {
+          path: 'MemberEmailSearch',
+          element: <MemberEmailSearch/>
+        },
+        {
+          path: 'MemberPwdSearch',
+          element: <MemberPwdSearch/>
         },
         {
           path: 'account',

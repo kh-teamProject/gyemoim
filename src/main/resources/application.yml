@@ -5,6 +5,18 @@ spring:
     password: MUMANI
     driverClassName: oracle.jdbc.driver.OracleDriver
 
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: kwon524@naver.com
+    password: rnjsdhtn2@
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl.enable: true
+          ssl.trust: smtp.naver.com
+
 jwt:
   header: Gyemoim
   secret: GyemoimChickenMumani
@@ -16,4 +28,4 @@ mybatis:
 
 
 upload:
-    path: /path/to/upload/folder
+  path: /path/to/upload/folder

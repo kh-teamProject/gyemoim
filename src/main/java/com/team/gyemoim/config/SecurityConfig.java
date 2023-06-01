@@ -22,11 +22,11 @@ public class SecurityConfig {
     private final JwtProvider jwtProvider;
 
 
-
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); // 패스워드 암호화
     }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

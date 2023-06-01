@@ -1,144 +1,230 @@
-import React, {useState} from "react";
-import axios from "axios";
-import {useNavigate} from "react-router-dom";
-import account from "../css/Account.module.css"
+import React, {useState} from 'react';
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
+import account from "../css/Account.module.css";
 
 const Account = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState(""); // 비밀번호 확인
-    const [name, setName] = useState("");
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+
+    // // 이메일 인증
+    // const [emailConfirm, setEmailConfirm] = useState('');
+    // const [emailConfirmMsg, setEmailConfirmMsg] = useState('');
+
+    // 이용약관
     const [ageConfirmation, setAgeConfirmation] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [privacyAccepted, setPrivacyAccepted] = useState(false);
     const [marketingAccepted, setMarketingAccepted] = useState(false);
+
     const navigate = useNavigate();
 
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+
+    // const handleEmailConfirmChange = (event) => {
+    //     setEmailConfirm(event.target.value);
+    // };
+    //
+    // // 이메일 인증 번호 발송
+    // const sendEmailConfirmation = () => {
+    //     axios
+    //         .post('/api/account/mailConfirm', {email: email})
+    //         .then((response) => {
+    //             alert('해당 이메일로 인증번호 발송이 완료되었습니다. 확인 부탁드립니다.');
+    //             setEmailConfirmMsg('');
+    //             checkEmailConfirmation(response.data);
+    //             console.log(response.data)
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         });
+    // };
+
+    // const checkEmailConfirmation = (data) => {
+    //     if (data !== emailConfirm) {
+    //         setEmailConfirmMsg('인증번호가 잘못되었습니다.');
+    //     } else {
+    //         setEmailConfirmMsg('인증번호 확인 완료');
+    //     }
+    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            alert("비밀번호가 일치하지 않습니다.");
+            alert('비밀번호가 일치하지 않습니다.');
             return;
         }
 
         if (!ageConfirmation) {
-            alert("만 18세 이상인지 확인해주세요.");
+            alert('만 18세 이상인지 확인해주세요.');
             return;
         }
 
         if (!termsAccepted) {
-            alert("이용약관에 동의해야 합니다.");
+            alert('이용약관에 동의해야 합니다.');
             return;
         }
 
         if (!privacyAccepted) {
-            alert("개인정보 수집 및 이용에 동의해야 합니다.");
+            alert('개인정보 수집 및 이용에 동의해야 합니다.');
             return;
         }
 
-
-        const user = {email, password, name};
+        // 회원가입
+        const user = {email, password, name, phone};
         try {
-            const res = await axios.post("api/account", user);
+            const res = await axios.post('api/account', user);
             console.log(user);
             console.log(res);
-            alert(user.name + "님 회원가입을 축하합니다")
-            navigate("/login");
+            alert(user.name + '님 회원가입을 축하합니다');
+            navigate('/login');
         } catch (err) {
             console.log(err);
-            alert("회원가입에 실패하였습니다.")
-
+            alert('회원가입에 실패하였습니다.');
         }
     };
 
     return (
-        <div>
-            <h2>회원가입</h2>
-            <form onSubmit={handleSubmit}>
-                <div className={account.field}>
-                    <label htmlFor="email">이메일</label>
-                    <input type="email"
-                           value={email}
-                           onChange={(e) => setEmail(e.target.value)}
-                           required
-                    />
-                </div>
-                <div className={account.field}>
-                    <label htmlFor="password">비밀번호</label>
-                    <input
-                        type="password"
-                        // placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className={account.field}>
-                    <label htmlFor="Confirm Password">비밀번호 확인</label>
-                    <input
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className={account.field}>
-                    <label htmlFor="name">이름</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>
+        <section>
+            <div className={account.main}>
+                <h2>회원가입</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className={account.field}>
                         <input
-                            type="checkbox"
-                            checked={ageConfirmation}
-                            onChange={(e) => setAgeConfirmation(e.target.checked)}
+                            type="email"
+                            id="email"
+                            placeholder="이메일을 입력해 주세요."
+                            className={account.email}
+                            value={email}
+                            onChange={handleEmailChange}
+                            required
                         />
-                        [필수] 만 18세 이상입니다.
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={termsAccepted}
-                            onChange={(e) => setTermsAccepted(e.target.checked)}
-                        />
-                        [필수] 이용 약관에 동의합니다.
-                    </label>
-                </div>
+                        {/*<button className={account.emailConfirm} type="button" onClick={sendEmailConfirmation}>*/}
+                        {/*    이메일 인증*/}
+                        {/*</button>*/}
+                    </div>
 
-                <div>
-                    <label>
+
+                    {/*<div className={account.field}>*/}
+                    {/*    <input*/}
+                    {/*        className={account.confirms}*/}
+                    {/*        type="text"*/}
+                    {/*        id="confirm-input"*/}
+                    {/*        placeholder="인증번호를 입력해 주세요."*/}
+                    {/*        value={emailConfirm}*/}
+                    {/*        onChange={handleEmailConfirmChange}*/}
+                    {/*        required*/}
+                    {/*    />*/}
+                    {/*    <span*/}
+                    {/*        id="confirm-check"*/}
+                    {/*        className={account.confirmCheck}*/}
+                    {/*    >*/}
+                    {/*     {emailConfirmMsg}*/}
+                    {/*    </span>*/}
+                    {/*</div>*/}
+
+                    <div className={account.field}>
                         <input
-                            type="checkbox"
-                            checked={privacyAccepted}
-                            onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                            type="password"
+                            id="password"
+                            placeholder="비밀번호를 입력해 주세요."
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
                         />
-                        [필수] 개인정보 수집 및 이용에 동의합니다.
-                    </label>
-                </div>
-                <div>
-                    <label>
+                    </div>
+
+                    <div className={account.field}>
                         <input
-                            type="checkbox"
-                            checked={marketingAccepted}
-                            onChange={(e) => setMarketingAccepted(e.target.checked)}
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="비밀번호 확인"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
                         />
-                        [선택] 마케팅 정보 수신에 동의합니다.
-                    </label>
-                </div>
-                <div>
-                    <button type="submit">회원가입</button>
-                </div>
-            </form>
-        </div>
+                    </div>
+
+                    <div className={account.field}>
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="이름을 입력해 주세요."
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className={account.field}>
+                        <input
+                            type="text"
+                            id="phone"
+                            placeholder="휴대폰 번호를 입력해 주세요."
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <form className={account.checkboxGroup}>
+                        <div className={account.checkbox}>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={ageConfirmation}
+                                    onChange={(e) => setAgeConfirmation(e.target.checked)}
+                                />
+                                [필수] 만 18세 이상입니다.
+                            </label>
+                        </div>
+
+                        <div className={account.checkbox}>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={termsAccepted}
+                                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                                />
+                                [필수] 이용 약관에 동의합니다.
+                            </label>
+                        </div>
+
+                        <div className={account.checkbox}>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={privacyAccepted}
+                                    onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                                />
+                                [필수] 개인정보 수집 및 이용에 동의합니다.
+                            </label>
+                        </div>
+
+                        <div className={account.checkbox}>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={marketingAccepted}
+                                    onChange={(e) => setMarketingAccepted(e.target.checked)}
+                                />
+                                [선택] 마케팅 정보 수신에 동의합니다.
+                            </label>
+                        </div>
+                    </form>
+
+                    <div>
+                        <button type="submit" className={account.btn}>회원가입</button>
+                    </div>
+                </form>
+            </div>
+        </section>
     );
 };
 
