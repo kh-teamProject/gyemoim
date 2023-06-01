@@ -67,13 +67,13 @@ const MemberEmailSearch = () => {
                     <input
                         type="text"
                         id="phone"
-                        placeholder='휴대폰 번호를 입력해 주세요.'
+                        placeholder='휴대폰 번호를 `-` 없이 입력해 주세요.'
                         value={phone}
                         onChange={handlePhoneChange}
                     />
                 </div>
 
-                <button className={emailSearch.btn} onClick={handleSearch}>검색</button>
+                <button className={emailSearch.btn} onClick={handleSearch}>확인</button>
 
                 <div className={emailSearch.guide}>
                     <ul className={emailSearch.ul}>

@@ -86,13 +86,13 @@ const MemberPwdSearch = () => {
                     <input
                         type="text"
                         name="phone"
-                        placeholder='휴대폰 번호를 입력해 주세요.'
+                        placeholder='휴대폰 번호를 `-`없이 입력해 주세요.'
                         value={phone}
                         onChange={handleInputChange}
                     />
                 </div>
 
-                <button className={pwdSearch.btn} type="submit" >비밀번호 찾기</button>
+                <button className={pwdSearch.btn} type="submit" >확인</button>
             </form>
 
             <div>

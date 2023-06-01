@@ -173,7 +173,7 @@ const Account = () => {
                         />
                     </div>
 
-                    <form className={account.checkboxGroup}>
+                    <div className={account.checkboxGroup}>
                         <div className={account.checkbox}>
                             <label>
                                 <input
@@ -217,7 +217,7 @@ const Account = () => {
                                 [선택] 마케팅 정보 수신에 동의합니다.
                             </label>
                         </div>
-                    </form>
+                    </div>
 
                     <div>
                         <button type="submit" className={account.btn}>회원가입</button>

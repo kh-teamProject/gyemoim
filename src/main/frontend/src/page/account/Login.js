@@ -10,6 +10,7 @@ import gyemoim_character from "../../component/images/gyemoim_character.png"
 
 const Login = () => {
 
+
     const dispatch = useDispatch();
     const checkedLogin = useSelector((state) => state.checkedLogin);
 
@@ -18,7 +19,9 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
         try {
             await axios.post('/api/login', {
                 email,
@@ -26,21 +29,20 @@ const Login = () => {
 
             })
                 .then((res) => {
-                    // console.log(res);
+
                     Cookies.set('Set-Cookie', res.data.data);
-                    // console.log('Set-Cookie', res.data.data);
-                    // console.log('Set-Cookie', res.data.data.uNo)
-                    // console.log(jwtDecode(res.data.data));
 
                     const decodedToken = jwtDecode(res.data.data);
                     const name = decodedToken.name;
                     const uNo = decodedToken.uNo;
+                    const userRole = decodedToken.userRole;
 
                     dispatch({type: 'login'});
                     console.log(checkedLogin);
-                    console.log('이름', name)
-                    console.log('uNo', uNo)
-//                    alert(`${name}님 환영합니다.);
+                    console.log('이름', name);
+                    console.log('uNo', uNo);
+                    console.log('userRole', userRole);
+
                     alert(`${name} 어서와ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ`);
                     navigate(-1)
 
@@ -51,6 +53,8 @@ const Login = () => {
                 });
         } catch (error) {
             console.error(error);
+            alert('이메일이나 비밀번호를 다시 확인해 주세요.')
+
         }
     };
 
