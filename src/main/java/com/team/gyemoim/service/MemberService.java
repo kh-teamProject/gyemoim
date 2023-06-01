@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class MemberService {
     private final JwtProvider jwtProvider;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender mailSender;
+    private final RedisService redisService;
 
 
     // 회원가입
@@ -55,20 +57,21 @@ public class MemberService {
 
     // 회원 가입 인증번호 전송
     // 메일 내용 작성
-    public MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException {
-        String ePw = createKey(); // 랜덤 인증번호 생성
+    public MimeMessage createMessage(String email) throws MessagingException, UnsupportedEncodingException {
+        String ePw = createKey();
 
-        System.out.println("보내는 대상 : " + to);
-        System.out.println("인증 번호 : " + ePw);
+        System.out.println("보내는 대상: " + email);
+        System.out.println("인증 번호: " + ePw);
 
         MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        message.addRecipients(MimeMessage.RecipientType.TO, to);    // 보내는 대상
-        message.setSubject("[나만의 목돈마련 솔루션, 계이득] 회원가입 이메일 인증코드");    // 제목
+        helper.setTo(email);
+        helper.setSubject("[나만의 목돈마련 솔루션, 계이득] 회원가입 이메일 인증코드");
 
         String content = "";
         content += "<div style='margin:100px;'>";
-        content += "<h1> 나만의 목돈마련 솔루션, 계이득</h1>";
+        content += "<h1>나만의 목돈마련 솔루션, 계이득</h1>";
         content += "<br>";
         content += "<p>아래 코드로 회원가입 이메일 인증을 해주세요.<p>";
         content += "<br>";
@@ -78,35 +81,33 @@ public class MemberService {
         content += "<h3 style='color:blue;'>회원가입 인증 코드입니다.</h3>";
         content += "<div style='font-size:130%'>";
         content += "CODE : <strong>";
-        content += ePw + "</strong><div><br/> ";   // 메일에 인증번호 넣기
+        content += ePw + "</strong><div><br/> ";
         content += "</div>";
 
-        message.setText(content, "utf-8", "html"); // 내용
-        message.setFrom(new InternetAddress("kwon524@naver.com", "계이득"));   // 보내는 사람의 이메일 주소, 보내는 사람 이름
+        helper.setText(content, true);
+        helper.setFrom(new InternetAddress("kwon524@naver.com", "계이득"));
+
+        redisService.setDataExpire(email, ePw, 60 * 30L);
 
         return message;
     }
 
-    // 랜덤 인증 코드 전송
-    public String createKey() {
+    private String createKey() {
         StringBuilder key = new StringBuilder();
         Random rnd = new Random();
 
-        for (int i = 0; i < 8; i++) { // 인증코드 8자리
-            int index = rnd.nextInt(3); // 0~2 까지 랜덤, rnd 값에 따라서 아래 switch 문이 실행됨
+        for (int i = 0; i < 8; i++) {
+            int index = rnd.nextInt(3);
 
             switch (index) {
                 case 0:
-                    key.append((char) ( (rnd.nextInt(26)) + 97));
-                    // a~z (ex. 1+97=98 => (char)98 = 'b')
+                    key.append((char) ((rnd.nextInt(26)) + 97));
                     break;
                 case 1:
-                    key.append((char) ( (rnd.nextInt(26)) + 65));
-                    // A~Z
+                    key.append((char) ((rnd.nextInt(26)) + 65));
                     break;
                 case 2:
                     key.append((rnd.nextInt(10)));
-                    // 0~9
                     break;
             }
         }
@@ -114,18 +115,23 @@ public class MemberService {
         return key.toString();
     }
 
-    public void sendSimpleMessage(String to) throws Exception {
+    public void sendSimpleMessage(String email) throws Exception {
+        MimeMessage message = createMessage(email);
 
-        MimeMessage message = createMessage(to); // 메일 발송
-
-        try {// 예외처리
+        try {
             mailSender.send(message);
-
         } catch (MailException es) {
             es.printStackTrace();
             throw new IllegalArgumentException();
         }
+    }
 
+    public boolean verifyEmailCode(String email, String ePw) {
+        String codeFoundByEmail = redisService.getData(email);
+        if (codeFoundByEmail == null) {
+            return false;
+        }
+        return codeFoundByEmail.equals(ePw);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +172,6 @@ public class MemberService {
         MemberDTO memberDTO = memberMapper.findByEmailAndName(email, name, phone);
 
 
-
         if (memberDTO == null) {
             throw new NoSuchElementException("일치하는 회원이 없습니다.");
         }
@@ -198,12 +203,12 @@ public class MemberService {
     }
 
     // 임시 비밀번호 이메일 메시지 작성
-    private MimeMessage createPasswordResetMessage(String to, String newPassword) {
+    private MimeMessage createPasswordResetMessage(String email, String newPassword) {
         MimeMessage message = mailSender.createMimeMessage();
 
         try {
             message.setSubject("[나만의 목돈마련 솔루션, 계이득] 임시 비밀번호 발급");
-            message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(to));
+            message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(email));
 
             String content = generatePasswordResetEmailContent(newPassword);
 
