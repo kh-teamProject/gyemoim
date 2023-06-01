@@ -42,8 +42,6 @@ import AccountModify from "./page/admin/AccountModify";
 import './App.css';
 
 const App = () => {
-    
-
   const router = createBrowserRouter([
     {
       path: '/',
@@ -173,11 +171,11 @@ const App = () => {
         },
         {
           path: 'account',
-          element: <AccountManagement/>
+          element: <AccountManagement />
         },
         {
-          path: 'account/detail/:uno',
-          element: <TestAdminAccountDetail/>
+          path: 'account/detail/:uNo',
+          element: <TestAdminAccountDetail />
         },
         {
           path: 'account/modify/:uNo',
@@ -185,23 +183,23 @@ const App = () => {
         },
         {
           path: 'stage',
-          element: <StageManagement/>,
+          element: <StageManagement />,
         },
         {
           path: 'stage/list',
-          element: <AdminStageList/>
+          element: <AdminStageList />
           },
         {
           path: 'stage/detail/:pfID',
-          element: <AdminStageDetail/>
+          element: <AdminStageDetail />
         },
         {
           path: 'stage/detail1/:pfID',
-          element: <AdminStageDetail/>
+          element: <AdminStageDetail />
         },
         {
           path: 'board',
-          element: <BoardManagement/>
+          element: <BoardManagement />
         }
       ]
     },

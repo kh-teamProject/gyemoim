@@ -3,6 +3,7 @@ package com.team.gyemoim.mapper;
 import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
+import com.team.gyemoim.vo.ExpenditureVO;
 import com.team.gyemoim.vo.MyAccountVO;
 import com.team.gyemoim.vo.MyAccountHistoryVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -52,4 +53,9 @@ public interface AccountMapper {
   // 회원 탈퇴
   void memberDelete(Integer uNo);
 
+  void createExpenditure(MyPageDTO dto);
+
+  List<ExpenditureVO> getExpenditure(Integer uNo);
+
+  void updateExpenditure(MyPageDTO dto);
 }

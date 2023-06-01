@@ -4,6 +4,7 @@ import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.service.AccountService;
+import com.team.gyemoim.vo.ExpenditureVO;
 import com.team.gyemoim.vo.MyAccountVO;
 import com.team.gyemoim.vo.MyAccountHistoryVO;
 import lombok.AllArgsConstructor;
@@ -51,9 +52,17 @@ public class AccountController {
   // Update
   // 내 정보 수정하기
   @PostMapping("/myInfoModify")
-  public boolean myInfoModify(MyPageDTO dto) {
-    accountService.myInfoModify(dto);
-    return true;
+  public boolean myInfoModify(@RequestBody MyPageDTO dto) {
+    List<ExpenditureVO> list = accountService.getExpenditure(dto.getUNo());
+    if(list.isEmpty()) {
+      accountService.myInfoModify(dto);
+      accountService.createExpenditure(dto);
+      return true;
+    } else {
+      accountService.myInfoModify(dto);
+      accountService.updateExpenditure(dto);
+      return true;
+    }
   }
 
   // 내 관심사 수정하기

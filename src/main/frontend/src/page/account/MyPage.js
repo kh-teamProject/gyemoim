@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {NavLink, useLocation} from "react-router-dom";
 import axios from "axios";
 
@@ -8,17 +8,10 @@ import classes from '../css/MyPage.module.css';
 const MyPage = () => {
   const location = useLocation();
 
-  const [uNo, setUNo] = useState('');
-
-  const emailRef = useRef();
-  const nameRef = useRef();
-  const phoneRef = useRef();
-  const bankRef = useRef();
-  const bankNumberRef = useRef();
-  const pRankRef = useRef();
-  const accountHolderRef = useRef();
-  const userRoleRef = useRef();
-  const enrollDateRef = useRef();
+  const [myInfo, setMyInfo] = useState({});
+  const [enrollDate, setEnrollDate] = useState('');
+  const [monthlySalary, setMonthlySalary] = useState(0);
+  const [monthlyLimit, setMonthlyLimit] = useState(0);
 
   useEffect(() => {
     axios.get('/mypage', {
@@ -27,18 +20,13 @@ const MyPage = () => {
       }
     })
       .then((res) => {
+        setMyInfo(res.data);
+        console.log(res.data);
         const date = new Date(res.data.enrollDate);
         const [year, month, day] = [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')];
-        setUNo(res.data.uNo);
-        emailRef.current.value = res.data.email;
-        nameRef.current.value = res.data.name;
-        phoneRef.current.value = res.data.phone ? res.data.phone : '';
-        bankRef.current.value = res.data.bankName ? res.data.bankName : '';
-        bankNumberRef.current.value = res.data.bankAccountNumber ? res.data.bankAccountNumber : '';
-        accountHolderRef.current.value = res.data.accountHolder ? res.data.accountHolder : '';
-        pRankRef.current.value = res.data.PRANK ? res.data.PRANK : '';
-        userRoleRef.current.value = res.data.USERROLE;
-        enrollDateRef.current.value = `${year}-${month}-${day}`;
+        setEnrollDate(`${year}-${month}-${day}`);
+        setMonthlySalary(res.data.monthlySalary.toLocaleString());
+        setMonthlyLimit(res.data.monthlyLimit.toLocaleString());
       })
       .catch((error) => {
         console.log(error);
@@ -67,39 +55,43 @@ const MyPage = () => {
         </div>
         <div className={classes.field}>
           <label htmlFor="user-id">아이디</label>
-          <input type="text" id="user-id" ref={emailRef} readOnly/>
+          <input type="text" id="user-id" value={myInfo.email || ''} readOnly/>
         </div>
         <div className={classes.field}>
           <label htmlFor="name">이름</label>
-          <input type="text" id="name" ref={nameRef} readOnly/>
+          <input type="text" id="name" value={myInfo.name || ''} readOnly/>
         </div>
         <div className={classes.field}>
           <label htmlFor="phone">휴대폰</label>
-          <input type="text" id="phone" ref={phoneRef} readOnly/>
+          <input type="text" id="phone" value={myInfo.phone || ''} readOnly/>
         </div>
         <div className={classes.field}>
           <label htmlFor="bank-name">은행</label>
-          <input type="text" id="bank-name" ref={bankRef} readOnly/>
+          <input type="text" id="bank-name" value={myInfo.bankName || ''} readOnly/>
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">계좌번호</label>
-          <input type="text" id="account-number" ref={bankNumberRef} readOnly/>
+          <input type="text" id="account-number" value={myInfo.bankAccountNumber || ''} readOnly/>
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">계좌명의</label>
-          <input type="text" id="account-number" ref={accountHolderRef} readOnly/>
+          <input type="text" id="account-number" value={myInfo.accountHolder || ''} readOnly/>
         </div>
         <div className={classes.field}>
-          <label htmlFor="credit-rating">계모임 등급</label>
-          <input type="text" id="credit-rating" ref={pRankRef} readOnly/>
+          <label htmlFor="account-number">월급여</label>
+          <input type="text" id="account-number" value={monthlySalary || ''} readOnly/>
+        </div>
+        <div className={classes.field}>
+          <label htmlFor="account-number">최대약정금</label>
+          <input type="text" id="account-number" value={monthlyLimit || ''} readOnly/>
         </div>
         <div className={classes.field}>
           <label htmlFor="enroll-date">가입일</label>
-          <input type="text" id="enroll-date" ref={enrollDateRef} readOnly/>
+          <input type="text" id="enroll-date" value={enrollDate || ''} readOnly/>
         </div>
         <div className={classes.field}>
           <label htmlFor="">회원구분</label>
-          <input type="text" id="" ref={userRoleRef} readOnly/>
+          <input type="text" id="" value={myInfo.userRole || ''} readOnly/>
         </div>
         <div className={classes.field}>
           <NavLink to={`/mypage/info/checkedPwd`} className={`${classes['link-btn']}`}>수정하기</NavLink>
