@@ -7,8 +7,6 @@ import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 
 const StageList = () => {
-
-  console.log(uNo);
   const [error, setError] = useState();
   // 계모임 값 뿌리기
   const [stage, setStage] = useState([]);
@@ -16,6 +14,11 @@ const StageList = () => {
   const [isClicked, setIsClicked] = useState('전체');
   // 관심사 기반으로 스테이지 세팅하는 State
   const [interest, setInterest] = useState('관심사');
+
+  //추천기능 변수와 state
+  const token = jwtDecode(Cookies.get('Set-Cookie'));
+  const uNo = token.uNo;
+  const [recommend, setRecommend] = useState([])
 
   //페이징 가보자고~
   const [curPage, setCurPage] = useState(1); //현재페이지
@@ -61,12 +64,10 @@ const StageList = () => {
       setList(list+10);
     }
   };
-  //추천기능 함수
-  const token = jwtDecode(Cookies.get('Set-Cookie'));
-  const uNo = token.uNo;
-  const recommend = (uNo) =>{
-    axios.get()
-  }
+
+
+
+
 
   useEffect(() => {
     // 버튼 클릭으로 스테이지 조회하는 구문
@@ -99,15 +100,89 @@ const StageList = () => {
           console.log(error);
         });
     }
-  }, [isClicked]);
+    //추천테이블 작동 코드
+     if(uNo !==null) {
+      axios
+        .get('/recommend',{
+          params : {
+            uno: uNo
+          },
+        })
+        .then((res)=>{
+          console.log(res.data);
+          setRecommend(res.data);
+        })
+        .catch((error)=>{
+          console.log(error);
+        });
+    }
+  },[isClicked,uNo] );
 
- // if(uNo===null){
+
   return (
     <>
       <div>
-        {uNo &&
-          <div>유노윤호?</div>
-        }
+        <div style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+        {token.uNo && recommend
+          .reduce((acc,value) =>{
+            const index = acc.findIndex(item => item.pfID === value.pfID)
+            if(index === -1){
+              acc.push({
+                pfName: value.pfName,
+                pfID : value.pfID,
+                receiveTurn:[{turn:value.receiveTurn,uno: value.uno}],
+                // {turn:value.receiveTurn,uno: value.uno}
+                deposit:value.deposit,
+                payment : value.payment ,
+                pfEntry : value.pfEntry ,
+                startFlag : value.startFlag,
+                // uno:value.uno,
+                interest:value.interest})
+              console.log((value.uno));
+
+            } else{
+              acc[index].receiveTurn.push({turn: value.receiveTurn, uno: value.uno})
+            }
+            return acc
+          },[])
+          .map((value,index)=>{
+          return(
+            <>
+              <div class="stage-wrap" >
+
+              <div class="stage">
+              <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
+            <div id="select-deposit">
+              <h3 className="stage-h3">{value.pfName}</h3>
+              {value.interest}
+            </div>
+              <ul>
+                {[...Array(Number(value.pfEntry))].map((_,index) =>{
+                  const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index+1)
+                  const uno = receiveTurnIndex !== -1? value.receiveTurn[receiveTurnIndex].uno:null
+                  return(
+                    <li key={index} id="rec-turn">
+                      {/*{value.receiveTurn===index+1?"참": index+1}*/}
+                      {uno === null? index+1 : "참"}
+                    </li>
+                  )
+                })}
+              </ul>
+              <div id="stage-payInfo">
+                <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+              </div>
+            </Link>
+              </div>
+              </div>
+              </>
+          )
+          })}
+          </div>
       </div>
       <h1>스테이지 조회</h1>
       <div>
@@ -156,7 +231,6 @@ const StageList = () => {
                   }
                   return acc
                 },[])
-                // .filter(item => item.interest === interest)
                 .map((value, index) => {
                   if(interest ==='관심사'){
                     return(

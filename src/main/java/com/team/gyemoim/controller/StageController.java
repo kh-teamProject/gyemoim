@@ -42,7 +42,7 @@ public class StageController {
   public HashMap<String,Object> stage() {
     HashMap<String,Object> map = new HashMap<>();
     map.put("PF",stageService.getPFList());
-    System.out.println("참가테이블 잘 들어가나욘");
+    System.out.println("계모임 조회 컨트롤러");
     return map;
   }
   
@@ -50,6 +50,11 @@ public class StageController {
   public List<StageListDTO> filterList(@RequestParam("deposit") int deposit){
     System.out.println("필터작동컨트롤러");
     return stageService.filterList(deposit);
+  }
+  @GetMapping("/recommend")//(유진) uno존재시 입금액 맞춰 무작위로 추천
+  public List<StageListDTO> recommend(@RequestParam("uno") int uno){
+      System.out.println("계모임 추천 컨트롤러");
+      return stageService.recommend(uno);
   }
   
     // (현지)<스테이지생성>_중복체크

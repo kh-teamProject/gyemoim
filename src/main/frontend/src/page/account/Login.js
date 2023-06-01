@@ -17,7 +17,8 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+      e.preventDefault();
         try {
             await axios.post('/api/login', {
                 email,
