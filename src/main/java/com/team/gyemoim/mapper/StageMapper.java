@@ -22,10 +22,13 @@ import java.util.Map;
 @Mapper
 public interface StageMapper {
   /*(유진) getPFList -> 전체버튼일때 리스트 전부 가져옴
-         filterList -> deposit에 따라서 리스트 해당하는것만 가져옴 */
+         filterList -> deposit에 따라서 리스트 해당하는것만 가져옴 
+         recommend -> 입금액에 맞춰 무작위 추천*/
   List<StageListDTO> getPFList();
   
   List<StageListDTO> filterList(int deposit);
+
+  List<StageListDTO> recommend(int uno);
 
 
   // (현지)

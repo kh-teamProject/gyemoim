@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/**").permitAll()
+                .antMatchers("/**").permitAll()
 //                .antMatchers("/mypage").hasRole("가회원")
 //                .antMatchers("/**").hasRole("정회원")
 //                .antMatchers("/**").hasRole("관리자")

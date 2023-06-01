@@ -20,12 +20,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
-<<<<<<< HEAD
-        e.preventDefault()
-=======
         e.preventDefault();
-
->>>>>>> feature/KwonOhSoo
         try {
             await axios.post('/api/login', {
                 email,
@@ -39,6 +34,7 @@ const Login = () => {
                     const decodedToken = jwtDecode(res.data.data);
                     const name = decodedToken.name;
                     const uNo = decodedToken.uNo;
+
                     const userRole = decodedToken.userRole;
 
                     dispatch({type: 'login'});
@@ -46,11 +42,8 @@ const Login = () => {
                     console.log('이름', name);
                     console.log('uNo', uNo);
                     console.log('userRole', userRole);
-<<<<<<< HEAD
-//                    alert(`${name}님 환영합니다.);
-=======
 
->>>>>>> feature/KwonOhSoo
+
                     alert(`${name} 어서와ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ`);
                     navigate('/');
 

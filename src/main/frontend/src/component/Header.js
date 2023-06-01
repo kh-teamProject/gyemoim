@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-import {useDispatch, useSelector} from "react-redux";
-import Cookies from "js-cookie";
-import {NavLink, useNavigate} from "react-router-dom";
-import axios from "axios";
-=======
 import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
->>>>>>> feature/KwonOhSoo
 import {useEffect} from "react";
-
 import logo from "./assert/images/logo0306.png";
 import "./css/Header.module.css";
 
