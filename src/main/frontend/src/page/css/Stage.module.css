@@ -97,6 +97,7 @@ img{
     text-align: left;
     padding: 0.5rem 1rem;
     flex: 1;
+    cursor: pointer;
 }
 .boxTitle{
     font-size: 1.4rem;

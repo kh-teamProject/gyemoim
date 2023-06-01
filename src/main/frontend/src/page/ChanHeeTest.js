@@ -1,10 +1,15 @@
 import {useEffect, useState} from "react";
 import axios from 'axios';
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
 import {Link} from "react-router-dom";
 
 
 const ChanHeeTest = () => {
+    const token = jwtDecode(Cookies.get('Set-Cookie'));
+    const uNo = token.uNo;
+
     const [selectedButton, setSelectedButton] = useState(null);
     const navigate = useNavigate();
 
@@ -13,7 +18,7 @@ const ChanHeeTest = () => {
     console.log(value);
     axios.post('/stageIn', null, {
       params: {
-        uNo: 5,
+        uNo: uNo,
         receiveTurn: value,
         pfID: 1
       }

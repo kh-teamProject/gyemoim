@@ -2,6 +2,8 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import moment from 'moment';
 import {useLocation} from "react-router-dom";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 import { PDFViewer, Document, Page, View , Text, StyleSheet, Font } from "@react-pdf/renderer";
 
@@ -17,6 +19,8 @@ Font.register({
 });
 
 const StageReport = (props) => {
+    const token = jwtDecode(Cookies.get('Set-Cookie'));
+    const uNo = token.uNo;
 
     const [pf, setPf] = useState([]);
     const [roll, setRoll] = useState([]);
@@ -33,7 +37,7 @@ const StageReport = (props) => {
    useEffect(() => {
       axios.get('/StageReport', {
         params: {
-          uNo: 1,
+          uNo: uNo,
           pfID: pfIDNum[pfIDNum.length -1]
         }
       })

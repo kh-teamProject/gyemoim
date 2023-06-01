@@ -152,7 +152,6 @@ public class StageServiceImpl implements StageService {
     //2.  roll 테이블 uNo 삭제
     stageMapper.rollDelete(dto);
     //3. 나가는 사람이 방장이면 다음사람에게 방장을 넘겨주기
-    log.info("pfMaster:::::::::::::::::::"+pfMaster);
     if (pfMaster != null) {
       Date latestRollDate = stageMapper.getLatestStageInDate(dto);
       if(latestRollDate == null){
@@ -174,13 +173,12 @@ public class StageServiceImpl implements StageService {
   //(찬희) 스테이지 입금하기
   @Override
   public void stageDeposit(StageRollDTO dto) {
-    log.info("+++++++++++++++++서비스" + dto);
     //1. 계좌잔액 업데이트 -> uPayment 금액을 insert
     stageMapper.stageBalanceUpdate(dto);
     //2. my계좌 잔액 -> 현금액 - uPayment
     stageMapper.myAccountUPaymentUpdate(dto);
-    //3. 계좌이력도 남겨야 함 (출금, 입금)
-
+    //3. 계좌이력도 남겨야 함 (출금 insert)
+    stageMapper.stageWithdraw(dto);
     //4. 입금 횟수 mapper.xml에서 +1
     stageMapper.depositCntPlus(dto);
     //5. 입금 누적 금액 update
@@ -192,29 +190,39 @@ public class StageServiceImpl implements StageService {
     //(현재 paymentOrder 값 조회)
     this.stageRollDTO = dto;
     this.stageRollDTO.setPaymentOrder(stageMapper.getPaymentOrderValue(stageRollDTO));
+
+
+
+
   }
   //(찬희). 스테이지 금액 -> my계좌로 순서에 맞게 update / 자동으로 곗돈 지급
   @Override
-  @Scheduled(cron = "0 52 19 20 * ?") // 매달 25일 0시 0분 0초에 실행
+  @Scheduled(cron = "0 40 19 31 * ?") // 매달 25일 0시 0분 0초에 실행
   public void performUpdate() {
-    log.info("제발 실행이 되어주세요 플리즈" + stageRollDTO);
+    log.info("들어오세요 쫌 !!!!! 왜 안돼? 왜? 왜지? 모지?");
     if( stageRollDTO != null) {
-      log.info("실행이 됩니까? 1 : " + stageRollDTO);
+      log.info("들어오세요 쫌 !!!!!");
       int currentStageBalance = stageMapper.getStageBalance(stageRollDTO);
       int stageDeposit = stageMapper.getStageDeposit(stageRollDTO);
+      int uTotalReceipts = stageMapper.getUTotalReceipts(stageRollDTO);
+      int uNo = stageMapper.getUNoForMyAccount(stageRollDTO);
+
+      //dto에 정보저장
+      stageRollDTO.setUTotalReceipts(uTotalReceipts);
+      stageRollDTO.setUNo(uNo);
       // stageBalance >= deposit : stageBalance -> uPayment 이동
-
       if (currentStageBalance >= stageDeposit) {
-        log.info("실행이 됩니까? 2 : " + currentStageBalance);
-
-        //1. stageBalance - *번의 uPayment
+        log.info("currentStageBalance: " + currentStageBalance + ",stageDeposit : " + stageDeposit);
+        //1. 스테이지(pf) stageBalance - *번의 uPayment
         stageMapper.stageBalanceMinus(stageRollDTO);
-        //2. *번의 uPayment + stageBalance
+        //2. *번의 계좌(myAccount)의 uPayment + stageBalance
         stageMapper.stagePaymentOrder(stageRollDTO);
         //3. 지급순서 올리기
         stageMapper.paymentOrderSave(stageRollDTO);
         //4. 전원 입금식별자 'Y' -> 'N'
         stageMapper.AllPaymentCheckUpdate(stageRollDTO);
+        //5. 계좌이력 남기기(입금)
+        stageMapper.depositHistoryInsert(stageRollDTO);
       }
     }
   }
