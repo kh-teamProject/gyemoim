@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import {useDispatch, useSelector} from "react-redux";
 import Cookies from "js-cookie";
 import {NavLink, useNavigate} from "react-router-dom";
 import axios from "axios";
+=======
+import {NavLink, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import axios from "axios";
+import Cookies from "js-cookie";
+>>>>>>> feature/KwonOhSoo
 import {useEffect} from "react";
 
 import logo from "./assert/images/logo0306.png";
@@ -37,7 +44,7 @@ const Header = () => {
         <header>
             <nav>
                 <div>
-                    <NavLink to={"stage"}>스테이지</NavLink>
+                    <NavLink to={"stagelist"}>스테이지</NavLink>
                     <NavLink to={"question"}>1:1 문의사항</NavLink>
                     <NavLink to={"faq"}>이용안내</NavLink>
                 </div>

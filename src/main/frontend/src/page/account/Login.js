@@ -10,6 +10,7 @@ import gyemoim_character from "../../component/images/gyemoim_character.png"
 
 const Login = () => {
 
+
     const dispatch = useDispatch();
     const checkedLogin = useSelector((state) => state.checkedLogin);
 
@@ -19,7 +20,12 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
+<<<<<<< HEAD
         e.preventDefault()
+=======
+        e.preventDefault();
+
+>>>>>>> feature/KwonOhSoo
         try {
             await axios.post('/api/login', {
                 email,
@@ -40,7 +46,11 @@ const Login = () => {
                     console.log('이름', name);
                     console.log('uNo', uNo);
                     console.log('userRole', userRole);
+<<<<<<< HEAD
 //                    alert(`${name}님 환영합니다.);
+=======
+
+>>>>>>> feature/KwonOhSoo
                     alert(`${name} 어서와ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ`);
                     navigate('/');
 
@@ -51,6 +61,8 @@ const Login = () => {
                 });
         } catch (error) {
             console.error(error);
+            alert('이메일이나 비밀번호를 다시 확인해 주세요.')
+
         }
     };
 
