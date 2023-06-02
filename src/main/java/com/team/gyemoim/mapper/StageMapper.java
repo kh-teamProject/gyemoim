@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import com.team.gyemoim.dto.stage.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -112,4 +113,12 @@ public interface StageMapper {
     int getUTotalReceipts(StageRollDTO stageRollDTO);
     //(찬희) 현재 *번째의 uNo 정보 갖고오기
     int getUNoForMyAccount(StageRollDTO stageRollDTO);
+
+  // (지연)선택한 계모임 정보 가져오기
+  HashMap<String, Object> getStageSelect(Integer pfID);
+
+    // (지연)수령예정표 가져오기
+    List<ReceiptDTO> getReceipt(BigDecimal pfRate);
+
+
 }

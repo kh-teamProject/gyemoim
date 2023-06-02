@@ -4,9 +4,6 @@ package com.team.gyemoim.service.stage;
 import com.team.gyemoim.dto.stage.*;
 import com.team.gyemoim.mapper.StageMapper;
 import com.team.gyemoim.vo.MemberVO;
-
-import com.team.gyemoim.vo.RollVO;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -70,6 +67,13 @@ public class StageServiceImpl implements StageService {
     return stageMapper.checkPfName(pfName);
   }
 
+  //(현지)<스테이지생성>_스테이지 pfID 가져오기
+  @Override
+  public List<StageCreateDTO> stagePartIn1(String pfName) {
+    System.out.println("[서비스] 참가스테이지 번호 가져오기");
+    return stageMapper.stagePartIn1(pfName);
+  }
+
   // (현지)  <스테이지생성>_수령예정표
   @Override
   public List<ImportDTO> importGet(ImportDTO importDTO) {
@@ -77,12 +81,6 @@ public class StageServiceImpl implements StageService {
     return stageMapper.importGet(importDTO);
   }
 
-  //(현지)<스테이지생성>_스테이지 pfID 가져오기
-  @Override
-  public List<StageCreateDTO> stagePartIn1(String pfName) {
-    System.out.println("[서비스] 참가스테이지 번호 가져오기");
-    return stageMapper.stagePartIn1(pfName);
-  }
   //(현지)<스테이지생성>_스테이지 정보 가져오기
   @Override
   public List<ImportDTO> stagePartIn2(ImportDTO importDTO) {
@@ -226,13 +224,23 @@ public class StageServiceImpl implements StageService {
       }
     }
   }
-
   //(찬희) 수익보고서 member 정보 불러오기
   @Override
   public List<MemberVO> getMemberInfo(StageRollDTO dto) {
     return stageMapper.getMemberInfo(dto);
   }
 
+  // (지연)선택한 계모임 정보 가져오기
+  @Override
+  public HashMap<String, Object> getStageSelect(Integer pfID) {
+    System.out.println("getStageSelect Service...");
+    return stageMapper.getStageSelect(pfID);
+  }
 
-
+  // (지연)수령예정표 가져오기
+  @Override
+  public List<ReceiptDTO> getReceipt(BigDecimal pfRate) {
+    System.out.println("getReceipt Service...");
+    return stageMapper.getReceipt(pfRate);
+  }
 }

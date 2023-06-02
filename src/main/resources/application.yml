@@ -30,6 +30,5 @@ jwt:
 mybatis:
   mapper-locations: classpath:mapper/**.xml
 
-
 upload:
   path: /path/to/upload/folder

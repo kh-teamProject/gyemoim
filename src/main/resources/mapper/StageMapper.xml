@@ -321,5 +321,23 @@
         WHERE uNo = #{uNo}
         AND pfID = #{pfID}
     </select>
+    <!-- (지연)선택한 계모임 정보 가져오기 -->
+    <select id="getStageSelect" resultType="java.util.HashMap">
+        SELECT *
+        FROM PF
+        WHERE pfID = #{pfID}
+    </select>
+
+    <!-- (지연)수령예정표 가져오기 -->
+    <select id="getReceipt" resultType="com.team.gyemoim.dto.stage.ReceiptDTO">
+        SELECT rs.*
+        FROM receiptSchedule rs
+        WHERE rs.pfRate IN (
+        SELECT pfRate
+        FROM PF
+        WHERE pfRate = 1.86
+        AND deposit = 100000
+        )
+    </select>
 
 </mapper>

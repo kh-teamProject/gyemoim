@@ -149,4 +149,22 @@ public class StageController {
       log.info("stageOutOoooooooooooooooo"+dto);
       return "success";
   }
+
+
+    // (지연)선택한 계모임 정보 가져오기
+    @GetMapping("/stageSelect")
+    public HashMap<String, Object> getStageSelect(@RequestParam Integer pfID) {
+        return stageService.getStageSelect(pfID);
+    }
+
+
+
+    // (지연)스테이지 선택 수령예정표 가져오기
+    @GetMapping("/Receipt")
+    public List<ReceiptDTO> getReceipt(@RequestParam BigDecimal pfRate) {
+        System.out.println(stageService.getReceipt(pfRate));
+        return stageService.getReceipt(pfRate);
+    }
+
+
 }

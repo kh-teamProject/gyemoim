@@ -1,0 +1,28 @@
+.button {
+    color: skyblue;
+}
+
+.PartiNum {
+    background-color: #f7f7f7;
+    padding: 20px;
+    box-sizing: border-box;
+    width:1100px;
+    height:800px;
+    object-fit: cover;
+}
+
+.stageSelectOrder {
+    color: #1a1a1a;
+    display: block;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.stageSelectOrder > p {
+    color: #505050;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    margin-top: 22px;
+}

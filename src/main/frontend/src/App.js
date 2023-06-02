@@ -23,6 +23,7 @@ import StagePartIn from './page/stage/StagePartIn';
 import StageList from './page/stage/StageList';
 import Account from "./page/account/Account";
 import Stage from './page/stage/Stage';
+import StageSelect from './page/stage/StageSelect';
 import ChanHeeTest from './page/ChanHeeTest';
 import CheckedPwd from "./page/account/CheckedPwd";
 import Deposit from "./page/account/Deposit";
@@ -112,6 +113,10 @@ const App = () => {
         {
           path: 'stage/:pfID',
           element: <Stage/>
+        },
+        {
+           path: '/stageSelect',
+           element: <StageSelect />
         },
         {
           path: 'stagelist',

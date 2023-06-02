@@ -11,7 +11,10 @@ import com.team.gyemoim.vo.MemberVO;
 
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+
+
 
 public interface StageService {
  /*(유진) getPFList -> 전체버튼일때 리스트 전부 가져옴
@@ -32,14 +35,14 @@ public interface StageService {
  // (현지)  <스테이지생성>_수령예정표
   List <ImportDTO> importGet(ImportDTO importDTO);
 
-
   //Read
   //(현지)<스테이지생성>_스테이지 pfID 가져오기
   List <StageCreateDTO> stagePartIn1(String pfName);
  //(현지)<스테이지생성>_스테이지 정보 가져오기
   List <ImportDTO> stagePartIn2(ImportDTO importDTO);
 
-  //(찬희) 스테이지 PF 정보 갖고오기
+
+ //(찬희) 스테이지 PF 정보 갖고오기
  List<StagePfDTO> getPfList(Integer pfID);
  //(찬희) 개인 Roll 정보 갖고오기
  List<StageRollDTO> getRollList(StageRollDTO dto);
@@ -63,4 +66,10 @@ public interface StageService {
  //(찬희) 수익보고서 user 정보 갖고오기
  List<MemberVO> getMemberInfo(StageRollDTO dto);
 
+
+ // (지연)선택한 계모임 정보 가져오기
+ HashMap<String, Object> getStageSelect(Integer pfID);
+
+ // (지연)수령예정표 가져오기
+ List<ReceiptDTO> getReceipt(BigDecimal pfRate);
 }
