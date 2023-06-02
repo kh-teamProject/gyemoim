@@ -49,6 +49,11 @@ public class AccountController {
     return accountService.getMyAccountHistory(uNo);
   }
 
+  // 지출내역 가져오기
+  @GetMapping("/getExpenditure")
+  public List<ExpenditureVO> getExpenditure(@RequestParam Integer uNo) {
+    return accountService.getExpenditure(uNo);
+  }
   // Update
   // 내 정보 수정하기
   @PostMapping("/myInfoModify")

@@ -12,6 +12,7 @@ const MemberInfo = () => {
   const lastPath = pathParts[pathParts.length - 1];
 
   const [myInfo, setMyInfo] = useState({});
+  const [expenditure, setExpenditure] = useState({});
   const [enrollDate, setEnrollDate] = useState('');
 
   useEffect(() => {
@@ -29,26 +30,46 @@ const MemberInfo = () => {
       .catch((error) => {
         console.log(error);
       });
+
+    axios.get('/getExpenditure', {
+      params: {
+        uNo: lastPath
+      }
+    })
+      .then((res) => {
+        setExpenditure(res.data[0]);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }, []);
 
   const myInfoChangeHandler = (e) => {
     e.preventDefault();
-    console.log(myInfo);
+    console.log(expenditure);
     if(
       myInfo.bankName === '' ||
       myInfo.bankAccountNumber === '' ||
       myInfo.accountHolder === '' ||
       myInfo.monthlySalary === '' ||
-      myInfo.monthlyLimit === ''
+      myInfo.monthlyLimit === '' ||
+      expenditure.medicalCost === '' ||
+      expenditure.housingCost === '' ||
+      expenditure.foodCost === '' ||
+      expenditure.culturalCost === '' ||
+      expenditure.etc === ''
     ) {
       alert('빈칸이 존재합니다. 모두 입력해주세요.');
       return;
     }
 
-    axios.post('/myInfoModify', myInfo)
+    axios.post('/myInfoModify', {
+      ...myInfo,
+      ...expenditure,
+    })
       .then((res) => {
         alert('회원정보 수정이 완료되었습니다.');
-        // navigate('/');
+        navigate('/');
       })
       .catch((error) => {
         console.log(error);
@@ -89,23 +110,23 @@ const MemberInfo = () => {
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">의료비</label>
-          <input type="text" id="account-number" onChange={(e) => {setMyInfo({...myInfo, medicalCost: parseInt(e.target.value)})}}  />
+          <input type="text" id="account-number" value={expenditure.medicalCost || ''} onChange={(e) => {setExpenditure({...expenditure, medicalCost: e.target.value})}}  />
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">주거비</label>
-          <input type="text" id="account-number" onChange={(e) => {setMyInfo({...myInfo, housingCost: parseInt(e.target.value)})}}  />
+          <input type="text" id="account-number" value={expenditure.housingCost || ''} onChange={(e) => {setExpenditure({...expenditure, housingCost: e.target.value})}}  />
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">식비</label>
-          <input type="text" id="account-number" onChange={(e) => {setMyInfo({...myInfo, foodCost: parseInt(e.target.value)})}}  />
+          <input type="text" id="account-number" value={expenditure.foodCost || ''} onChange={(e) => {setExpenditure({...expenditure, foodCost: e.target.value})}}  />
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">문화비</label>
-          <input type="text" id="account-number" onChange={(e) => {setMyInfo({...myInfo, culturalCost: parseInt(e.target.value)})}}  />
+          <input type="text" id="account-number" value={expenditure.culturalCost || ''} onChange={(e) => {setExpenditure({...expenditure, culturalCost: e.target.value})}}  />
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">기타</label>
-          <input type="text" id="account-number" onChange={(e) => {setMyInfo({...myInfo, etc: parseInt(e.target.value)})}}  />
+          <input type="text" id="account-number" value={expenditure.etc || ''} onChange={(e) => {setExpenditure({...expenditure, etc: e.target.value})}}  />
         </div>
         <div className={classes.field}>
           <label htmlFor="enroll-date">가입일</label>
@@ -113,7 +134,7 @@ const MemberInfo = () => {
         </div>
         <div className={classes.field}>
           <label htmlFor="">회원구분</label>
-          <input type="text" id="" value={myInfo.USERROLE || ''} readOnly />
+          <input type="text" id="" value={myInfo.userRole || ''} readOnly />
         </div>
         <div className={classes.field}>
           <button type={"submit"} className={`${classes['submit-btn']}`}>수정완료</button>

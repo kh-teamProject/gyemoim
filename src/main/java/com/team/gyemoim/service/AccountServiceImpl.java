@@ -68,7 +68,6 @@ public class AccountServiceImpl implements AccountService {
   // Update
   @Override
   public void myInfoModify(MyPageDTO myPageDTO) {
-    System.out.println("myPageDTO = " + myPageDTO);
     accountMapper.myInfoModify(myPageDTO);
   }
 

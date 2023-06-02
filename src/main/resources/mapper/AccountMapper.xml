@@ -52,19 +52,16 @@
   <update id="myInfoModify" parameterType="com.team.gyemoim.dto.MyPageDTO">
     UPDATE MEMBER
     SET NAME = #{name},
-        PHONE = #{phone},
-        BANKNAME = #{bankName},
-        BANKACCOUNTNUMBER = #{bankAccountNumber},
-        ACCOUNTHOLDER = #{accountHolder},
-        MONTHLYSALARY = #{monthlySalary},
-        MONTHLYLIMIT = (#{monthlySalary} - #{medicalCost} - #{housingCost} - #{foodCost} - #{culturalCost} - #{etc}) * 0.1,
-        USERROLE =
-            <choose>
-              <when test="#{userRole == '가회원'}">
-                '정회원'
-              </when>
-        </choose>
-    WHERE uNo = #{uNo}
+    PHONE = #{phone},
+    BANKNAME = #{bankName},
+    BANKACCOUNTNUMBER = #{bankAccountNumber},
+    ACCOUNTHOLDER = #{accountHolder},
+    MONTHLYSALARY = #{monthlySalary},
+    MONTHLYLIMIT = (#{monthlySalary} - #{medicalCost} - #{housingCost} - #{foodCost} - #{culturalCost} - #{etc}) * 0.1
+    <if test="userRole == '가회원'">
+      , USERROLE = '정회원'
+    </if>
+    WHERE UNO = #{uNo}
   </update>
 
   <!-- 내 관심사 수정 -->

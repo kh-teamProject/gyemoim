@@ -17,7 +17,7 @@ public class MyPageDTO {
   private String bankName; //은행명
   private String bankAccountNumber; //계좌번호
   private String accountHolder; // 계좌명의
-  @JsonProperty(value = "USERROLE")
+  @JsonProperty(value = "userRole")
   private String userRole; // 회원 식별자
   private String enrollDate; //회원가입일
   private Integer monthlySalary; // 월급여
