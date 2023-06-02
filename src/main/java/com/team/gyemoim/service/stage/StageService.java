@@ -4,7 +4,10 @@ import com.team.gyemoim.dto.stage.*;
 import com.team.gyemoim.vo.ParticipationVO;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+
+
 
 public interface StageService {
  /*(유진) getPFList -> 전체버튼일때 리스트 전부 가져옴
@@ -13,21 +16,21 @@ public interface StageService {
  List<StageListDTO> getPFList();
  List<StageListDTO> filterList(int deposit);
 
-// (유진) 수령순서 가져오기
+ // (유진) 수령순서 가져오기
  List<ParticipationVO> getRecTurn();
 
-  void stageCreate(StageCreateDTO stageCreateDTO);
-  void stageParticipate(StageParticipateDTO stageParticipateDTO);
+ void stageCreate(StageCreateDTO stageCreateDTO);
+ void stageParticipate(StageParticipateDTO stageParticipateDTO);
 
-  int checkPfName(String pfName);
-  List <ImportDTO> importGet(BigDecimal pfRate);
+ int checkPfName(String pfName);
+ List <ImportDTO> importGet(BigDecimal pfRate);
 
 
-  //Read
-  List <StageCreateDTO> stagePartIn1(String pfName);
-  List <ImportDTO> stagePartIn2(String pfName);
+ //Read
+ List <StageCreateDTO> stagePartIn1(String pfName);
+ List <ImportDTO> stagePartIn2(String pfName);
 
-  //(찬희) 스테이지 PF 정보 갖고오기
+ //(찬희) 스테이지 PF 정보 갖고오기
  List<StagePfDTO> getPfList(Integer pfID);
  //(찬희) 개인 Roll 정보 갖고오기
  List<StageRollDTO> getRollList(StageRollDTO dto);
@@ -47,4 +50,11 @@ public interface StageService {
  void stageDeposit(StageRollDTO dto);
  //(찬희) 자동으로 곗돈 수령
  void performUpdate();
+
+
+ // (지연)선택한 계모임 정보 가져오기
+ HashMap<String, Object> getStageSelect(Integer pfID);
+
+ // (지연)수령예정표 가져오기
+ List<ReceiptDTO> getReceipt(BigDecimal pfRate);
 }

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -186,5 +187,22 @@ public class StageServiceImpl implements StageService {
 
       }
     }
+  }
+
+
+
+
+  // (지연)선택한 계모임 정보 가져오기
+  @Override
+  public HashMap<String, Object> getStageSelect(Integer pfID) {
+    System.out.println("getStageSelect Service...");
+    return stageMapper.getStageSelect(pfID);
+  }
+
+  // (지연)수령예정표 가져오기
+  @Override
+  public List<ReceiptDTO> getReceipt(BigDecimal pfRate) {
+    System.out.println("getReceipt Service...");
+    return stageMapper.getReceipt(pfRate);
   }
 }

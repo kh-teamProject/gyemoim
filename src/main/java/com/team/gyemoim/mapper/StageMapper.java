@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import com.team.gyemoim.dto.stage.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -83,5 +84,14 @@ public interface StageMapper {
     void stagePaymentOrder(StageRollDTO dto);
     //(찬희) 현재 pf의 지급순서 조회
     int getPaymentOrderValue(StageRollDTO dto);
+
+
+  // (지연)선택한 계모임 정보 가져오기
+  HashMap<String, Object> getStageSelect(Integer pfID);
+
+    // (지연)수령예정표 가져오기
+    List<ReceiptDTO> getReceipt(BigDecimal pfRate);
+
+
 
 }
