@@ -3,6 +3,8 @@ import {Link, useNavigate} from "react-router-dom";
 import "../../component/css/Board.module.css";
 import "../../component/css/Page.module.css";
 import axios from "axios";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 const NoticeList = () => {
 
@@ -18,16 +20,21 @@ const NoticeList = () => {
     // 2) 전체 페이지 수 : totalPage
     const [totalPage, setTotalPage] = useState(0);
 
-
     // 검색용 변수
     const [searchTypeVal, setSearchTypeVal] = useState("");
     const [searchKeywordVal, setSearchKeywordVal] = useState("");
 
-
     // Link 용 (함수)
     let navigate = useNavigate();
 
+    // 로그인 토큰에서 식별자(역할) userRole, 회원번호 uno 가져오기
+    /*const token = jwtDecode(Cookies.get('Set-Cookie'));
+    const userRole = token.userRole;
+    const uno = token.uNo;*/
 
+
+    // 운영자 여부 확인을 위한 상태 변수
+    //const [isAdmin, setIsAdmin] = useState(false);
 
 
     // API 호출하여 게시글 목록 가져오기
@@ -53,14 +60,24 @@ const NoticeList = () => {
                 console.log("NoticeList_fetchNoticeList 게시글 불러오기 에러발생 :< ");
                 console.log(error);
             })
-
     };
 
 
     // 초기 렌더링 시 게시글 목록과 전체 페이지 수를 가져온다.
     useEffect(() => {
+        /*// 사용자 역할(userRole)이 "관리자" 인 경우에만 운영자로 간주
+        if (userRole == "관리자") {
+            setIsAdmin(true);
+        }*/
         fetchNoticeList("", "");
+        //console.log("token : " + token);
     }, []);
+
+
+    // searchKeyword (검색어), searchType(검색타입), nowPage(현재페이지) 상태가 변경될 때만 호출되도록 설정
+    /*useEffect(() => {
+        fetchNoticeList(searchTypeVal, searchKeywordVal);
+    }, [searchTypeVal, searchKeywordVal, nowPage]);*/
 
 
     // 검색 타입 변경하는 함수
@@ -68,12 +85,10 @@ const NoticeList = () => {
         setSearchTypeVal(e.target.value);
     }
 
-
     // 검색어 변경하는 함수
     const changeSearchKeyword = (e) => {
         setSearchKeywordVal(e.target.value);
     }
-
 
     // searchKeyword (검색어), searchType (검색타입) 기반으로 조회하는 함수
     const handleFormSubmit = () => {
@@ -86,19 +101,16 @@ const NoticeList = () => {
 
     };
 
-
     // 페이지 변경할 때 호출되는 함수
     // 클릭한 페이지에 해당하는 게시글 목록 가져오도록 설정함
     const handlePageClick = (e) => {
         // 클릭한 페이지
         const targetPage = Number(e.target.value);
-
         // 클릭한 targetPage 가 0보다 크고 totalPage 보다 작거나 같으면
         // 즉, 클릭한 페이지가 유효 범위에 있을 때
         // 현재페이지 setNowPage 를 클릭한 페이지 targetPage 로 변경해준다.
         if (targetPage > 0 && targetPage <= totalPage) {
             setNowPage(targetPage);
-
         }
     }
 
@@ -241,14 +253,22 @@ const NoticeList = () => {
 
 
                             {/* 글쓰기 버튼 */}
+                            {/*{isAdmin && (
+                                <div className="my-5 d-flex justify-content-center" style={{
+                                    marginTop: '10px',
+                                    marginBottom: '10px',
+                                }}>
+                                     적용시켜야 할 것: 로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화(/board/notice/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기
+                                    <Link to={"/board/notice/write"}><i className="fas fa-pen"></i> &nbsp; 글쓰기</Link>
+                                </div>
+                            )}*/}
                             <div className="my-5 d-flex justify-content-center" style={{
                                 marginTop: '10px',
                                 marginBottom: '10px',
                             }}>
-                                {/* 적용시켜야 할 것: 로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화(/board/notice/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기 */}
+                                적용시켜야 할 것: 로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화(/board/notice/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기
                                 <Link to={"/board/notice/write"}><i className="fas fa-pen"></i> &nbsp; 글쓰기</Link>
                             </div>
-
                         </div>
                     </div>
                 </div>

@@ -1,11 +1,17 @@
 import React, {useEffect, useState} from "react";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
+import ReplyWrite from "../../component/ReplyWrite";
+import ReplyList from "../../component/ReplyList";
 
 const QuestionDetail = () => {
 
     const [questionDetail, setQuestionDetail] = useState({});
+
+    const token = jwtDecode(Cookies.get('Set-Cookie'));
+    const uNo = token.uNo;
 
     // 파라미터 가져오기
     const {bid} = useParams();
@@ -92,6 +98,20 @@ const QuestionDetail = () => {
                                 <p>문의사항 세부내용</p>
                             </div>
                             <div>
+
+                                {/* 수정,삭제,목록보기 버튼 */}
+                                <div>
+                                    <button className="btn btn-primary btn-lg px-4 me-sm-3"
+                                            onClick={moveToQuestionList}>목록보기
+                                    </button>
+                                    <button className="btn btn-primary btn-lg px-4 me-sm-3"
+                                            onClick={moveToQuestionModify}>수정하기
+                                    </button>
+                                    <button className="btn btn-primary btn-lg px-4 me-sm-3"
+                                            onClick={moveToQuestionDelete}>삭제하기
+                                    </button>
+                                </div>
+
                                 <table>
                                     <tbody>
                                     <tr>
@@ -114,7 +134,7 @@ const QuestionDetail = () => {
                                     </tbody>
                                 </table>
 
-                                {/* 댓글 시작 */}
+                                {/* 댓글 시작
                                 <div id="replyArea">
                                     <div className="card-body">
                                         <textarea className="form-control" name="comm" id="newReplyComm" cols="30"
@@ -133,25 +153,22 @@ const QuestionDetail = () => {
                                         </button>
 
 
-                                        {/* 댓글 테이블 */}
-                                        {/* 댓글 나오고 그 아래에 댓글 수정하기, 삭제하기 버튼 (로그인 uno === 댓글 uno 인 경우에만 실행) */}
+                                         댓글 테이블
+                                         댓글 나오고 그 아래에 댓글 수정하기, 삭제하기 버튼 (로그인 uno === 댓글 uno 인 경우에만 실행)
 
                                     </div>
-                                </div>
+                                </div>*/}
 
-                                {/* 수정,삭제,목록보기 버튼 */}
-                                <div>
-                                    <button className="btn btn-primary btn-lg px-4 me-sm-3"
-                                            onClick={moveToQuestionList}>목록보기
-                                    </button>
-                                    <button className="btn btn-primary btn-lg px-4 me-sm-3"
-                                            onClick={moveToQuestionModify}>수정하기
-                                    </button>
-                                    <button className="btn btn-primary btn-lg px-4 me-sm-3"
-                                            onClick={moveToQuestionDelete}>삭제하기
-                                    </button>
-                                </div>
-                                <br/><br/>
+                                {/* 댓글 작성 컴포넌트 */}
+                                {
+                                    (uNo != null) ? // 로그인한 사용자만 댓글 작성 가능
+                                        <ReplyWrite bid={bid}/>
+                                        :
+                                        null
+                                }
+
+                                {/* 댓글 리스트 컴포넌트 */}
+                                <ReplyList bid={bid} />
 
                             </div>
                         </div>

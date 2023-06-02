@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.gyemoim.mapper.BoardMapper">
 
-<!--     게시글 Read -->
-<!--     게시글 총 갯수 구하기 -->
+    <!--     게시글 Read -->
+    <!--     게시글 총 갯수 구하기 -->
     <select id="countBoard" resultType="int">
         SELECT COUNT(*)
         FROM BOARD
@@ -86,16 +86,25 @@
 
     <!-- 게시글 Create -->
     <!-- 글 작성하기 -->
-    <insert id="write" parameterType="com.team.gyemoim.dto.board.BoardWriteDTO">
+    <insert id="insert" parameterType="com.team.gyemoim.dto.board.BoardWriteDTO">
         INSERT INTO board (bid, uNo, name, type, title, views, content, writeDate, secret)
         VALUES (BID_BOA_SEQ.NEXTVAL, #{uno}, #{name}, #{type}, #{title}, 0, #{content}, sysdate, #{secret})
     </insert>
 
-    <!-- 첨부파일 작성하기 -->
-    <insert id="addAttachedName">
-        INSERT INTO Attached(bid, fileNamae)
-        VALUES (BID_BOA_SEQ.currval, #{fileNamae})
-    </insert>
+
+    <!-- 첨부파일 작성하기
+    &lt;!&ndash; attachedID 및 bid 필드에 대해 시퀀스 값을 조회하고, 이를 사용하여 해당 필드에 값을 할당한다. &ndash;&gt;
+    <insert id="saveAttached" parameterType="com.team.gyemoim.vo.AttachedVO">
+        <selectKey keyProperty="attachedID" resultType="int" order="BEFORE">
+            SELECT ATTACHEDID_ATTACHED_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+        <selectKey keyProperty="bid" resultType="int" order="BEFORE">
+            SELECT BID_BID_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO Attached (attachedID, bid, filename, fileSize, fileType, filePath, uploadDate, modifyDate)
+        VALUES (ATTACHEDID_ATTACHED_SEQ.NEXTVAL, BID_BOA_SEQ.NEXTVAL, #{fileName}, #{fileSize}, #{fileType},
+        #{filePath}, systimestamp, sistimestamp)
+    </insert>-->
 
 
     <!-- 게시글 Update -->
@@ -106,13 +115,13 @@
         WHERE bid = #{bid}
     </select>
 
-<!--  아직안씀  -->
+    <!--  아직안씀  -->
     <!-- 수정 전 게시글에 있는 기존 첨부파일 가져오기 -->
-<!--    <select id="attached" resultType="com.team.gyemoim.vo.AttachedVO">-->
-<!--        SELECT *-->
-<!--        FROM ATTACEHD-->
-<!--        WHERE bid = #{bid}-->
-<!--    </select>-->
+    <!--    <select id="attached" resultType="com.team.gyemoim.vo.AttachedVO">-->
+    <!--        SELECT *-->
+    <!--        FROM ATTACEHD-->
+    <!--        WHERE bid = #{bid}-->
+    <!--    </select>-->
 
     <!-- 특정 bid 에 해당하는 게시글 수정하기 -->
     <update id="modifyUpdate" parameterType="com.team.gyemoim.dto.board.BoardModifyDTO">
@@ -140,6 +149,40 @@
         FROM BOARD
         WHERE bid = #{bid}
           AND uNo = #{uNo}
+    </delete>
+
+
+    <!-- 첨부파일 -->
+    <!-- 첨부파일 생성 Create -->
+    <insert id="saveAttached" parameterType="com.team.gyemoim.vo.AttachedVO">
+        INSERT INTO Attached (attachedID, bid, fileName, fileSize, fileType, filePath, uploadDate, modifyDate)
+        VALUES (ATTACHEDID_ATTACHED_SEQ.NEXTVAL, #{bid}, #{fileName}, #{fileSize}, #{fileType},
+                #{filePath}, SYSTIMESTAMP, SYSTIMESTAMP)
+    </insert>
+
+    <!-- 첨부파일 상세보기 Read -->
+    <select id="getAttachedById" parameterType="int" resultType="com.team.gyemoim.vo.AttachedVO">
+        SELECT *
+        FROM Attached
+        WHERE attachedID = #{attachedID}
+    </select>
+
+    <!-- 첨부파일 수정 Update -->
+    <update id="updateAttached" parameterType="com.team.gyemoim.vo.AttachedVO">
+        UPDATE Attached
+        SET fileName   = #{fileName},
+            fileSize   = #{fileSize},
+            fileType   = #{fileType},
+            filePath   = #{filePath},
+            modifyDate = SYSTIMESTAMP
+        WHERE attachedID = #{attachedID}
+    </update>
+
+    <!-- 첨부파일 삭제 Delete -->
+    <delete id="deleteAttached" parameterType="int">
+        DELETE
+        FROM Attached
+        WHERE attachedID = #{attachedID}
     </delete>
 
 </mapper>

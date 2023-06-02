@@ -4,31 +4,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.gyemoim.mapper.ReplyMapper">
 
-    <!-- 댓글 작성하는 sql 문 -->
-    <insert id="replyWrite">
-        INSERT INTO REPLY(rno, bid, uNo, name, repdate, comm)
-        VALUES (rno_reply_seq.nextval, #{bid}, #{uNo}, #{name}, SYSDATE, #{comm})
+    <!-- 댓글 생성 -->
+    <insert id="createReply" parameterType="com.team.gyemoim.dto.reply.CreateReplyParamDTO">
+        INSERT INTO Reply (rno, bid, uNo, repDate, replyComm)
+        VALUES (RNO_REPLY_SEQ.NEXTVAL, #{bid}, #{uNo}, sysdate, #{replyComm})
     </insert>
 
-    <!-- 특정 게시글 bid 에 해당하는 댓글들 가져오는 sql 문 -->
-    <select id="reply" resultType="com.team.gyemoim.vo.ReplyVO">
-        SELECT *
-        FROM REPLY
+    <!-- 댓글 리스트 조회 -->
+    <select id="getReplyList" parameterType="int" resultType="com.team.gyemoim.vo.ReplyVO">
+        SELECT rno, bid, uNo, repDate, replyComm
+        FROM Reply
         WHERE bid = #{bid}
+        ORDER BY repDate DESC
     </select>
 
-
-    <!-- 특정 댓글 rno 에 해당하는 댓글 내용 수정하는 sql 문 -->
-    <update id="replyModify">
-        UPDATE REPLY
-        SET comm = #{comm}
-        WHERE rno = #{rno}
-    </update>
-
-    <!-- 특정 댓글 rno 에 해당하는 댓글 삭제하는 sql 문 -->
-    <delete id="replyDelete">
-        DELETE REPLY
+    <!-- 댓글 삭제 -->
+    <delete id="deleteReply" parameterType="int">
+        DELETE
+        FROM Reply
         WHERE rno = #{rno}
     </delete>
+
+    <!-- 댓글 수정 -->
+    <update id="updateReply" parameterType="com.team.gyemoim.dto.reply.UpdateReplyDTO">
+        UPDATE Reply
+        SET replyComm = #{replyComm}
+        WHERE rno = #{rno}
+    </update>
 
 </mapper>

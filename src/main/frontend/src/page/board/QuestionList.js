@@ -2,6 +2,8 @@ import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import styleTable from "../../component/styleTable";
 import axios from "axios";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 const QuestionList = () => {
 
@@ -25,6 +27,10 @@ const QuestionList = () => {
 
     // Link 용 (함수)
     let navigate = useNavigate();
+
+    // 로그인 토큰에서 회원번호 uno 가 있으면 가져오고 아니면 null 로 설정
+    const token = Cookies.get('Set-Cookie');
+    const uno = token ? jwtDecode(token).uNo : null;
 
 
     // API 호출하여 게시글 목록 가져오기
@@ -59,18 +65,15 @@ const QuestionList = () => {
         fetchQuestionList("", "");
     }, []);
 
-
     // 검색 타입 변경하는 함수
     const changeSearchType = (e) => {
         setSearchTypeVal(e.target.value);
     }
 
-
     // 검색어 변경하는 함수
     const changeSearchKeyword = (e) => {
         setSearchKeywordVal(e.target.value);
     }
-
 
     // searchKeyword (검색어), searchType (검색타입) 기반으로 조회하는 함수
     const handleFormSubmit = () => {
@@ -105,9 +108,9 @@ const QuestionList = () => {
         alert("다른 사람의 비밀글은 볼 수 없습니다.");
     };
 
-    // 글쓰기 버튼 클릭시 발생하는 함수 (글쓰기 버튼 클릭 -> 글쓰기 page 로 이동)
+    // 글쓰기 버튼 클릭시 문의사항 글쓰기 페이지로 이동하는 함수
     const moveQuestionWrite = () => {
-        window.location.href = 'question/write';
+        navigate("/board/question/write");
     };
 
 
@@ -115,6 +118,7 @@ const QuestionList = () => {
         <>
             {/* 헤더 */}
             {/* ... */}
+
 
             <section className="py-5">
                 <div className="container px-5">
@@ -127,7 +131,7 @@ const QuestionList = () => {
 
 
                             {/* 검색 시작 */}
-                            <table className="search" style={{
+                            {/*<table className="search" style={{
                                 display: 'flex',
                                 justifyContent: 'center',
                                 marginBottom: '10px',
@@ -155,18 +159,48 @@ const QuestionList = () => {
                                 </tr>
                                 </tbody>
 
-                            </table>
+                            </table>*/}
+                            <div className="search" style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginBottom: '10px',
+                            }}>
+                                <div>
+                                    <select className="custom-select" value={searchTypeVal}
+                                            onChange={changeSearchType}>
+                                        <option>검색 옵션 선택</option>
+                                        <option value="title">제목</option>
+                                        <option value="content">내용</option>
+                                        <option value="name">작성자</option>
+                                    </select>
+
+
+                                    <input type="text" className="form-control" placeholder="검색어를 입력하세요."
+                                           value={searchKeywordVal} onChange={changeSearchKeyword}/>
+                                </div>
+
+                                <div>
+                                    <button type="button" className="btn btn-outline-secondary"
+                                            onClick={handleFormSubmit}><i className="fas fa-search"></i> 검색
+                                    </button>
+                                    {uno && (
+                                        <button onClick={moveQuestionWrite}><i className="fas fa-pen"></i> &nbsp; 글쓰기
+                                        </button>
+                                    )}
+                                </div>
+
+                            </div>
                             {/* 검색 끝 */}
 
 
                             <table className="table table-hover">
                                 <thead className="table table-hover">
                                 <colgroup>
-                                    <col width="10%" />
-                                    <col width="40%" />
-                                    <col width="15%" />
-                                    <col width="25%" />
-                                    <col width="10%" />
+                                    <col width="10%"/>
+                                    <col width="40%"/>
+                                    <col width="15%"/>
+                                    <col width="25%"/>
+                                    <col width="10%"/>
                                 </colgroup>
                                 <tr>
                                     <th className="col-1">글번호</th>
@@ -248,13 +282,13 @@ const QuestionList = () => {
 
 
                             {/* 글쓰기 버튼 */}
-                            <div className="my-5 d-flex justify-content-center" style={{
+                            {/*<div className="my-5 d-flex justify-content-center" style={{
                                 marginTop: '10px',
                                 marginBottom: '10px',
                             }}>
-                                {/* 적용시켜야 할 것: 로그인한 경우에만 글쓰기 버튼 활성화(/board/question/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기 */}
+                                 //적용시켜야 할 것: 로그인한 경우에만 글쓰기 버튼 활성화(/board/question/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기
                                 <Link to={"/board/question/write"}><i className="fas fa-pen"></i> &nbsp; 글쓰기</Link>
-                            </div>
+                            </div>*/}
 
                         </div>
                     </div>

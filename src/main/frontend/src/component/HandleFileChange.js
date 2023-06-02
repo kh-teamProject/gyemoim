@@ -1,4 +1,6 @@
-const handleFileChange = (event) => {
+/*
+const
+    handleFileChange = (event) => {
     const imgControlName = "#ImgPreview";
     const input = event.target;
 
@@ -16,4 +18,4 @@ const handleFileChange = (event) => {
     );
 }
 
-export default handleFileChange;
+export default handleFileChange;*/

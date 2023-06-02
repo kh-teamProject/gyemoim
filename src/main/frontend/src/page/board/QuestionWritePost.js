@@ -1,21 +1,25 @@
 import React, {useState} from "react";
 import axios from "axios";
-
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 const QuestionWritePost = () => {
 
-    // 문자열 1 을 10진수로 나타내주는
-    //const uno = parseInt("1", 10);
+    // 로그인 토큰에서 이름 name, 회원번호 uno 가져오기
+    const token = jwtDecode(Cookies.get('Set-Cookie'));
+    const writer = token.name;
+    const uno = token.uNo;
 
     const [questionFormData, setQuestionFormData] = useState({
-        uno: 1,
-        name: "현지", // 글 작성자 이름
+        uno: uno,
+        name: writer, // 글 작성자 이름
         type: "1:1 문의사항", // 게시글 타입
         title: "", // 게시글 제목
         content: "", // 게시글 내용
         secret: "P", // 글 여부 (공개/비공개)
     });
 
+    const [file, setFile] = useState(null);
 
     const handleChange = (e) => {
         const {name, value} = e.target;// 변경된 요소의 'name' 과 'value' 속성을 추출함
@@ -38,42 +42,57 @@ const QuestionWritePost = () => {
 
     };
 
+    // 첨부 파일 선택(input type="file") 요소의 변경 이벤트에 대한 핸들러
+    // 파일을 선택하면 이벤트가 발생하고 선택한 파일 객체를 추출하여
+    // setSelectedFile 함수를 사용하여 상태를 업데이트 한다.
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]);
+    };
+
+
+
+
 
     const handleQuestionSubmit = async (e) => {
         e.preventDefault();// 리로드 방지
 
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("uno", questionFormData.uno);
+            formData.append("name", questionFormData.name);
+            formData.append("type", questionFormData.type);
+            formData.append("title", questionFormData.title);
+            formData.append("content", questionFormData.content);
+            formData.append("secret", questionFormData.secret);
 
-        axios.post('/board/writePost', questionFormData)
-            .then((response) => {
-                console.log("QuestionWritePost_handleSubmit 성공 :D");
-                console.log("글 작성자의 uNo 또는 uno: " + questionFormData.uno);
-                console.log("글 작성자의 name: " + questionFormData.name);
-                console.log("글 게시물 종류: " + questionFormData.type);
-                console.log("글 게시물 제목: " + questionFormData.title);
-                console.log("글 게시물 내용: " + questionFormData.content);
-                console.log("글 게시물 공개여부: " + questionFormData.secret);
-                window.location.href = '/board/question';
-            })
-            .catch((error) => {
-                console.log("QuestionWritePost_handleSubmit axios 실패 :<");
-                console.log("글 작성자의 uNo 또는 uno: " + questionFormData.uno);
-                console.log("글 작성자의 name: " + questionFormData.name);
-                console.log("글 게시물 종류: " + questionFormData.type);
-                console.log("글 게시물 제목: " + questionFormData.title);
-                console.log("글 게시물 내용: " + questionFormData.content);
-                console.log("글 게시물 공개여부: " + questionFormData.secret);
-                console.log("QuestionWritePost_handleSubmit axios 에러: " + error)
-
-                /*console.log("QuestionWritePost_handleSubmit 성공 :D");
-                console.log("글 작성자의 uNo 또는 uno: " + questionFormData.uno);
-                console.log("글 작성자의 name: " + questionFormData.name);
-                console.log("글 게시물 종류: " + questionFormData.type);
-                console.log("글 게시물 제목: " + questionFormData.title);
-                console.log("글 게시물 내용: " + questionFormData.content);
-                console.log("글 게시물 공개여부: " + questionFormData.secret);
-                console.log("QuestionWritePost_handleSubmit 글 작성 컨트롤러로 가즈앗! ><");
-                //window.location.href = '/board/question';*/
+            const response = await axios.post("/board/writePost", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
             });
+            console.log("QuestionWritePost_handleSubmit 성공 :D");
+            console.log("업로드할 첨부파일 : " + file);
+            console.log("글 작성자의 uNo 또는 uno: " + questionFormData.uno);
+            console.log("글 작성자의 name: " + questionFormData.name);
+            console.log("글 게시물 종류: " + questionFormData.type);
+            console.log("글 게시물 제목: " + questionFormData.title);
+            console.log("글 게시물 내용: " + questionFormData.content);
+            console.log("글 게시물 공개여부: " + questionFormData.secret);
+            window.location.href = '/board/question';
+
+        } catch (error) {
+            console.log("QuestionWritePost_handleSubmit axios 실패 :<");
+            console.log("업로드할 첨부파일 : " + file);
+            console.log("글 작성자의 uNo 또는 uno: " + questionFormData.uno);
+            console.log("글 작성자의 name: " + questionFormData.name);
+            console.log("글 게시물 종류: " + questionFormData.type);
+            console.log("글 게시물 제목: " + questionFormData.title);
+            console.log("글 게시물 내용: " + questionFormData.content);
+            console.log("글 게시물 공개여부: " + questionFormData.secret);
+            console.log("QuestionWritePost_handleSubmit axios 에러: " + error)
+
+        }
 
     }
 
@@ -87,7 +106,7 @@ const QuestionWritePost = () => {
                                 <h1>1:1 문의사항 글쓰기</h1>
                                 <p>반갑습니다 고객님, 문의사항을 적어주세요</p>
                             </div>
-                            <form onSubmit={handleQuestionSubmit} id="writeConn">
+                            <form encType="multipart/form-data" onSubmit={handleQuestionSubmit} id="writeConn">
                                 <div>
                                     <label htmlFor="uno">회원번호</label>
                                     <input type="number" id="uno" name="uno" value={questionFormData.uno}
@@ -127,6 +146,13 @@ const QuestionWritePost = () => {
                                 </div>
 
                                 <div>
+                                    <label htmlFor="file">첨부파일</label>
+                                    <input type="file" onChange={handleFileChange}/>
+                                </div>
+
+                                <div style={{
+                                    margin: '20px',
+                                }}>
                                     <button type="submit">작성하기</button>
                                 </div>
                             </form>

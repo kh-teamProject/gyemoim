@@ -39,7 +39,7 @@ const Header = () => {
             <nav>
                 <div>
                     <NavLink to={'stage'}>스테이지</NavLink>
-                    <NavLink to={'question'}>1:1 문의사항</NavLink>
+                    <NavLink to={'/board/question'}>1:1 문의사항</NavLink>
                     <NavLink to={'faq'}>이용안내</NavLink>
                 </div>
                 <NavLink to={'/'}><img src={logo} alt="logo" width={'200'} height={'100'}/></NavLink>
@@ -55,7 +55,7 @@ const Header = () => {
                             <NavLink to={'account'}>회원가입</NavLink>
                         </>
                     )}
-                    <NavLink to={'notice'}>공지사항</NavLink>
+                    <NavLink to={'/board/notice'}>공지사항</NavLink>
                 </div>
             </nav>
         </header>

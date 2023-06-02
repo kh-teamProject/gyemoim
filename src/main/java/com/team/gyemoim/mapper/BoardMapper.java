@@ -15,16 +15,14 @@ public interface BoardMapper {
     /* BoardWriteDAO (Create) */
     void write(BoardWriteDTO boardWriteDTO) throws Exception; // 게시글 쓰기
    // void addAttachedName(String savedName) throws Exception; // 첨부파일 쓰기
-
+    void insert(BoardVO boardVO) throws Exception; // 게시글 작성
 
 
     /* BoardDAO (Read) */
     // 검색 후 페이징 된 게시글 갯수 구하기 (사용 o)
     int searchCountBoard(PageVO spv);
-
     // 검색 후 검색에 해당하는 게시글 리스트 조회하기(사용 o)
     List<BoardVO> searchList(BoardListDTO dto) throws Exception;
-
     //int countBoard(); // 게시글 총 갯수 구하기
     //List<BoardVO> selectBoard(PageVO vo); // 게시글 조회하기
     List<BoardVO> selectBoard(); // 게시글 조회하기
@@ -56,5 +54,19 @@ public interface BoardMapper {
     Integer createBbsReadCountHistory(CreateReadCountParam param);//
     Integer increaseBbsReadCount(Integer seq); // 조회수 올리기?
     */
+
+
+    /* 첨부파일 관련 mapper */
+    // 첨부파일 생성
+    void saveAttached(AttachedVO attachedVO);
+
+    // 첨부파일 상세보기
+    AttachedVO getAttachedById(int attachedID);
+
+    // 첨부파일 수정
+    void updateAttached(AttachedVO attached);
+
+    // 첨부파일 삭제
+    void deleteAttached(int attachedID);
 
 }
