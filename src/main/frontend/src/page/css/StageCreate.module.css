@@ -3,6 +3,15 @@ body{
   text-align: center;
 }
 
+h4{
+    text-align:left;
+}
+
+
+.textLeft{
+text-align:left;
+}
+
 .title {
    color: #373f57;
 }
@@ -35,15 +44,10 @@ input.aa + label {
      justify-content: space-between;
 }
 
-.flex6{
-    flex:6;
-    padding: 2rem;
-
-}
 
 .flex2{
     flex:2;
-     padding: 1rem;
+     margin: 3rem;
 
 }
 
@@ -59,8 +63,8 @@ input.aa + label {
    border: 3px solid  #004DC1;
     background-color: #004DC1;
     color: white ;
-    width: 300px;
-    height: 68px;
+    width: 15rem;
+     height: 4rem;
     border-radius: 10px;
     font-size: 1.3rem;
 }
@@ -70,19 +74,168 @@ input.aa + label {
    border: 3px solid  #004DC1;
     background-color: #004DC1;
     color: white ;
-    width: 100px;
-    height: 50px;
+   width: 8.5rem;
+     height: 4rem;
     border-radius: 10px;
     font-size: 1.3rem;
 }
 
+/*참여인원 버튼
+.textLeft button {
+  text-align: center;
+   border: 3px solid  #004DC1;
+    background-color: white;
+    color: #004DC1;
+   width: 4rem;
+     height: 4rem;
+     border-radius: 50%;
+    font-size: 1.3rem;
+     margin : 0.5rem;
+}
+*/
+.button1{
+  text-align: center;
+   border: 3px solid  #004DC1;
+    background-color: white;
+    color: #004DC1;
+   width: 4rem;
+     height: 4rem;
+     border-radius: 50%;
+    font-size: 1.3rem;
+     margin : 0.5rem;
+}
+
+.button1:hover{
+  text-align: center;
+   border: 3px solid  #004DC1;
+    background-color:  #004DC1;
+    color:white;
+   width: 4rem;
+     height: 4rem;
+     border-radius: 50%;
+    font-size: 1.3rem;
+     margin : 0.5rem;
+}
+
+
+.buttonSmall2Click {
+  text-align: center !important;
+ border: 3px solid  #004DC1!important;
+  background-color: #004DC1!important;
+  color: white !important;
+   width: 4rem !important;
+       height: 4rem !important;
+       border-radius: 50% !important;
+      font-size: 1.3rem !important;
+       margin : 0.5rem !important;
+}
+
+.buttonSmall2:hover {
+  text-align: center;
+   border: 3px solid  #004DC1;
+    background-color: #004DC1;
+    color: white ;
+       width: 4rem;
+         height: 4rem;
+     border-radius: 50%;
+    font-size: 1.3rem;
+     margin : 0.5rem;
+    cursor: pointer;
+}
+
+
+.buttonSmall3 {
+  text-align: center;
+   border: 3px solid  #004DC1;
+    background-color: white;
+    color: #004DC1;
+   width: 15rem;
+     height: 4rem;
+     border-radius: 3rem;
+    font-size: 1.3rem;
+    margin : 1rem;
+}
+.buttonSmall3:hover {
+  text-align: center;
+   border: 3px solid  #004DC1;
+    background-color: #004DC1;
+    color: white ;
+  width: 15rem;
+     height: 4rem;
+     border-radius: 3rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+     margin : 1rem;
+}
+
+.buttonSmall4 {
+  text-align: center;
+   border: 3px solid  #004DC1;
+    background-color: white;
+    color: #004DC1;
+   width: 7rem;
+     height: 4rem;
+     border-radius: 1rem;
+    font-size: 1.3rem;
+     margin : 0.5rem;
+}
+
+
+.buttonSmall4:hover {
+  text-align: center;
+   border: 3px solid  #004DC1;
+    background-color: #004DC1;
+    color: white ;
+     width: 7rem;
+    height: 4rem;
+    border-radius: 1rem;
+    font-size: 1.3rem;
+     margin : 0.5rem;
+    cursor: pointer;
+}
+
+
+.selectInput {
+    display: none;
+}
+
+.selectLabel {
+  margin : 0.5rem;
+ text-align: center;
+  display: inline-block;
+  cursor: pointer;
+   border: 3px solid  #004DC1;
+    background-color:white ;
+    color: #004DC1 ;
+   width: 13rem;
+    height: 4rem;
+    line-height:50px;
+    border-radius: 10px;
+    font-size: 1.3rem;
+}
+.selectLabel:hover {
+  margin : 0.5rem;
+ text-align: center;
+  display: inline-block;
+  cursor: pointer;
+   border: 3px solid  #004DC1;
+    background-color: #004DC1;
+    color: white ;
+   width: 13rem;
+    height: 4rem;
+    line-height:50px;
+    border-radius: 10px;
+    font-size: 1.3rem;
+}
+
+
 .inputStage {
   border-radius: 4px;
   border: 1px solid #8491a7;
-    width: 200px;
-  height: 50px;
+   width: 25rem;
+  height: 4rem;
   font-size: 16px;
-  line-height: 24px
+  line-height: 24px;
 }
 
 
@@ -114,13 +267,15 @@ input.aa + label {
 
 /*박스 */
 .box {
+    display: flex;
   background: #fff;
   border-radius: 7px;
   display: inline-block;
-  height: 100%;
-  margin: 1rem;
-  position: relative;
-  width: 90%;
+  height: 80rem;
+  width: 120rem;
+  margin: 5rem;
+
+
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
