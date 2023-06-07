@@ -91,7 +91,7 @@ const Reply = (props) => {
                         height: "30px",
                         borderRadius: "50%",
                         backgroundColor: "ivory"
-                    }} src={profileImg} alt="프로필 이미지" className="profile-img"/>
+                    }} src={profileImg} className="profile-img"/>
                 </div>
                 <div>
                     <div>

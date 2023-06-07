@@ -21,4 +21,4 @@ mybatis:
 
 
 upload:
-    path: /path/to/upload/folder
+    path: C:/gyemoim/upload

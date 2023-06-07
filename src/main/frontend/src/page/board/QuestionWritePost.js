@@ -51,20 +51,13 @@ const QuestionWritePost = () => {
 
 
 
-
-
     const handleQuestionSubmit = async (e) => {
         e.preventDefault();// 리로드 방지
 
         try {
             const formData = new FormData();
             formData.append("file", file);
-            formData.append("uno", questionFormData.uno);
-            formData.append("name", questionFormData.name);
-            formData.append("type", questionFormData.type);
-            formData.append("title", questionFormData.title);
-            formData.append("content", questionFormData.content);
-            formData.append("secret", questionFormData.secret);
+            formData.append("boardWriteDTO", JSON.stringify(questionFormData));
 
             const response = await axios.post("/board/writePost", formData, {
                 headers: {
@@ -73,12 +66,7 @@ const QuestionWritePost = () => {
             });
             console.log("QuestionWritePost_handleSubmit 성공 :D");
             console.log("업로드할 첨부파일 : " + file);
-            console.log("글 작성자의 uNo 또는 uno: " + questionFormData.uno);
-            console.log("글 작성자의 name: " + questionFormData.name);
-            console.log("글 게시물 종류: " + questionFormData.type);
-            console.log("글 게시물 제목: " + questionFormData.title);
-            console.log("글 게시물 내용: " + questionFormData.content);
-            console.log("글 게시물 공개여부: " + questionFormData.secret);
+            console.log("글 작성 : " + questionFormData);
             window.location.href = '/board/question';
 
         } catch (error) {
@@ -148,6 +136,7 @@ const QuestionWritePost = () => {
                                 <div>
                                     <label htmlFor="file">첨부파일</label>
                                     <input type="file" onChange={handleFileChange}/>
+                                    <img width="30px" src={file}/>
                                 </div>
 
                                 <div style={{

@@ -85,10 +85,15 @@
 
 
     <!-- 게시글 Create -->
+    <!-- 게시글 번호 조회 -->
+    <select id="getBid" resultType="int">
+        SELECT BID_BOA_SEQ.NEXTVAL FROM dual
+    </select>
+
     <!-- 글 작성하기 -->
-    <insert id="insert" parameterType="com.team.gyemoim.dto.board.BoardWriteDTO">
+    <insert id="insert" parameterType="com.team.gyemoim.vo.BoardVO">
         INSERT INTO board (bid, uNo, name, type, title, views, content, writeDate, secret)
-        VALUES (BID_BOA_SEQ.NEXTVAL, #{uno}, #{name}, #{type}, #{title}, 0, #{content}, sysdate, #{secret})
+        VALUES (#{bid}, #{uNo}, #{name}, #{type}, #{title}, 0, #{content}, sysdate, #{secret})
     </insert>
 
 
@@ -137,7 +142,7 @@
     <!-- 특정 bid 에 해당하는 게시글에 있는 첨부파일 수정하기 -->
     <update id="addAttachedUpdate">
         UPDATE ATTACHED
-        SET fileName = #{fileName}
+        SET filename = #{filename}
         WHERE bid = #{bid}
     </update>
 
@@ -155,16 +160,16 @@
     <!-- 첨부파일 -->
     <!-- 첨부파일 생성 Create -->
     <insert id="saveAttached" parameterType="com.team.gyemoim.vo.AttachedVO">
-        INSERT INTO Attached (attachedID, bid, fileName, fileSize, fileType, filePath, uploadDate, modifyDate)
-        VALUES (ATTACHEDID_ATTACHED_SEQ.NEXTVAL, #{bid}, #{fileName}, #{fileSize}, #{fileType},
+        INSERT INTO Attached (attachedID, bid, filename, fileSize, fileType, filePath, uploadDate, modifyDate)
+        VALUES (ATTACHEDID_ATTACHED_SEQ.NEXTVAL, #{bid}, #{filename}, #{fileSize}, #{fileType},
                 #{filePath}, SYSTIMESTAMP, SYSTIMESTAMP)
     </insert>
 
-    <!-- 첨부파일 상세보기 Read -->
+    <!-- 첨부파일 조회하기 Read -->
     <select id="getAttachedById" parameterType="int" resultType="com.team.gyemoim.vo.AttachedVO">
         SELECT *
         FROM Attached
-        WHERE attachedID = #{attachedID}
+        WHERE bid = #{bid}
     </select>
 
     <!-- 첨부파일 수정 Update -->

@@ -1,33 +1,36 @@
 package com.team.gyemoim.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.team.gyemoim.config.FileUploadConfig;
 import com.team.gyemoim.dto.board.*;
 import com.team.gyemoim.service.BoardService;
 import com.team.gyemoim.service.ReplyService;
 import com.team.gyemoim.vo.AttachedVO;
 import com.team.gyemoim.vo.BoardVO;
-import com.team.gyemoim.vo.PageVO;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.context.annotation.Import;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
+@Import(FileUploadConfig.class) // FileUploadConfig 를 컨텍스트에 등록
 public class BoardController {
 
     public final BoardService boardService;
-
-    public final ReplyService replyService;
-
-    private static final String UPLOAD_FOL = "/path/to/upload/folder"; // 실제 업로드 경로로 변경해야 함
 
     // 전체 게시글 목록 조회하는 API
     @GetMapping("/board/notice/list")
@@ -49,53 +52,29 @@ public class BoardController {
     }
 
 
-    // 게시글 작성 API (Create)
+    /* 게시글 작성 API (Create) */
     @PostMapping("/board/writePost")
-    public ResponseEntity<String> writePost(@RequestPart MultipartFile file, @RequestBody BoardWriteDTO boardWriteDTO) {
+    public ResponseEntity<String> writePost(@RequestPart("file") MultipartFile file,
+                                            @RequestParam("boardWriteDTO") String boardWriteDTOJson) {
         try {
-            System.out.println("*************** 글 작성 writePost 컨트롤러 성공 >< *****************");
-            System.out.println("글 종류 type: " + boardWriteDTO.getType());
-            System.out.println("작성자 uNo: " + boardWriteDTO.getUno());
-            System.out.println("작성자 이름: " + boardWriteDTO.getName());
-
+            System.out.println("*************** 글 작성 writePost 컨트롤러 성공 :D *****************");
+            ObjectMapper objectMapper = new ObjectMapper();
+            BoardWriteDTO boardWriteDTO = objectMapper.readValue(boardWriteDTOJson, BoardWriteDTO.class);
             // 게시글 저장하고 작성된 게시글의 고유 식별자 bid 반한하는 코드
-            int bid = boardService.writePost(boardWriteDTO);
-            //boardService.write(boardWriteDTO);
+            int bid = boardService.writePost(boardWriteDTO, file);
 
-            // 첨부파일 저장
-            if (file != null) {
-                // AttachedVO 객체 생성 및 정보 저장
-                AttachedVO attachedVO = new AttachedVO();
-                attachedVO.setFilename(file.getOriginalFilename());
-                attachedVO.setFileSize(file.getSize());
-                attachedVO.setFileType(file.getContentType());
-                attachedVO.setFilePath(saveFile(file));
-                attachedVO.setUploadDate(Timestamp.valueOf(LocalDateTime.now()));
-                attachedVO.setModifyDate(Timestamp.valueOf(LocalDateTime.now()));
-                // AttachedVO 객체를 데이터베이스에 저장 (첨부파일 생성)
-                boardService.saveAttached(attachedVO);
-            }
             return ResponseEntity.ok("BoardController 글 작성 writePost 돌아간닷 첨부파일도 포함이닷 ! :D");
         } catch (Exception e) {
             System.out.println("*************** 글 작성 writePost 컨트롤러 실패 :< *****************");
-            System.out.println("작성자 uNo: " + boardWriteDTO.getUno());
-            System.out.println("게시글 첨부파일: " + file);
             System.out.println("error 메시지: " + e.getMessage());
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("글 작성 실패 :< -FROM BoardController-");
         }
     }
 
 
-    // 파일 실제 업로드 경로에 저장하는 로직
-    // 'file' 객체에서 파일 이름 얻어와 경로를 생성하고 해당 경로에 파일을 저장한다.
-    private String saveFile(MultipartFile file) throws IOException {
-        String fileName = file.getOriginalFilename();
-        String filePath = UPLOAD_FOL + "/" + fileName;
-        File dest = new File(filePath);
-        file.transferTo(dest);
 
-        return filePath;
-    }
+
 
 
     /* 게시글 읽기 API (Read) [GET /board/notice/read/{bid}]
@@ -120,13 +99,26 @@ public class BoardController {
     @GetMapping("/board/read")
     public BoardVO read(@RequestParam("bid") int bid, @RequestParam(value = "increaseViews", defaultValue = "true") boolean increaseViews) throws Exception {
         System.out.println("*************** 글 읽기 read 컨트롤러 성공 >< *****************");
-
-        /*List<ReplyVO> replyVOList = replyService.reply(bid);*/
         BoardVO boardVO = boardService.readDetail(bid);
-
 
         return boardVO;
     }
+
+    /* 첨부파일 존재여부 확인 API */
+    @GetMapping("/board/attachment")
+    public ResponseEntity<?> getAttachment(@RequestParam("bid") int bid) {
+        try {
+            AttachedVO attachedVO = boardService.getAttachedById(bid);
+            if (attachedVO != null) {
+                return ResponseEntity.ok(attachedVO);// 첨부파일 있으면 첨부파일 반환
+            } else {
+                return ResponseEntity.ok().build();// 첨부파일 없으면 빈 응답 반환
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("컨트롤러_첨부파일 가져오기 실패 :<");
+        }
+    }
+
 
 
     /* 글 수정 API (Update) */

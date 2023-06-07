@@ -23,6 +23,7 @@ const NoticeWritePost = () => {
         }));
     };
 
+    /*
     // 글 공개 설정 변경하는 함수
     // 공개 선택시 secret == 'P',
     // 비공개 선택 시 secret === 'S' 로 변경하기
@@ -32,8 +33,7 @@ const NoticeWritePost = () => {
           ...prevFormData,
           [name]: value,
       }));
-
-    };
+    };*/
 
 
     /*const moveToNoticeList = () => {
@@ -48,7 +48,7 @@ const NoticeWritePost = () => {
         try {
             await axios.post('/board/writePost', formData, {
                 headers: {
-                    Authorization: 'Bearer <your_access_token>',
+                    "Content-Type": "multipart/form-data",
                 }
             });
             console.log("NoticeWritePost_handleSubmit 성공 :D");
@@ -88,7 +88,7 @@ const NoticeWritePost = () => {
                                     <input type="text" id="write-input-writer" name="name" value={formData.name}
                                            onChange={handleChange} required/>
                                 </div>
-                                <div>
+                                {/*<div>
                                     <label htmlFor="write-input-writer">공개설정</label>
                                     <div>
                                         <div className="secret-detail">
@@ -104,7 +104,7 @@ const NoticeWritePost = () => {
                                             <label htmlFor="write-cs-close">비공개</label>
                                         </div>
                                     </div>
-                                </div>
+                                </div>*/}
                                 <div>
                                     <textarea name="content" placeholder="내용을 입력해주세요" value={formData.content}
                                               onChange={handleChange} required/>

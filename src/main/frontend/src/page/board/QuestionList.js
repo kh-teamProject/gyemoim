@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import styleTable from "../../component/styleTable";
 import axios from "axios";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
@@ -195,13 +194,6 @@ const QuestionList = () => {
 
                             <table className="table table-hover">
                                 <thead className="table table-hover">
-                                <colgroup>
-                                    <col width="10%"/>
-                                    <col width="40%"/>
-                                    <col width="15%"/>
-                                    <col width="25%"/>
-                                    <col width="10%"/>
-                                </colgroup>
                                 <tr>
                                     <th className="col-1">글번호</th>
                                     <th className="col-8">제목</th>

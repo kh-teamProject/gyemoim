@@ -4,6 +4,7 @@ import com.team.gyemoim.dto.board.*;
 import com.team.gyemoim.vo.AttachedVO;
 import com.team.gyemoim.vo.BoardVO;
 import com.team.gyemoim.vo.PageVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface BoardService {
 
     /* 게시글 생성 C */
     //void write(BoardWriteDTO boardWriteDTO) throws Exception; // 게시글 작성하기
-    int writePost(BoardWriteDTO boardWrite) throws Exception; // 첨부파일 업로드 포함 게시글 작성하기
+    int writePost(BoardWriteDTO boardWrite, MultipartFile file) throws Exception; // 첨부파일 업로드 포함 게시글 작성하기
 
     /* 게시글 조회 R */
     //int searchCountBoard(PageVO spv) throws Exception; // 검색 후 게시글 갯수 구하기
@@ -32,8 +33,6 @@ public interface BoardService {
 
 
     /* 첨부파일 */
-    // 첨부파일 생성
-    public void saveAttached(AttachedVO attachedVO) throws Exception;
 
     // 첨부파일 상세보기
     public AttachedVO getAttachedById(int attachedID) throws Exception;

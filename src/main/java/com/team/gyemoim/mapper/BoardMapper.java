@@ -13,8 +13,9 @@ import java.util.List;
 public interface BoardMapper {
 
     /* BoardWriteDAO (Create) */
-    void write(BoardWriteDTO boardWriteDTO) throws Exception; // 게시글 쓰기
+    //void write(BoardWriteDTO boardWriteDTO) throws Exception; // 게시글 쓰기
    // void addAttachedName(String savedName) throws Exception; // 첨부파일 쓰기
+    int getBid() throws Exception; // 게시글 번호 조회
     void insert(BoardVO boardVO) throws Exception; // 게시글 작성
 
 
@@ -61,7 +62,7 @@ public interface BoardMapper {
     void saveAttached(AttachedVO attachedVO);
 
     // 첨부파일 상세보기
-    AttachedVO getAttachedById(int attachedID);
+    AttachedVO getAttachedById(int bid);
 
     // 첨부파일 수정
     void updateAttached(AttachedVO attached);

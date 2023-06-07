@@ -3,6 +3,7 @@ import jwtDecode from "jwt-decode";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
+import profileImg from "./images/profile-placeholder.png";
 
 /* ReplyWrite 컴포넌트 : 댓글 작성을 위한 폼을 나타냄 */
 const ReplyWrite = (props) => {
@@ -59,7 +60,12 @@ const ReplyWrite = (props) => {
             {/* 상단 영역 (프로필 이미지, 댓글 작성자) */}
             <div className="my-1 d-flex justify-content-center">
                 <div className="col-1">
-                    <img src="../images/profile-placeholder.png" alt="프로필 이미지" className="profile-img"/>
+                    <img style={{
+                        width: "30px",
+                        height: "30px",
+                        borderRadius: "50%",
+                        backgroundColor: "ivory"
+                    }} src={profileImg} className="profile-img"/>
                 </div>
 
                 <div className="col-7">
