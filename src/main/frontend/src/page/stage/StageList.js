@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import ErrorModal from "../../component/UI/ErrorModal";
-import {Link, NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 import classes from '../css/StageList.modlue.css';
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
@@ -12,7 +12,7 @@ const StageList = () => {
   // 계모임 값 뿌리기
   const [stage, setStage] = useState([]);
   // 약정금 버튼으로 스테이지 세팅하는 State
-  const [isClicked, setIsClicked] = useState('전체');
+  const [deposit, setDeposit] = useState('전체');
   // 관심사 기반으로 스테이지 세팅하는 State
   const [interest, setInterest] = useState('관심사');
   //로그인 여부 체크
@@ -33,11 +33,11 @@ const StageList = () => {
   // 약정금 기반으로 조회하는 함수
   const handleButtonClick = (event) => {
     if (event.target.value === '전체') {
-      setIsClicked(event.target.value);
+      setDeposit(event.target.value);
       console.log(event.target.value);
     } else {
       let i = Number(event.target.value);
-      setIsClicked(i);
+      setDeposit(i);
       console.log(i);
     }
     setCurPage(1); //페이지 버튼 클릭시 현재 페이지를 1로 초기화
@@ -73,7 +73,7 @@ const StageList = () => {
   useEffect(() => {
     // 버튼 클릭으로 스테이지 조회하는 구문
   // console.log(token);
-    if (isClicked === '전체') {
+    if (deposit === '전체') {
       axios
         .get('/stagelist', {})
         .then((res) => {
@@ -88,7 +88,7 @@ const StageList = () => {
       axios
         .get('/filter', {
           params: {
-            deposit: isClicked,
+            deposit: deposit,
           },
         })
         .then((res) => {
@@ -120,7 +120,7 @@ const StageList = () => {
           console.log(error);
         });
     }
-  },[isClicked,checkedLogin] );
+  },[deposit,checkedLogin] );
 
   //추천테이블 값 뿌리는 스테이트
   const [recommend, setRecommend] = useState([])
@@ -130,7 +130,6 @@ const StageList = () => {
       <div>
         <div style={{
           display: 'flex',
-          flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center'
         }}>
@@ -157,8 +156,8 @@ const StageList = () => {
           .map((value,index)=>{
           return(
             <>
-              <div class="stage-wrap" >
-              <div class="stage">
+              <div>
+              <div>
               <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
             <div id="select-deposit">
               <h3 className="stage-h3">{value.pfName}</h3>
@@ -189,11 +188,11 @@ const StageList = () => {
       </div>
       <h1>스테이지 조회</h1>
       <div>
-        <button class='sel-deposit' onClick={handleButtonClick} value='전체'>전체</button>
-        <button class='sel-deposit' onClick={handleButtonClick} value='70'>~70만원</button>
-        <button class='sel-deposit' onClick={handleButtonClick} value='150'>100~150만원</button>
-        <button class='sel-deposit' onClick={handleButtonClick} value='250'>200~250만원</button>
-        <button class='sel-deposit' onClick={handleButtonClick} value='350'>280~350만원</button>
+        <button class={deposit==='전체'? 'btn-deposit':'sel-deposit'} onClick={handleButtonClick} value='전체'>전체</button>
+        <button class={deposit=== 70? 'btn-deposit':'sel-deposit'} onClick={handleButtonClick} value='70'>~70만원</button>
+        <button class={deposit=== 150? 'btn-deposit':'sel-deposit'} onClick={handleButtonClick} value='150'>100~150만원</button>
+        <button class={deposit=== 250? 'btn-deposit':'sel-deposit'} onClick={handleButtonClick} value='250'>200~250만원</button>
+        <button class={deposit=== 350? 'btn-deposit':'sel-deposit'} onClick={handleButtonClick} value='350'>280~350만원</button>
       </div>
 
       <div>
