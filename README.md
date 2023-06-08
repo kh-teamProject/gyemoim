@@ -8,14 +8,16 @@
 프로젝트 구현 과정 동안 로그인 적용 게시판 기능구현과 예외처리를 고민하며 코드를 작성했습니다.
 
 
+
 # 📚 목차
 * [프로젝트 구조](#-프로젝트-구조)
 * [사용 기술](#-사용-기술)
 * [구현 기능](#-구현-기능)
-* [기능 실행화면](#-기능-실행화면)
 * [API 명세서](#-API-명세서)
 * [ERD 설계](#-ERD-설계)
 * [트러블슈팅](#-트러블슈팅)
+
+
 
 # 🎃 프로젝트 구조
 ### 📌 Backend
@@ -24,6 +26,7 @@
 
 ### 🥕 Frontend
 <img width="574" alt="frontend-project-structure" src="https://user-images.githubusercontent.com/43202607/183297579-ddaad9a7-3d2b-467f-8519-c639e0feb8f3.png">
+
 
 
 # 🕹 사용 기술
@@ -57,6 +60,7 @@
 |Redux Toolkit|1.9.5|
 
 
+
 # 🎢 구현 기능
 * 회원 기능
   * 회원가입
@@ -77,87 +81,27 @@
   * 회원 정보 조회
   * 스테이지 정보 조회
   
-# 🍭 담당 기능 실행화면
-
-## 게시판 기능
-### 모든 게시글 및 특정 게시글 조회
-* 모든 게시글을 조회할 수 있습니다. 페이징 기능을 통해 한 페이지에서 최대 10개의 게시글이 조회됩니다.
-<img width="1724" alt="bbslist1" src="">
-<img width="1724" alt="bbslist2" src="">
-
-* 게시글의 제목을 클릭하면, 게시글의 상세 내용을 조회할 수 있습니다.
-<img width="1724" alt="bbsdetail1" src="">
-<img width="1724" alt="bbsdetail2" src="">
-
-
-### 게시글 검색
-* 게시글의 제목과 내용 또는 작성자로 게시글을 검색할 수 있습니다.
-<img width="1724" alt="bbs-search" src="">
-
-
-### 게시글 작성
-* 로그인한 사용자는 게시글을 작성할 수 있습니다.
-<img width="1724" alt="bbs-write" src="">
-<img width="1724" alt="bbs-write-success" src="">
-<img width="1724" alt="bbs-write-result" src="">
-
-* 로그인하지 않았을 경우 글 작성이 제한됩니다.
-<img width="1724" alt="bbs-write-auth" src="">
-
-* 첨부파일 포함하여 게시글을 작성할 수 있습니다.
-<img width="1724" alt="bbs-attachment-post" src="">
-
-
-### 게시글 수정
-* 게시글 작성자는 게시글을 수정할 수 있습니다. 
-<img width="1724" alt="bbs-update" src="">
-<img width="1724" alt="bbs-update2" src="">
-<img width="1724" alt="bbs-update-success" src="">
-
-* 자신이 작성한 게시글에만 수정, 삭제 버튼이 활성화됩니다.
-![bbs-update-delete-btn-deactive](https://user-images.githubusercontent.com/43202607/183295398-a3d3b599-90ea-4356-be7a-793736fee4e9.png)
-<img width="1724" alt="bbs-update-delete-btn-active" src="">
-
-### 게시글 삭제
-* 게시글 작성자는 게시글을 삭제할 수 있습니다.
-<img width="1724" alt="bbs-delete" src="">
-<img width="1724" alt="bbs-delete-result" src="">
-
-
-## 댓글 기능
-### 댓글 조회
-* `게시글 상세` 에서 관련된 댓글을 조회할 수 있습니다.
-<img width="1724" alt="comment1" src="">
-<img width="1724" alt="comment2" src="">
-
-
-### 댓글 작성
-* 로그인한 사용자는 댓글을 작성할 수 있습니다.
-
-<img width="1680" alt="comment-write1" src="">
-<img width="1724" alt="comment-write2" src="">
-
-
-### 댓글 수정
-* 자신이 작성한 댓글을 수정할 수 있습니다.
-<img width="1724" alt="comment-update1" src="">
-<img width="1724" alt="comment-update2" src="">
-<img width="1724" alt="comment-update3" src="">
-
-### 댓글 삭제
-* 자신이 작성한 댓글을 삭제할 수 있습니다.
-<img width="1724" alt="comment-delete" src="">
-<img width="1680" alt="comment-delete2" src="">
-
-
+  
   
 # 🤙🏻 API 명세서
 HTTP 메서드를 통해 행위를 명시할 수 있도록 RESTful 방식으로 설계했습니다. <br/><br/>
 
 <img width="997" alt="api-definition" src="">
 
+
+
 # 🕸 ERD 설계
-<img width="997" alt="erd" src="">
+![gyemoimERD](https://github.com/kh-teamProject/gyemoim/assets/117277248/fd7a4970-6879-426f-8766-00a12bfe6b4d)
+### 1) Member
+<img width="1024" alt="gyemoimMemberERD" src="https://github.com/kh-teamProject/gyemoim/assets/117277248/2ec7347f-cbfa-4167-a894-2b2592e22a20">
+
+### 2) Board
+<img width="1024" alt="gyemoimBoardERD" src="https://github.com/kh-teamProject/gyemoim/assets/117277248/cfffadca-8eb0-49e0-b6c3-87405b378788">
+
+### 3) Solution
+<img width="1024" alt="gyemoimSolutionERD" src="https://github.com/kh-teamProject/gyemoim/assets/117277248/635ac549-e19c-4832-88bf-9d9aa7a34de2">
+
+
 
 # 👾 트러블슈팅
 ### 조회수 중복 카운팅 예방
