@@ -1,10 +1,13 @@
 .main {
     min-height: 644px;
+    justify-content: space-evenly;
 }
 
 h2 {
-    font-size: 2.5rem;
-    margin: 20px 0;
+    padding-bottom: 15px;
+    margin-top: 10px;
+    font-size: 2.1em;
+    /*margin: 20px 0;*/
 }
 
 .field {
@@ -13,7 +16,8 @@ h2 {
     justify-content: space-between;
     font-size: 1.25rem;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 6px;
     border-radius: 5px;
 
 
@@ -72,13 +76,35 @@ h2 {
     box-sizing: border-box;
 }
 
-.checkboxGroup .checkbox{
+/*.field > .pwdError{*/
+/*    display: inline-block;*/
+/*    color: red;*/
+/*    font-size: 120px;*/
+/*    margin-top: 5px;*/
+/*}*/
 
+/*.field > .pwdSuccess{*/
+/*    display: inline-block;*/
+/*    color: green;*/
+/*    font-size: 12px;*/
+/*    margin-top: 5px;*/
+/*}*/
+
+.checkboxGroup .checkboxAll{
+    margin-top: 9px;
     border: 0;
-    font-size: 15px;
-    /*font-weight: bold;*/
+    font-size: 13px;
+    font-weight: bold;
     text-align: left;
-    height: 25px;
+    height: 18px;
+}
+
+.checkboxGroup .checkbox{
+    margin-top: 9px;
+    border: 0;
+    font-size: 13px;
+    text-align: left;
+    height: 18px;
 }
 
 .btn {

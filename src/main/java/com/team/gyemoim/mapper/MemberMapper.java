@@ -22,4 +22,8 @@ public interface MemberMapper {
     // password 찾기 (이메일, 이름)
     MemberDTO findByEmailAndName(@Param("email") String email, @Param("name") String name, @Param("phone") String phone);
 
+    // password update
+    void pwdUpdate(@Param("uNo") Integer uNo, @Param("password") String password);
+
+
 }

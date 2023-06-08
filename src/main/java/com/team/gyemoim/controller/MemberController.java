@@ -23,6 +23,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -62,6 +63,16 @@ public class MemberController {
         return responseEntity;
     }
 
+    // 이메일 중복 확인
+    @PostMapping("/account/checkEmail")
+    public ResponseEntity<?> checkEmailExist(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        boolean exists = memberService.isEmailExist(email);
+        Map<String, Boolean> response = Collections.singletonMap("exists", exists);
+        System.out.println("이메일 중복 확인: " + response);   // 존재하면 true
+        return ResponseEntity.ok(response);
+    }
+
 
     // 회원가입 메일 인증 번호 발송
     @PostMapping("/account/mailConfirm")
@@ -80,22 +91,25 @@ public class MemberController {
         }
     }
 
+    // 인증 번호 일치 여부 확인
     @PostMapping("/account/verifyEmailCode")
     public ResponseEntity<String> verifyEmailCode(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");
         String ePw = requestBody.get("ePw");
 
         if (StringUtils.isEmpty(email) || StringUtils.isEmpty(ePw)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\": \"이메일과 인증 번호를 모두 제공해야 합니다.\"}");
+            System.out.println("error: 이메일과 인증 번호를 모두 입력해야 합니다.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\": \"이메일과 인증 번호를 모두 입력해야 합니다.\"}");
         }
 
         boolean isValid = memberService.verifyEmailCode(email, ePw);
 
         if (isValid) {
-            // 인증 번호 일치, 회원 가입 완료 처리
-            // ...
+            System.out.println("message: 이메일 인증이 완료되었습니다.");
             return ResponseEntity.ok("{\"message\": \"이메일 인증이 완료되었습니다. 회원 가입이 완료되었습니다.\"}");
+
         } else {
+            System.out.println("error: 유효하지 않은 인증 번호입니다.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\": \"유효하지 않은 인증 번호입니다.\"}");
         }
     }
@@ -176,17 +190,36 @@ public class MemberController {
         String phone = requestBody.get("phone");
 
         if (email == null || email.isEmpty() || name == null || name.isEmpty()) {
+            System.out.println("error: 이메일이 제공되지 않았습니다.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{'error': '이메일이 제공되지 않았습니다.'}");
 
         }
         try {
             memberService.resetPassword(email, name, phone);
+            System.out.println("message: 임시 비밀번호 발급 이메일이 전송되었습니다.");
             return ResponseEntity.ok("{'message': '임시 비밀번호 발급 이메일이 전송되었습니다.'}");
 
         } catch (NoSuchElementException e) {
+            System.out.println("error: 일치하는 회원이 없습니다.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{'error': '일치하는 회원이 없습니다.'}");
         }
 
     }
+
+    // Password 변경
+    @PutMapping("/myPage/info/pwdUpdate/{uNo}")
+    public ResponseEntity<String> pwdUpdate(@PathVariable("uNo") Integer uNo, @RequestParam String newPassword) {
+        try {
+
+            memberService.pwdUpdate(uNo, newPassword);
+            System.out.println("Ctrl new Pwd SUCCESS");
+            System.out.println("newPassword = " + newPassword);
+            return ResponseEntity.ok("비밀번호 변경 성공");
+        } catch (Exception e) {
+            System.out.println("Ctrl new Pwd FAILS");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비밀번호 변경 실패: " + e.getMessage());
+        }
+    }
+
 
 }

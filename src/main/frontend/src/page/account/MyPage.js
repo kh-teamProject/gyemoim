@@ -23,7 +23,7 @@ const MyPage = () => {
   useEffect(() => {
     axios.get('/mypage', {
       params: {
-        uNo: 83
+        uNo: 121
       }
     })
       .then((res) => {
@@ -61,7 +61,10 @@ const MyPage = () => {
               <NavLink to={'/mypage/info/interest'} className={`${location.pathname.includes('interest') ? classes.isActive : undefined}`}>관심사 수정</NavLink>
             </li>
             <li>
-              <NavLink to={'/mypage/info/delete'} className={`${location.pathname.includes('delete') ? classes.isActive : undefined}`}>회원 탈퇴</NavLink>
+              <NavLink to={'/mypage/info/pwdUpdate/${uNo}'} className={`${location.pathname.includes('pwdUpdate') ? classes.isActive : undefined}`}>비밀번호 변경</NavLink>
+            </li>
+            <li>
+              <NavLink to={'/mypage/info/delete/3'} className={`${location.pathname.includes('delete') ? classes.isActive : undefined}`}>회원 탈퇴</NavLink>
             </li>
           </ul>
         </div>

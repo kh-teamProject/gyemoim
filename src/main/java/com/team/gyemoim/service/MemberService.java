@@ -55,6 +55,12 @@ public class MemberService {
         return memberMapper.findByEmail(memberDTO.getEmail());
     }
 
+    // 이메일 중복 확인
+    public boolean isEmailExist(String email){
+        MemberDTO memberDTO = memberMapper.findByEmail(email);
+        return memberDTO != null;   // 이메일 존재하면 true 반환
+    }
+
     // 회원 가입 인증번호 전송
     // 메일 내용 작성
     public MimeMessage createMessage(String email) throws MessagingException, UnsupportedEncodingException {
@@ -242,5 +248,15 @@ public class MemberService {
 
         return content;
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // password update
+    public void pwdUpdate(Integer uNo, String newPassword) {
+        String encodePwd = passwordEncoder.encode(newPassword);
+        System.out.println("*비밀번호 변경 성공* " + "uNo: " + uNo + ", newPwd: " + encodePwd);
+        memberMapper.pwdUpdate(uNo, encodePwd);
+    }
+
 
 }
