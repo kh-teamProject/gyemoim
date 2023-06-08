@@ -30,6 +30,10 @@ section > div:last-child {
   font-size: 2rem;
 }
 
+.myinfo-wrap > img {
+  width: 80px;
+}
+
 .myinfo-sidebar-wrap {
   width: 100%;
   font-size: 1.75rem;

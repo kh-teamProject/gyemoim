@@ -4,6 +4,7 @@ import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.service.AccountService;
+import com.team.gyemoim.vo.ExpenditureVO;
 import com.team.gyemoim.vo.MyAccountVO;
 import com.team.gyemoim.vo.MyAccountHistoryVO;
 import lombok.AllArgsConstructor;
@@ -48,12 +49,33 @@ public class AccountController {
     return accountService.getMyAccountHistory(uNo);
   }
 
+  // 지출내역 가져오기
+  @GetMapping("/getExpenditure")
+  public List<ExpenditureVO> getExpenditure(@RequestParam Integer uNo) {
+    return accountService.getExpenditure(uNo);
+  }
+
+  // 비밀번호 체크
+  @PostMapping("/checkedPwd/{uNo}")
+  public boolean checkedPwd(@PathVariable Integer uNo, @RequestParam String password) {
+    System.out.println("uNo = " + uNo);
+    System.out.println("password = " + password);
+    return accountService.checkedPwd(uNo, password);
+  }
   // Update
   // 내 정보 수정하기
   @PostMapping("/myInfoModify")
-  public boolean myInfoModify(MyPageDTO dto) {
-    accountService.myInfoModify(dto);
-    return true;
+  public boolean myInfoModify(@RequestBody MyPageDTO dto) {
+    List<ExpenditureVO> list = accountService.getExpenditure(dto.getUNo());
+    if(list.isEmpty()) {
+      accountService.myInfoModify(dto);
+      accountService.createExpenditure(dto);
+      return true;
+    } else {
+      accountService.myInfoModify(dto);
+      accountService.updateExpenditure(dto);
+      return true;
+    }
   }
 
   // 내 관심사 수정하기

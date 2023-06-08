@@ -8,19 +8,16 @@
     <result property="email" column="email"/>
     <result property="password" column="password"/>
     <result property="name" column="name"/>
-    <result property="ssn" column="ssn"/>
     <result property="phone" column="phone"/>
     <result property="bankName" column="bankName"/>
     <result property="bankAccountNumber" column="bankAccountNumber"/>
     <result property="accountHolder" column="accountHolder"/>
     <result property="identifier" column="identifier"/>
-    <result property="creditRating" column="creditRating"/>
-    <result property="plusRate" column="plusRate"/>
     <result property="enrollDate" column="enrollDate"/>
     <result property="interest" column="interest"/>
-    <result property="postcode" column="postcode"/>
-    <result property="address" column="address"/>
-    <result property="addressDetail" column="addressDetail"/>
+    <result property="userRole" column="userRole"/>
+    <result property="monthlySalary" column="monthlySalary"/>
+    <result property="monthlyLimit" column="monthlyLimit"/>
   </resultMap>
 
   <select id="getMyInfo" resultMap="memberResultMap">
@@ -52,24 +49,19 @@
   </select>
 
   <!-- 내 정보 수정 -->
-  <update id="myInfoModify">
+  <update id="myInfoModify" parameterType="com.team.gyemoim.dto.MyPageDTO">
     UPDATE MEMBER
-    SET name = #{name},
-        phone = #{phone},
-        bankname = #{bankName},
-        bankaccountnumber = #{bankAccountNumber},
-        accountHolder = #{accountHolder},
-        userRole = '정회원',
-        <if test="creditRating == 1">
-          pRank = 'A'
-        </if>
-        <if test="creditRating == 4">
-          pRank = 'B'
-        </if>
-        <if test="creditRating == 7">
-          pRank = 'C'
-        </if>
-    WHERE uNo = #{uNo}
+    SET NAME = #{name},
+    PHONE = #{phone},
+    BANKNAME = #{bankName},
+    BANKACCOUNTNUMBER = #{bankAccountNumber},
+    ACCOUNTHOLDER = #{accountHolder},
+    MONTHLYSALARY = #{monthlySalary},
+    MONTHLYLIMIT = (#{monthlySalary} - #{medicalCost} - #{housingCost} - #{foodCost} - #{culturalCost} - #{etc}) * 0.1
+    <if test="userRole == '가회원'">
+      , USERROLE = '정회원'
+    </if>
+    WHERE UNO = #{uNo}
   </update>
 
   <!-- 내 관심사 수정 -->
@@ -83,14 +75,14 @@
   <update id="myAccountUpdate" parameterType="com.team.gyemoim.vo.MyAccountVO">
     update MYACCOUNT
     SET
-        <choose>
-          <when test="bankHistory == '충전'">
-            MYBALANCE = MYBALANCE + #{transactionAmount}
-          </when>
-          <when test="bankHistory == '출금'">
-            MYBALANCE = MYBALANCE - #{transactionAmount}
-          </when>
-        </choose>
+    <choose>
+      <when test="bankHistory == '충전'">
+        MYBALANCE = MYBALANCE + #{transactionAmount}
+      </when>
+      <when test="bankHistory == '출금'">
+        MYBALANCE = MYBALANCE - #{transactionAmount}
+      </when>
+    </choose>
     WHERE UNO = #{uNo}
   </update>
 
@@ -100,22 +92,47 @@
     VALUES (#{uNo}, #{bankName}, #{bankAccountNumber}, #{transactionAmount}, #{bankHistory}, sysdate)
   </insert>
 
-<!-- 정회원으로 변경시 myAccount에 계모임 계좌 생성 -->
+  <!-- 정회원으로 변경시 myAccount에 계모임 계좌 생성 -->
   <insert id="createMyAccount">
     INSERT INTO MYACCOUNT(uNo)
     VALUES (#{uNo})
   </insert>
 
-<!-- 회원 탈퇴 -->
+  <!-- 회원 탈퇴 -->
   <update id="memberDelete">
     UPDATE MEMBER
     SET ISLEAVE = 'Y'
     WHERE uNo = #{uNo}
   </update>
 
-<!-- 계모임계좌 존재하는지 확인 -->
-<!--  <select id="getMyAccount" resultType="Integer">-->
-<!--    SELECT UNO-->
-<!--    FROM MYACCOUNT-->
-<!--  </select>-->
+  <!-- 지출목록 데이터 생성 -->
+  <insert id="createExpenditure">
+    INSERT INTO EXPENDITURE
+    values (#{uNo}, #{medicalCost}, #{housingCost}, #{foodCost}, #{culturalCost}, #{etc})
+  </insert>
+
+  <!-- 회원에 지출데이터가 있는지 확인 -->
+  <select id="getExpenditure" resultType="com.team.gyemoim.vo.ExpenditureVO">
+    SELECT *
+    FROM EXPENDITURE
+    WHERE uNo = #{uNo}
+  </select>
+
+  <!-- 지출 내역 수정 -->
+  <update id="updateExpenditure">
+    UPDATE EXPENDITURE
+    SET MEDICALCOST  = #{medicalCost},
+        HOUSINGCOST  = #{housingCost},
+        FOODCOST     = #{foodCost},
+        CULTURALCOST = #{culturalCost},
+        ETC          = #{etc}
+    WHERE uNo = #{uNo}
+  </update>
+
+  <select id="checkedPwd" resultType="String">
+    SELECT password
+    FROM MEMBER
+    WHERE uNo = #{uNo}
+  </select>
+
 </mapper>

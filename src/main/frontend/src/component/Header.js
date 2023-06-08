@@ -46,7 +46,7 @@ const Header = () => {
                     {checkedLogin ? (
                         <>
                             <NavLink onClick={handleLogout}>로그아웃</NavLink>
-                            <NavLink to={"mypage"}>내 정보</NavLink>
+                            <NavLink to={"mypage/info"}>내 정보</NavLink>
                         </>
                     ) : (
                         <>
