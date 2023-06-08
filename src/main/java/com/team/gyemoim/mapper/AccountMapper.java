@@ -3,10 +3,13 @@ package com.team.gyemoim.mapper;
 import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
+import com.team.gyemoim.vo.ExpenditureVO;
 import com.team.gyemoim.vo.MyAccountVO;
 import com.team.gyemoim.vo.MyAccountHistoryVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +35,9 @@ public interface AccountMapper {
   // 계모임 계좌 정보 가져오기
   List<MyAccountVO> getMyAccount(Integer uNo);
 
+  // 비밀번호 체크
+  String checkedPwd(@Param("uNo") Integer uNo, @Param("password") String password);
+
   // Update
   // 내 정보 수정하기
   void myInfoModify(MyPageDTO dto);
@@ -51,5 +57,11 @@ public interface AccountMapper {
 
   // 회원 탈퇴
   void memberDelete(Integer uNo);
+
+  void createExpenditure(MyPageDTO dto);
+
+  List<ExpenditureVO> getExpenditure(Integer uNo);
+
+  void updateExpenditure(MyPageDTO dto);
 
 }
