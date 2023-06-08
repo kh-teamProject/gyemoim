@@ -9,6 +9,7 @@ const AdminStageDetail = () => {
 
   const {pfID} = useParams();
   console.log(pfID);
+  // const intPFID = Number(pfID);
 
     //(유진)pfID를 변수로 받아와서 띄울수 있게 해주는것.
 
@@ -18,19 +19,29 @@ const AdminStageDetail = () => {
     const formatNum = (number) => {
       return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
-    const complete= () => {
-      axios.post('/admin/stage/complete',{
-        params:{
-
-        }
-      })
-  }
-
+    const complete= (event) => {
+      const pfID = Number(event.target.value);
+      const confirmed = window.confirm('완료처리하시겠습니까?');
+      if(confirmed){
+      axios
+        .post('/admin/stage/complete',  null,{
+            params: {
+              pfID
+            }
+        })
+        .then((res) =>{
+          console.log(res.data);
+        })
+        .catch((error) =>{
+          console.log(error);
+        })
+      }
+    };
     useEffect(() => {
       axios
         .get('/admin/stage/detail', {
           params: {
-            pfID: 4,
+            pfID: pfID,
           }
         })
         .then((res) => {
@@ -52,7 +63,7 @@ const AdminStageDetail = () => {
             {/*stageDetail이 배열값이니까 배열중에 걍 첫번째 인덱스만 가져오면 된다.. 천재네,, gpt,,,모든건 자바로 통한다,,,*/}
             {stageDetail.length > 0 && (
               <div>
-                <ul key={pfID}>
+                <ul>
                   스테이지 이름 : {stageDetail[0].pfName}
                   스테이지 상태 : {stageDetail[0].startFlag}
                   스테이지 이율 : {stageDetail[0].pfRate}
@@ -65,8 +76,8 @@ const AdminStageDetail = () => {
           <div>
             <h3>회원정보</h3>
             {stageDetail.map((value, index) => (
-              <div>
-                <Link to={`/admin/account/detail/${value.uno}`}>
+              <div key={index}>
+                <Link to={`/admin/account/detail/${value.uno}`} >
                   <ul>
                     <li>
                       방장여부 : {value.pfMaster} |
@@ -81,9 +92,10 @@ const AdminStageDetail = () => {
               </div>
             ))}
           </div>
-          <button onClick={complete}>
-            완료처리
-          </button>
+          <div>
+            <button onClick={complete} value={pfID}>완료</button>
+
+          </div>
         </div>
       </>
 

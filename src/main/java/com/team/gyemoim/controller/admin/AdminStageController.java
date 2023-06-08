@@ -41,13 +41,20 @@ public HashMap<String,Object> stage() {
 
 
   private final AdminStageService adminStageService;
-  //유진
+  //유진 계모임 관리자 디테일
   @GetMapping("/admin/stage/detail")
   @ResponseBody
     public List<AdminStageDetailDTO> getStageMemList(@RequestParam("pfID") int pfID){
       System.out.println("관리자 스테이지 상세" +pfID);
       return adminStageService.getStageMemList(pfID);
     }
+   
+// (유진) 계모임 상태 참여중-> 완료처리
+  @PostMapping("/admin/stage/complete")
+    public void setStageComplete(@RequestParam int pfID){
+    System.out.println("관리자 스테이지 완료처리"+pfID);
+    adminStageService.setStageComplete(pfID);
   }
+}
 
 

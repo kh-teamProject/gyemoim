@@ -17,4 +17,10 @@ public class AdminStageServiceImpl implements AdminStageService{
     System.out.println("관리자 스테이지 서빗스");
     return adminStageMapper.getStageMemList(pfID);
   }
+//(유진)스테이지 상태 업데이트
+  @Override
+  public void setStageComplete(int pfID) {
+    System.out.println("관리자 스테이지 상태 서비스");
+    adminStageMapper.setStageComplete(pfID);
+  }
 }
