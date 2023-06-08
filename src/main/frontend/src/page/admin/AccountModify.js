@@ -2,9 +2,9 @@ import MemberInfo from "../../component/MemberInfo";
 
 const AccountModify = () => {
 
-  return (
-    <MemberInfo />
-  );
+    return (
+        <MemberInfo />
+    );
 };
 
 export default AccountModify;

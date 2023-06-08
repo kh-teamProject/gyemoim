@@ -1,4 +1,3 @@
-import MyPageSidebar from "./MyPageSidebar";
 import classes from "../page/css/MyPageModify.module.css";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";

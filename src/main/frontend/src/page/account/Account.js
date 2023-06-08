@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import account from '../css/Account.module.css';
 
 const Account = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
 
     // 이메일 인증
-    // const [isEmailSent, setIsEmailSent] = useState(false);
     const [verificationCode, setVerificationCode] = useState('');
     const [isCodeVerified, setIsCodeVerified] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
 
     // 이용약관
     const [ageConfirmation, setAgeConfirmation] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [privacyAccepted, setPrivacyAccepted] = useState(false);
     const [marketingAccepted, setMarketingAccepted] = useState(false);
+    const [selectAll, setSelectAll] = useState(false);
 
     const navigate = useNavigate();
 
@@ -28,18 +28,22 @@ const Account = () => {
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
         if (email === '') {
-            setErrorMessage('이메일을 입력해주세요.');
             alert('이메일을 입력해주세요.');
             return;
         }
 
         try {
-            // Send email confirmation request to the server
+            // 이메일 중복 확인
+            const res = await axios.post('/api/account/checkEmail', { email });
+            if (res.data.exists) {
+                alert('이미 등록된 이메일입니다.');
+                return;
+            }
+
+            // 이메일이 존재하지 않으면 인증 번호 전송
             await axios.post('/api/account/mailConfirm', { email });
-            // setIsEmailSent(true);
             alert('해당 이메일로 인증 번호가 전송되었습니다.');
         } catch (error) {
-            setErrorMessage('서버 오류로 인해 이메일 전송에 실패했습니다.');
             alert('서버 오류로 인해 이메일 전송에 실패했습니다.');
         }
     };
@@ -47,18 +51,17 @@ const Account = () => {
     const handleVerificationSubmit = async (e) => {
         e.preventDefault();
         if (verificationCode === '') {
-            setErrorMessage('인증 번호를 입력해주세요.');
+            alert('인증 번호를 입력해주세요.');
             return;
         }
 
         try {
-            // Verify email confirmation code
-            await axios.post('/api/account/verifyEmailCode', { email, ePw: verificationCode });
+            // 인증 번호 일치여부 확인
+            await axios.post('/api/account/verifyEmailCode', {email, ePw: verificationCode});
             setIsCodeVerified(true);
             alert('인증 되었습니다.');
         } catch (error) {
-            setErrorMessage('서버 오류로 인해 인증 번호 확인에 실패했습니다.');
-            alert('서버 오류로 인해 인증 번호 확인에 실패했습니다.');
+            alert('인증 번호가 다릅니다. 다시 입력해 주세요.');
         }
     };
 
@@ -71,14 +74,24 @@ const Account = () => {
         }
 
         if (password === '' || confirmPassword === '') {
-            setErrorMessage('비밀번호를 입력해주세요.');
             alert('비밀번호를 입력해주세요.');
             return;
         }
 
+        const passwordRegex = /^(?=.*[!@#$%^&*])(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/;
+        if (!passwordRegex.test(password)) {
+            alert('비밀번호는 8자 이상이어야 하며, 특수문자를 포함해야 합니다.');
+            return;
+        }
+
         if (password !== confirmPassword) {
-            setErrorMessage('비밀번호와 확인용 비밀번호가 일치하지 않습니다.');
-            alert('비밀번호와 확인용 비밀번호가 일치하지 않습니다.');
+            alert('비밀번호가 일치하지 않습니다.');
+            return;
+        }
+
+        const phoneRegex = /^[0-9]*$/;
+        if (!phoneRegex.test(phone)) {
+            alert('휴대폰 번호는 숫자만 입력해주세요.');
             return;
         }
 
@@ -98,7 +111,7 @@ const Account = () => {
         }
 
         // 회원가입
-        const user = { email, password, name, phone };
+        const user = {email, password, name, phone};
         try {
             const res = await axios.post('api/account', user);
             console.log(user);
@@ -109,6 +122,15 @@ const Account = () => {
             console.log(err);
             alert('회원가입에 실패하였습니다.');
         }
+    };
+
+    const handleSelectAll = (e) => {
+        const checked = e.target.checked;
+        setSelectAll(checked);
+        setAgeConfirmation(checked);
+        setTermsAccepted(checked);
+        setPrivacyAccepted(checked);
+        setMarketingAccepted(checked);
     };
 
     return (
@@ -132,27 +154,27 @@ const Account = () => {
                     </div>
 
 
-                        <div className={account.field}>
-                            <input
-                                type="text"
-                                value={verificationCode}
-                                className={account.email}
-                                placeholder="인증번호를 입력해 주세요."
-                                onChange={(e) => setVerificationCode(e.target.value)}
-                            />
-                            <button className={account.emailConfirmCheck}
-                                    type="submit"
-                                    onClick={handleVerificationSubmit}>
-                                인증 번호 확인
-                            </button>
-                        </div>
+                    <div className={account.field}>
+                        <input
+                            type="text"
+                            value={verificationCode}
+                            className={account.email}
+                            placeholder="인증번호를 입력해 주세요."
+                            onChange={(e) => setVerificationCode(e.target.value)}
+                        />
+                        <button className={account.emailConfirmCheck}
+                                type="submit"
+                                onClick={handleVerificationSubmit}>
+                            인증 번호 확인
+                        </button>
+                    </div>
 
 
                     <div className={account.field}>
                         <input
                             type="password"
                             id="password"
-                            placeholder="비밀번호를 입력해 주세요."
+                            placeholder="비밀번호를 입력해 주세요. (특수문자 포함 8자리 이상)"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
@@ -165,7 +187,9 @@ const Account = () => {
                             id="confirmPassword"
                             placeholder="비밀번호 확인"
                             value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            onChange={(e) => {
+                                setConfirmPassword(e.target.value);
+                            }}
                             required
                         />
                     </div>
@@ -184,8 +208,9 @@ const Account = () => {
                     <div className={account.field}>
                         <input
                             type="text"
+                            pattern="[0-9]*"
                             id="phone"
-                            placeholder="휴대폰 번호를 입력해 주세요."
+                            placeholder="`-` 제외한 휴대폰 번호를 입력해 주세요."
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
                             required
@@ -193,6 +218,19 @@ const Account = () => {
                     </div>
 
                     <div className={account.checkboxGroup}>
+                        <div className={account.checkboxAll}>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={selectAll}
+                                    onChange={handleSelectAll}
+                                />
+                                모두 동의합니다.
+                            </label>
+                        </div>
+
+                        <hr/>
+
                         <div className={account.checkbox}>
                             <label>
                                 <input
