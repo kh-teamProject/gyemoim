@@ -44,8 +44,6 @@ import AccountModify from "./page/admin/AccountModify";
 import './App.css';
 import MemberPwdSearch from "./page/account/MemberPwdSearch";
 import PwdUpdate from "./page/account/PwdUpdate";
-import TestAdminAccountDetail from "./page/admin/TestAdminAccountDetail";
-import AccountModify from "./page/admin/AccountModify";
 
 const App = () => {
 
