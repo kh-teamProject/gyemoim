@@ -1,6 +1,7 @@
 # Project_gyemoim
 ![gyemoimProject](https://github.com/kh-teamProject/gyemoim/assets/117277248/b3c8b0e4-ae8f-4b29-beb3-2ac31fcd8960)
-<br/><br/> 계모임에서는 계주 먹튀라는 사례가 흔하게 나오는점을 고려해서<br/>
+<br/><br/>
+계모임에서는 계주 먹튀라는 사례가 흔하게 나오는점을 고려해서 <br/>
 돈을 들고 도망갈 수 없는 시스템을 고려하여 시작한 계모임 금융 플팻폼 구현 프로젝트 입니다. <br/><br/>
  `2023.05.01 ~ 2023.06.10` 동안 `Spring Boot` | `React` | `MyBatis` | `Oracle` 을 사용해 구현했습니다..
  
@@ -10,12 +11,17 @@
 
 
 # 📚 목차
+* [프로젝트 설치 및 실행방법](#-프로젝트-설치-및-실행방법)
 * [프로젝트 구조](#-프로젝트-구조)
 * [사용 기술](#-사용-기술)
 * [구현 기능](#-구현-기능)
 * [API 명세서](#-API-명세서)
 * [ERD 설계](#-ERD-설계)
+* [프로젝트 수행 일정표 WBS](#-프로젝트-수행-일정표-WBS)
 * [트러블슈팅](#-트러블슈팅)
+
+
+# 프로젝트 설치 및 실행방법
 
 
 
@@ -100,6 +106,21 @@ HTTP 메서드를 통해 행위를 명시할 수 있도록 RESTful 방식으로 
 
 ### 3) Solution
 <img width="1024" alt="gyemoimSolutionERD" src="https://github.com/kh-teamProject/gyemoim/assets/117277248/635ac549-e19c-4832-88bf-9d9aa7a34de2">
+
+
+
+# [프로젝트 수행 일정표 WBS](https://docs.google.com/spreadsheets/d/e/2PACX-1vRrqM36ijbuIGb2SEILdGGQ2E-CXSkyVRFJcyLrvE0kfDVzWHr1Sp140nQmISjqnw/pubhtml?gid=1857947579&single=true)
+
+### 1주차
+<img width="1024" alt="WBS_1Week" src="https://github.com/kh-teamProject/gyemoim/assets/117277248/e3f1d277-8de8-4fad-a2d1-02ab9af8c8ff"><br/>
+
+
+### 2주차
+<img width="1024" alt="WBS_2Week" src="https://github.com/kh-teamProject/gyemoim/assets/117277248/33fe392f-b17d-4099-ab01-f38e54ad2e0b">
+
+
+### 3주차
+<img width="1024" alt="WBS_3Week" src="https://github.com/kh-teamProject/gyemoim/assets/117277248/da6b7abf-9f28-4db0-b50c-9a98081b0836">
 
 
 
