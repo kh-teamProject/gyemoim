@@ -3,6 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
+import classes from "../../component/css/Board.module.css";
 
 const QuestionList = () => {
 
@@ -114,31 +115,24 @@ const QuestionList = () => {
 
 
     return (
-        <>
-            {/* 헤더 */}
-            {/* ... */}
+        <section style={{
+            marginLeft: '0px',
+        }}>
+            <div>
+                <div>
+                    <div>
+                        <div>
+                            <h1>1:1 문의사항</h1>
+                            <p>문의사항을 상세하게 적어주세요.</p>
+                        </div>
 
-
-            <section className="py-5">
-                <div className="container px-5">
-                    <div className="row justify-content-center">
-                        <div className="col-11">
-                            <div className="title">
-                                <h1>1:1 문의사항</h1>
-                                <p>문의사항을 상세하게 적어주세요.</p>
-                            </div>
-
-
+                        <div>
                             {/* 검색 시작 */}
-                            {/*<table className="search" style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                marginBottom: '10px',
-                            }}>
+                            <table className={`${classes['search-container']}`}>
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <select className="custom-select" value={searchTypeVal}
+                                        <select className={`${classes['search-option']}`} value={searchTypeVal}
                                                 onChange={changeSearchType}>
                                             <option>검색 옵션 선택</option>
                                             <option value="title">제목</option>
@@ -147,63 +141,45 @@ const QuestionList = () => {
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="text" className="form-control" placeholder="검색어를 입력하세요."
-                                               value={searchKeywordVal} onChange={changeSearchKeyword}/>
+                                        <span className={`${classes['search-window']}`}>
+                                        <input type="text" className={`${classes['input-text']}`} placeholder="검색어를 입력하세요."
+                                               value={searchKeywordVal} onChange={changeSearchKeyword}/></span>
                                     </td>
                                     <td>
-                                        <button type="button" className="btn btn-outline-secondary"
+                                        <button type="button" className={`${classes['search-button']}`}
                                                 onClick={handleFormSubmit}><i className="fas fa-search"></i> 검색
                                         </button>
                                     </td>
                                 </tr>
                                 </tbody>
-
-                            </table>*/}
-                            <div className="search" style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                marginBottom: '10px',
-                            }}>
-                                <div>
-                                    <select className="custom-select" value={searchTypeVal}
-                                            onChange={changeSearchType}>
-                                        <option>검색 옵션 선택</option>
-                                        <option value="title">제목</option>
-                                        <option value="content">내용</option>
-                                        <option value="name">작성자</option>
-                                    </select>
-
-
-                                    <input type="text" className="form-control" placeholder="검색어를 입력하세요."
-                                           value={searchKeywordVal} onChange={changeSearchKeyword}/>
-                                </div>
-
-                                <div>
-                                    <button type="button" className="btn btn-outline-secondary"
-                                            onClick={handleFormSubmit}><i className="fas fa-search"></i> 검색
-                                    </button>
-                                    {uno && (
-                                        <button onClick={moveQuestionWrite}><i className="fas fa-pen"></i> &nbsp; 글쓰기
-                                        </button>
-                                    )}
-                                </div>
-
-                            </div>
+                            </table>
+                            <br/>
                             {/* 검색 끝 */}
 
-
-                            <table className="table table-hover">
-                                <thead className="table table-hover">
+                            <table className={`${classes['board-container']}`} style={{
+                                borderCollapse: 'collapse'
+                            }}>
+                                <thead>
                                 <tr>
-                                    <th className="col-1">글번호</th>
-                                    <th className="col-8">제목</th>
-                                    <th className="col-3">작성자</th>
-                                    <th className="col-3">작성일</th>
-                                    <th className="col-3">조회수</th>
+                                    <th className={`${classes['board-column']}`} style={{
+                                        borderSpacing: "30px"
+                                    }}>글번호</th>
+                                    <th className={`${classes['board-column']}`} style={{
+                                        borderSpacing: "10px"
+                                    }}>제목</th>
+                                    <th className={`${classes['board-column']}`} style={{
+                                        borderSpacing: "10px"
+                                    }}>작성자</th>
+                                    <th className={`${classes['board-column']}`} style={{
+                                        borderSpacing: "10px"
+                                    }}>작성일</th>
+                                    <th className={`${classes['board-column']}`} style={{
+                                        borderSpacing: "10px"
+                                    }}>조회수</th>
                                 </tr>
                                 </thead>
 
-                                <tbody className="table table-hover">
+                                <tbody>
                                 {/* 게시글 목록 (적용시켜야하는 것 : 비밀글인 경우, 로그인 되어있는 사람의 uNo와 글의 uNo가 같으면 글 제목 눌렀을 때 글 상세보기로 이동하게하고 uNo가 서로 같지 않으면 '비밀글입니다.' 라고 alert() 띄워주기 / 공개글인 경우 그냥 제목 누르면 상세보기로 이동시키기 ) */}
                                 {questionList.length > 0 ? (
                                     questionList
@@ -215,17 +191,22 @@ const QuestionList = () => {
                                             const formattedWriteDate = writeDate.toISOString().split('T')[0];
 
                                             return (
-                                                <tr key={index}>
-                                                    <td className="text-center">{item.bid}</td>
-                                                    <td>
+                                                <tr className={`${classes['text-center']}`} key={index}>
+                                                    <td className={`${classes['text-center']}`} style={{
+                                                        borderSpacing: "50px"
+                                                    }}>{item.bid}</td>
+                                                    <td className={`${classes['text-center'], classes['title-link']}`}>
                                                         {item.secret === 'S' ? (
                                                                 <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>) :
                                                             (<Link
-                                                                to={`/board/question/detail/${item.bid}`}>{item.title}</Link>)}
+                                                                to={`/board/question/detail/${item.bid}`}
+                                                                className={`${classes['title-link']}`}>
+                                                                {item.title}
+                                                            </Link>)}
                                                     </td>
-                                                    <td className="text-center">{item.name}</td>
-                                                    <td className="text-center">{formattedWriteDate}</td>
-                                                    <td className="text-center">{item.views}</td>
+                                                    <td className={`${classes['text-center']}`}>{item.name}</td>
+                                                    <td className={`${classes['text-center']}`}>{formattedWriteDate}</td>
+                                                    <td className={`${classes['text-center']}`}>{item.views}</td>
                                                 </tr>
                                             );
                                         })
@@ -238,16 +219,14 @@ const QuestionList = () => {
                                 )}
                                 </tbody>
                                 {/* 게시글 목록 끝 */}
-
                             </table>
 
                             {/* 페이징 시작 */}
-                            <div className="pagination">
-                                <nav aria-label="Page navigation"
-                                     style={{display: "flex", justifyContent: "center", flex: 10}}>
-                                    <div>
+                            <div>
+                                <nav aria-label="Page navigation">
+                                    <div className={`${classes['pagination']}`}>
                                         {nowPage > 1 && (
-                                            <span className="page-item">
+                                            <span className={`${classes['page-item']}`}>
                                                 <button className="page-link"
                                                         value={nowPage - 1}
                                                         onClick={handlePageClick}>
@@ -260,7 +239,7 @@ const QuestionList = () => {
                                                     className={nowPage === i + 1 ? 'active' : ''}>{i + 1}</button>
                                         ))}
                                         {nowPage < totalPage && (
-                                            <span className="page-item">
+                                            <span className={`${classes['page-item']}`}>
                                                 <button className="page-link" value={nowPage + 1}
                                                         onClick={handlePageClick}>
                                                     {">>"}
@@ -272,25 +251,18 @@ const QuestionList = () => {
                             </div>
                             {/* 페이징 끝 */}
 
-
                             {/* 글쓰기 버튼 */}
-                            {/*<div className="my-5 d-flex justify-content-center" style={{
-                                marginTop: '10px',
-                                marginBottom: '10px',
-                            }}>
-                                 //적용시켜야 할 것: 로그인한 경우에만 글쓰기 버튼 활성화(/board/question/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기
-                                <Link to={"/board/question/write"}><i className="fas fa-pen"></i> &nbsp; 글쓰기</Link>
-                            </div>*/}
-
+                            <div className={`${classes['board-write']}`}>
+                                {uno && (
+                                    <button onClick={moveQuestionWrite}> 글쓰기</button>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
-
-            {/* 푸터 */}
-        </>
+            </div>
+        </section>
     );
-
 }
 
 export default QuestionList;

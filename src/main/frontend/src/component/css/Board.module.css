@@ -1,78 +1,143 @@
-.underline:hover {
+/* 검색 테이블 스타일 */
+.search-container {
+    width: 500px;
+    margin: 0 auto;
+}
+
+/* 게시판 테이블 스타일 */
+.board-container {
+    width: 900px;
+}
+
+.board-column {
+    border-top: 2px solid darkblue;
+    border-bottom: 2px solid darkblue;
+    padding: 3px;
+}
+
+.text-center {
+    border-bottom: 1px solid darkblue;
+    padding: 15px;
+}
+
+.title-link {
+    text-decoration: none;
+    color: black;
+}
+
+.title-link:hover {
     text-decoration: underline;
-    cursor: pointer;
+}
+
+/* 게시글 제목에 회색 밑줄 스타일 적용 */
+.underline {
+    border-bottom: 1px solid #ccc;
+    display: inline-block;
+    transition: border-bottom-color 0.3s ease;
+}
+
+.underline:hover {
+    border-bottom-color: transparent;
 }
 
 
-
-textarea {
-    background-color: transparent;
-    resize: none;
-    outline: none;
-        border-radius: 20px;
-        padding: 20px;
+/* 페이징 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size:0;
 }
 
-.profile-img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    background-color: #e9ecef;
+
+.pagination button {
+    display: block;
+    margin: 0 3px;
+    float: left;
+    border: 1px solid #e6e6e6;
+    background-color: #ffffff;
+    font-size: 12px;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
 }
 
-.comment {
-    border-radius: 20px;
-    background-color: #e9ecef;
-    padding: 20px;
+
+.pagination button:hover {
+    background-color: gray;
+    color: white;
 }
 
-.comment-div {
-    width: 100%;
-    margin: auto;
+
+/* 글쓰기 버튼 */
+.board-write {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size:0;
 }
 
-span.comment-id {
+.board-write button {
+    height: 25px;
+    width: 60px;
+    margin: 10px auto;
+    border: 1px solid #e6e6e6;
+    background-color: #ffffff;
+    font-size: 12px;
     font-weight: bold;
 }
 
-span.board-title {
-    color: #212529;
-}
-
-.pagination > li > a
-{
+/* 검색창 스타일 */
+.search-option {
+    display: inline-block;
+    width: 105px;
+    height: 24px;
+    border: 1px solid #200400;
     background-color: white;
-    color: #212529 !important;
+    font-weight: bold;
+    font-size: 11px;
+    outline: none;
 }
 
-.pagination > .active > a {
-        background-color: #212529;
-    color: #ffffff !important;
+
+.search-window {
+    display: inline-block;
+    width: 366px;
+    height: 34px;
+    border: 2px solid #200400;
+    background-color: white;
 }
 
-.pagination > .active > a:hover {
-        background-color: #212529;
+.input-text {
+    width: 348px;
+    height: 21px;
+    margin: 6px 0 0 9px;
+    border: 0;
+    line-height: 21px;
+    font-weight: bold;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-button {
+    width: 54px;
+    height: 38px;
+    margin: 0;
+    border: 0;
+    vertical-align: top;
+    background-color: #200400;
     color: white;
-        border: solid 1px #212529 !important;
+    font-weight: bold;
+    border-radius: 1px;
+    cursor: pointer;
 }
 
-.pagination > .active {
-        background-color: #212529 !important;
-    color: #ffffff;
-}
-
-.pagination > li > a:focus,
-.pagination > li > a:hover,
-.pagination > li > span:focus,
-.pagination > li > span:hover
-{
-    color: black;
-    border-color: #ddd;
-}
-
-.pagination > .active > a:hover
-{
-    background-color: #212529 !important;
-        color: #ffffff;
-    border: solid 1px #ffffff;
+.search-button:hover {
+    background-color: #56C82C;
 }

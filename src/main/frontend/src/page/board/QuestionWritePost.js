@@ -139,9 +139,7 @@ const QuestionWritePost = () => {
                                     <img width="30px" src={file}/>
                                 </div>
 
-                                <div style={{
-                                    margin: '20px',
-                                }}>
+                                <div>
                                     <button type="submit">작성하기</button>
                                 </div>
                             </form>

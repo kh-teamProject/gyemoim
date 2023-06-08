@@ -53,7 +53,7 @@ public class BoardServiceImpl implements BoardService{
     @Override
     @Transactional
     public int writePost(BoardWriteDTO boardWriteDTO, MultipartFile file) throws Exception {
-        // BoardWriteDTO 이용하여 게시글 생성하고 DB에 저장
+        // BoardWriteDTO 이용하여 BoardVO 생성하고 DB에 게시글 저장
         BoardVO boardVO = new BoardVO();
         boardVO = boardVO.dtoToVO(boardWriteDTO);
         int bid = boardMapper.getBid();
@@ -63,7 +63,7 @@ public class BoardServiceImpl implements BoardService{
         boardMapper.insert(boardVO); // 게시글 저장 후 고유 식별자 반환
 
         // 첨부파일 존재하면 첨부파일 저장
-        if (file != null) {
+        if (file != null && !file.isEmpty()) {
             // AttachedVO 객체 생성 및 정보 저장
             AttachedVO attachedVO = new AttachedVO();
             attachedVO = attachedVO.dtoToVO(bid,file);
@@ -76,6 +76,8 @@ public class BoardServiceImpl implements BoardService{
 
         return boardVO.getBid(); // 게시글 고유 식별자 반환
     }
+
+
 
     // 파일 실제 업로드 경로에 저장하는 로직
     // 'file' 객체에서 파일 이름 얻어와 경로를 생성하고 해당 경로에 파일을 저장한다.

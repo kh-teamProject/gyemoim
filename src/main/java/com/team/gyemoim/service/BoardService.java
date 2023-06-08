@@ -13,7 +13,6 @@ public interface BoardService {
     /* 게시글 생성 C */
     //void write(BoardWriteDTO boardWriteDTO) throws Exception; // 게시글 작성하기
     int writePost(BoardWriteDTO boardWrite, MultipartFile file) throws Exception; // 첨부파일 업로드 포함 게시글 작성하기
-
     /* 게시글 조회 R */
     //int searchCountBoard(PageVO spv) throws Exception; // 검색 후 게시글 갯수 구하기
     List<BoardVO> searchList(BoardListDTO dto) throws Exception; // 검색 후 검색에 해당하는 게시글 리스트로 조회하기 (페이징 동시에 검색)

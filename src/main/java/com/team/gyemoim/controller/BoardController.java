@@ -52,9 +52,9 @@ public class BoardController {
     }
 
 
-    /* 게시글 작성 API (Create) */
+    /* 첨부파일 포함한 게시글 작성 API (Create) */
     @PostMapping("/board/writePost")
-    public ResponseEntity<String> writePost(@RequestPart("file") MultipartFile file,
+    public ResponseEntity<String> writePost(@RequestPart(value = "file", required = false) MultipartFile file,
                                             @RequestParam("boardWriteDTO") String boardWriteDTOJson) {
         try {
             System.out.println("*************** 글 작성 writePost 컨트롤러 성공 :D *****************");
@@ -68,7 +68,7 @@ public class BoardController {
             System.out.println("*************** 글 작성 writePost 컨트롤러 실패 :< *****************");
             System.out.println("error 메시지: " + e.getMessage());
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("글 작성 실패 :< -FROM BoardController-");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("글 작성 실패 :< -FROM BoardController_writePost-");
         }
     }
 
