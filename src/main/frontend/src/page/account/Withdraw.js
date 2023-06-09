@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import {Link, NavLink} from "react-router-dom";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 import axios from "axios";
 
 import MyPageSidebar from "../../component/MyPageSidebar";
@@ -13,10 +15,13 @@ const Withdraw = () => {
     uno: 0
   });
 
+  const token = Cookies.get('Set-Cookie');
+  const uNo = jwtDecode(token).uNo;
+
   useEffect(() => {
     axios.get('/getMyAccount', {
       params: {
-        uNo: 3
+        uNo
       }
     })
       .then((res) => {
@@ -28,7 +33,7 @@ const Withdraw = () => {
 
     axios.get('/mypage', {
       params: {
-        uNo: 3
+        uNo
       }
     })
       .then((res) => {

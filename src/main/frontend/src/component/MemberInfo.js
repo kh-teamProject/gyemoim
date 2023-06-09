@@ -42,7 +42,7 @@ const MemberInfo = () => {
       }
     })
       .then((res) => {
-        setExpenditure(...expenditure, res.data[0]);
+        setExpenditure(res.data[0]);
       })
       .catch((error) => {
         console.log(error);
