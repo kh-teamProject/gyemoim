@@ -16,7 +16,7 @@ const Header = () => {
         try {
             await axios.post("/api/logout").then((res) => {
                 Cookies.remove("Set-Cookie");
-                dispatch({ type: "logout" });
+                dispatch({type: "logout"});
                 navigate("/");
             });
         } catch (error) {
@@ -35,12 +35,12 @@ const Header = () => {
         <header>
             <nav>
                 <div>
-                    <NavLink to={"stagelist"}>스테이지</NavLink>
-                    <NavLink to={"question"}>1:1 문의사항</NavLink>
-                    <NavLink to={"faq"}>이용안내</NavLink>
+                    <NavLink to={'stage'}>스테이지</NavLink>
+                    <NavLink to={'/board/question'}>1:1 문의사항</NavLink>
+                    <NavLink to={'faq'}>이용안내</NavLink>
                 </div>
                 <NavLink to={"/"}>
-                    <img src={logo} alt="logo" width={"200"} height={"100"} />
+                    <img src={logo} alt="logo" width={"200"} height={"100"}/>
                 </NavLink>
                 <div>
                     {checkedLogin ? (
@@ -54,7 +54,7 @@ const Header = () => {
                             <NavLink to={"account"}>회원가입</NavLink>
                         </>
                     )}
-                    <NavLink to={"notice"}>공지사항</NavLink>
+                    <NavLink to={'/board/notice'}>공지사항</NavLink>
                 </div>
             </nav>
         </header>

@@ -2,88 +2,103 @@ package com.team.gyemoim.service;
 
 import com.team.gyemoim.dto.board.*;
 import com.team.gyemoim.mapper.BoardMapper;
+import com.team.gyemoim.vo.AttachedVO;
 import com.team.gyemoim.vo.BoardVO;
 import com.team.gyemoim.vo.PageVO;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-/*@RequiredArgsConstructor*/
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService{
 
     private final BoardMapper boardMapper;
-    
-    private final String uploadPath; // 첨부파일의 저장 경로 지정
-    String filePath  = "/gyemoim/upload/";
+    private final String uploadPath; // FileUploadConfig 에 있는 uploadPath 주입
 
 
-    @Autowired
-    public BoardServiceImpl(BoardMapper boardMapper, @Value("${upload.path}") String uploadPath) {
-        this.boardMapper = boardMapper;
-        this.uploadPath = uploadPath;
+    /* (Create) */
+
+    // 첨부파일 조회하기
+    @Override
+    public AttachedVO getAttachedById(int bid) throws Exception {
+        return boardMapper.getAttachedById(bid);
+    }
+    // 첨부파일 수정
+    @Override
+    public void updateAttached(AttachedVO attached) throws Exception {
+        boardMapper.updateAttached(attached);
+    }
+    // 첨부파일 삭제
+    @Override
+    public void deleteAttached(int attachedID) throws Exception {
+        boardMapper.deleteAttached(attachedID);
     }
 
 
-    /* (Create) BoardWriteServiceImpl */
-    // 게시글 작성하기
-    /*@Transactional
+    // 게시글 생성하고 생성된 게시글의 번호 bid 반환
     @Override
-    public void write(BoardWriteDTO boardWriteDTO) throws Exception {
-        System.out.println("BoardServiceImpl.write_boardWriteDTO 나와줘 :< " + boardWriteDTO);
-        boardMapper.write(boardWriteDTO);
+    @Transactional
+    public int writePost(BoardWriteDTO boardWriteDTO, MultipartFile file) throws Exception {
+        // BoardWriteDTO 이용하여 BoardVO 생성하고 DB에 게시글 저장
+        BoardVO boardVO = new BoardVO();
+        boardVO = boardVO.dtoToVO(boardWriteDTO);
+        int bid = boardMapper.getBid();
+        boardVO.setBid(bid);
+        System.out.println(boardVO);
 
-        *//* 첨부파일 *//*
-        MultipartFile UploadFile = boardWriteDTO.getUploadFile();
-        if (!UploadFile.isEmpty() && UploadFile != null) {// 업로드된 파일이 있는 경우
-            *//*String originalFileName = uploadFile.getOriginalFilename();
-            String savedName = generateUniqueFileName(originalFileName);// savedName : 유니크네임
-            String fullPath = uploadPath + savedName;
-            uploadFile.transferTo(new File(fullPath));// 서버에 파일 저장*//*
-            
-            UUID uid = UUID.randomUUID();
-            String savedName = uid.toString() + "_" + UploadFile.getOriginalFilename();
-            UploadFile.transferTo(new File(uploadPath + filePath + savedName)); // 서버에 파일 저장
-            
-            boardMapper.addAttachedName(savedName);// 첨부파일 이름을 게시글에 보여주기 위해 파일이름 저장하는 메서드
+        boardMapper.insert(boardVO); // 게시글 저장 후 고유 식별자 반환
+
+        // 첨부파일 존재하면 첨부파일 저장
+        if (file != null && !file.isEmpty()) {
+            // AttachedVO 객체 생성 및 정보 저장
+            AttachedVO attachedVO = new AttachedVO();
+            attachedVO = attachedVO.dtoToVO(bid,file);
+            attachedVO.setFilePath(saveFile(file)); // 업로드 경로에 파일 저장
+
+            // AttachedVO 객체를 데이터베이스에 저장 (첨부파일 생성)
+            System.out.println(attachedVO);
+            boardMapper.saveAttached(attachedVO);
         }
 
-    }*/
-
-    @Override
-    public void write(BoardWriteDTO boardWriteDTO) {
-        try {
-            System.out.println("******************** 글 작성 write 서비스 성공 ********************");
-            System.out.println("글 작성 boardWriteDTO 나와랏 : " +boardWriteDTO);
-            boardMapper.write(boardWriteDTO);
-        } catch (Exception e) {
-            System.out.println("******************** 글 작성 write 서비스 실패 ********************");
-            System.out.println("아악 :< 에러 원인 : " + e.getMessage());
-        }
+        return boardVO.getBid(); // 게시글 고유 식별자 반환
     }
 
 
-    // 업로드된 파일의 원본 이름을 전달받아 고유한 파일 이름 생성하여 반환하는 메서드
-    // 위의 write 메서드에서 사용된다.
-    private String generateUniqueFileName(String originalFileName) {
-        String extension = StringUtils.getFilenameExtension(originalFileName);
-        String uniqueFileName = UUID.randomUUID().toString() + "." + extension;// 파일의 고유한 이름을 생성하기 위해 UUID 활용함
 
-        return uniqueFileName;
+    // 파일 실제 업로드 경로에 저장하는 로직
+    // 'file' 객체에서 파일 이름 얻어와 경로를 생성하고 해당 경로에 파일을 저장한다.
+    private String saveFile(MultipartFile file) throws IOException {
+        String originalFileName = file.getOriginalFilename();
+        String extension = FilenameUtils.getExtension(originalFileName);
+        String fileName = LocalDateTime.now().toString().replace(":", "-") + "." + extension;
+        String filePath = uploadPath + File.separator + fileName; // File.separator 사용하여 경로 구분자 설정
+        File dest = new File(filePath);
+        file.transferTo(dest);
+
+        return filePath;
     }
 
-
-    /* (Read) BoardServiceImpl */
+    /* (Read) BoardServiceImpl
     // 검색 해당하는 게시글 갯수 구하기 (사용 o)
     @Override
     public int searchCountBoard(PageVO spv) throws Exception {
         System.out.println("BoardServiceImpl.searchCountBoard_검색한 게시글 갯수 : " + boardMapper.searchCountBoard(spv));
         return boardMapper.searchCountBoard(spv);
-    }
+    }*/
 
     // 검색에 해당하는 게시글 리스트 조회하기 (사용 o)
     @Override
@@ -104,13 +119,7 @@ public class BoardServiceImpl implements BoardService{
 
 
 
-    /*게시글 조회하기
-    @Override
-    public List<BoardVO> selectBoard(PageVO vo) throws Exception {
-        System.out.println("BoardSereviceImpl.selectBoard_게시글 조회 : " + boardMapper.selectBoard(vo));
-        return boardMapper.selectBoard(vo);
-    }*/
-
+    /* 게시글 조회하기 */
     @Override
     public List<BoardVO> selectBoard() throws Exception {
         System.out.println("BoardSereviceImpl.selectBoard_게시글 조회 : " + boardMapper.selectBoard());

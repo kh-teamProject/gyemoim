@@ -1,5 +1,6 @@
 package com.team.gyemoim.vo;
 
+import com.team.gyemoim.dto.board.BoardWriteDTO;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,5 +18,17 @@ public class BoardVO {
     private String content; // 내용
     private Date writeDate; // 글 작성일자
     private String secret; // 글 공개여부
+
+
+    public BoardVO dtoToVO(BoardWriteDTO dto){
+        BoardVO boardVO = new BoardVO();
+        boardVO.setUNo(dto.getUNo());
+        boardVO.setType(dto.getType());
+        boardVO.setName(dto.getName());
+        boardVO.setTitle(dto.getTitle());
+        boardVO.setContent(dto.getContent());
+        boardVO.setSecret(dto.getSecret());
+        return boardVO;
+    }
 
 }
