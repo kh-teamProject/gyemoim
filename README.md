@@ -46,6 +46,7 @@
 |JSON Web Token(JWT)|0.9.1|
 |MyBatis|2.3.0|
 |Oracle JDBC Driver|ojdbc8|
+|Redis|
 |Commons IO|2.11.0|
 |Commons FileUpload|1.3.1|
 |JAXB API|2.3.1|
@@ -76,6 +77,7 @@
 * 회원 기능
   * 회원가입
   * 로그인/로그아웃
+  * 이메일 찾기, 임시 비밀번호 전송, 비밀번호 변경
   * 마이페이지
 * 게시판 기능
   * 모든 게시글 및 특정회게시글 조회
