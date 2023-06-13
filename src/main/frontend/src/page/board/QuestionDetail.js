@@ -13,6 +13,7 @@ const QuestionDetail = () => {
 
     const token = jwtDecode(Cookies.get('Set-Cookie'));
     const uNo = token.uNo;
+    const name = token.name;
 
     // 파라미터 가져오기
     const {bid} = useParams();

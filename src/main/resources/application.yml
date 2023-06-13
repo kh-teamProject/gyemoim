@@ -36,5 +36,5 @@ mybatis:
   mapper-locations: classpath:mapper/**.xml
 
 upload:
-    path: C:/gyemoim/upload
+    path: /Users/minjaehong/gyemoim/upload
 

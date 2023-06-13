@@ -64,5 +64,42 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 20px;
   flex-wrap: wrap;
+}
+
+.stage {
+  width: 300px;
+  height: 260px;
+  border: 1px solid black;
+}
+
+.stage ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.stage ul li {
+  border: 2px solid skyblue;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+}
+
+.stage p {
+  font-size: 2vmin;
+}
+
+.stage span {
+  color: gray;
+}
+
+.stageImg {
+  width: 20px;
+  padding-top: 3px;
 }

@@ -10,7 +10,13 @@ const MemberInfo = () => {
   const pathParts = location.pathname.split('/');
   const lastPath = pathParts[pathParts.length - 1];
 
-  const [myInfo, setMyInfo] = useState({});
+  const [myInfo, setMyInfo] = useState({
+    medicalCost: '',
+    housingCost: '',
+    foodCost: '',
+    culturalCost: '',
+    etx: ''
+  });
   const [expenditure, setExpenditure] = useState({
     medicalCost: '',
     housingCost: '',
@@ -29,7 +35,11 @@ const MemberInfo = () => {
       .then((res) => {
         const date = new Date(res.data.enrollDate);
         const [year, month, day] = [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')];
-        setMyInfo(res.data);
+        const info = res.data;
+        setMyInfo({
+          ...myInfo,
+          ...info
+        });
         setEnrollDate(`${year}-${month}-${day}`);
       })
       .catch((error) => {

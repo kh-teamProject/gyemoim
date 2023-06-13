@@ -10,6 +10,7 @@ const ReplyWrite = (props) => {
 
     const token = jwtDecode(Cookies.get('Set-Cookie'));
     const uNo = token.uNo;
+    const name = token.name;
 
     /*const uno = uNo;*/
     const bid = props.bid;
@@ -70,7 +71,7 @@ const ReplyWrite = (props) => {
                 </div>
 
                 <div className="col-7">
-                    <span style={{fontWeight: "bold"}} className="comment-id">{uNo}</span>
+                    <span style={{fontWeight: "bold"}} className="comment-id">{name}</span>
                 </div>
                 <div className="col-2 my-1 d-flex justify-content-end">
                     <button className="btn btn-outline-secondary" onClick={createReply}><i

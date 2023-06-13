@@ -17,7 +17,7 @@ const Interest = () => {
   useEffect(() => {
     axios.get('/mypage', {
       params: {
-        uNo: 3
+        uNo: 81
       }
     })
       .then((res) => {
@@ -42,7 +42,7 @@ const Interest = () => {
 
     axios.post('/interestUpdate', null, {
       params: {
-        uno: 3,
+        uno: 81,
         interest: checkedInterest,
       }
     })

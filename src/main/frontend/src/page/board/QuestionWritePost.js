@@ -3,8 +3,11 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import classes from "../css/board/Board.module.css";
+import {useNavigate} from "react-router-dom";
 
 const QuestionWritePost = () => {
+
+  const navigate = useNavigate();
 
     // 로그인 토큰에서 이름 name, 회원번호 uno 가져오기
     const token = jwtDecode(Cookies.get('Set-Cookie'));
@@ -86,7 +89,8 @@ const QuestionWritePost = () => {
             console.log("QuestionWritePost_handleSubmit 성공 :D");
             console.log("업로드할 첨부파일 : " + file);
             console.log("글 작성 : " + questionFormData);
-            window.location.href = '/board/question';
+          navigate('/board/question')
+            // window.location.href = '/board/question';
 
         } catch (error) {
             console.log("QuestionWritePost_handleSubmit axios 실패 :<");
