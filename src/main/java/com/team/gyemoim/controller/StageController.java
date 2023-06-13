@@ -101,7 +101,7 @@ public class StageController {
         map.put("roll", rollList);
         map.put("import", stageService.getImportList(pfID));
         map.put("memList", stageService.getMemList(pfID));
-
+        log.info("importimportimportimportimport"+ stageService.getImportList(pfID));
         return map;
     }
     //(찬희) 수익보고서

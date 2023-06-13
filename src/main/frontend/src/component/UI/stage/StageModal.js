@@ -57,7 +57,7 @@ const ReceiptModalOverlay = (props) => {
           <td>{scheduleData.upayment.toLocaleString()}</td>
           <td>{scheduleData.utotalPayment.toLocaleString()}</td>
           <td>{scheduleData.utotalReceipts.toLocaleString()}</td>
-          <td>{scheduleData.uRate}</td>
+          <td>{scheduleData.urate}%</td>
         </tr>
       );
 

@@ -12,6 +12,7 @@ public class StageReceiptDTO {
   private Integer uPayment; //개인별 월 입금액
   private Integer uTotalPayment; //개인별 총 입금액
   private Integer uTotalReceipts; //개인별 실 지급금
+  private BigDecimal uRate; //개인별 적용이율
 
 
 }
