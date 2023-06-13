@@ -13,4 +13,7 @@ public interface AdminStageService {
   //(현지) 스테이지 리스트 상태 업데이트
   Integer checkPFID(Integer pfID);
 
+  //(유진) 스테이지 상태 업데이트 하기
+  void setStageComplete (int pfID);
+
 }

@@ -32,5 +32,10 @@
       and   rs.receiveturn= r.receiveturn
       and   rs.pfrate = p.pfrate
   </select>
+<!-- (유진) 스테이지 상태 업데이트 하기  -->
+    <update id="setStageComplete">
+    UPDATE pf set startFlag = '완료'
+    where pfID=#{pfID}
+    </update>
 
 </mapper>

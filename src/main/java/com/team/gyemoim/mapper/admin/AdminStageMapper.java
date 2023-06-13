@@ -16,4 +16,6 @@ public interface AdminStageMapper {
 Integer updateStatus(Integer pfID);
 
   List<AdminStageDetailDTO> getStageMemList(int pfID);
+
+  void setStageComplete(int pfID);
 }

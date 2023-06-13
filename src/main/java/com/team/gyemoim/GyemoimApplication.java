@@ -9,7 +9,8 @@ import javax.annotation.PostConstruct;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-public class GyemoimApplication {
+public class
+GyemoimApplication {
 
 	private final RedisConnectionChecker redisConnectionChecker;
 
