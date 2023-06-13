@@ -1,7 +1,6 @@
 import classes from '../../../page/css/Stage.module.css';
 
 function StageMemberList(props){
-   console.log(props.mem);
 
       return (
       <ul className={classes.memberOrder}>
