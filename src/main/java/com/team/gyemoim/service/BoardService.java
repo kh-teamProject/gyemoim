@@ -28,7 +28,7 @@ public interface BoardService {
     // 수정페이지 불러오기
     BoardVO modify(int bid) throws Exception; // 수정 전 원래 글 정보 끌고오기
     // 게시글 수정하기
-    public void modifyUpdate(BoardModifyDTO boardModifyDTO) throws Exception; // 게시글 정보 수정하기
+    public void modifyUpdate(BoardModifyDTO boardModifyDTO, MultipartFile file) throws Exception; // 게시글 정보 수정하기
 
 
     /* 첨부파일 */

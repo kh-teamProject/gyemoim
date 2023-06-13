@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import "../../component/css/Board.module.css";
+import "../css/board/Board.module.css";
 import "../../component/css/Page.module.css";
 import axios from "axios";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
+import classes from "../css/board/Board.module.css";
 
 const NoticeList = () => {
 
@@ -28,13 +29,13 @@ const NoticeList = () => {
     let navigate = useNavigate();
 
     // 로그인 토큰에서 식별자(역할) userRole, 회원번호 uno 가져오기
-    /*const token = jwtDecode(Cookies.get('Set-Cookie'));
+    const token = jwtDecode(Cookies.get('Set-Cookie'));
     const userRole = token.userRole;
-    const uno = token.uNo;*/
+    const uno = token.uNo;
 
 
     // 운영자 여부 확인을 위한 상태 변수
-    //const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
 
     // API 호출하여 게시글 목록 가져오기
@@ -43,17 +44,17 @@ const NoticeList = () => {
         // 검색된 List<BoardVO> 리턴받음
         await axios.get("/board/searchList", {
             params: {
+                "type": type,
                 "searchType": searchType,
                 "searchKeyword": searchKeyword,
-                "type": type,
             },
         })
             .then((response) => {
-                console.log("NoticeList_fetchNoticeList_컨트롤러로 들어갑니다~ :D");
-                console.log("게시글 목록 response.data.list: " + response.data);
-                console.log(response);
+                console.log("게시글 목록 response.data.list: " + response);
+                console.log(isAdmin);
+                console.log(token);
 
-                setNoticeList(response.data); // 검색된 게시글 리스트 가져오기
+                setNoticeList(response.data); // 검색된 공지사항 리스트 가져오기
                 setTotalPage(Math.ceil(response.data.length / 10)); // total 값을 가져와서 업데이트
             })
             .catch((error) => {
@@ -65,19 +66,14 @@ const NoticeList = () => {
 
     // 초기 렌더링 시 게시글 목록과 전체 페이지 수를 가져온다.
     useEffect(() => {
-        /*// 사용자 역할(userRole)이 "관리자" 인 경우에만 운영자로 간주
+        // 사용자 역할(userRole)이 "관리자" 인 경우에만 운영자로 간주
         if (userRole == "관리자") {
             setIsAdmin(true);
-        }*/
+        }
+
         fetchNoticeList("", "");
         //console.log("token : " + token);
     }, []);
-
-
-    // searchKeyword (검색어), searchType(검색타입), nowPage(현재페이지) 상태가 변경될 때만 호출되도록 설정
-    /*useEffect(() => {
-        fetchNoticeList(searchTypeVal, searchKeywordVal);
-    }, [searchTypeVal, searchKeywordVal, nowPage]);*/
 
 
     // 검색 타입 변경하는 함수
@@ -94,8 +90,8 @@ const NoticeList = () => {
     const handleFormSubmit = () => {
         console.log("NoticeList_handleFormSubmit_searchTypeVal= " + searchTypeVal + ", searchKeywordVal= " + searchKeywordVal);
 
-        navigate("/board/notice");
         fetchNoticeList(searchTypeVal, searchKeywordVal);
+        navigate("/board/notice");
         // 페이지 버튼 클릭 시 현재 페이지를 1로 초기화
         setNowPage(1);
 
@@ -115,7 +111,6 @@ const NoticeList = () => {
     }
 
 
-    // (board.secret == 'S') && (board.uNo != login.uNo) 인 경우 발생하는 함수
     const handleSecretClick = () => {
         alert("다른 사람의 비밀글은 볼 수 없습니다.");
     };
@@ -127,26 +122,26 @@ const NoticeList = () => {
 
 
     return (
-        <>
-            {/* 헤더 */}
-            {/* ... */}
+        <section style={{
+            marginLeft: '0px'
+        }}>
+            <div>
+                <div>
+                    <div style={{marginTop: "8%"}}>
+                        <div className={`${classes["noticeList_ttl"]}`}>
+                            <h1>공지사항</h1>
+                            <p>계모임의 새로운 소식을 전합니다.</p>
+                        </div>
 
-            <section className="py-5">
-                <div className="container px-5">
-                    <div className="row justify-content-center">
-                        <div className="col-11">
-                            <div className="title">
-                                <h1>공지사항</h1>
-                                <p>계모임의 소식을 전합니다.</p>
-                            </div>
-
-
+                        <div style={{
+                            margin: "45px 0 50px"
+                        }}>
                             {/* 검색 시작 */}
-                            <table className="search">
+                            <table className={`${classes['search-container']}`}>
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <select className="custom-select" value={searchTypeVal}
+                                        <select className={`${classes['search-option']}`} value={searchTypeVal}
                                                 onChange={changeSearchType}>
                                             <option>검색 옵션 선택</option>
                                             <option value="title">제목</option>
@@ -155,35 +150,54 @@ const NoticeList = () => {
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="text" className="form-control" placeholder="검색어를 입력하세요."
-                                               value={searchKeywordVal} onChange={changeSearchKeyword}/>
+                                        <span className={`${classes['search-window']}`}>
+                                        <input type="text" className={`${classes['input-text']}`}
+                                               placeholder="검색어를 입력하세요."
+                                               value={searchKeywordVal} onChange={changeSearchKeyword}/></span>
                                     </td>
                                     <td>
-                                        <button type="button" className="btn btn-outline-secondary"
-                                                onClick={handleFormSubmit}><i className="fas fa-search"></i> 검색
+                                        <button type="button" className={`${classes['search-button']}`}
+                                                onClick={handleFormSubmit}> 검색
                                         </button>
                                     </td>
                                 </tr>
                                 </tbody>
 
                             </table>
+                            <br/>
                             {/* 검색 끝 */}
 
 
-                            <table className="table table-hover">
+                            <table className={`${classes['board-container']}`} style={{
+                                borderCollapse: 'collapse'
+                            }}>
                                 <thead>
                                 <tr>
-                                    <th className="col-1">글번호</th>
-                                    <th className="col-8">제목</th>
-                                    <th className="col-3">작성자</th>
-                                    <th className="col-8">작성일</th>
-                                    <th className="col-1">조회수</th>
+                                    <th className={`${classes['board-column']}`} style={{
+                                        borderSpacing: "30px"
+                                    }}>글번호
+                                    </th>
+                                    <th className={`${classes['board-column']}`} style={{
+                                        borderSpacing: "10px"
+                                    }}>제목
+                                    </th>
+                                    <th className={`${classes['board-column']}`} style={{
+                                        borderSpacing: "10px"
+                                    }}>작성자
+                                    </th>
+                                    <th className={`${classes['board-column']}`} style={{
+                                        borderSpacing: "10px"
+                                    }}>작성일
+                                    </th>
+                                    <th className={`${classes['board-column']}`} style={{
+                                        borderSpacing: "10px"
+                                    }}>조회수
+                                    </th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
 
-                                {/* 게시글 목록 (적용시켜야하는 것 : 비밀글인 경우, 로그인 되어있는 사람의 uNo와 글의 uNo가 같으면 글 제목 눌렀을 때 글 상세보기로 이동하게하고 uNo가 서로 같지 않으면 '비밀글입니다.' 라고 alert() 띄워주기 / 공개글인 경우 그냥 제목 누르면 상세보기로 이동시키기 ) */}
                                 {noticeList.length > 0 ? (
                                     noticeList
                                         .slice((nowPage - 1) * 10, nowPage * 10)
@@ -194,17 +208,22 @@ const NoticeList = () => {
                                             const formattedWriteDate = writeDate.toISOString().split('T')[0];
 
                                             return (
-                                                <tr key={index}>
-                                                    <td>{item.bid}</td>
-                                                    <td>
+                                                <tr className={`${classes['text-center']}`} key={index}>
+                                                    <td className={`${classes['text-center']}`} style={{
+                                                        borderSpacing: "50px"
+                                                    }}>{item.bid}</td>
+                                                    <td className={`${classes['text-center'], classes['title-link']}`}>
                                                         {item.secret === 'S' ? (
                                                                 <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>) :
                                                             (<Link
-                                                                to={`/board/notice/detail/${item.bid}`}>{item.title}</Link>)}
+                                                                to={`/board/notice/detail/${item.bid}`}
+                                                                className={`${classes['title-link']}`}>
+                                                                {item.title}
+                                                            </Link>)}
                                                     </td>
-                                                    <td>{item.name}</td>
-                                                    <td>{formattedWriteDate}</td>
-                                                    <td>{item.views}</td>
+                                                    <td className={`${classes['text-center']}`}>{item.name}</td>
+                                                    <td className={`${classes['text-center']}`}>{formattedWriteDate}</td>
+                                                    <td className={`${classes['text-center']}`}>{item.views}</td>
                                                 </tr>
                                             );
                                         })
@@ -217,16 +236,14 @@ const NoticeList = () => {
                                 )}
                                 </tbody>
                                 {/* 게시글 목록 끝 */}
-
                             </table>
 
                             {/* 페이징 시작 */}
-                            <div className="pagination">
-                                <nav aria-label="Page navigation"
-                                     style={{display: "flex", justifyContent: "center", flex: 10}}>
-                                    <div>
+                            <div>
+                                <nav aria-label="Page navigation">
+                                    <div className={`${classes['pagination']}`}>
                                         {nowPage > 1 && (
-                                            <span className="page-item">
+                                            <span className={`${classes['page-item']}`}>
                                                 <button className="page-link"
                                                         value={nowPage - 1}
                                                         onClick={handlePageClick}>
@@ -239,7 +256,7 @@ const NoticeList = () => {
                                                     className={nowPage === i + 1 ? 'active' : ''}>{i + 1}</button>
                                         ))}
                                         {nowPage < totalPage && (
-                                            <span className="page-item">
+                                            <span className={`${classes['page-item']}`}>
                                                 <button className="page-link" value={nowPage + 1}
                                                         onClick={handlePageClick}>
                                                     {">>"}
@@ -253,29 +270,17 @@ const NoticeList = () => {
 
 
                             {/* 글쓰기 버튼 */}
-                            {/*{isAdmin && (
-                                <div className="my-5 d-flex justify-content-center" style={{
-                                    marginTop: '10px',
-                                    marginBottom: '10px',
-                                }}>
-                                     적용시켜야 할 것: 로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화(/board/notice/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기
-                                    <Link to={"/board/notice/write"}><i className="fas fa-pen"></i> &nbsp; 글쓰기</Link>
-                                </div>
-                            )}*/}
-                            <div className="my-5 d-flex justify-content-center" style={{
-                                marginTop: '10px',
-                                marginBottom: '10px',
-                            }}>
-                                적용시켜야 할 것: 로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화(/board/notice/write) 로 이동하게 하기), 로그인 안한 경우에 버튼 클릭할시 '로그인을 해주세요' 라고 alert() 띄워주기
-                                <Link to={"/board/notice/write"}><i className="fas fa-pen"></i> &nbsp; 글쓰기</Link>
+                            <div className={`${classes['board-write']}`}>
+                                {/*로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화하기)*/}
+                                {isAdmin && (
+                                    <button onClick={moveNoticeWrite}>등록하기</button>
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-
-            {/* 푸터 */}
-        </>
+            </div>
+        </section>
     );
 
 }

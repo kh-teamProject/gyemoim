@@ -1,5 +1,6 @@
 package com.team.gyemoim.vo;
 
+import com.team.gyemoim.dto.board.BoardModifyDTO;
 import com.team.gyemoim.dto.board.BoardWriteDTO;
 import lombok.Data;
 
@@ -24,6 +25,17 @@ public class BoardVO {
         BoardVO boardVO = new BoardVO();
         boardVO.setUNo(dto.getUNo());
         boardVO.setType(dto.getType());
+        boardVO.setName(dto.getName());
+        boardVO.setTitle(dto.getTitle());
+        boardVO.setContent(dto.getContent());
+        boardVO.setSecret(dto.getSecret());
+        return boardVO;
+    }
+
+    public BoardVO modifyDtoToVO(BoardModifyDTO dto) {
+        BoardVO boardVO = new BoardVO();
+        boardVO.setBid(dto.getBid());
+        boardVO.setUNo(dto.getUNo());
         boardVO.setName(dto.getName());
         boardVO.setTitle(dto.getTitle());
         boardVO.setContent(dto.getContent());

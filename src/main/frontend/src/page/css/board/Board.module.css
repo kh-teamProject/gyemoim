@@ -4,9 +4,19 @@
     margin: 0 auto;
 }
 
+.noticeList_ttl {
+    font-size: 1.5rem;
+    margin: 0 15px;
+}
+
+.noticeList_ttl p {
+    font-style: normal;
+}
+
 /* 게시판 테이블 스타일 */
 .board-container {
     width: 900px;
+    margin-top: 30px;
 }
 
 .board-column {
@@ -46,7 +56,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 50px;
     font-size:0;
 }
 
@@ -84,9 +94,9 @@
 }
 
 .board-write button {
-    height: 25px;
-    width: 60px;
-    margin: 10px auto;
+    height: 30px;
+    width: 70px;
+    margin: 10px auto 30px;
     border: 1px solid #e6e6e6;
     background-color: #ffffff;
     font-size: 12px;
@@ -219,11 +229,11 @@
 }
 
 .write-button-container {
-    text-align: center;
+    justify-content: center;
+    display: flex;
 }
 
 .write-button {
-    display: inline-block;
     width: 100px;
     height: 50px;
     font-size: 16px;

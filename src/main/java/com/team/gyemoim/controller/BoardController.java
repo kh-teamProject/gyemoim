@@ -16,12 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import javax.annotation.Resource;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -132,14 +126,21 @@ public class BoardController {
 
     // 글 수정 업데이트하기
     @PostMapping("/board/modifyPost")
-    public ResponseEntity<String> modifyPost(@RequestBody BoardModifyDTO boardModifyDTO) {
+    public ResponseEntity<String> modifyPost(@RequestPart(value = "file", required = false) MultipartFile file,
+                                             @RequestParam("boardModifyDTO") String boardModifyDTOJson) {
+
         try {
             System.out.println("*************** 글 수정 modifyPost 컨트롤러 성공 >< *****************");
-            boardService.modifyUpdate(boardModifyDTO);
-            return ResponseEntity.ok("BoardController 글 수정 업뎃 완료  :D");
+            ObjectMapper objectMapper = new ObjectMapper();
+            BoardModifyDTO boardModifyDTO = objectMapper.readValue(boardModifyDTOJson, BoardModifyDTO.class);
+            // 게시글 저장하고 작성된 게시글의 고유 식별자 bid 반한하는 코드
+            boardService.modifyUpdate(boardModifyDTO, file);
+
+            return ResponseEntity.ok("BoardController 글 수정 업뎃 완료, 첨부파일도 포함이닷 ! :D");
         } catch (Exception e) {
-            System.out.println("*************** 글 수정 modify 컨트롤러 실패 :< *****************");
-            System.out.println("에러 이유: " + e.getMessage());
+            System.out.println("*************** 글 작성 writePost 컨트롤러 실패 :< *****************");
+            System.out.println("error 메시지: " + e.getMessage());
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController 글 수정 실패 :< ");
         }
     }

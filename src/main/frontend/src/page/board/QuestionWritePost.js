@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
-import classes from "../../component/css/Board.module.css";
+import classes from "../css/board/Board.module.css";
 
 const QuestionWritePost = () => {
 
@@ -65,6 +65,9 @@ const QuestionWritePost = () => {
         setSelectedFileName("");
     };
 
+    const moveToQuestionList = () => {
+        window.location.href = '/board/question';
+    };
 
 
     const handleQuestionSubmit = async (e) => {
@@ -200,6 +203,7 @@ const QuestionWritePost = () => {
                                 </table>
                                 <div className={`${classes['write-button-container']}`}>
                                     <button className={`${classes['write-button']}`} type="submit">작성하기</button>
+                                    <button className={`${classes['write-button']}`} onClick={moveToQuestionList}>돌아가기</button>
                                 </div>
                             </form>
                         </div>
