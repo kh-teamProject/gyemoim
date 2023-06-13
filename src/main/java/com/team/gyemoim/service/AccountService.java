@@ -56,4 +56,5 @@ public interface AccountService {
 
   void updateExpenditure(MyPageDTO dto);
 
+  void createMyAccount(MyPageDTO dto);
 }

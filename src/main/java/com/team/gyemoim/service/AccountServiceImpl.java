@@ -31,10 +31,22 @@ public class AccountServiceImpl implements AccountService {
     accountMapper.deposit(bankHistoryDTO);
   }
 
+  // 계모임 계좌 개설
+  @Override
+  public void createMyAccount(MyPageDTO dto) {
+    List<MyAccountVO> myAccountList = accountMapper.getMyAccount(dto.getUNo());
+    if (myAccountList.isEmpty()) {
+      accountMapper.createMyAccount(dto);
+    }
+  }
+
   // 지출목록 생성
   @Override
   public void createExpenditure(MyPageDTO dto) {
-    accountMapper.createExpenditure(dto);
+    List<ExpenditureVO> expenditureList = accountMapper.getExpenditure(dto.getUNo());
+    if (expenditureList.isEmpty()) {
+      accountMapper.createExpenditure(dto);
+    }
   }
 
   // Read

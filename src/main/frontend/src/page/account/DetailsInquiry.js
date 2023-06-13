@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 import axios from "axios";
 
 import MyPageSidebar from "../../component/MyPageSidebar";
@@ -14,10 +16,13 @@ const DetailsInquiry = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10); // 페이지당 아이템 수
 
+  const token = Cookies.get('Set-Cookie');
+  const uNo = jwtDecode(token).uNo;
+
   useEffect(() => {
     axios.get('/getMyAccountHistory', {
       params: {
-        uNo: 3
+        uNo
       }
     })
       .then((res) => {

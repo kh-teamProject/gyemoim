@@ -66,12 +66,16 @@ public class AccountController {
   // 내 정보 수정하기
   @PostMapping("/myInfoModify")
   public boolean myInfoModify(@RequestBody MyPageDTO dto) {
-    List<ExpenditureVO> list = accountService.getExpenditure(dto.getUNo());
-    if(list.isEmpty()) {
+    List<ExpenditureVO> expenditureList = accountService.getExpenditure(dto.getUNo());
+    List<MyAccountVO> myAccountList = accountService.getMyAccount(dto.getUNo());
+    if(expenditureList.isEmpty() || myAccountList.isEmpty()) {
+      System.out.println("Create");
       accountService.myInfoModify(dto);
+      accountService.createMyAccount(dto);
       accountService.createExpenditure(dto);
       return true;
     } else {
+      System.out.println("Update");
       accountService.myInfoModify(dto);
       accountService.updateExpenditure(dto);
       return true;
