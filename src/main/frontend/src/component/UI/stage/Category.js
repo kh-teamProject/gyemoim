@@ -2,23 +2,27 @@ import React, { useState } from "react";
 
 import styles from "../../../page/css/StageCreate.module.css";
 
-const Turn = (props) => {
+
+const Category = (props) => {
 const [isClicked, setIsClicked] = useState(false);
-  const turnHandler = (event) => {
+  const categoryHandler = (event) => {
     props.onClick(event.target.value);
       setIsClicked(!isClicked);
-    console.log(`Turn.js ${event.target.value}`);
+        console.log(`Category.js ${event.target.value}`);
+
   };
 
-  const buttonClassName = isClicked ? `${styles.buttonSmall4} ${styles.clicked}` : styles.buttonSmall4;
+const buttonClassName = isClicked ? `${styles.buttonSmall4} ${styles.clicked}` : styles.buttonSmall4;
+
 
   return (
     <label>
+
       <input
         type="button"
         value={props.value}
         name={props.name}
-        onClick={turnHandler}
+        onClick={categoryHandler}
         className={styles.buttonSmall4}
       />
       {props.children}
@@ -26,4 +30,4 @@ const [isClicked, setIsClicked] = useState(false);
   );
 };
 
-export default Turn;
+export default Category;

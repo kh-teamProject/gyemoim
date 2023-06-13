@@ -11,17 +11,6 @@ const AdminStageList = () => {
   const [totalPage, setTotalPage] = useState(0);
   const itemsPerPage = 10;
 
-  const selectStartFlag = (event) => {
-    setStartFlag(event.target.value);
-    setCurPage(1);
-  };
-
-  const handlePageClick = (event) => {
-    const targetPage = Number(event.target.value);
-    if (targetPage > 0 && targetPage <= totalPage) {
-      setCurPage(targetPage);
-    }
-  };
 
   useEffect(() => {
     try {
@@ -39,6 +28,20 @@ const AdminStageList = () => {
       console.log(error);
     }
   }, []);
+
+
+  const selectStartFlag = (event) => {
+    setStartFlag(event.target.value);
+    setCurPage(1);
+  };
+
+  const handlePageClick = (event) => {
+    const targetPage = Number(event.target.value);
+    if (targetPage > 0 && targetPage <= totalPage) {
+      setCurPage(targetPage);
+    }
+  };
+
 
   const getCurrentStageList = () => {
     const startIndex = (curPage - 1) * itemsPerPage;
@@ -63,11 +66,42 @@ const AdminStageList = () => {
       .slice(startIndex, endIndex);
   };
 
+
+ const [selectedIds, setSelectedIds] = useState([]);
+
+  const handleCheckboxChange = (event, pfID) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setSelectedIds((prevIds) => [...prevIds, pfID]);
+       console.log(pfID);
+    } else {
+      setSelectedIds((prevIds) => prevIds.filter((id) => id !== pfID));
+        console.log(pfID);
+    }
+  };
+
+const handleSendData = async () => {
+  try {
+    const response = await axios.post("/admin/stage/list", null, {
+      params: {
+        pfID: selectedIds[0],
+      },
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
   return (
     <>
 
       <h2>스테이지 리스트</h2>
+     <div  className={styles.slice2}>
+      <button onClick={handleSendData}>데이터 전송</button>
+     </div>
       <div className={styles.slice}>
+
         <select onChange={selectStartFlag} >
           <option value="전체">전체</option>
           <option value="대기중">대기중</option>
@@ -79,6 +113,7 @@ const AdminStageList = () => {
         <table className={styles.table} style={{width: '100rem'}} >
         <colgroup>
         <col style={{width: '3%'}} />
+        <col style={{width: '3%'}} />
          <col style={{width: '10%'}} />
           <col style={{width: '10%'}} />
 
@@ -89,6 +124,7 @@ const AdminStageList = () => {
         </colgroup>
           <thead>
             <tr>
+            <th><input type="checkbox" /></th>
               <th>번호</th>
               <th>이름</th>
               <th>약정금</th>
@@ -102,6 +138,14 @@ const AdminStageList = () => {
           <tbody>
             {getCurrentStageList().map((value, index) => (
               <tr key={index}>
+               <td>
+               <input type="checkbox"
+                         checked={selectedIds.includes(value.pfID)}
+                          onChange={(event) =>
+                          handleCheckboxChange(event, value.pfID)
+                         }
+                           />
+                 </td>
                 <td>{value.pfID}</td>
                 <td>{value.pfName}</td>
                 <td>{value.deposit.toLocaleString()}원</td>
@@ -131,6 +175,7 @@ const AdminStageList = () => {
           </button>
         ))}
       </div>
+
     </>
   );
 };

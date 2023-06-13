@@ -26,7 +26,6 @@ public class StageController {
          stageService.stageCreate(stageCreateDTO);
         stageService.stageParticipate(stageParticipateDTO);
     }
-  @GetMapping(value ="/stageCreate")
 
 
 

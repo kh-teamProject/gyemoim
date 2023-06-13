@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import styles from "../../../page/css/StageCreate.module.css";
+
 const Participants = (props) => {
      const depositHandler = (event) => {
      if (props.value === "500000" || props.value === "700000") {
@@ -25,15 +27,17 @@ const Participants = (props) => {
       };
 
     return (
-    <label>
+    <>
+
       <input
         type="radio"
         value={props.value}
         name={props.name}
         onClick={depositHandler}
+        className={styles.selectInput}
       />
-      {props.children}
-    </label>
+       {props.children}
+</>
     );
 };
 
