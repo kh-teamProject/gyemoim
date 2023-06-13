@@ -74,25 +74,40 @@ public class BoardController {
      * @PathVariable 어노테이션은 URL 경로 변수 값을 매개변수에 매핑할 때 사용함
      * @RequestParam 어노테이션은 요청 파라미터의 값을 매개변수에 매핑될 때 사용된
      * `bid` 매개변수에는 `bid` 라는 요청 파라미터의 값이 매핑된다. */
-   /* @GetMapping("/board/read")
+   /*@GetMapping("/board/read")
     public BoardVO read(@RequestParam("bid") int bid, @RequestParam(value = "increaseViews", defaultValue = "true") boolean increaseViews) throws Exception {
         System.out.println("*************** 글 읽기 read 컨트롤러 성공 >< *****************");
 
-        *//*List<ReplyVO> replyVOList = replyService.reply(bid);*//*
+        //List<ReplyVO> replyVOList = replyService.reply(bid);
         BoardVO boardVO = boardService.readDetail(bid);
 
         // 조회수 증가 여부에 따른 조회수 증가하기
-//        if (increaseViews) {
-//            boardService.updateViewCnt(bid);
-//        }
+        if (increaseViews) {
+            boardService.updateViewCnt(bid);
+        }
+
+        return boardVO;
+    }*/
+
+    /*@GetMapping("/board/read")
+    public BoardVO read(@RequestParam("bid") int boardBid, @RequestParam("uno") Integer readerUno) {
+        BoardVO boardVO = new BoardVO();
+        try {
+
+            System.out.println("*************** 글 읽기 read 컨트롤러 성공 >< *****************");
+            boardVO = boardService.readDetail(boardBid, readerUno);
+        } catch (Exception e) {
+            System.out.println("************ 글 읽기 컨트롤러 실패 :< ************");zz
+            return null;
+        }
 
         return boardVO;
     }*/
 
     @GetMapping("/board/read")
-    public BoardVO read(@RequestParam("bid") int bid, @RequestParam(value = "increaseViews", defaultValue = "true") boolean increaseViews) throws Exception {
+    public BoardVO read(@RequestParam("bid") int bid) throws Exception {
         System.out.println("*************** 글 읽기 read 컨트롤러 성공 >< *****************");
-        BoardVO boardVO = boardService.readDetail(bid);
+            BoardVO boardVO = boardService.readDetail(bid);
 
         return boardVO;
     }

@@ -26,28 +26,27 @@ const NoticeDetail = () => {
         await axios.get("/board/read", {
             params: {
                 "bid": bid,
-                "increaseViews": false, // 조회수 증가 여부를 false 로 설정
             }
         })
             .then((response) => {
                 console.log("NoticeDetail_공지사항 게시글 세부내용 가져오기 성공 :D");
                 console.log("NoticeDetail_가져온 데이터 : " + response.data);
                 console.log("bid 가져와지니? " + bid);
-                //console.log("readerUNo 가져와지니? " + readerUno);
+                console.log("readerUNo 가져와지니? " + uNo);
 
                 setNoticeDetail(response.data);
             })
             .catch((error) => {
                 console.log("NoticeDetail_getNoticeDetail 게시글 못가져옴 :<");
-                //console.log("readerUNo = " + readerUno);
+                console.log("readerUNo = " + uNo);
                 console.log("NoticeDetail_axios 에러사항: " + error);
             });
     }
 
-    // 파일 다운로드
+    /*// 파일 다운로드
     const downloadImage = async (fileName) => {
         const url = "";
-    }
+    }*/
 
 
     // 공지사항 목록으로 이동하는 함수

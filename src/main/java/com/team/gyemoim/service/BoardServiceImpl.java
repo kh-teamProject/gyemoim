@@ -119,33 +119,35 @@ public class BoardServiceImpl implements BoardService {
 
     // 특정 게시글 상세보기
     /*@Override
-    public BoardVO readDetail(BoardReadCountDTO boardReadCountDTO) throws Exception {
+    public BoardVO readDetail(int boardBid, Integer readerUno) throws Exception {
+        BoardReadCountDTO dto = new BoardReadCountDTO(boardBid, readerUno);
         // 로그인 한 사용자의 조회수만 카운팅
-        if (boardReadCountDTO.getReaderUno() != null) {
-            Integer result = boardMapper.createBoardRecordCountHistory(boardReadCountDTO); // 조회수 히스토리 처리 (insert: 1, update: 2)
+        if (dto.getReaderUno() != null) {
+            Integer result = boardMapper.createBoardRecordCountHistory(dto); // 조회수 히스토리 처리 (insert: 1, update: 2)
 
             // 특정 게시글을 로그인 한 사용자가 처음 읽은 경우일 때 (result == 1 인 경우)
             if (result == 1) {
-                Integer updatedRecordCount = boardMapper.updateViewCnt(boardReadCountDTO.getBoardBid()); // 조회수 증가
+                boardMapper.updateViewCnt(boardBid); // 조회수 증가
             }
         }
 
-        return boardMapper.readDetail(boardReadCountDTO.getBoardBid());
-    }
-*/
+        return boardMapper.readDetail(boardBid);
+    }*/
 
+
+    // 특정 글 읽기 (조회수 수정)
     @Override
     public BoardVO readDetail(int bid) throws Exception {
-        //boardMapper.updateViewCnt(bid); // 조회수 올리기
+        boardMapper.updateViewCnt(bid); // 조회수 올리기
 
         return boardMapper.readDetail(bid);
     }
 
     // 조회수 올리기
-    @Override
+    /*@Override
     public void updateViewCnt(int bid) throws Exception {
         boardMapper.updateViewCnt(bid);
-    }
+    }*/
 
 
     /* (Update) */
