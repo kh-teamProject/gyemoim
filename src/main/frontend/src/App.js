@@ -44,6 +44,11 @@ import AccountModify from "./page/admin/AccountModify";
 import './App.css';
 import MemberPwdSearch from "./page/account/MemberPwdSearch";
 import PwdUpdate from "./page/account/PwdUpdate";
+import MyStage from "./page/account/MyStage";
+import RecommendedStage from "./page/account/RecommendedStage";
+import StageWait from "./page/account/StageWait";
+import StageParticipatin from "./page/account/StageParticipatin";
+import StageComplete from "./page/account/StageComplete";
 
 const App = () => {
     const router = createBrowserRouter([
@@ -109,6 +114,26 @@ const App = () => {
               {
                 path: 'bankAccount/detailsInquiry',
                 element: <DetailsInquiry/>
+              },
+              {
+                path: 'stage',
+                element: <MyStage />
+              },
+              {
+                path: 'stage/wait',
+                element: <StageWait />
+              },
+              {
+                path: 'stage/participagin',
+                element: <StageParticipatin />
+              },
+              {
+                path: 'stage/complete',
+                element: <StageComplete />
+              },
+              {
+                path: 'stage/recommendedStage',
+                element: <RecommendedStage />
               }
             ]
           },
