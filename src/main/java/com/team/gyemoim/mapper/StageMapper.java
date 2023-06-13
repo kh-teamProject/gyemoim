@@ -120,5 +120,6 @@ public interface StageMapper {
     // (지연)수령예정표 가져오기
     List<ReceiptDTO> getReceipt(BigDecimal pfRate);
 
-
+    //(찬희) 나가는 사람이 마지막 사람이면 스테이지 삭제
+    void stageDelete(StageINDTO dto);
 }

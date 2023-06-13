@@ -20,6 +20,9 @@
   padding: 2rem;
 }
 
+.red{
+    color: #FF0000;
+}
 /* exit */
 .modal.exit p:first-child{
   font-size: 1.5rem;
@@ -52,7 +55,7 @@
 /* receipt */
 .modal.receipt{
     top: 15vh;
-    padding: 2rem 2rem 4rem;
+    padding: 2rem 2rem 3rem;
 }
 .modal.receipt p:first-child{
     font-size: 1.5rem;
@@ -62,6 +65,13 @@
 .modal.receipt table{
     border-collapse: collapse;
 }
+.modal.receipt table caption{
+    caption-side: bottom;
+    text-align: left;
+    margin-top: 1rem;
+    line-height: 1.5rem;
+}
+
 .modal.receipt table thead th{
     background: #f7f7f7;
     color: #505050;
@@ -70,6 +80,7 @@
     height: 40px;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
+    font-size: 1.1rem;
 }
 .modal.receipt table thead th:first-child{
     width: 7%;
@@ -79,6 +90,7 @@
     color: #505050;
     height: 40px;
     border-bottom: 1px solid #eee;
+    font-size: 1.1rem;
 }
 .modal.receipt button.back{
         padding: 0;

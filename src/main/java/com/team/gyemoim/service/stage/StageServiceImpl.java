@@ -112,7 +112,6 @@ public class StageServiceImpl implements StageService {
   @Override
   public void stageIn(StageINDTO dto) {
     stageMapper.rollIn(dto); // Roll에 insert
-
   }
   //(찬희)참가자 수가 다 차면 stage 시작
   @Override
@@ -122,7 +121,6 @@ public class StageServiceImpl implements StageService {
 
     // PF의 pfEntry 값 조회
     int pfEntry = stageMapper.pfEntryValue(dto);
-
     if(uNoCount == pfEntry) {
       //진행상태 update
       stageMapper.stageStart(dto);
@@ -153,8 +151,8 @@ public class StageServiceImpl implements StageService {
     if (pfMaster != null) {
       Date latestRollDate = stageMapper.getLatestStageInDate(dto);
       if(latestRollDate == null){
-        //마지막 사람이면 return
-        return;
+        //마지막 사람이면 stage삭제
+        stageMapper.stageDelete(dto);
       }else {
         Map<String, Object> parameterMap = new HashMap<>();
         parameterMap.put("stageInDate", latestRollDate);

@@ -339,5 +339,11 @@
         AND deposit = 100000
         )
     </select>
+    <!--(찬희) stageDelete -->
+    <delete id="stageDelete" parameterType="com.team.gyemoim.dto.stage.StageINDTO">
+        DELETE
+        FROM pf
+        WHERE pfID = #{pfID}
+    </delete>
 
 </mapper>
