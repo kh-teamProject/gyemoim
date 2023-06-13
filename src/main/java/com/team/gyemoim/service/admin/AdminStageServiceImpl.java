@@ -17,9 +17,13 @@ public class AdminStageServiceImpl implements AdminStageService{
     return adminStageMapper.getStageList();
   }
 
+//(현지) 스테이지 리스트 상태 업데이트
+  @Override
+  public Integer checkPFID(Integer pfID) {
+    return adminStageMapper.updateStatus(pfID);
+  }
 
-
-//(유진) 스테이지 참여 회원정보 가져오기
+  //(유진) 스테이지 참여 회원정보 가져오기
 
   private final AdminStageMapper adminStageMapper;
   @Override

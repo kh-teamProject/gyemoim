@@ -9,8 +9,15 @@
         ORDER BY  startDate
     </select>
 
+    <!--(현지)리스트 상태 변경 -->
+    <update id="updateStatus" parameterType="com.team.gyemoim.dto.admin.AdminStageDetailDTO">
+        UPDATE pf
+        SET  startflag='완료'
+        WHERE pfID = #{pfID}
+    </update>
 
-<!--(유진) 스테이지 참여 회원정보 리스트 띄우기-->
+
+    <!--(유진) 스테이지 참여 회원정보 리스트 띄우기-->
   <select id="getStageMemList" resultType="com.team.gyemoim.dto.admin.AdminStageDetailDTO">
     select  p.pfID, p.pfName, p.pfentry, p.payment, p.deposit,p.interest,p.startFlag,p.pfRate
             ,r.receiveTurn,m.name, r.uno,rs.upayment,rs.uTotalpayment, rs.uTotalReceipts,rs.ureceipt

@@ -267,11 +267,11 @@ input.aa + label {
 
 /*박스 */
 .box {
-    display: flex;
+
   background: #fff;
   border-radius: 7px;
   display: inline-block;
-  height: 80rem;
+
   width: 120rem;
   margin: 5rem;
 

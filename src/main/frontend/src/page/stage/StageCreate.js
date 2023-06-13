@@ -74,7 +74,7 @@ const [isDuplicate, setIsDuplicate] = useState(false);
           pfRate: rate,
           deposit: deposit,
           payment : payment,
-          category: category,
+          interest : category,
          receiveTurn : turn,
         },
       })
@@ -389,6 +389,8 @@ const countClickHandler = (value) => {
          </div>
 
         </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
            <div className={styles.flex1}>
              <Link to={`/stageAgree/${name}`}>

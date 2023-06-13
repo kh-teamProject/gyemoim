@@ -13,20 +13,19 @@ import com.team.gyemoim.dto.admin.AdminStageDetailDTO;
 import com.team.gyemoim.service.admin.AdminStageService;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 
 @RestController
 @RequiredArgsConstructor
 @Log4j2
 public class AdminStageController {
-
-
 
     private final AdminStageService adminStageService;
 
@@ -40,7 +39,14 @@ public HashMap<String,Object> stage() {
     return map;
 }
 
-  //유진
+    // (현지)리스트 상태 바꾸기
+    @PostMapping(value = "/admin/stage/list")
+    public Integer checkPFID3(@RequestParam("pfID") Integer pfID) {
+        System.out.println("[컨트롤러] pfID 확인 " + pfID);
+        return adminStageService.checkPFID(pfID);
+    }
+
+    //유진
   @GetMapping("/admin/stage/detail1")
   @ResponseBody
     public List<AdminStageDetailDTO> getStageMemList(@RequestParam("pfID") int pfID){

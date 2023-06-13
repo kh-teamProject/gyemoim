@@ -69,8 +69,16 @@ input.aa + label {
 /*대기중 슬라이스*/
 .slice{
   position: relative;
-    padding: 0.5rem 0 3rem;
-    left: 40rem;
+    padding: 0.5rem 0 1.5rem;
+    left: 36rem;
+    display: inline-block;
+
+}
+
+.slice2{
+  position: relative;
+    padding: 0.5rem 0 1.5rem;
+    right: 46rem;
     display: inline-block;
 
 }
@@ -84,7 +92,18 @@ input.aa + label {
        width: 10rem;
 
 }
+.slice2 > button{
+  text-align: center;
+   border: 1px solid #004DC1;
+    background-color:  #004DC1;
+    color: white ;
+    width: 8rem;
+    height: 3.5rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    cursor: pointer;
 
+}
 
 
 /*버튼*/
