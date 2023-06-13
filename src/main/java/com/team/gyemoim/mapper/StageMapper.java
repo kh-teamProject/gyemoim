@@ -112,4 +112,6 @@ public interface StageMapper {
     int getUTotalReceipts(StageRollDTO stageRollDTO);
     //(찬희) 현재 *번째의 uNo 정보 갖고오기
     int getUNoForMyAccount(StageRollDTO stageRollDTO);
+    //(찬희) 나가는 사람이 마지막 사람이면 스테이지 삭제
+    void stageDelete(StageINDTO dto);
 }
