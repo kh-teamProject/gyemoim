@@ -28,7 +28,7 @@ public interface BoardMapper {
     //List<BoardVO> selectBoard(PageVO vo); // 게시글 조회하기
     List<BoardVO> selectBoard(); // 게시글 조회하기
     BoardVO readDetail(int bid); // 특정 게시글 상세보기
-   // Integer createBoardRecordCountHistory(BoardReadCountDTO dto); // 조회수 레코드 생성 or 업데이트
+    //Integer createBoardRecordCountHistory(BoardReadCountDTO dto); // 조회수 레코드 생성 or 업데이트
     void updateViewCnt(int bid); // 조회수 올리기
 
 

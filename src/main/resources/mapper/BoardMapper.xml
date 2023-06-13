@@ -52,26 +52,19 @@
     <select id="readDetail" resultType="com.team.gyemoim.vo.BoardVO">
         SELECT *
         FROM BOARD
-        WHERE BID = #{bid}
+        WHERE bid = #{bid}
     </select>
 
 
-    <!-- 게시글 조회수 레코드 생성 (mysql)
-    <insert id="createBoardRecordCountHistory" parameterType="com.team.gyemoim.dto.board.BoardReadCountDTO">
-        INSERT INTO read_history (bid, uNo, latest_access_at)
-        values (#{boardBid}, #{readerUNo}, sysdate) ON DUPLICATE KEY
-        UPDATE latest_access_at=SYSDATE;
-    </insert> -->
-
-    <!-- 게시글 조회수 레코드 생성 (Oracle)
+    <!--게시글 조회수 레코드 생성 (Oracle)
      'MERGE' 문 사용하여 존재하는 레코드 업데이트하거나, 존재하지 않는 경우 새로운 레코드 삽입하기 -->
     <!--<insert id="createBoardRecordCountHistory" parameterType="com.team.gyemoim.dto.board.BoardReadCountDTO">
         MERGE INTO read_history rh
-            USING DUAL ON (rh.bid = #{boardBid} AND rh.uNo = #{readerUno})
+            USING DUAL ON (rh.board_bid = #{boardBid} AND rh.read_uNo = #{readerUno})
             WHEN MATCHED THEN
                 UPDATE SET rh.latest_access_at = SYSDATE
             WHEN NOT MATCHED THEN
-                INSERT INTO read_history (bid, uNo, latest_access_at)
+                INSERT INTO read_history (board_bid, read_uNo, latest_access_at)
                 VALUES (#{boardBid}, #{readerUno}, SYSDATE);
     </insert>-->
 

@@ -16,12 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import javax.annotation.Resource;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -80,25 +74,40 @@ public class BoardController {
      * @PathVariable 어노테이션은 URL 경로 변수 값을 매개변수에 매핑할 때 사용함
      * @RequestParam 어노테이션은 요청 파라미터의 값을 매개변수에 매핑될 때 사용된
      * `bid` 매개변수에는 `bid` 라는 요청 파라미터의 값이 매핑된다. */
-   /* @GetMapping("/board/read")
+   /*@GetMapping("/board/read")
     public BoardVO read(@RequestParam("bid") int bid, @RequestParam(value = "increaseViews", defaultValue = "true") boolean increaseViews) throws Exception {
         System.out.println("*************** 글 읽기 read 컨트롤러 성공 >< *****************");
 
-        *//*List<ReplyVO> replyVOList = replyService.reply(bid);*//*
+        //List<ReplyVO> replyVOList = replyService.reply(bid);
         BoardVO boardVO = boardService.readDetail(bid);
 
         // 조회수 증가 여부에 따른 조회수 증가하기
-//        if (increaseViews) {
-//            boardService.updateViewCnt(bid);
-//        }
+        if (increaseViews) {
+            boardService.updateViewCnt(bid);
+        }
+
+        return boardVO;
+    }*/
+
+    /*@GetMapping("/board/read")
+    public BoardVO read(@RequestParam("bid") int boardBid, @RequestParam("uno") Integer readerUno) {
+        BoardVO boardVO = new BoardVO();
+        try {
+
+            System.out.println("*************** 글 읽기 read 컨트롤러 성공 >< *****************");
+            boardVO = boardService.readDetail(boardBid, readerUno);
+        } catch (Exception e) {
+            System.out.println("************ 글 읽기 컨트롤러 실패 :< ************");zz
+            return null;
+        }
 
         return boardVO;
     }*/
 
     @GetMapping("/board/read")
-    public BoardVO read(@RequestParam("bid") int bid, @RequestParam(value = "increaseViews", defaultValue = "true") boolean increaseViews) throws Exception {
+    public BoardVO read(@RequestParam("bid") int bid) throws Exception {
         System.out.println("*************** 글 읽기 read 컨트롤러 성공 >< *****************");
-        BoardVO boardVO = boardService.readDetail(bid);
+            BoardVO boardVO = boardService.readDetail(bid);
 
         return boardVO;
     }
@@ -132,14 +141,21 @@ public class BoardController {
 
     // 글 수정 업데이트하기
     @PostMapping("/board/modifyPost")
-    public ResponseEntity<String> modifyPost(@RequestBody BoardModifyDTO boardModifyDTO) {
+    public ResponseEntity<String> modifyPost(@RequestPart(value = "file", required = false) MultipartFile file,
+                                             @RequestParam("boardModifyDTO") String boardModifyDTOJson) {
+
         try {
             System.out.println("*************** 글 수정 modifyPost 컨트롤러 성공 >< *****************");
-            boardService.modifyUpdate(boardModifyDTO);
-            return ResponseEntity.ok("BoardController 글 수정 업뎃 완료  :D");
+            ObjectMapper objectMapper = new ObjectMapper();
+            BoardModifyDTO boardModifyDTO = objectMapper.readValue(boardModifyDTOJson, BoardModifyDTO.class);
+            // 게시글 저장하고 작성된 게시글의 고유 식별자 bid 반한하는 코드
+            boardService.modifyUpdate(boardModifyDTO, file);
+
+            return ResponseEntity.ok("BoardController 글 수정 업뎃 완료, 첨부파일도 포함이닷 ! :D");
         } catch (Exception e) {
-            System.out.println("*************** 글 수정 modify 컨트롤러 실패 :< *****************");
-            System.out.println("에러 이유: " + e.getMessage());
+            System.out.println("*************** 글 작성 writePost 컨트롤러 실패 :< *****************");
+            System.out.println("error 메시지: " + e.getMessage());
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController 글 수정 실패 :< ");
         }
     }

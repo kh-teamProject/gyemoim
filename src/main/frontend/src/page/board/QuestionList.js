@@ -3,7 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
-import classes from "../../component/css/Board.module.css";
+import classes from "../css/board/Board.module.css";
 
 const QuestionList = () => {
 
@@ -45,11 +45,9 @@ const QuestionList = () => {
             }
         })
             .then((response) => {
-                console.log("QuestionList_fetchQuestionList_컨트롤러로 들어갑니다~ :D");
-                console.log("게시글 목록 response.data.list: " + response.data);
-                console.log(response);
+                console.log("게시글 목록 response.data.list: " + response);
 
-                setQuestionList(response.data); // 검색된 게시글 리스트 가져오기
+                setQuestionList(response.data); // 검색된 문의사항 리스트 가져오기
                 setTotalPage(Math.ceil(response.data.length / 10)); // total 값을 가져와서 업데이트
             })
             .catch((error) => {
@@ -98,7 +96,6 @@ const QuestionList = () => {
         // 현재페이지 setNowPage 를 클릭한 페이지 targetPage 로 변경해준다.
         if (targetPage > 0 && targetPage <= totalPage) {
             setNowPage(targetPage);
-
         }
     }
 
@@ -147,7 +144,7 @@ const QuestionList = () => {
                                     </td>
                                     <td>
                                         <button type="button" className={`${classes['search-button']}`}
-                                                onClick={handleFormSubmit}><i className="fas fa-search"></i> 검색
+                                                onClick={handleFormSubmit}> 검색
                                         </button>
                                     </td>
                                 </tr>
@@ -254,7 +251,7 @@ const QuestionList = () => {
                             {/* 글쓰기 버튼 */}
                             <div className={`${classes['board-write']}`}>
                                 {uno && (
-                                    <button onClick={moveQuestionWrite}> 글쓰기</button>
+                                    <button onClick={moveQuestionWrite}> 등록하기</button>
                                 )}
                             </div>
                         </div>

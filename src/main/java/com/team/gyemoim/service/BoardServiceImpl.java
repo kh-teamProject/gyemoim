@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
 
     private final BoardMapper boardMapper;
     private final String uploadPath; // FileUploadConfig 에 있는 uploadPath 주입
@@ -37,11 +37,13 @@ public class BoardServiceImpl implements BoardService{
     public AttachedVO getAttachedById(int bid) throws Exception {
         return boardMapper.getAttachedById(bid);
     }
+
     // 첨부파일 수정
     @Override
     public void updateAttached(AttachedVO attached) throws Exception {
         boardMapper.updateAttached(attached);
     }
+
     // 첨부파일 삭제
     @Override
     public void deleteAttached(int attachedID) throws Exception {
@@ -66,7 +68,7 @@ public class BoardServiceImpl implements BoardService{
         if (file != null && !file.isEmpty()) {
             // AttachedVO 객체 생성 및 정보 저장
             AttachedVO attachedVO = new AttachedVO();
-            attachedVO = attachedVO.dtoToVO(bid,file);
+            attachedVO = attachedVO.dtoToVO(bid, file);
             attachedVO.setFilePath(saveFile(file)); // 업로드 경로에 파일 저장
 
             // AttachedVO 객체를 데이터베이스에 저장 (첨부파일 생성)
@@ -76,7 +78,6 @@ public class BoardServiceImpl implements BoardService{
 
         return boardVO.getBid(); // 게시글 고유 식별자 반환
     }
-
 
 
     // 파일 실제 업로드 경로에 저장하는 로직
@@ -109,16 +110,6 @@ public class BoardServiceImpl implements BoardService{
     }
 
 
-
-    // 게시글 총 갯수 구하기
-//    @Override
-//    public int countBoard() throws Exception {
-//        System.out.println("BoardServiceImpl.countBoard_게시글 총 갯수 : " + boardMapper.countBoard());
-//        return boardMapper.countBoard();
-//    }
-
-
-
     /* 게시글 조회하기 */
     @Override
     public List<BoardVO> selectBoard() throws Exception {
@@ -128,33 +119,35 @@ public class BoardServiceImpl implements BoardService{
 
     // 특정 게시글 상세보기
     /*@Override
-    public BoardVO readDetail(BoardReadCountDTO boardReadCountDTO) throws Exception {
+    public BoardVO readDetail(int boardBid, Integer readerUno) throws Exception {
+        BoardReadCountDTO dto = new BoardReadCountDTO(boardBid, readerUno);
         // 로그인 한 사용자의 조회수만 카운팅
-        if (boardReadCountDTO.getReaderUno() != null) {
-            Integer result = boardMapper.createBoardRecordCountHistory(boardReadCountDTO); // 조회수 히스토리 처리 (insert: 1, update: 2)
+        if (dto.getReaderUno() != null) {
+            Integer result = boardMapper.createBoardRecordCountHistory(dto); // 조회수 히스토리 처리 (insert: 1, update: 2)
 
             // 특정 게시글을 로그인 한 사용자가 처음 읽은 경우일 때 (result == 1 인 경우)
             if (result == 1) {
-                Integer updatedRecordCount = boardMapper.updateViewCnt(boardReadCountDTO.getBoardBid()); // 조회수 증가
+                boardMapper.updateViewCnt(boardBid); // 조회수 증가
             }
         }
 
-        return boardMapper.readDetail(boardReadCountDTO.getBoardBid());
-    }
-*/
+        return boardMapper.readDetail(boardBid);
+    }*/
 
+
+    // 특정 글 읽기 (조회수 수정)
     @Override
     public BoardVO readDetail(int bid) throws Exception {
-        //boardMapper.updateViewCnt(bid); // 조회수 올리기
+        boardMapper.updateViewCnt(bid); // 조회수 올리기
 
         return boardMapper.readDetail(bid);
     }
 
     // 조회수 올리기
-    @Override
+    /*@Override
     public void updateViewCnt(int bid) throws Exception {
         boardMapper.updateViewCnt(bid);
-    }
+    }*/
 
 
     /* (Update) */
@@ -168,52 +161,29 @@ public class BoardServiceImpl implements BoardService{
 
     // 게시글 및 첨부파일 수정하기
     @Override
-    public void modifyUpdate(BoardModifyDTO boardModifyDTO) throws Exception {
-        // 글 수정하기
+    public void modifyUpdate(BoardModifyDTO boardModifyDTO, MultipartFile file) throws Exception {
+
+        // BoardModifyDTO 이용하여 BoardVO 생성하고 DB에 게시글 수정
+        BoardVO boardVO = new BoardVO();
+        boardVO = boardVO.modifyDtoToVO(boardModifyDTO);
+        System.out.println("******* 서비스 수정 boardVO : " + boardVO);
+        System.out.println("******* 서비스 boardModifyDto : " + boardModifyDTO);
+
         boardMapper.modifyUpdate(boardModifyDTO);
-        System.out.println("BoardServiceImpl.modifyUpdate 수정 왜 안돼 악 " + boardModifyDTO);
-        System.out.println("BoardServiceImpl.modifyUpdate 수정 서비스야 bid 좀 가져와줘.. " + boardModifyDTO.getBid());
 
-        /* 첨부파일
-        MultipartFile newFile = boardModifyDTO.getUploadFile();
+        // 수정된 게시글에 첨부파일 존재하면 첨부파일 저장
+        if (file != null && !file.isEmpty()) {
+            // AttachedVO 객체 생성 및 정보 저장
+            AttachedVO attachedVO = new AttachedVO();
+            attachedVO = attachedVO.dtoToVO(boardModifyDTO.getBid(), file);
+            attachedVO.setFilePath(saveFile(file)); // 업로드 경로에 파일 저장
 
-        if (!newFile.isEmpty() && newFile != null) {// 업로드된 파일이 있는 경우
-            UUID uid = UUID.randomUUID();
-            String savedName = uid.toString() + "_" + newFile.getOriginalFilename();
-            // savedName 은 유니크 네임
-            newFile.transferTo(new File(uploadPath + filePath + savedName)); // 서버에 파일 저장
-
-            // savedName 을 modifyDTO 에 넣어주기
-            boardModifyDTO.setFileName(savedName);
-
-            // new 첨부파일 추가
-            boardMapper.addAttachedUpdate(boardModifyDTO);
-
-         */
+            // AttachedVO 객체를 데이터베이스에 저장 (첨부파일 생성)
+            System.out.println(attachedVO);
+            boardMapper.saveAttached(attachedVO);
         }
 
-
-
-    /* 수정 페이지 첨부파일 불러오기
-    @Override
-    public AttachedVO attached(int bid) throws Exception {
-        return boardMapper.attached(bid);
     }
-
-    // old 첨부파일 삭제
-    @Override
-    public AttachedVO deleteFile(String fileName) throws Exception {
-        try {
-            Path file = Paths.get(uploadPath + filePath + fileName);
-            Files.deleteIfExists(file);
-        } catch (Exception e) {
-            System.out.println("deleteFile 에러발생 !!!!!!! :0 ");
-        }
-        return null;
-    }
-     */
-
-
 
 
     /* 글 삭제 (Delete) BoardDeleteServiceImpl */

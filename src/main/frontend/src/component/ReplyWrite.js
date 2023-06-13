@@ -58,13 +58,14 @@ const ReplyWrite = (props) => {
     return (
         <>
             {/* 상단 영역 (프로필 이미지, 댓글 작성자) */}
-            <div className="my-1 d-flex justify-content-center">
-                <div className="col-1">
+            <div className="my-1 d-flex justify-content-center" style={{marginTop: "14%"}}>
+                <div className="col-1" style={{borderTop: "1px solid #eee"}}>
                     <img style={{
                         width: "30px",
                         height: "30px",
                         borderRadius: "50%",
-                        backgroundColor: "ivory"
+                        backgroundColor: "ivory",
+                        marginTop: "40px"
                     }} src={profileImg} className="profile-img"/>
                 </div>
 
