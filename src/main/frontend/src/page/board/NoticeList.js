@@ -273,7 +273,7 @@ const NoticeList = () => {
                             <div className={`${classes['board-write']}`}>
                                 {/*로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화하기)*/}
                                 {isAdmin && (
-                                    <button onClick={moveNoticeWrite}>등록하기</button>
+                                    <button onClick={moveNoticeWrite}>공지등록</button>
                                 )}
                             </div>
                         </div>

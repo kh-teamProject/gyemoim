@@ -15,6 +15,7 @@
     <select id="selectBoard" resultType="com.team.gyemoim.vo.BoardVO">
         SELECT *
         FROM BOARD
+        ORDER BY writeDate DESC
     </select>
 
     <!-- 검색 후 페이징 된 게시글 갯수 구하기 -->
@@ -44,7 +45,7 @@
                 AND name LIKE '%' || #{searchKeyword} || '%'
             </if>
         </if>
-        ORDER BY writeDate
+        ORDER BY writeDate DESC
     </select>
 
 
@@ -88,21 +89,6 @@
         INSERT INTO board (bid, uNo, name, type, title, views, content, writeDate, secret)
         VALUES (#{bid}, #{uNo}, #{name}, #{type}, #{title}, 0, #{content}, sysdate, #{secret})
     </insert>
-
-
-    <!-- 첨부파일 작성하기
-    &lt;!&ndash; attachedID 및 bid 필드에 대해 시퀀스 값을 조회하고, 이를 사용하여 해당 필드에 값을 할당한다. &ndash;&gt;
-    <insert id="saveAttached" parameterType="com.team.gyemoim.vo.AttachedVO">
-        <selectKey keyProperty="attachedID" resultType="int" order="BEFORE">
-            SELECT ATTACHEDID_ATTACHED_SEQ.NEXTVAL FROM DUAL
-        </selectKey>
-        <selectKey keyProperty="bid" resultType="int" order="BEFORE">
-            SELECT BID_BID_SEQ.NEXTVAL FROM DUAL
-        </selectKey>
-        INSERT INTO Attached (attachedID, bid, filename, fileSize, fileType, filePath, uploadDate, modifyDate)
-        VALUES (ATTACHEDID_ATTACHED_SEQ.NEXTVAL, BID_BOA_SEQ.NEXTVAL, #{fileName}, #{fileSize}, #{fileType},
-        #{filePath}, systimestamp, sistimestamp)
-    </insert>-->
 
 
     <!-- 게시글 Update -->

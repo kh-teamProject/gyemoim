@@ -79,7 +79,7 @@ const QuestionModify = () => {
             secret: questionModify.secret,
         };
 
-        console.log("업데이트 할 데이터 : " + updateQuestion);
+        console.log("업데이트 할 데이터 : " + updateQuestion.data);
 
         await axios.post("/board/modifyPost", updateQuestion, {
             headers: {

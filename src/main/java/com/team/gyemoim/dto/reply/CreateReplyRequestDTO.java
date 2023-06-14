@@ -9,5 +9,6 @@ public class CreateReplyRequestDTO {
     private int bid;
     private Integer uNo;
     private String replyComm;
+    private String name;
 
 }

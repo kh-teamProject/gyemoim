@@ -139,7 +139,8 @@ const QuestionList = () => {
                                     </td>
                                     <td>
                                         <span className={`${classes['search-window']}`}>
-                                        <input type="text" className={`${classes['input-text']}`} placeholder="검색어를 입력하세요."
+                                        <input type="text" className={`${classes['input-text']}`}
+                                               placeholder="검색어를 입력하세요."
                                                value={searchKeywordVal} onChange={changeSearchKeyword}/></span>
                                     </td>
                                     <td>
@@ -160,19 +161,24 @@ const QuestionList = () => {
                                 <tr>
                                     <th className={`${classes['board-column']}`} style={{
                                         borderSpacing: "30px"
-                                    }}>글번호</th>
+                                    }}>글번호
+                                    </th>
                                     <th className={`${classes['board-column']}`} style={{
                                         borderSpacing: "10px"
-                                    }}>제목</th>
+                                    }}>제목
+                                    </th>
                                     <th className={`${classes['board-column']}`} style={{
                                         borderSpacing: "10px"
-                                    }}>작성자</th>
+                                    }}>작성자
+                                    </th>
                                     <th className={`${classes['board-column']}`} style={{
                                         borderSpacing: "10px"
-                                    }}>작성일</th>
+                                    }}>작성일
+                                    </th>
                                     <th className={`${classes['board-column']}`} style={{
                                         borderSpacing: "10px"
-                                    }}>조회수</th>
+                                    }}>조회수
+                                    </th>
                                 </tr>
                                 </thead>
 
@@ -194,12 +200,22 @@ const QuestionList = () => {
                                                     }}>{item.bid}</td>
                                                     <td className={`${classes['text-center'], classes['title-link']}`}>
                                                         {item.secret === 'S' ? (
-                                                                <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>) :
-                                                            (<Link
+                                                            uno == item.uno ? (
+                                                                <Link
+                                                                    to={`/board/question/detail/${item.bid}`}
+                                                                    className={`${classes['title-link']}`}>
+                                                                    [비밀글]
+                                                                </Link>
+                                                            ) : (
+                                                                <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>
+                                                            )
+                                                        ) : (
+                                                            <Link
                                                                 to={`/board/question/detail/${item.bid}`}
                                                                 className={`${classes['title-link']}`}>
                                                                 {item.title}
-                                                            </Link>)}
+                                                            </Link>
+                                                        )}
                                                     </td>
                                                     <td className={`${classes['text-center']}`}>{item.name}</td>
                                                     <td className={`${classes['text-center']}`}>{formattedWriteDate}</td>
@@ -251,7 +267,7 @@ const QuestionList = () => {
                             {/* 글쓰기 버튼 */}
                             <div className={`${classes['board-write']}`}>
                                 {uno && (
-                                    <button onClick={moveQuestionWrite}> 등록하기</button>
+                                    <button onClick={moveQuestionWrite}> 문의하기</button>
                                 )}
                             </div>
                         </div>

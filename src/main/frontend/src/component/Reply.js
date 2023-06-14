@@ -4,6 +4,9 @@ import axios from "axios";
 import profileImg from "./images/profile-placeholder.png";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
+import className from "../page/css/board/Reply.module.css";
+import replyModifyImg from "./images/reply-modify-button.png";
+import replyDeleteImg from "./images/reply-delete-button.png";
 
 /* 댓글 컴포넌트 */
 const Reply = (props) => {
@@ -15,6 +18,7 @@ const Reply = (props) => {
 
     // 댓글 원소의 댓글번호 rno
     const rno = reply.rno;
+    const name = reply.name;
 
     const navigate = useNavigate();
 
@@ -83,56 +87,63 @@ const Reply = (props) => {
 
     return (
         <>
-            {/* 상단 영역 (프로필 이미지, 댓글 작성자, 댓글 작성시간) */}
-            <div>
+            {/* 상단 영역 (프로필 이미지, 댓글 작성자) */}
+            <div className={`${className['reply-ttl']}`}>
                 <div>
-                    <img style={{
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "50%",
-                        backgroundColor: "ivory"
-                    }} src={profileImg} className="profile-img"/>
-                </div>
-                <div>
-                    <div>
-                        <span className="reply-uNo">{reply.uno}</span>
+                    <div className={`${className['profile-box']}`}>
+                        <img src={profileImg} className={`${className['profile-img']}`}/>
+                        <div className={`${className['reply-container']}`}>
+                            <span className={`${className['reply-name']}`}>{name}</span>
+                            <span className={`${className['reply-repDate']}`}>{formatDate(reply.repDate)}</span>
+                        </div>
                     </div>
-                    <div>
-                        <span>{formatDate(reply.repDate)}</span>
+
+                    <div className={`${className['reply-button-box']}`}>
+                        {/* 자신이 작성한 댓글인 경우에만 수정, 삭제 가능 */}
+                        {(reply.uno === token.uNo) ? (
+                            <>
+                                <button className={`${className['reply-modify-button']}`} onClick={updateToggle}>
+                                    <img src={replyModifyImg} className={`${className['replyModifyImg']}`}/>
+                                    수정
+                                </button>
+                                &nbsp;
+                                <button className={`${className['reply-delete-button']}`} onClick={deleteReplyComment}>
+                                    <img src={replyDeleteImg} className={`${className['replyDeleteImg']}`}/>
+                                    삭제
+                                </button>
+                            </>
+                        ) : null}
                     </div>
-                </div>
-                <div>
-                    {/* 자신이 작성한 댓글인 경우에만 수정, 삭제 가능 */}
-                    {(reply.uno === token.uNo) ? (
-                        <>
-                            <button onClick={updateToggle}> 댓글 수정</button>
-                            &nbsp;
-                            <button onClick={deleteReplyComment}> 댓글 삭제</button>
-                        </>
-                    ) : null}
+
                 </div>
             </div>
 
-            {
-                /* 댓글 수정하는 경우 */
-                show ?
-                    <>
-                        {/* 수정하는 경우 : 하단 영역 (댓글 내용 + 댓글 내용 편집 창) */}
-                        <div className="my-3 d-flex justify-content-center">
-                            <textarea className="col-10" rows="5" value={replyComm} onChange={changeComment}></textarea>
-                        </div>
-                        <div className="my-1 d-flex justify-content-center">
-                            <button className="btn btn-dark" onClick={updateReply}> 수정 완료</button>
-                        </div>
-                    </>
-                    :
-                    <>
-                        {/* 수정 안하는 경우 : 하단 영역 (댓글 내용) */}
-                        <div className="my-3 d-flex justify-content-center">
-                            <div className="col-10 reply">{replyComm}</div>
-                        </div>
-                    </>
-            }
+            {/* 하단 영역 (댓글 내용) */}
+            <div className={`${className['reply-content']}`}>
+                {
+                    /* 댓글 수정하는 경우 */
+                    show ?
+                        <>
+                            {/* 수정하는 경우 : 하단 영역 (댓글 내용 + 댓글 내용 편집 창) */}
+                            <div className={`${className['reply-content']}`}>
+                                <textarea className="col-10" rows="5" value={replyComm}
+                                          onChange={changeComment}></textarea>
+                            </div>
+                            <div className="my-1 d-flex justify-content-center">
+                                <button className="btn btn-dark" onClick={updateReply}> 수정 완료</button>
+                            </div>
+                        </>
+                        :
+                        <>
+                            {/* 수정 안하는 경우 : 하단 영역 (댓글 내용) */}
+                            <div className={`${className['reply-content']}`}>
+                                <textarea className="col-10" rows="5" value={replyComm}></textarea>
+                            </div>
+                        </>
+                }
+            </div>
+
+
         </>
     )
 }
