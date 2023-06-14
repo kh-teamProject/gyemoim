@@ -213,13 +213,11 @@ const NoticeList = () => {
                                                         borderSpacing: "50px"
                                                     }}>{item.bid}</td>
                                                     <td className={`${classes['text-center'], classes['title-link']}`}>
-                                                        {item.secret === 'S' ? (
-                                                                <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>) :
-                                                            (<Link
-                                                                to={`/board/notice/detail/${item.bid}`}
-                                                                className={`${classes['title-link']}`}>
-                                                                {item.title}
-                                                            </Link>)}
+                                                        <Link
+                                                            to={`/board/notice/detail/${item.bid}`}
+                                                            className={`${classes['title-link']}`}>
+                                                            {item.title}
+                                                        </Link>
                                                     </td>
                                                     <td className={`${classes['text-center']}`}>{item.name}</td>
                                                     <td className={`${classes['text-center']}`}>{formattedWriteDate}</td>

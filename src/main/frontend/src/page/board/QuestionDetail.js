@@ -18,6 +18,7 @@ const QuestionDetail = () => {
     const token = jwtDecode(Cookies.get('Set-Cookie'));
     const uNo = token.uNo;
     const name = token.name;
+    const userRole = token.userRole;
 
     // 파라미터 가져오기
     const {bid} = useParams();
@@ -150,16 +151,38 @@ const QuestionDetail = () => {
                                     <button onClick={moveToQuestionList}>목록보기</button>
                                 </li>
                             </ul>
-                            <ul>
-                                <li className={`${classes['blue_bdr']}`}>
-                                    <button onClick={moveToQuestionModify}>수정하기</button>
-                                </li>
-                            </ul>
-                            <ul>
-                                <li className={`${classes['blue_bdr']}`}>
-                                    <button onClick={moveToQuestionDelete}>삭제하기</button>
-                                </li>
-                            </ul>
+                            {userRole == '관리자' ? (
+                                <>
+                                    <ul>
+                                        <li className={`${classes['blue_bdr']}`}>
+                                            <button onClick={moveToQuestionModify}>수정하기</button>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li className={`${classes['blue_bdr']}`}>
+                                            <button onClick={moveToQuestionDelete}>삭제하기</button>
+                                        </li>
+                                    </ul>
+                                </>
+                            ) : (
+                                uNo == questionDetail.uno ? (
+                                    <>
+                                        <ul>
+                                            <li className={`${classes['blue_bdr']}`}>
+                                                    <button onClick={moveToQuestionModify}>수정하기</button>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li className={`${classes['blue_bdr']}`}>
+                                                <button onClick={moveToQuestionDelete}>삭제하기</button>
+                                            </li>
+                                        </ul>
+                                    </>
+                                ) : (
+                                    <></>
+                                )
+
+                            )}
                         </div>
                     </div>
 

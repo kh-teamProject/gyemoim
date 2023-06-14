@@ -31,6 +31,7 @@ const QuestionList = () => {
     // 로그인 토큰에서 회원번호 uno 가 있으면 가져오고 아니면 null 로 설정
     const token = Cookies.get('Set-Cookie');
     const uno = token ? jwtDecode(token).uNo : null;
+    const userRole = jwtDecode(token).userRole;
 
 
     // API 호출하여 게시글 목록 가져오기
@@ -103,6 +104,7 @@ const QuestionList = () => {
     // (board.secret == 'S') && (board.uNo != login.uNo) 인 경우 발생하는 함수
     const handleSecretClick = () => {
         alert("다른 사람의 비밀글은 볼 수 없습니다.");
+        console.log("userRole = " + userRole);
     };
 
     // 글쓰기 버튼 클릭시 문의사항 글쓰기 페이지로 이동하는 함수
@@ -200,14 +202,24 @@ const QuestionList = () => {
                                                     }}>{item.bid}</td>
                                                     <td className={`${classes['text-center'], classes['title-link']}`}>
                                                         {item.secret === 'S' ? (
-                                                            uno == item.uno ? (
+                                                            userRole == "관리자" ? (
                                                                 <Link
                                                                     to={`/board/question/detail/${item.bid}`}
                                                                     className={`${classes['title-link']}`}>
                                                                     [비밀글]
                                                                 </Link>
                                                             ) : (
-                                                                <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>
+                                                                uno === item.uno ? (
+                                                                    <Link
+                                                                        to={`/board/question/detail/${item.bid}`}
+                                                                        className={`${classes['title-link']}`}>
+                                                                        [비밀글]
+                                                                    </Link>
+                                                                ) : (
+                                                                    <Link to="#"
+                                                                          onClick={handleSecretClick}>[비밀글]
+                                                                    </Link>
+                                                                )
                                                             )
                                                         ) : (
                                                             <Link
