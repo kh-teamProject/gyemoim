@@ -1,0 +1,39 @@
+.stage {
+  width: 300px;
+  height: 260px;
+  border: 1px solid black;
+}
+
+.stage h4 {
+  text-align: center;
+}
+
+.stage ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.stage ul li.stageEmpty {
+  border: 2px solid skyblue;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+}
+
+.stage p {
+  font-size: 2vmin;
+}
+
+.stage span {
+  color: gray;
+}
+
+.stageImg {
+  width: 30px;
+  padding-top: 3px;
+}

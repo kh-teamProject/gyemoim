@@ -35,11 +35,7 @@ const MemberInfo = () => {
       .then((res) => {
         const date = new Date(res.data.enrollDate);
         const [year, month, day] = [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')];
-        const info = res.data;
-        setMyInfo({
-          ...myInfo,
-          ...info
-        });
+        setMyInfo(res.data);
         setEnrollDate(`${year}-${month}-${day}`);
       })
       .catch((error) => {
@@ -52,7 +48,7 @@ const MemberInfo = () => {
       }
     })
       .then((res) => {
-        setExpenditure(res.data[0]);
+        if(res.data.length !== 0) setExpenditure(res.data[0]);
       })
       .catch((error) => {
         console.log(error);
@@ -117,31 +113,31 @@ const MemberInfo = () => {
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">계좌명의</label>
-          <input type="text" id="account-number" value={myInfo.accountHolder || ''} onChange={(e) => {setMyInfo({...myInfo, accountHolder: e.target.value})}}  />
+          <input type="text" value={myInfo.accountHolder || ''} onChange={(e) => {setMyInfo({...myInfo, accountHolder: e.target.value})}}  />
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">월급여</label>
-          <input type="text" id="account-number" value={myInfo.monthlySalary || ''} onChange={(e) => {setMyInfo({...myInfo, monthlySalary: e.target.value})}}  />
+          <input type="text" value={myInfo.monthlySalary || ''} onChange={(e) => {setMyInfo({...myInfo, monthlySalary: e.target.value})}}  />
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">의료비</label>
-          <input type="text" id="account-number" value={expenditure.medicalCost || ''} onChange={(e) => {setExpenditure({...expenditure, medicalCost: e.target.value})}}  />
+          <input type="text" value={expenditure.medicalCost || ''} onChange={(e) => {setExpenditure({...expenditure, medicalCost: e.target.value})}}  />
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">주거비</label>
-          <input type="text" id="account-number" value={expenditure.housingCost || ''} onChange={(e) => {setExpenditure({...expenditure, housingCost: e.target.value})}}  />
+          <input type="text" value={expenditure.housingCost || ''} onChange={(e) => {setExpenditure({...expenditure, housingCost: e.target.value})}}  />
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">식비</label>
-          <input type="text" id="account-number" value={expenditure.foodCost || ''} onChange={(e) => {setExpenditure({...expenditure, foodCost: e.target.value})}}  />
+          <input type="text" value={expenditure.foodCost || ''} onChange={(e) => {setExpenditure({...expenditure, foodCost: e.target.value})}}  />
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">문화비</label>
-          <input type="text" id="account-number" value={expenditure.culturalCost || ''} onChange={(e) => {setExpenditure({...expenditure, culturalCost: e.target.value})}}  />
+          <input type="text" value={expenditure.culturalCost || ''} onChange={(e) => {setExpenditure({...expenditure, culturalCost: e.target.value})}}  />
         </div>
         <div className={classes.field}>
           <label htmlFor="account-number">기타</label>
-          <input type="text" id="account-number" value={expenditure.etc || ''} onChange={(e) => {setExpenditure({...expenditure, etc: e.target.value})}}  />
+          <input type="text" value={expenditure.etc || ''} onChange={(e) => {setExpenditure({...expenditure, etc: e.target.value})}}  />
         </div>
         <div className={classes.field}>
           <label htmlFor="enroll-date">가입일</label>
