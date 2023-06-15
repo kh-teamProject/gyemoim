@@ -1,0 +1,152 @@
+a{
+    color: black;
+}
+.section{
+    padding-top: 3.5rem;
+    padding-bottom: 7rem;
+    background: white;
+}
+.section:first-child{
+    padding-top: 0;
+}
+/* Visual */
+.VisualArea{
+    position: relative;
+}
+.mainBanner{
+    background-color: #fffff7;
+    min-height: 400px;
+    border-bottom: 1px solid #ebebeb;
+    padding-top: 4rem;
+    background-image: url("../../component/assert/images/main_banner01.png");
+    background-repeat: no-repeat;
+}
+.mainBanner p{
+    margin: 0;
+}
+.mainChartArea{
+    box-shadow: 2px 2px 5px #0000003b;
+    width: 1200px;
+    height: 300px;
+    margin: -115px auto 0;
+    z-index: 0;
+    position: inherit;
+    background-color: white;
+}
+
+/*stageList*/
+.StageListArea{
+    background-color: #F7F7F7;
+}
+
+.stageCreateBanner{
+    background: url(../../component/assert/images/stageCreateSubbanner_01.png) no-repeat center/cover;
+    padding: 3rem 4rem;
+    border-radius: 2rem;
+    width: 1200px;
+    margin: 2rem auto;
+    text-align: left;
+}
+.createTitle{
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin: 0;
+}
+.createSub{
+    font-size: 1.05rem;
+    margin: 0.8rem 0.3rem 1.3rem;
+}
+.createButton{
+    border-radius: 1rem;
+    outline: 1px solid #fff;
+    box-shadow: 0px 4px 9.6px 0.4px rgba(0, 0, 0, 0.05), 2.1px 3.4px 9.6px 0.4px rgba(0, 0, 0, 0.05);
+    background: white;
+    color: #000;
+    padding: 0.7rem 2rem;
+    cursor: pointer;
+}
+/*StageListComponent*/
+.homeStageList{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: auto;
+}
+.homeStageList .stageBox{
+    width: 400px;
+    padding: 1.7rem 1.3rem;
+    border: 1px solid #ddd;
+    background-color: white;
+}
+.homeStageList .stageTitle{
+    font-size: 1.3rem;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 1.3rem;
+    margin-bottom: 1.5rem;
+}
+.homeStageList .stageBox ul{
+    display: flex;
+    justify-content: center;
+    margin: 1.3rem auto;
+}
+.homeStageList .stageBox ul li{
+    border: 1px solid #0693c1;
+    border-radius: 50%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #0693c1;
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 400;
+    height: 32px;
+    line-height: 30px;
+    margin: 0 5px;
+    text-align: center;
+    vertical-align: top;
+    width: 32px;
+}
+.homeStageList .stageBox .stageInfo{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 1.2rem;
+    padding: 0.7rem;
+
+}
+.homeStageList .stageBox .stageInfo div:first-child{
+    border-right: 1px solid;
+    padding-right: 1rem;
+}
+.homeStageList .stageBox .stageInterest{
+    color: #8158d3;
+    font-size: 0.9rem;
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid;
+    border-radius: 50px;
+}
+.homeStageList .stageBox .stageInterest span{
+    vertical-align: text-bottom;
+    padding-left: 4px;
+}
+.homeStageList .stageBox .stageImage{
+    position: relative;
+}
+.homeStageList .stageBox .stageImage img{
+    width: 52%;
+}
+.homeStageList .stageBox .stageImage span{
+    font-size: 1rem;
+    font-weight: bold;
+    position: absolute;
+    left: 188px;
+    top: 22px;
+    text-align: center;
+    width: 70px;
+}
+.homeStageList .stageBox .egg{
+    width: 115%;
+    margin: -5px -3px;
+}
