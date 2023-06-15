@@ -68,7 +68,7 @@
   <update id="interestUpdate">
     UPDATE MEMBER
     SET interest = #{interest}
-    WHERE uno = #{uno}
+    WHERE uNo = #{uNo}
   </update>
 
   <!-- 계모임 계좌 정보 수정 -->
