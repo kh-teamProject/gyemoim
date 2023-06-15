@@ -1,6 +1,18 @@
-# Project_gyemoim
-![gyemoimProject](https://github.com/kh-teamProject/gyemoim/assets/117277248/b3c8b0e4-ae8f-4b29-beb3-2ac31fcd8960)
-<br/><br/>
+# ‘계모임 플랫폼’ Project
+
+## Contact & Channels
+* <b>프로젝트 소개</b> | 고객 수입/지출 데이터 분석 기반으로 추천 가능한 계모임 플랫폼을 만들어 곗돈을 투명하게 관리하겠다는 계획을 구체화했습니다.
+* <b>프로젝트 기간</b> | 2023.05월 ~ 2023.06 (약 30일)
+* <b>개발 인원</b> | 민재홍, 김찬희, 권오수, 이현지, 김지연, 이유진, 길현지
+* <b>프로젝트 목표</b> | Spring 프레임워크를 기반으로 하여 다양한 기술과 환경에서 실용적인 웹을 개발하는 것을 목표로 하였습니다. 
+
+## 기술활용
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/jpa-6DB33F?style=for-the-badge&logo=jpa&logoColor=white"> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+<img src="https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white"> <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"> <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jQuery&logoColor=white">
+<img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white"> <img src="https://img.shields.io/badge/apachetomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white">
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/intellijidea-000000?style=for-the-badge&logo=intellijidea&logoColor=white">
+
+
 계모임에서는 계주 먹튀라는 사례가 흔하게 나오는점을 고려해서 <br/>
 돈을 들고 도망갈 수 없는 시스템을 고려하여 시작한 계모임 금융 플팻폼 구현 프로젝트 입니다. <br/><br/>
  `2023.05.01 ~ 2023.06.10` 동안 `Spring Boot` | `React` | `MyBatis` | `Oracle` 을 사용해 구현했습니다..
