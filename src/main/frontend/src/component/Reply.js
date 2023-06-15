@@ -83,7 +83,7 @@ const Reply = (props) => {
             <div className={`${className['reply-ttl']}`}>
                 <div>
                     <div className={`${className['profile-box']}`}>
-                        <img src={profileImg} className={`${className['profile-img']}`}/>
+                        <img alt="profile-img" src={profileImg} className={`${className['profile-img']}`}/>
                         <div className={`${className['reply-container']}`}>
                             <span className={`${className['reply-name']}`}>{name}</span>
                             <span className={`${className['reply-repDate']}`}>{formatDate(reply.repDate)}</span>
@@ -95,12 +95,12 @@ const Reply = (props) => {
                         {(reply.uno === token.uNo) ? (
                             <>
                                 <button className={`${className['reply-modify-button']}`} onClick={updateToggle}>
-                                    <img src={replyModifyImg} className={`${className['replyModifyImg']}`}/>
+                                    <img alt="reply-modify-img" src={replyModifyImg} className={`${className['replyModifyImg']}`}/>
                                     수정
                                 </button>
                                 &nbsp;
                                 <button className={`${className['reply-delete-button']}`} onClick={deleteReplyComment}>
-                                    <img src={replyDeleteImg} className={`${className['replyDeleteImg']}`}/>
+                                    <img alt="reply-delete-img" src={replyDeleteImg} className={`${className['replyDeleteImg']}`}/>
                                     삭제
                                 </button>
                             </>
@@ -129,7 +129,7 @@ const Reply = (props) => {
                         <>
                             {/* 수정 안하는 경우 : 하단 영역 (댓글 내용) */}
                             <div className={`${className['reply-content']}`}>
-                                <textarea className="col-10" rows="5" value={replyComm}></textarea>
+                                <textarea className="col-10" rows="5" value={replyComm} readOnly></textarea>
                             </div>
                         </>
                 }

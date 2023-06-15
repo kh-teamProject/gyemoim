@@ -111,13 +111,9 @@ const NoticeList = () => {
     }
 
 
-    const handleSecretClick = () => {
-        alert("다른 사람의 비밀글은 볼 수 없습니다.");
-    };
-
     // 글쓰기 버튼 클릭시 발생하는 함수 (글쓰기 버튼 클릭 -> 글쓰기 page 로 이동)
     const moveNoticeWrite = () => {
-        window.location.href = 'notice/write';
+        navigate('notice/write');
     };
 
 

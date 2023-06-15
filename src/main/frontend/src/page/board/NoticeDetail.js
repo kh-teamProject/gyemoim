@@ -137,14 +137,14 @@ const NoticeDetail = () => {
                                                                                                    className={`${classes['comment-img']}`}/>{replySum}</span>
                             </div>
                             <div className={`${classes['evt_share_btns']}`}>
-                                <button onClick={handleFacebookShare}>
-                                    <img src={facebookImg} className={`${classes['facebook-img']}`}/>
+                                <button className={`${classes['event_btns']}`} onClick={handleFacebookShare}>
+                                    <img alt="facebook-img" src={facebookImg} className={`${classes['facebook-img']}`}/>
                                 </button>
-                                <button onClick={handleKakaoTalkShare} id="kakaotalk">
-                                    <img src={kakaotalkImg} className={`${classes['kakaotalk-img']}`}/>
+                                <button className={`${classes['event_btns']}`} onClick={handleKakaoTalkShare} id="kakaotalk">
+                                    <img alt="kakaotalk-img" src={kakaotalkImg} className={`${classes['kakaotalk-img']}`}/>
                                 </button>
-                                <button onClick={handleLinkCopy}>
-                                    <img src={linkImg} className={`${classes['link-img']}`}/>
+                                <button className={`${classes['event_btns']}`} onClick={handleLinkCopy}>
+                                    <img alt="link-img" src={linkImg} className={`${classes['link-img']}`}/>
                                 </button>
                             </div>
                         </div>

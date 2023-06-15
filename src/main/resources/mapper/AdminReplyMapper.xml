@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.gyemoim.mapper.admin.AdminReplyMapper">
+
+    <select id="searchReplyList" parameterType="com.team.gyemoim.dto.admin.AdminReplyListParamDTO" resultType="com.team.gyemoim.dto.admin.AdminReplyListDTO">
+        SELECT REPLY.rno, REPLY.bid, REPLY.name, REPLY.uNo, REPLY.replyComm, REPLY.repDate, BOARD.type
+        FROM REPLY
+        JOIN BOARD ON REPLY.bid = BOARD.bid
+        <if test="type != '' and searchType == '' and searchKeyword == ''">
+            WHERE BOARD.type = #{type}
+        </if>
+        <if test="type == '' and searchType != '' and searchKeyword != ''">
+            <if test="searchType == 'bid'">
+                AND REPLY.bid = #{searchKeyword}
+            </if>
+            <if test="searchType == 'uno'">
+                AND REPLY.uNo = #{searchKeyword}
+            </if>
+            <if test="searchType == 'name'">
+                AND REPLY.name = #{searchKeyword}
+            </if>
+            <if test="searchType == 'replyComm'">
+                AND REPLY.replyComm LIKE '%' || #{searchKeyword} || '%'
+            </if>
+            <if test="searchType == 'repDate'">
+                AND REPLY.repDate LIKE '%' || #{searchKeyword} || '%'
+            </if>
+        </if>
+        <if test="type != '' and searchType != '' and searchKeyword != ''">
+            WHERE BOARD.type = #{type}
+            <if test="searchType == 'bid'">
+                AND REPLY.bid = #{searchKeyword}
+            </if>
+            <if test="searchType == 'uno'">
+                AND REPLY.uNo = #{searchKeyword}
+            </if>
+            <if test="searchType == 'name'">
+                AND REPLY.name = #{searchKeyword}
+            </if>
+            <if test="searchType == 'replyComm'">
+                AND REPLY.replyComm LIKE '%' || #{searchKeyword} || '%'
+            </if>
+            <if test="searchType == 'repDate'">
+                AND REPLY.repDate LIKE '%' || #{searchKeyword} || '%'
+            </if>
+        </if>
+        ORDER BY REPLY.rno DESC
+    </select>
+
+
+
+
+</mapper>
