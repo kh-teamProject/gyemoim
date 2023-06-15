@@ -49,14 +49,10 @@ const Reply = (props) => {
 
         await axios.patch("/reply", req, {params: {rno: rno}})
             .then((response) => {
-                console.log("댓글 수정 성공 :D");
-                console.log(response.data);
-
-                alert("댓글을 성공적으로 수정했습니다. :D");
                 navigate(0);
             }).catch((error) => {
                 console.log("댓글 수정 실패 :<");
-                console.log(error);
+                console.log("에러 메시지 : " + error.getMessage);
 
                 alert(error.response.data);
             });
@@ -69,10 +65,6 @@ const Reply = (props) => {
     const deleteReplyComment = async () => {
         await axios.delete("/reply", {params: {rno: rno}})
             .then((response) => {
-                console.log("댓글 삭제 성공 :D");
-                console.log("response.data: " + response.data);
-
-                alert("댓글을 성공적으로 삭제했습니다. :D");
                 navigate(0);
             }).catch((error) => {
                 console.log("댓글 삭제 실패 :<");

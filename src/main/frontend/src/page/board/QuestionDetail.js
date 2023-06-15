@@ -6,9 +6,6 @@ import jwtDecode from "jwt-decode";
 import ReplyWrite from "../../component/ReplyWrite";
 import ReplyList from "../../component/ReplyList";
 import classes from "../css/board/BoardDetail.module.css";
-import facebookImg from "../../component/images/facebook.png";
-import kakaotalkImg from "../../component/images/kakaotalk.png";
-import linkImg from "../../component/images/copy-link.png";
 
 const QuestionDetail = () => {
 
@@ -53,7 +50,7 @@ const QuestionDetail = () => {
 
     // 1:1 문의사항 목록으로 이동하는 함수
     const moveToQuestionList = (e) => {
-        window.location.href = "/board/question";
+        navigate("/board/question");
     }
 
     // 글 수정 페이지로 이동하는 함수
@@ -61,13 +58,13 @@ const QuestionDetail = () => {
         await axios.get("/board/modify", {params: {bid: bid}})
             .then((response) => {
                 console.log("QuestionDetail.moveToQuestionModify 문의사항 수정 페이지로 이동 :D");
+                navigate(`/board/question/modify/${bid}`);
             })
             .catch((error) => {
                 console.log("QuestionDetail.moveToQuestionModify 문의사항 수정 페이지 이동 안됨 :<");
                 console.log("문의사항 에러: " + error);
 
             })
-        window.location.href = `/board/question/modify/${bid}`;
     };
 
 

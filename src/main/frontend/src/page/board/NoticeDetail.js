@@ -59,7 +59,7 @@ const NoticeDetail = () => {
 
     // 공지사항 목록으로 이동하는 함수
     const moveToNoticeList = (event) => {
-        window.location.href = '/board/notice';
+       navigate('/board/notice');
     };
 
     // 글 수정 페이지로 이동하는 함수
@@ -67,13 +67,12 @@ const NoticeDetail = () => {
         await axios.get("/board/modify", {params: {bid: bid}})
             .then((response) => {
                 console.log("NoticeDetail.moveToNoticeModify 글 수정 페이지로 이동 :D ");
-
+                navigate(`/board/notice/modify/${bid}`);
             })
             .catch((error) => {
                 console.log("NoticeDetail.moveToNoticeModify 글 수정 페이지 이동 안됨 :< ");
                 console.log(error);
             })
-        window.location.href = `/board/notice/modify/${bid}`;
     };
 
 
