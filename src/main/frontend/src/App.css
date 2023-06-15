@@ -7,7 +7,9 @@ input, button, div {
 }
 
 a {
+  color: black;
   text-decoration: none;
+  font-weight: 400;
 }
 
 a:visited {

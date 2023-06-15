@@ -1,0 +1,11 @@
+.card {
+  background: #DDF3FF;
+  padding: 10px 30px;
+  border-radius: 8px;
+  box-shadow: 4px 4px 9px rgba(0, 0, 0, 0.20);
+  margin-bottom: 20px;
+}
+
+.card > h3 {
+  text-align: left;
+}

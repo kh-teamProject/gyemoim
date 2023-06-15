@@ -49,7 +49,7 @@ section > div:last-child {
   cursor: pointer;
 }
 
-.myinfo-sidebar-wrap ul li a {
+.myinfo-sidebar-wrap ul li a, .logout {
   display: inline-block;
   width: 100%;
   height: 100%;
@@ -60,4 +60,8 @@ section > div:last-child {
 .myinfo-sidebar-wrap ul li a.isActive {
   background: blue;
   color: white;
+}
+
+.logout {
+  margin: 0;
 }

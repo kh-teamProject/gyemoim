@@ -9,8 +9,6 @@ import gyemoim_character from "../../component/images/gyemoim_character.png"
 
 
 const Login = () => {
-
-
     const dispatch = useDispatch();
     const checkedLogin = useSelector((state) => state.checkedLogin);
 
