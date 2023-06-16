@@ -42,8 +42,14 @@ const InterestChart = () => {
   useEffect(() => {
     axios.get('/getInterest')
       .then((res) => {
-        console.log(res)
-        setInterest(res.data);
+        const dbData = res.data;
+        dbData.forEach((item) => {
+          interest.map((value, index) => {
+            if(interest[index].INTEREST === item.INTEREST) {
+              return interest[index.COUNT] += item.COUNT;
+            }
+          });
+        })
       })
       .catch((error) => {
         console.error(error);
@@ -52,11 +58,11 @@ const InterestChart = () => {
 
   ChartJS.register(ArcElement, Tooltip, Legend);
   const data = {
-    labels: [interest[4].INTEREST, interest[3].INTEREST, interest[0].INTEREST, interest[5].INTEREST, interest[2].INTEREST, interest[6].INTEREST, interest[2].INTEREST, interest[1].INTEREST],
+    labels: [interest[4].INTEREST, interest[3].INTEREST, interest[0].INTEREST, interest[5].INTEREST, interest[2].INTEREST, interest[6].INTEREST, interest[7].INTEREST, interest[1].INTEREST],
     datasets: [
       {
         label: '관심사',
-        data: [interest[4].COUNT, interest[3].COUNT, interest[0].COUNT, interest[5].COUNT, interest[2].COUNT, interest[6].COUNT, interest[2].COUNT, interest[1].COUNT],
+        data: [interest[4].COUNT, interest[3].COUNT, interest[0].COUNT, interest[5].COUNT, interest[2].COUNT, interest[6].COUNT, interest[7].COUNT, interest[1].COUNT],
         backgroundColor: [
           'rgba(255, 99, 132, 0.4)',
           'rgba(54, 162, 235, 0.4)',
