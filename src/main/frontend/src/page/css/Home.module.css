@@ -150,3 +150,57 @@ a{
     width: 115%;
     margin: -5px -3px;
 }
+
+/* HomeNoticeArea */
+.noticeBoxArea{
+    display: flex;
+    max-width: 1300px;
+    margin: auto;
+    gap: 2rem;
+}
+.NoticeArea h2{
+    margin-bottom: 1rem;
+}
+.noticeBoxArea .noticeBox{
+    width: 100%;
+    height: auto;
+    border-radius: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 15px 0px;
+    padding: 3.5rem;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    text-align: left;
+    position: relative;
+}
+
+.noticeBoxArea .noticeBox a:after {
+    content: "→";
+    position: absolute;
+    right: 4rem;
+    color: #a2c7ff;
+    top: 3.8rem;
+    font-size: 1.3rem;
+}
+.noticeBoxArea .noticeBox a:after:hover {
+  content: "→";
+  position: absolute;
+  right: 7rem;
+  color: #004DC1;
+}
+.noticeBoxArea .noticeBox .noticeTitle{
+    font-size: 1.5rem;
+}
+.noticeBoxArea .noticeBox .noticeDate {
+    font-size: 1rem;
+    color: #818181;
+    margin-top: 0.2rem;
+}
+.noticeBoxArea .noticeBox .noticeTitle svg{
+    margin-right: 0.5rem;
+    color: #a2c7ff;
+    transform: rotate( 338deg );
+    vertical-align: text-top;
+}
+.noticeBoxArea .noticeBox .noticeContent{
+    margin-top: 0.6rem;
+}

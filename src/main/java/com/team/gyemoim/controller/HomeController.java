@@ -24,19 +24,26 @@ public class HomeController {
         HashMap<String,Object> map = new HashMap<String,Object>();
         //시각화
         //1. 스테이지 전체 수
+        map.put("allPf", homeService.getAllPfList());
         //2. 스테이지 대기중 수
+        map.put("waitingPf", homeService.getAllWaitingPfList());
         //3. 스테이지 참여중 수
+        map.put("partPf", homeService.getAllPartPfList());
         //4. 스테이지 완료 수
+        map.put("completePf", homeService.getAllCompletePfList());
         //5. 총 참여인원
         //6. 현재 스테이지 누적 운영 금액
 
-        // 스테이지
+
+        // 스테이지 리스트
         //1. 전체 계모임 중 랜덤 6개 select + 대기중만 표시
         map.put("stageList", homeService.getPfHomeList());
         //2. pfID가 일치하는 roll 데이터
         map.put("stageUserList", homeService.getPfRollList());
+
         // 공지사항
-        //1. 전체 공지사항 정보 중 최신 5개 select
+        //1. 전체 공지사항 정보 중 최신 3개 select
+        map.put("noticeList", homeService.getNoticeHomeList());
         return map;
     }
 }

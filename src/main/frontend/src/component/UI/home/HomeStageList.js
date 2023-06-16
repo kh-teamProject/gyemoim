@@ -1,4 +1,3 @@
-import axios from "axios";
 import {Link, useLocation} from "react-router-dom";
 
 import classes from '../../../page/css/Home.module.css';

@@ -4,10 +4,22 @@ import axios from "axios";
 
 import classes from './css/Home.module.css';
 import HomeStageList from "../component/UI/home/HomeStageList";
+import HomeChart from "../component/UI/home/HomeChart";
+import HomeNotice from "../component/UI/home/HomeNotice";
 
 const Home = () => {
     const [stageList, setStageList] = useState([]);
     const [stageUserList, setStageUserList] = useState([]);
+
+    const [allPf, setAllPf] = useState();
+    const [waitingPf, setWaitingPf] = useState();
+    const [partPf, setPartPf] = useState();
+    const [completePf, setCompletePf] = useState();
+
+    const [noticeList, setNoticeList] = useState([]);
+
+
+    console.log('allPf', allPf);
 
     console.log(stageList);
 useEffect(() => {
@@ -19,6 +31,13 @@ useEffect(() => {
       .then((res) => {
         setStageList(res.data.stageList);
         setStageUserList(res.data.stageUserList);
+
+        setAllPf(res.data.allPf);
+        setWaitingPf(res.data.waitingPf);
+        setPartPf(res.data.partPf);
+        setCompletePf(res.data.completePf);
+
+        setNoticeList(res.data.noticeList);
 
       })
       .catch((error) => {
@@ -37,7 +56,7 @@ useEffect(() => {
             </div> {/* main_banner end */}
 
             <div className={classes.mainChartArea}> {/*main_chart start*/}
-                시각화
+                <HomeChart allPf={allPf} />
             </div> {/* main_chart end */}
         </div>{/* Visual start */}
 
@@ -60,7 +79,7 @@ useEffect(() => {
         {/* NoticeArea start */}
         <div className={[classes.NoticeArea, classes.section].join(' ')}>
             <h2>계이득의 소식</h2>
-            <div>컴포넌트</div>
+            <HomeNotice noticeList={noticeList} />
         </div> {/* NoticeArea end */}
     </>
   );

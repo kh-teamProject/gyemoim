@@ -23,4 +23,42 @@
         JOIN roll ON PF.PFID = roll.PFID
     </select>
 
+    <!--(찬희) 총 PF-->
+    <select id="getAllPfList" resultType="Integer">
+        SELECT count(*)
+        FROM PF
+    </select>
+
+    <!--(찬희) PF 대기중-->
+    <select id="getAllWaitingPfList" resultType="Integer">
+        SELECT count(*)
+        FROM PF
+        WHERE startFlag = '대기중'
+    </select>
+
+    <!--(찬희) PF 참여중-->
+    <select id="getAllPartPfList" resultType="Integer">
+        SELECT count(*)
+        FROM PF
+        WHERE startFlag = '참여중'
+    </select>
+
+    <!--(찬희) PF 완료-->
+    <select id="getAllCompletePfList" resultType="Integer">
+        SELECT count(*)
+        FROM PF
+        WHERE startFlag = '완료'
+    </select>
+
+    <!--(찬희) 공지사항 최신 3개 리스트 출력-->
+    <select id="getNoticeHomeList" resultType="com.team.gyemoim.dto.HomeNoticeDTO">
+        SELECT *
+        FROM (
+        SELECT *
+        FROM BOARD
+        WHERE bType = '공지사항'
+        ORDER BY writeDate DESC
+        )
+        WHERE 3>= ROWNUM
+    </select>
 </mapper>
