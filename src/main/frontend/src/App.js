@@ -35,6 +35,7 @@ import AccountManagement from "./page/admin/AccountManagement";
 import AdminHome from "./page/AdminHome";
 import StageManagement from "./page/admin/StageManagement";
 import BoardManagement from "./page/admin/BoardManagement";
+import ReplyManagement from "./page/admin/ReplyManagement";
 import StageReport from "./component/UI/stage/StageReport";
 import AdminStageList from "./page/admin/AdminStageList";
 import AdminStageChart from "./page/admin/AdminStageChart";
@@ -288,7 +289,11 @@ const App = () => {
           {
             path: 'board',
             element: <BoardManagement/>
-          }
+          },
+            {
+                path: 'reply',
+                element: <ReplyManagement/>
+            }
         ]
       },
       {
@@ -299,13 +304,12 @@ const App = () => {
       }
     ]);
 
-
-    return (
-      <div className="App">
-        <RouterProvider router={router}/>
-      </div>
-    );
-  }
+        return (
+            <div className="App">
+                <RouterProvider router={router}/>
+            </div>
+        );
+    }
 ;
 
 export default App;

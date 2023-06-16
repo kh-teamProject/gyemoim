@@ -4,6 +4,8 @@ import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
 import profileImg from "./images/profile-placeholder.png";
+import chatImg from "./images/chat.png"
+import className from "../page/css/board/Reply.module.css";
 
 /* ReplyWrite 컴포넌트 : 댓글 작성을 위한 폼을 나타냄 */
 const ReplyWrite = (props) => {
@@ -12,7 +14,6 @@ const ReplyWrite = (props) => {
     const uNo = token.uNo;
     const name = token.name;
 
-    /*const uno = uNo;*/
     const bid = props.bid;
 
     const navigate = useNavigate();
@@ -32,6 +33,7 @@ const ReplyWrite = (props) => {
             uno: uNo,
             replyComm: replyComm,
             bid: bid,
+            name: name,
         }
 
         await axios
@@ -43,7 +45,6 @@ const ReplyWrite = (props) => {
                 console.log("댓글 응답 데이터: " + response.data);
 
                 if (response.data.bid !== 0) {
-                    alert("댓글을 성공적으로 작성했습니다!");
                     navigate(0);
                 }
             })
@@ -59,28 +60,24 @@ const ReplyWrite = (props) => {
     return (
         <>
             {/* 상단 영역 (프로필 이미지, 댓글 작성자) */}
-            <div className="my-1 d-flex justify-content-center" style={{marginTop: "14%"}}>
-                <div className="col-1" style={{borderTop: "1px solid #eee"}}>
-                    <img style={{
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "50%",
-                        backgroundColor: "ivory",
-                        marginTop: "40px"
-                    }} src={profileImg} className="profile-img"/>
-                </div>
+            <div className={`${className['reply-ttl']}`}>
+                <div>
+                    <div className={`${className['profile-box']}`}>
+                        <img src={profileImg} className={`${className['profile-img']}`}/>
+                        <span className={`${className['reply-name']}`}>{name}</span>
+                    </div>
 
-                <div className="col-7">
-                    <span style={{fontWeight: "bold"}} className="comment-id">{name}</span>
-                </div>
-                <div className="col-2 my-1 d-flex justify-content-end">
-                    <button className="btn btn-outline-secondary" onClick={createReply}><i
-                        className="fas fa-comment-dots"></i> 댓글 추가
-                    </button>
+                    <div className={`${className['reply-button-box']}`}>
+                        <button className={`${className['reply-write-button']}`} onClick={createReply}>
+                            <img src={chatImg} className={`${className['chat-img']}`}/>
+                            댓글 추가
+                        </button>
+                    </div>
+
                 </div>
             </div>
             {/* 하단 영역 (댓글 내용) */}
-            <div className="my-3 d-flex justify-content-center">
+            <div className={`${className['reply-content']}`}>
                 <textarea className="col-10" rows="5" value={replyComm} onChange={createReplyComment}></textarea>
             </div>
             <br/><br/>

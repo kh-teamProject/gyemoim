@@ -6,13 +6,13 @@
 
     <!-- 댓글 생성 -->
     <insert id="createReply" parameterType="com.team.gyemoim.dto.reply.CreateReplyParamDTO">
-        INSERT INTO Reply (rno, bid, uNo, repDate, replyComm)
-        VALUES (RNO_REPLY_SEQ.NEXTVAL, #{bid}, #{uNo}, sysdate, #{replyComm})
+        INSERT INTO Reply (rno, bid, uNo, name, repDate, replyComm)
+        VALUES (RNO_REPLY_SEQ.NEXTVAL, #{bid}, #{uNo}, #{name}, sysdate, #{replyComm})
     </insert>
 
     <!-- 댓글 리스트 조회 -->
     <select id="getReplyList" parameterType="int" resultType="com.team.gyemoim.vo.ReplyVO">
-        SELECT rno, bid, uNo, repDate, replyComm
+        SELECT rno, bid, uNo, name, repDate, replyComm
         FROM Reply
         WHERE bid = #{bid}
         ORDER BY repDate DESC

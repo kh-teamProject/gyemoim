@@ -111,13 +111,9 @@ const NoticeList = () => {
     }
 
 
-    const handleSecretClick = () => {
-        alert("다른 사람의 비밀글은 볼 수 없습니다.");
-    };
-
     // 글쓰기 버튼 클릭시 발생하는 함수 (글쓰기 버튼 클릭 -> 글쓰기 page 로 이동)
     const moveNoticeWrite = () => {
-        window.location.href = 'notice/write';
+        navigate('notice/write');
     };
 
 
@@ -213,13 +209,11 @@ const NoticeList = () => {
                                                         borderSpacing: "50px"
                                                     }}>{item.bid}</td>
                                                     <td className={`${classes['text-center'], classes['title-link']}`}>
-                                                        {item.secret === 'S' ? (
-                                                                <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>) :
-                                                            (<Link
-                                                                to={`/board/notice/detail/${item.bid}`}
-                                                                className={`${classes['title-link']}`}>
-                                                                {item.title}
-                                                            </Link>)}
+                                                        <Link
+                                                            to={`/board/notice/detail/${item.bid}`}
+                                                            className={`${classes['title-link']}`}>
+                                                            {item.title}
+                                                        </Link>
                                                     </td>
                                                     <td className={`${classes['text-center']}`}>{item.name}</td>
                                                     <td className={`${classes['text-center']}`}>{formattedWriteDate}</td>
@@ -273,7 +267,7 @@ const NoticeList = () => {
                             <div className={`${classes['board-write']}`}>
                                 {/*로그인한 사람이 운영자인 경우에만 글쓰기 버튼 활성화하기)*/}
                                 {isAdmin && (
-                                    <button onClick={moveNoticeWrite}>등록하기</button>
+                                    <button onClick={moveNoticeWrite}>공지등록</button>
                                 )}
                             </div>
                         </div>

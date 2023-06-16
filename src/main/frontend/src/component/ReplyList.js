@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Reply from "./Reply";
+import className from "../page/css/board/Reply.module.css";
+import replyListImg from "./images/reply-list-clip.png";
 
 const ReplyList = (props) => {
 
@@ -32,8 +34,8 @@ const ReplyList = (props) => {
 
     return (
         <>
-            <div className="my-1 d-flex justify-content-center">
-                <h5>[ 댓글목록 ]</h5>
+            <div className={`${className['reply-list']}`}>
+                <img src={replyListImg} className={`${className['reply-list-img']}`}/><h5>댓글 목록</h5>
             </div>
 
             {
