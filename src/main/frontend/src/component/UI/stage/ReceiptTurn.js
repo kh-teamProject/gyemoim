@@ -121,7 +121,7 @@ const ReceiptTurn = () => {
                    className={`${classes.memList} ${selectedClass}`}
                    onClick={() => handleClickTurn(index)}
                  >
-                   <span>
+                   <span style={{ cursor: 'pointer' }}>
                    { name === '●'
                        ? <>
                        {index + 1}

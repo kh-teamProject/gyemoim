@@ -29,6 +29,9 @@ const Stage = () => {
     const [rollData, setRollData] = useState([]);
 
 
+
+
+    console.log(schedule);
     const location = useLocation();
     const pfIDNum = location.pathname.split('/');
 
@@ -107,7 +110,8 @@ const Stage = () => {
         console.log(error);
 
       });
-  }, [roll]);
+  }, []);
+
 
     const [receipt, setReceipt] = useState();
     const receiptHandler = () => {
@@ -169,7 +173,7 @@ const Stage = () => {
                             {startFlag==='대기중' && <p>모두 입장하면 계모임이 시작됩니다.</p>}
                             {startFlag==='참여중' && <p>매달 <span className={classes.red}>24일 전</span>에 입금하세요</p>}
 
-                            <StageSequence schedule={schedule} roll={roll} ></StageSequence>
+                            <StageSequence schedule={schedule} roll={roll} uNo={uNo}></StageSequence>
                         </div>
 
                         <div>

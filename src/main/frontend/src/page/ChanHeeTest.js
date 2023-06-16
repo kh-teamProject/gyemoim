@@ -20,11 +20,11 @@ const ChanHeeTest = () => {
       params: {
         uNo: uNo,
         receiveTurn: value,
-        pfID: 1
+        pfID: 22
       }
     })
       .then(response => {
-          navigate('/stage/1');
+          navigate('/stage/22');
       })
       .catch(error => {
         // 에러 처리

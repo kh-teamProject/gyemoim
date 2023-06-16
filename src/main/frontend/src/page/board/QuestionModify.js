@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+import classes from "../css/board/Board.module.css";
 
 const QuestionModify = () => {
 
@@ -32,7 +33,6 @@ const QuestionModify = () => {
                 console.log("QuestionModify_axios 에러사항: " + error);
             })
     };
-
 
 
     // 게시글 수정된 데이터로 바꿔주는 함수
@@ -109,12 +109,115 @@ const QuestionModify = () => {
                     <div>
                         <div>
                             <div className="title">
-                                <h1>공지사항</h1>
-                                <p>글 수정 페이지</p>
+                                <h1>문의사항</h1>
+                                <p>문의사항 수정 페이지</p>
                             </div>
 
                             <div>
+
                                 <form onSubmit={modifyUpdateQuestionPost}>
+                                    <table className={`${classes['write-table']}`}>
+                                        <tbody className={`${classes['write-tbody']}`}>
+                                        <tr>
+                                            <th>
+                                                제목
+                                            </th>
+                                            <td>
+                                                <div className={`${classes['write_table_input_wrap']}`}>
+                                                    <input type="text" className={`${classes['w800']}`}
+                                                           id="write-input-title" name="title"
+                                                           value={questionModify.title === undefined ? () => {
+                                                               alert("제목을 입력하세요.");
+                                                           } : questionModify.title} onChange={handleChange}
+                                                           required/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                작성자
+                                            </th>
+                                            <td>
+                                                <div className={`${classes['write_table_input_wrap']}`}>
+                                                    <input type="text"  id="write-input-writer" name="name"
+                                                           value={questionModify.name}
+                                                           onChange={handleChange}
+                                                           readOnly/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                공개설정
+                                            </th>
+                                            <td className={`${classes['secret-type']}`}>
+                                                <div className={`${classes['write_table_input_wrap']}`}>
+                                                    <input type="radio" name="secret" id="write-cs-open" value="P"
+                                                           className="radio" checked={questionModify.secret === 'P'}
+                                                           onChange={handleChange} required/>
+                                                    <label htmlFor="write-cs-open">공개</label>
+                                                </div>
+                                                <div className={`${classes['write_table_input_wrap']}`}>
+                                                    <input type="radio" name="secret" id="write-cs-close" value="S"
+                                                           className="radio" checked={questionModify.secret === 'S'}
+                                                           onChange={handleChange}/>
+                                                    <label htmlFor="write-cs-close">비공개</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                내용
+                                            </th>
+                                            <td>
+                                                <div className={`${classes['write_table_input_wrap']}`}>
+                                                    <textarea name="content" className={`${classes['ps-text-area']}`}
+                                                              value={questionModify.content} onChange={handleChange}
+                                                              required></textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                첨부파일
+                                            </th>
+                                            <td>
+                                                {/*<div className={`${classes['write_table_input_wrap']}`}>
+                                                    <input id="showFileName" value={attachments} readOnly/>
+                                                    <label htmlFor="allFileName" className={`${classes['ps-label']}`} type="file">찾아보기</label>
+                                                    <label htmlFor="delFileName" className={`${classes['ps-label']}`} onClick={handleDeleteFile}>삭제</label>
+                                                    <input id="allFileName" className={`${classes['w400']}}`} name="allFileName" type="file" onChange={handleFileChange} style={{
+                                                        display: "none"
+                                                    }}/>
+                                                </div>*/}
+                                            </td>
+                                            {/*<th>
+                                                첨부파일
+                                            </th>
+                                            <td>
+                                                <div className={`${classes['write_table_input_wrap']}`}>
+                                                    <input id="showFileName" value={selectedFileName} readOnly />
+                                                    <label htmlFor="allFileName" className={`${classes['ps-label']}`} type="file">찾아보기</label>
+                                                    <label htmlFor="delFileName" className={`${classes['ps-label']}`} onClick={handleDeleteFile}>삭제</label>
+                                                    <input id="allFileName" className={`${classes['w400']}}`} name="allFileName" type="file" onChange={handleFileChange} style={{
+                                                        display: "none"
+                                                    }}/>
+                                                </div>
+                                            </td>*/}
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <div className={`${classes['write-button-container']}`}>
+                                        <button className={`${classes['write-button']}`} type="submit">수정하기</button>
+                                        <button className={`${classes['write-button']}`}
+                                                onClick={moveToQuestionDetail}>취소하기
+                                        </button>
+                                    </div>
+                                </form>
+
+
+                                {/*<form onSubmit={modifyUpdateQuestionPost}>
                                     <div>
 
                                         <input type="hidden" id="write-input-bid" name="bid" value={questionModify.bid}/>
@@ -167,6 +270,7 @@ const QuestionModify = () => {
                                 <div>
                                     <button onClick={moveToQuestionDetail}>취소하기</button>
                                 </div>
+                                */}
                             </div>
                         </div>
                     </div>

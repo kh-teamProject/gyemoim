@@ -57,8 +57,7 @@ const ReceiptModalOverlay = (props) => {
           <td>{scheduleData.upayment.toLocaleString()}</td>
           <td>{scheduleData.utotalPayment.toLocaleString()}</td>
           <td>{scheduleData.utotalReceipts.toLocaleString()}</td>
-          <td>{scheduleData.uRate}</td>
-          <td>{scheduleData.uReceipt}</td>
+          <td>{scheduleData.urate}%</td>
         </tr>
       );
 
@@ -69,6 +68,8 @@ const ReceiptModalOverlay = (props) => {
       <p>"{props.title}" 수령예정표</p>
       <div>
          <table>
+               <caption>*매달 <span className={classes.red}>24일 전</span>에 입금해주세요.<br / >
+                       *곗돈은 <span className={classes.red}>매달 30일</span>에 My계좌로 입금됩니다.</caption>
                 <thead>
                   <tr>
                     <th>순번</th>
@@ -76,7 +77,6 @@ const ReceiptModalOverlay = (props) => {
                     <th>총 입금액</th>
                     <th>실 지급금</th>
                     <th>적용이율(세후)</th>
-                    <th>실 이자(세후)</th>
                   </tr>
                 </thead>
                 <tbody>{lis}</tbody>

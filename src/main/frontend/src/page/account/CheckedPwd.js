@@ -1,5 +1,7 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 import axios from "axios";
 
 import classes from "../css/CheckedPwd.module.css";
@@ -8,33 +10,30 @@ import MyPageSidebar from "../../component/MyPageSidebar";
 const CheckedPwd = () => {
   const navigate = useNavigate();
 
-  const [passwordIsValid, setPasswordIsValid] = useState(true);
   const [enteredPassword, setEnteredPassword] = useState('');
-  const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    axios.get('/getPassword', {
-      params: {
-        uNo: 1
-      }
-    }).then(res => {
-      setPassword(res.data);
-    })
-      .catch(error => {
-        console.log(error);
-      })
-  });
-
-  const checkedPwdHandler = (e) => {
-    setPasswordIsValid(e.target.value == password);
-  }
-
+  const token = Cookies.get('Set-Cookie');
+  const uNo = jwtDecode(token).uNo;
   const locationHandler = () => {
     if(enteredPassword.trim() === '') {
       alert('비밀번호를 입력해주세요.');
       return;
     }
-    navigate('/mypage/info/modify/1')
+    axios.post(`/checkedPwd/${uNo}`, null, {
+      params: {
+        password: enteredPassword
+      }
+    })
+      .then((res) => {
+        if(res.data) {
+          navigate(`/mypage/info/modify/${uNo}`);
+        } else {
+          alert('비밀번호가 일치하지않습니다.');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   return (
@@ -47,16 +46,14 @@ const CheckedPwd = () => {
         <input
           type="password"
           name={"password"}
-          className={`${classes['password-input']} ${passwordIsValid ? '' : classes.isActive}`}
+          className={`${classes['password-input']}`}
           onChange={(e) => {setEnteredPassword(e.target.value)}}
-          onBlur={checkedPwdHandler}
         />
         <br/>
         <button
           type={"submit"}
           className={`${classes['check-btn']}`}
           onClick={locationHandler}
-          disabled={!passwordIsValid}
         >
           확인
         </button>

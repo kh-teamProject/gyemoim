@@ -1,0 +1,286 @@
+/* 검색 테이블 스타일 */
+.search-container {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.noticeList_ttl {
+    font-size: 1.5rem;
+    margin: 0 15px;
+}
+
+.noticeList_ttl p {
+    font-style: normal;
+}
+
+/* 게시판 테이블 스타일 */
+.board-container {
+    width: 900px;
+    margin-top: 30px;
+}
+
+.board-column {
+    border-top: 2px solid darkblue;
+    border-bottom: 2px solid darkblue;
+    padding: 3px;
+}
+
+.text-center {
+    border-bottom: 1px solid darkblue;
+    padding: 15px;
+}
+
+.title-link {
+    text-decoration: none;
+    color: black;
+}
+
+.title-link:hover {
+    text-decoration: underline;
+}
+
+/* 게시글 제목에 회색 밑줄 스타일 적용 */
+.underline {
+    border-bottom: 1px solid #ccc;
+    display: inline-block;
+    transition: border-bottom-color 0.3s ease;
+}
+
+.underline:hover {
+    border-bottom-color: transparent;
+}
+
+
+/* 페이징 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    font-size:0;
+}
+
+
+.pagination button {
+    display: block;
+    margin: 0 3px;
+    float: left;
+    border: 1px solid #e6e6e6;
+    background-color: #ffffff;
+    font-size: 12px;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+.pagination button:hover {
+    background-color: gray;
+    color: white;
+}
+
+
+/* 글쓰기 버튼 */
+.board-write {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size:0;
+}
+
+.board-write button {
+    height: 30px;
+    width: 70px;
+    margin: 10px auto 30px;
+    border: 1px solid #e6e6e6;
+    background-color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* 검색창 스타일 */
+.search-option {
+    display: inline-block;
+    width: 105px;
+    height: 24px;
+    border: 1px solid #200400;
+    background-color: white;
+    font-weight: bold;
+    font-size: 11px;
+    outline: none;
+}
+
+
+.search-window {
+    display: inline-block;
+    width: 366px;
+    height: 34px;
+    border: 1px solid #200400;
+    background-color: white;
+}
+
+.input-text {
+    width: 348px;
+    height: 21px;
+    margin: 6px 0 0 9px;
+    border: 0;
+    line-height: 21px;
+    font-weight: bold;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-button {
+    width: 54px;
+    height: 38px;
+    margin: 0;
+    border: 0;
+    vertical-align: top;
+    background-color: #200400;
+    color: white;
+    font-weight: bold;
+    border-radius: 1px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #337ab7;
+}
+
+
+/* 게시글 작성 스타일 */
+.write-table {
+    border-top: 2px solid #505050;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: table;
+    background: transparent;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.write-table td {
+    display: table-cell;
+    border: 0;
+    box-sizing: border-box;
+    letter-spacing: -.5px;
+    margin: 0;
+}
+
+.write-tbody {
+    color: rgb(80, 80, 80);
+    font-family: "Noto Sans KR", nsR, "맑은 고딕", "Helvetica Neue", "Droid Sans", sans-serif, "Helvetica";
+    font-size: 16px;
+    line-height: inherit;
+    font-weight: 400;
+}
+
+.write-table tbody tr {
+    border-bottom: 2px solid #eee;
+}
+
+.write-table tr th {
+    border-bottom: 2px solid #eee;
+    min-height: 80px;
+    vertical-align: middle;
+    background: #f7f7f7;
+    color: #1a1a1a;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 20px 10px;
+    text-align: left;
+    width: 240px;
+}
+
+.write-table tr td {
+    text-align: left;
+}
+
+.write-table tr td input {
+    border: 1px solid #d6d6d6;
+    box-sizing: border-box;
+    color: #4d4d4d;
+    font-size: 16px;
+    font-weight: 400;
+    height: 40px;
+    padding: 0 15px;
+}
+
+.write_table_input_wrap {/* tbl_input_wrap */
+    float: left;
+}
+
+.ps-label {
+    background-color: #f7f7f7;
+    color: #1a1a1a;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 5px 5px;
+    cursor: pointer;
+    margin: 0 10px;
+    border: 1px solid #d6d6d6;
+}
+
+.write-button-container {
+    justify-content: center;
+    display: flex;
+}
+
+.write-button {
+    width: 100px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 30px 20px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #4f4f4f;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);/* 그림자 효과 */
+    cursor: pointer;
+}
+
+.write-button:hover {
+    background-color: #45a049;/* 글 작성하기 버튼 마우스 오버 시 버튼 배경색 */
+}
+
+.write-button:active {
+    background-color: #3e8e41;/* 버튼 클릭시 버튼 배경색 */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);/* 버튼 클릭 시 그림자 효과 */
+}
+
+.w800 {
+    width: 800px !important;
+}
+
+.ps-text-area {
+    border: 1px solid #eee;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #4c4c4c;
+    font-size: 16px;
+    font-weight: 400;
+    height: 320px;
+    padding: 20px;
+    resize: none;
+    width: 800px;
+    writing-mode: horizontal-tb !important;
+    display: inline-block;
+}
+
+.secret-type {
+    display: flex;
+}
+
+.secret-type div {
+    padding-right: 2em;
+}

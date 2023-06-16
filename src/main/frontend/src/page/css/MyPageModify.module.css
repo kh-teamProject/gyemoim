@@ -39,3 +39,17 @@ h2 {
   font-weight: bold;
   cursor: pointer;
 }
+
+.field .pwd-submit-btn {
+  /*display: inline-block;*/
+  width: 100px;
+  height: 40px;
+  color: white;
+  background: skyblue;
+  line-height: 40px;
+  border-radius: 4px;
+  border: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}

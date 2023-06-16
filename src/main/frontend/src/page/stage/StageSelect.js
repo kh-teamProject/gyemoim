@@ -113,32 +113,6 @@ const Sidebar = () => {
             <div className={classes.stageInfoCardBtn}>
               <div>
               <button
-                onClick={handleJoin}
-                className="button-pa"
-                style={{
-                  backgroundColor: '#FFFFFF',
-                  color: '#4169E1',
-                  border: '1px solid #FFFFFF',
-                  height: '46px',
-                  fontSize: '16px',
-                  width: '70%',
-                  fontWeight: 'bold',
-                  margin: '10px 0',
-                  transition: 'background-color 0.3s, color 0.3s',
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#FFFFFF';
-                  e.target.style.color = '#4169E1';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = '#FFFFFF';
-                  e.target.style.color = '#4169E1';
-                }}
-              >
-                참여하기
-              </button>
-
-              <button
                 onClick={handleUse}
                 className="button-use"
                 style={{
@@ -161,7 +135,7 @@ const Sidebar = () => {
                   e.target.style.color = '#FFFFFF';
                 }}
               >
-                이용하기
+                돌아가기
               </button>
               </div>
             </div>

@@ -125,7 +125,7 @@ const OneReceipt = ({ selectedRollData }) => {
         <button
           key={index}
           style={{
-            border: '1px solid #FFFFFF',
+            border: '1px solid #4169E1',
             height: '46px',
             fontSize: '16px',
             width: '15%',
@@ -134,10 +134,11 @@ const OneReceipt = ({ selectedRollData }) => {
             transition: 'background-color 0.3s',
             backgroundColor: '#4169E1',
             color: '#FFFFFF',
+            cursor: 'pointer',
           }}
             onMouseEnter={(e) => {
-            e.target.style.backgroundColor = '#4169E1';
-            e.target.style.color = '#FFFFFF';
+            e.target.style.backgroundColor = '#FFFFFF';
+            e.target.style.color = '#4169E1';
             }}
             onMouseLeave={(e) => {
             e.target.style.backgroundColor = '#4169E1';

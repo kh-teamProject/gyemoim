@@ -1,13 +1,17 @@
-import {useEffect, useState} from "react";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import axios from "axios";
-
 import MyPageSidebar from "../../component/MyPageSidebar";
-import classes from "../css/MemberDelete.module.css";
+import classes from "../css/MyPage.module.css";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 const MemberDelete = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const token = Cookies.get('Set-Cookie');
+  const uNo = jwtDecode(token).uNo;
 
   const [passwordIsValid, setPasswordIsValid] = useState(true);
   const [enteredPassword, setEnteredPassword] = useState('');
@@ -38,7 +42,7 @@ const MemberDelete = () => {
     const checkDelete = window.confirm("회원탈퇴를 진행하시겠습니까?");
 
     if (checkDelete) {
-      axios.post(`/memberDelete/${3}`)
+      axios.post(`/memberDelete/${uNo}`)
         .then((res) => {
           alert('회원이 정상적으로 탈퇴되었습니다.');
           navigate('/')
@@ -67,6 +71,11 @@ const MemberDelete = () => {
                 className={`${location.pathname.includes('interest') ? classes.isActive : undefined}`}>
                 관심사 수정
               </NavLink>
+            </li>
+            <li>
+              <NavLink to={'/mypage/info/pwdUpdate/${uNo}'}
+                       className={`${location.pathname.includes('pwdUpdate') ? classes.isActive : undefined}`}>비밀번호
+                변경</NavLink>
             </li>
             <li>
               <NavLink

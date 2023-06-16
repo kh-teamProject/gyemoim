@@ -17,6 +17,5 @@ public class BoardModifyDTO {
     private String content;
     private Date writeDate;
     private String secret;
-    private MultipartFile uploadFile; // 업로드 하는 파일
-    private String fileName; // 업로드하는 파일 이름
+
 }

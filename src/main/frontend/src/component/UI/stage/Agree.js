@@ -63,11 +63,6 @@ const Agree = () => {
           <div className={styles.flex1}>
 
             <div className={styles.font}>
-                {data1.map((value, index) => (
-                <ul key={index}>
-                  <li>pf번호: {value.pfID}</li>
-                </ul>
-              ))}
 
                <div className={styles.gap}>
               <div>

@@ -1,0 +1,58 @@
+.nav {
+  margin-bottom: 20px;
+}
+
+.ul {
+  list-style-type: none;
+  padding: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.li {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.isActive {
+
+}
+
+.field {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.field label {
+  display: inline-block;
+  margin-right: 20px;
+  width: 130px;
+  text-align: left;
+}
+
+.field input {
+  display: inline-block;
+
+  width: 250px;
+  height: 35px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+}
+
+.pwd-submit-btn {
+  width: 200px;
+  height: 40px;
+  color: white;
+  background: #004dc1;
+  line-height: 40px;
+  border-radius: 4px;
+  border: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}

@@ -1,0 +1,122 @@
+.detail-content {
+    padding-top: 79px;
+}
+
+
+.facebook-img, .kakaotalk-img, .link-img {
+    width: 50px;
+    height: 50px;
+}
+
+
+.common_inner_sub {
+    padding-bottom: 180px;
+    height: 100%;
+    left: 48%;
+    position: relative;
+    transform: translateX(-50%);
+    width: 1180px;
+}
+
+.div, .body, .span, .h1, .h2, .h3, .h4, .h5, .h6, .p, .img, .form {
+    background: transparent;
+    border: 0;
+    box-sizing: border-box;
+    letter-spacing: -.5px;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+.evt_detail_ttl {
+    text-align: center;
+}
+
+.evt_detail_wrap {
+    border-top: 2px solid #505050;
+    margin-top: 63px;
+}
+
+.evt_detail_cont_ttl {
+    border-bottom: 1px solid #eee;
+    padding: 45px 20px;
+    position: relative;
+}
+
+.evt_detail_cont_ttl h3 {
+    color: #1a1a1a;
+    display: flex;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1;
+    margin-top: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+
+.evt_detail_cont_ttl_date {
+    color: #aaa;
+    display: flex;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    margin-top: 20px;
+}
+
+.evt_share_btns {
+    font-size: 0;
+    height: 50px;
+    position: absolute;
+    right: 20px;
+    text-align: right;
+    top: 45px;
+}
+
+.evt_detail_cont {
+    width: 900px;
+    margin: 0 auto;
+    border-bottom: 1px solid #eee;
+    padding: 50px 0 70px;
+    position: relative;
+}
+
+
+.stage_step_btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+
+.stage_step_btn li {
+    margin: auto;
+    height: 50px;
+    width: 100px;
+}
+
+
+.stage_step_btn ul li.blue_bdr button {
+    background: #fff;
+    border: 2px solid #0693c1;
+    color: #0693c1;
+    line-height: 46px;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 500;
+    height: 100%;
+    line-height: 50px;
+    width: 90%;
+    text-align: center;
+}
+
+
+
+.card-body {
+    margin-top: 110px;
+}
+

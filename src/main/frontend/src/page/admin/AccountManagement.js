@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
+import {NavLink} from "react-router-dom";
 import axios from "axios";
 
 import Paging from "../../component/Paging";
 import classes from "../css/admin/AccountManagement.module.css";
-import {NavLink} from "react-router-dom";
 
 const AccountManagement = () => {
   const options = {year: 'numeric', month: 'long', day: 'numeric'};

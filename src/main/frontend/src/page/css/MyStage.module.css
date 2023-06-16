@@ -1,0 +1,105 @@
+.field {
+  font-size: 1.25rem;
+  font-weight: bold;
+  min-height: 620px;
+}
+
+.field h3 {
+  margin-top: 50px;
+}
+
+.field .myStage {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 30px;
+  padding: 0;
+}
+
+.field .myStage li {
+  position: relative;
+  width: 140px;
+  height: 40px;
+  font-size: 2.2vmin;
+  cursor: pointer;
+}
+
+.field .myStage li a {
+  color: gray;
+}
+
+.field .myStage li  a.isActive {
+  color: black;
+  font-weight: bold;
+}
+
+.field .myStage li  a.isActive::after{
+  content: '';
+  display: inline-block;
+  width: 150px;
+  border-bottom: 2px solid gray;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.field > div:nth-child(2) {
+  width: 100%;
+}
+
+.myStageField {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 30px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
+}
+
+.myStageField li a.isActive {
+  color: blue;
+}
+
+.stage-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.stage {
+  width: 300px;
+  height: 260px;
+  border: 1px solid black;
+}
+
+.stage ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.stage ul li {
+  border: 2px solid skyblue;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+}
+
+.stage p {
+  font-size: 2vmin;
+}
+
+.stage span {
+  color: gray;
+}
+
+.stageImg {
+  width: 20px;
+  padding-top: 3px;
+}

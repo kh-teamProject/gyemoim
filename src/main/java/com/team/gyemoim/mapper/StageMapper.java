@@ -116,6 +116,7 @@ public interface StageMapper {
   //(지연)스테이지에 관한 PfInfo
   List<StageSelectDTO> getPfInfo(Integer pfID);
 
+
   //(지연) 계모임 장 Roll 정보 가져오기
   List<RollDTO> getStageSelectRoll(RollDTO dto);
 
@@ -133,4 +134,7 @@ public interface StageMapper {
 
   List<PartiListDTO> getTurnRoll(PartiListDTO dto);
 
+
+    //(찬희) 나가는 사람이 마지막 사람이면 스테이지 삭제
+    void stageDelete(StageINDTO dto);
 }

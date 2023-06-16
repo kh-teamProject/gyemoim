@@ -1,66 +1,89 @@
 import React, {useState} from "react";
 import axios from "axios";
+import classes from "../css/board/Board.module.css";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 const NoticeWritePost = () => {
+    const token = jwtDecode(Cookies.get("Set-Cookie"));
+    const writer = token.userRole[0];
+    const uno = token.uNo;
 
-    const [formData, setFormData] = useState({
-        uno: 1, // 글 작성자 회원번호
-        name: '운영자님', // 글 작성자 이름
-        type: '공지사항', // 게시글 타입
-        title: '', // 게시글 제목
-        content: '', // 게시글 내용
-        secret: 'P', // 글 여부 (공개/비공개)
+    const [noticeFormData, setNoticeFormData] = useState({
+        uno: uno,
+        name: writer,
+        type: "공지사항",
+        title: "",
+        content: "",
+        secret: "P",
     });
 
+    const [file, setFile] = useState(null);
+    const [selectedFileName, setSelectedFileName] = useState("");//첨부파일 이름
+    const [imgBase64, setImgBase64] = useState([]);// 첨부파일 미리보기
 
     const handleChange = (e) => {
-        const {name, value} = e.target;// 변경된 요소의 'name' 과 'value' 속성을 추출함
+        const {name, value} = e.target;
 
-
-        setFormData((prevFormData) => ({
+        setNoticeFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
         }));
     };
 
-    // 글 공개 설정 변경하는 함수
-    // 공개 선택시 secret == 'P',
-    // 비공개 선택 시 secret === 'S' 로 변경하기
-    const handleRadioChange = (e) => {
-      const {name, value} = e.target;
-      setFormData((prevFormData) => ({
-          ...prevFormData,
-          [name]: value,
-      }));
+    const handleChangeFile = (event) => {
+        const selectedFile = event.target.files[0];
+        setFile(selectedFile);
+        setSelectedFileName(selectedFile.name);
+        setImgBase64([]);
 
+        if (selectedFile) {
+            let reader = new FileReader();
+            reader.readAsDataURL(selectedFile);
+            reader.onloadend = () => {
+                const base64 = reader.result;
+                console.log(base64);
+                if (base64) {
+                    let base64Sub = base64.toString();
+                    setImgBase64([base64Sub]);
+                }
+            };
+        }
     };
 
+    const handleDeleteFile = () => {
+        setFile(null);
+        setSelectedFileName("");
+        setImgBase64([]);
+    };
 
-    /*const moveToNoticeList = () => {
-      <Link to="/board/notice/" />
-    };*/
-
+    const moveToNoticeList = () => {
+        window.location.href = "/board/notice";
+    };
 
     const handleNoticeSubmit = async (e) => {
-        e.preventDefault();// 리로드 방지
-
+        e.preventDefault();
 
         try {
-            await axios.post('/board/writePost', formData, {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("boardWriteDTO", JSON.stringify(noticeFormData));
+
+            const response = await axios.post("/board/writePost", formData, {
                 headers: {
-                    Authorization: 'Bearer <your_access_token>',
-                }
+                    "Content-Type": "multipart/form-data",
+                },
             });
+
             console.log("NoticeWritePost_handleSubmit 성공 :D");
-            window.location.href = '/board/notice';
+            console.log("공지사항 : " + noticeFormData);
+            window.location.href = "/board/notice";
         } catch (error) {
             console.log("NoticeWritePost_handleSubmit axios 실패 :<");
-            console.log("글 작성자의 uNo 또는 uno: " +formData.uno);
+            console.log("글 작성자의 uNo 또는 uno: " + noticeFormData);
             console.log("NoticeWritePost_handleSubmit axios 에러: " + error);
-
         }
-
-    }
+    };
 
     return (
         <>
@@ -68,50 +91,134 @@ const NoticeWritePost = () => {
                 <div>
                     <div>
                         <div>
-                            <div className="title text-center mb-3">
-                                <h1>공지사항 글쓰기</h1>
+                            <div>
+                                <h2>공지사항 글쓰기</h2>
                                 <p>반갑습니다 운영자님, 공지사항을 적어주세요</p>
                             </div>
-                            <form onSubmit={handleNoticeSubmit} id="writeConn">
-                                <div>
-                                    <label htmlFor="uno">회원번호</label>
-                                    <input type="number" id="uno" name="uno" value={formData.uno}
-                                           onChange={handleChange} readOnly/>
-                                </div>
-                                <div>
-                                    <label htmlFor="write-input-title">제목</label>
-                                    <input type="text" id="write-input-title" name="title" value={formData.title}
-                                           placeholder="제목을 입력해주세요" onChange={handleChange} required/>
-                                </div>
-                                <div>
-                                    <label htmlFor="write-input-writer">작성자</label>
-                                    <input type="text" id="write-input-writer" name="name" value={formData.name}
-                                           onChange={handleChange} required/>
-                                </div>
-                                <div>
-                                    <label htmlFor="write-input-writer">공개설정</label>
-                                    <div>
-                                        <div className="secret-detail">
-                                            <input type="radio" name="secret" id="write-cs-open" value="P"
-                                                   className="radio" checked={formData.secret === 'P'}
-                                                   onChange={handleRadioChange} required/>
-                                            <label htmlFor="write-cs-open">공개</label>
-                                        </div>
-                                        <div className="secret-detail">
-                                            <input type="radio" name="secret" id="write-cs-close" value="S"
-                                                   className="radio" checked={formData.secret === 'S'}
-                                                   onChange={handleRadioChange}/>
-                                            <label htmlFor="write-cs-close">비공개</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <textarea name="content" placeholder="내용을 입력해주세요" value={formData.content}
-                                              onChange={handleChange} required/>
-                                </div>
 
-                                <div>
-                                    <button type="submit">작성하기</button>
+                            <form
+                                encType="multipart/form-data"
+                                onSubmit={handleNoticeSubmit}
+                                id="writeConn"
+                            >
+                                <table className={`${classes["write-table"]}`}>
+                                    <tbody className={`${classes["write-tbody"]}`}>
+                                    <tr>
+                                        <th>회원번호</th>
+                                        <td>
+                                            <div className={`${classes["write_table_input_wrap"]}`}>
+                                                <input
+                                                    type="number"
+                                                    id="uno"
+                                                    name="uno"
+                                                    value={noticeFormData.uno}
+                                                    onChange={handleChange}
+                                                    readOnly
+                                                />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            제목<span>*</span>
+                                        </th>
+                                        <td>
+                                            <div className={`${classes["write_table_input_wrap"]}`}>
+                                                <input
+                                                    type="text"
+                                                    className={`${classes["w800"]}`}
+                                                    id="write-input-title"
+                                                    name="title"
+                                                    value={noticeFormData.title}
+                                                    placeholder="제목을 입력해주세요.(255자 이내)"
+                                                    onChange={handleChange}
+                                                    required/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>작성자</th>
+                                        <td>
+                                            <div className={`${classes["write_table_input_wrap"]}`}>
+                                                <input
+                                                    type="text"
+                                                    id="write-input-writer"
+                                                    name="name"
+                                                    value={noticeFormData.name}
+                                                    onChange={handleChange}
+                                                    required/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>내용</th>
+                                        <td>
+                                            <div className={`${classes["write_table_input_wrap"]}`}>
+                          <textarea
+                              name="content"
+                              className={`${classes["ps-text-area"]}`}
+                              placeholder="내용을 입력해주세요.(2000자 이내)"
+                              value={noticeFormData.content}
+                              onChange={handleChange}
+                              required/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>첨부파일</th>
+                                        <td>
+                                            <div className={`${classes["write_table_input_wrap"]}`}>
+                                                <input
+                                                    id="showFileName"
+                                                    value={selectedFileName}
+                                                    readOnly/>
+                                                <label
+                                                    htmlFor="allFileName"
+                                                    className={`${classes["ps-label"]}`}
+                                                    type="file">
+                                                    찾아보기
+                                                </label>
+                                                <label
+                                                    htmlFor="delFileName"
+                                                    className={`${classes["ps-label"]}`}
+                                                    onClick={handleDeleteFile}>
+                                                    삭제
+                                                </label>
+                                                <input
+                                                    id="allFileName"
+                                                    className={`${classes["w400"]}}`}
+                                                    name="allFileName"
+                                                    type="file"
+                                                    onChange={handleChangeFile}
+                                                    style={{
+                                                        display: "none",
+                                                    }}
+                                                    accept=""
+                                                />
+                                                <div className="image-preview">
+                                                    {imgBase64.map((base64, index) => (
+                                                        <img
+                                                            key={index}
+                                                            src={base64}
+                                                            alt="Preview"
+                                                            style={{width: "100px", height: "100px"}}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div className={`${classes["write-button-container"]}`}>
+                                    <button className={`${classes["write-button"]}`} type="submit">
+                                        작성하기
+                                    </button>
+                                    <button
+                                        className={`${classes["write-button"]}`}
+                                        onClick={moveToNoticeList}>
+                                        돌아가기
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -120,6 +227,6 @@ const NoticeWritePost = () => {
             </section>
         </>
     );
-}
+};
 
 export default NoticeWritePost;
