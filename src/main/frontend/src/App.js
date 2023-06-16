@@ -37,6 +37,7 @@ import StageManagement from "./page/admin/StageManagement";
 import BoardManagement from "./page/admin/BoardManagement";
 import StageReport from "./component/UI/stage/StageReport";
 import AdminStageList from "./page/admin/AdminStageList";
+import AdminStageChart from "./page/admin/AdminStageChart";
 import AdminStageDetail from "./page/admin/AdminStageDetail";
 import Test from "./page/Test";
 import TestAdminAccountDetail from "./page/admin/TestAdminAccountDetail";
@@ -272,6 +273,10 @@ const App = () => {
             path: 'stage/list',
             element: <AdminStageList/>
           },
+            {
+              path: 'stage/Chart',
+              element: <AdminStageChart/>
+            },
           {
             path: 'stage/detail/:pfID',
             element: <AdminStageDetail/>

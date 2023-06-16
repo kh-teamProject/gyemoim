@@ -17,6 +17,16 @@
     </update>
 
 
+    <!--(현지)차트 데이터 가져오기  -->
+    <select id="getStageChart" resultType="com.team.gyemoim.dto.admin.AdminStageDetailDTO">
+        SELECT endDate, SUM(deposit) AS totalDeposit
+        FROM pf
+        WHERE startflag = '완료'
+        GROUP BY endDate
+        ORDER BY endDate
+    </select>
+
+
     <!--(유진) 스테이지 참여 회원정보 리스트 띄우기-->
   <select id="getStageMemList" resultType="com.team.gyemoim.dto.admin.AdminStageDetailDTO">
     select  p.pfID, p.pfName, p.pfentry, p.payment, p.deposit,p.interest,p.startFlag,p.pfRate
