@@ -331,3 +331,7 @@ table td {
   .warningMsg{
     color: red;
   }
+
+.selected {
+  background-color: red;
+}

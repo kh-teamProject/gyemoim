@@ -157,6 +157,7 @@
         JOIN PF p ON p.pfRate = i.pfRate
         WHERE p.deposit = i.deposit
         AND r.pfID = #{pfID}
+        AND p.pfID = #{pfID}
         AND uNo = #{uNo}
     </select>
 
@@ -251,10 +252,10 @@
         WHERE pfID = #{pfID}
     </select>
 
-    <!--(찬희)stageBalance - *번의 uPayment-->
+    <!--(찬희)stageBalance - *번의 uTotalReceipts-->
     <update id="stageBalanceMinus">
         UPDATE PF
-        SET stageBalance = stageBalance - deposit
+        SET stageBalance = stageBalance - #{uTotalReceipts}
         WHERE pfID = #{pfID}
     </update>
 
