@@ -95,13 +95,17 @@ const handleSendData = async () => {
 
   return (
     <>
-
+    <div>
       <h2>스테이지 리스트</h2>
-     <div  className={styles.slice2}>
-      <button onClick={handleSendData}>데이터 전송</button>
-     </div>
-      <div className={styles.slice}>
 
+    <div className={styles.width}>
+     <div  className={styles.head}>
+
+     <div  className={styles.slice2}>
+      <button onClick={handleSendData}>일괄처리</button>
+     </div>
+
+      <div className={styles.slice}>
         <select onChange={selectStartFlag} >
           <option value="전체">전체</option>
           <option value="대기중">대기중</option>
@@ -109,7 +113,9 @@ const handleSendData = async () => {
           <option value="완료">완료</option>
         </select>
       </div>
-      <div>
+      </div>
+
+      <div className={styles.width}>
         <table className={styles.table} style={{width: '100rem'}} >
         <colgroup>
         <col style={{width: '3%'}} />
@@ -175,7 +181,8 @@ const handleSendData = async () => {
           </button>
         ))}
       </div>
-
+      </div>
+    </div>
     </>
   );
 };

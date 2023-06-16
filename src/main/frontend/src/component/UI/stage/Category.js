@@ -12,21 +12,19 @@ const [isClicked, setIsClicked] = useState(false);
 
   };
 
-const buttonClassName = isClicked ? `${styles.buttonSmall4} ${styles.clicked}` : styles.buttonSmall4;
-
 
   return (
-    <label>
-
+  <>
       <input
-        type="button"
+        type="radio"
+        id={props.id}
         value={props.value}
         name={props.name}
         onClick={categoryHandler}
-        className={styles.buttonSmall4}
+        className={styles.button4}
       />
       {props.children}
-    </label>
+  </>
   );
 };
 

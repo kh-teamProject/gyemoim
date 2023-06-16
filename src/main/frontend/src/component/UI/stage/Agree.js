@@ -54,13 +54,13 @@ const Agree = () => {
 
 
         <div className={styles.flexD}>
-        <div className={styles.flex1}>
+        <div className={styles.flex6}>
         <div className={styles.box2}>
           <div className={styles.flex1}>
             <h3>{pfName} 스테이지 생성</h3>
           </div>
 
-          <div className={styles.flex1}>
+          <div className={styles.flex2}>
 
             <div className={styles.font}>
 
