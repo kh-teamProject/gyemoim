@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import ErrorModal from "../../component/UI/ErrorModal";
 import {Link} from "react-router-dom";
 import classes from '../css/StageList.modlue.css';
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import {useSelector} from "react-redux";
+import RecommendList from "../../component/UI/stage/RecommendList";
+import SalesPieChart from "../../component/UI/stage/SalesPieChart";
 
 const StageList = () => {
-  const [error, setError] = useState();
   // 계모임 값 뿌리기
   const [stage, setStage] = useState([]);
   // 약정금 버튼으로 스테이지 세팅하는 State
@@ -21,14 +21,7 @@ const StageList = () => {
   //페이징 가보자고~
   const [curPage, setCurPage] = useState(1); //현재페이지
   const [totalPage, setTotalPage] = useState(0); //전체 페이지 수
-  const [list, setList ] = useState(10);//현재 스테이지 수
-  const modalHandler = () => {
-    setError('Modal');
-  };
-
-  const errorHandler = () => {
-    setError(null);
-  };
+  const [list, setList] = useState(10);//현재 스테이지 수
 
   // 약정금 기반으로 조회하는 함수
   const handleButtonClick = (event) => {
@@ -45,7 +38,7 @@ const StageList = () => {
     setInterest(interest);
   };
   //관심사 목록기반으로 조회하는 함수
-  const selectInterest = (event) =>{
+  const selectInterest = (event) => {
     console.log(event.target.value);
     setInterest(event.target.value);
     setCurPage(1);
@@ -59,7 +52,7 @@ const StageList = () => {
     if (targetPage > 0 && targetPage <= totalPage) {
       //클릭한 타겟페이지가 0보다 크고 totalPage보다 작거나 같으면 -> 즉, 클릭한 페이지가 유효범위에 있을때
       setCurPage(targetPage); //현재페이지를 클릭페이지로 설정
-      setList(list+10);
+      setList(list + 10);
     }
   };
 
@@ -69,10 +62,8 @@ const StageList = () => {
   };
 
 
-
   useEffect(() => {
     // 버튼 클릭으로 스테이지 조회하는 구문
-  // console.log(token);
     if (deposit === '전체') {
       axios
         .get('/stagelist', {})
@@ -102,101 +93,53 @@ const StageList = () => {
         });
     }
     //추천테이블 작동 코드
-    if(checkedLogin){
-  //추천기능 변수와 state
-  const token = jwtDecode(Cookies.get('Set-Cookie'));
-  const uNo = token.uNo;
+    if (checkedLogin) {
+      //추천기능 변수와 state
+      const token = jwtDecode(Cookies.get('Set-Cookie'));
+      const uNo = token.uNo;
       axios
-        .get('/recommend',{
-          params : {
+        .get('/recommend', {
+          params: {
             uno: uNo
           },
         })
-        .then((res)=>{
+        .then((res) => {
           console.log(res.data);
           setRecommend(res.data);
         })
-        .catch((error)=>{
+        .catch((error) => {
           console.log(error);
         });
     }
-  },[deposit,checkedLogin] );
+  }, [deposit, checkedLogin]);
 
   //추천테이블 값 뿌리는 스테이트
   const [recommend, setRecommend] = useState([])
 
   return (
     <>
-      <div>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-        {checkedLogin && recommend
-          .reduce((acc,value) =>{
-            const index = acc.findIndex(item => item.pfID === value.pfID)
-            if(index === -1){
-              acc.push({
-                pfName: value.pfName,
-                pfID : value.pfID,
-                receiveTurn:[{turn:value.receiveTurn,uno: value.uno}],
-                deposit:value.deposit,
-                payment : value.payment ,
-                pfEntry : value.pfEntry ,
-                startFlag : value.startFlag,
-                interest:value.interest})
-              console.log((value.uno));
+      {/*로그인시 추천테이블*/}
+      <RecommendList recommend={recommend} formatNum={formatNum}/>
 
-            } else{
-              acc[index].receiveTurn.push({turn: value.receiveTurn, uno: value.uno})
-            }
-            return acc
-          },[])
-          .map((value,index)=>{
-          return(
-            <>
-              <div>
-              <div>
-              <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
-            <div id="select-deposit">
-              <h3 className="stage-h3">{value.pfName}</h3>
-              {value.interest}
-            </div>
-              <ul>
-                {[...Array(Number(value.pfEntry))].map((_,index) =>{
-                  const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index+1)
-                  const uno = receiveTurnIndex !== -1? value.receiveTurn[receiveTurnIndex].uno:null
-                  return(
-                    <li key={index} id="rec-turn">
-                      {/*{value.receiveTurn===index+1?"참": index+1}*/}
-                      {uno === null? index+1 : "참"}
-                    </li>
-                  )
-                })}
-              </ul>
-              <div id="stage-payInfo">
-                <p>약정금 :<strong>{formatNum(Number(value.deposit))}</strong> | 월 입금액 : <strong>{formatNum(Number(value.payment))}</strong></p>
-              </div>
-            </Link>
-              </div>
-              </div>
-              </>
-          )
-          })}
-          </div>
-      </div>
       <h1>스테이지 조회</h1>
       <div>
-        <button class={deposit==='전체'? 'btn-deposit':'sel-deposit'} onClick={handleButtonClick} value='전체'>전체</button>
-        <button class={deposit=== 70? 'btn-deposit':'sel-deposit'} onClick={handleButtonClick} value='70'>~70만원</button>
-        <button class={deposit=== 150? 'btn-deposit':'sel-deposit'} onClick={handleButtonClick} value='150'>100~150만원</button>
-        <button class={deposit=== 250? 'btn-deposit':'sel-deposit'} onClick={handleButtonClick} value='250'>200~250만원</button>
-        <button class={deposit=== 350? 'btn-deposit':'sel-deposit'} onClick={handleButtonClick} value='350'>280~350만원</button>
+        <button className={deposit === '전체' ? 'btn-deposit' : 'sel-deposit'} onClick={handleButtonClick} value='전체'>전체
+        </button>
+        <button className={Number(deposit) === 70 ? 'btn-deposit' : 'sel-deposit'} onClick={handleButtonClick} value='70'>~70만원
+        </button>
+        <button className={Number(deposit)  === 150 ? 'btn-deposit' : 'sel-deposit'} onClick={handleButtonClick}
+                value='150'>100~150만원
+        </button>
+        <button className={Number(deposit)  === 250 ? 'btn-deposit' : 'sel-deposit'} onClick={handleButtonClick}
+                value='250'>200~250만원
+        </button>
+        <button className={Number(deposit)  === 350 ? 'btn-deposit' : 'sel-deposit'} onClick={handleButtonClick}
+                value='350'>280~350만원
+        </button>
       </div>
 
       <div>
-        <select class='sel-int' onChange={selectInterest}>
+        <select className='sel-int' onChange={selectInterest}>
           <option value='관심사'>관심사</option>
           <option value='목돈'>목돈</option>
           <option value='여행'>여행</option>
@@ -209,132 +152,279 @@ const StageList = () => {
       </div>
 
 
-      <div class="stage-wrap">
-        <div class="stage">
+      <div className="stage-wrap">
+        <div className="stage">
           {stage.slice((curPage - 1) * list, curPage * list)
-                .reduce((acc,value) =>{
-                  const index = acc.findIndex(item => item.pfID === value.pfID)
-                  if(index === -1){
-                    acc.push({
-                      pfName: value.pfName,
-                      pfID : value.pfID,
-                      receiveTurn:[{turn:value.receiveTurn,uno: value.uno}],
-                      deposit:value.deposit,
-                      payment : value.payment ,
-                      pfEntry : value.pfEntry ,
-                      startFlag : value.startFlag,
-                      interest:value.interest})
-                    console.log((value.uno));
+            .reduce((acc, value) => {
+              const index = acc.findIndex(item => item.pfID === value.pfID)
+              if (index === -1) {
+                acc.push({
+                  pfName: value.pfName,
+                  pfID: value.pfID,
+                  receiveTurn: [{turn: value.receiveTurn, uno: value.uno}],
+                  deposit: value.deposit,
+                  payment: value.payment,
+                  pfEntry: value.pfEntry,
+                  startFlag: value.startFlag,
+                  interest: value.interest,
+                })
 
-                  } else{
-                    acc[index].receiveTurn.push({turn: value.receiveTurn, uno: value.uno})
-                  }
-                  return acc
-                },[])
-                .map((value, index) => {
-                  if(interest ==='관심사'){
-                    return(
-              <div key={index} >
-                {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
-                {value.startFlag ==='대기중'?(
-                <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
-                  <div id="select-deposit">
-                    <h3 class="stage-h3">{value.pfName}</h3>
-                      {value.interest}
-                  </div>
-
-                  <ul>
-                    {[...Array(Number(value.pfEntry))].map((_,index) =>{
-                      const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index+1)
-                      const uno = receiveTurnIndex !== -1? value.receiveTurn[receiveTurnIndex].uno:null
-                      return(
-                        <li key={index} id="rec-turn">
-                          {/*{value.receiveTurn===index+1?"참": index+1}*/}
-                          {uno === null? index+1 : "참"}
-                        </li>
-                      )
-                    })}
-                  </ul>
-
-                  <div id="stage-payInfo">
-                    <p>약정금 :<strong>{formatNum(Number(value.deposit))}</strong> | 월 입금액 : <strong>{formatNum(Number(value.payment))}</strong></p>
-                  </div>
-                </Link>
-                )
-                :
-                  // 대기중이 아닐때 보여지는 코드
-                  (<div class='stage-ing'>
-                    <div id="select-deposit">
-                      <h3 className="stage-h3">{value.pfName}</h3>
-                     {value.interest}
-                    </div>
-                    <div class ='all-attend'>
-                      <p>전원 참여</p>
-                      <p>스테이지 진행중입니다</p>
-                    </div>
-                    <div id="stage-payInfo">
-                      <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
-                    </div>
-                  </div>)}
-                {/*startFlag가 대기중일때만 Link동작하게 하는 코드 끝*/}
-              </div>)}
-                  else if(value.interest === interest){
-                    return(
-                      <div key={index} >
-                        {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
-                        {/*&& value.interest==={}*/}
-                        {value.startFlag ==='대기중'?(
-                            <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
-                              <div id="select-deposit">
-                                <h3 class="stage-h3">{value.pfName}</h3>
-                                {value.interest}
-                              </div>
-
-                              <ul>
-                                {[...Array(Number(value.pfEntry))].map((_,index) =>{
-                                  const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index+1)
-                                  const uno = receiveTurnIndex !== -1? value.receiveTurn[receiveTurnIndex].uno:null
-                                  return(
-                                    <li key={index} id="rec-turn">
-                                      {/*{value.receiveTurn===index+1?"참": index+1}*/}
-                                      {uno === null? index+1 : "참"}
-                                    </li>
-                                  )
-                                })}
-                              </ul>
-
-                              <div id="stage-payInfo">
-                                <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
-                              </div>
-                            </Link>
-                          )
-                          :
-                          // 대기중이 아닐때 보여지는 코드
-                          (<div class='stage-ing'>
+              } else {
+                acc[index].receiveTurn.push({turn: value.receiveTurn, uno: value.uno})
+              }
+              return acc
+            }, [])
+            .map((value, index) => {
+              //내가 참여한 스테이지를 클릭한 경우 찬희언니 페이지로 보내버려
+              if (checkedLogin) {
+                const token = jwtDecode(Cookies.get('Set-Cookie'));
+                const loggedInUno = token.uNo;
+                if (interest === '관심사') {
+                  return (
+                    <div key={index}>
+                      {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
+                      {value.startFlag === '대기중' ? (
+                          <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
                             <div id="select-deposit">
                               <h3 className="stage-h3">{value.pfName}</h3>
-                              {value.interest}
+                              <div className='speechImg'>
+                                <img src={require('../../component/assert/images/gyemoim_speech.png')} alt="speech"/>
+                                <span>{value.interest}</span>
+                              </div>
                             </div>
-                            <div class ='all-attend'>
-                              <p>전원 참여</p>
-                              <p>스테이지 진행중입니다</p>
+                            <ul className='stageListUl'>
+                              {[...Array(Number(value.pfEntry))].map((_, index) => {
+                                const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index + 1)
+                                const uno = receiveTurnIndex !== -1 ? value.receiveTurn[receiveTurnIndex].uno : null
+                                return (
+                                  <li key={index} id="rec-turn">
+                                    {[uno].includes(loggedInUno) ? (
+                                      <div onClick={() => window.location.href = `/stage/${value.pfID}`}
+                                           style={{cursor: 'pointer'}}>
+                                        {uno === null
+                                          ? index + 1
+                                          : <img src={require('../../component/images/egg002.png')} alt="egg"/>
+                                        }
+                                      </div>
+                                    ) : (
+                                      <span>{uno === null
+                                        ? index + 1
+                                        : <img src={require('../../component/images/egg002.png')} alt="egg"/>
+                                      }</span>
+                                    )}
+                                  </li>
+                                )
+                              })}
+                            </ul>
+                            <div id="stage-payInfo">
+                              <p>약정금 :<strong>{formatNum(Number(value.deposit))}</strong> | 월 입금액
+                                : <strong>{formatNum(Number(value.payment))}</strong></p>
+                            </div>
+                          </Link>)
+                        :
+                        // 대기중이 아닐때 보여지는 코드
+                        (
+                          <div className='stage-ing'>
+                            <div>
+                            <div id="select-deposit">
+                              <h3 classNameName="stage-h3">{value.pfName}</h3>
+                              <div className='speechImg'>
+                                <img src={require('../../component/assert/images/gyemoim_speech.png')} alt="speech"/>
+                                <span>{value.interest}</span>
+                              </div>
                             </div>
                             <div id="stage-payInfo">
                               <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
                             </div>
-                          </div>)}
-                        {/*startFlag가 대기중일때만 Link동작하게 하는 코드 끝*/}
-                      </div>)}
+                          </div>
+                            <div className='all-attend'>
+                              <p>전원 참여</p>
+                              <p>스테이지 진행중입니다</p>
+                            </div>
+                          </div>
+                        )}
+                      {/*startFlag가 대기중일때만 Link동작하게 하는 코드 끝*/}
+                    </div>)
+                } else if (value.interest === interest) {
+                  return (
+                    <div key={index}>
+                      {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
+                      {value.startFlag === '대기중' ? (
+                          <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
+                            <div id="select-deposit">
+                              <h3 className="stage-h3">{value.pfName}</h3>
+                              <div className='speechImg'>
+                                <img src={require('../../component/assert/images/gyemoim_speech.png')} alt="speech"/>
+                                <span>{value.interest}</span>
+                              </div>
+                            </div>
+
+                            <ul className='stageListUl'>
+                              {[...Array(Number(value.pfEntry))].map((_, index) => {
+                                const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index + 1)
+                                const uno = receiveTurnIndex !== -1 ? value.receiveTurn[receiveTurnIndex].uno : null
+                                return (
+                                  <li key={index} id="rec-turn">
+                                    {uno === null
+                                      ? index + 1
+                                      : <img src={require('../../component/images/egg002.png')} alt="egg"/>
+                                    }
+                                  </li>
+                                )
+                              })}
+                            </ul>
+
+                            <div id="stage-payInfo">
+                              <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                            </div>
+                          </Link>
+                        )
+                        :
+                        // 대기중이 아닐때 보여지는 코드
+                        (<div className='stage-ing'>
+                          <div id="select-deposit">
+                            <h3 className="stage-h3">{value.pfName}</h3>
+                            <div className='speechImg'>
+                              <img src={require('../../component/assert/images/gyemoim_speech.png')} alt="speech"/>
+                              <span>{value.interest}</span>
+                            </div>
+                          </div>
+                          <div className='all-attend'>
+                            <p>전원 참여</p>
+                            <p>스테이지 진행중입니다</p>
+                          </div>
+                          <div id="stage-payInfo">
+                            <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                          </div>
+                        </div>)}
+                      {/*startFlag가 대기중일때만 Link동작하게 하는 코드 끝*/}
+                    </div>)}
+                }
+              //로그인 안되었을경우
+              else {
+                if (interest === '관심사') {
+                  return (
+                    <div key={index}>
+                      {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
+                      {value.startFlag === '대기중' ? (
+                          <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
+                            <div id="select-deposit">
+                              <h3 className="stage-h3">{value.pfName}</h3>
+                              <div className='speechImg'>
+                                <img src={require('../../component/assert/images/gyemoim_speech.png')} alt="speech"/>
+                                <span>{value.interest}</span>
+                              </div>
+                            </div>
+                            <ul className='stageListUl'>
+                              {[...Array(Number(value.pfEntry))].map((_, index) => {
+                                const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index + 1)
+                                const uno = receiveTurnIndex !== -1 ? value.receiveTurn[receiveTurnIndex].uno : null
+                                return (
+                                  <li key={index} id="rec-turn">
+                                    {uno === null
+                                      ? index + 1
+                                      : <img src={require('../../component/images/egg002.png')} alt="egg"/>
+                                    }
+                                  </li>
+                                )
+                              })}
+                            </ul>
+                            <div id="stage-payInfo">
+                              <p>약정금 :<strong>{formatNum(Number(value.deposit))}</strong> | 월 입금액
+                                : <strong>{formatNum(Number(value.payment))}</strong></p>
+                            </div>
+                          </Link>
+                        )
+                        :
+                        // 대기중이 아닐때 보여지는 코드
+                        (<div className='stage-ing'>
+                          <div id="select-deposit">
+                            <h3 className='stage-h3'>{value.pfName}</h3>
+                            <div className='speechImg'>
+                              <img src={require('../../component/assert/images/gyemoim_speech.png')} alt="speech"/>
+                              <span>{value.interest}</span>
+                            </div>
+                          </div>
+                          <div className='all-attend'>
+                            <p>전원 참여</p>
+                            <p>스테이지 진행중입니다</p>
+                          </div>
+                          <div id="stage-payInfo">
+                            <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                          </div>
+                        </div>)}
+                      {/*startFlag가 대기중일때만 Link동작하게 하는 코드 끝*/}
+                    </div>)
+                } else if (value.interest === interest) {
+                  return (
+                    <div key={index}>
+                      {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
+                      {value.startFlag === '대기중' ? (
+                          <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
+                            <div id="select-deposit">
+                              <h3 className="stage-h3">{value.pfName}</h3>
+                              <div className='speechImg'>
+                                <img src={require('../../component/assert/images/gyemoim_speech.png')} alt="speech"/>
+                                <span>{value.interest}</span>
+                              </div>
+                            </div>
+
+                            <ul className='stageListUl'>
+                              {[...Array(Number(value.pfEntry))].map((_, index) => {
+                                const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index + 1)
+                                const uno = receiveTurnIndex !== -1 ? value.receiveTurn[receiveTurnIndex].uno : null
+                                return (
+                                  <li key={index} id="rec-turn">
+                                    {uno === null
+                                      ? index + 1
+                                      : <img src={require('../../component/images/egg002.png')} alt="egg"/>
+                                    }
+                                  </li>
+                                )
+                              })}
+                            </ul>
+
+                            <div id="stage-payInfo">
+                              <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                            </div>
+                          </Link>
+                        )
+                        :
+                        // 대기중이 아닐때 보여지는 코드
+                        (<div className='stage-ing'>
+                          <div id="select-deposit">
+                            <h3 className="stage-h3">{value.pfName}</h3>
+                            <div className='speechImg'>
+                              <img src={require('../../component/assert/images/gyemoim_speech.png')} alt="speech"/>
+                              <span>{value.interest}</span>
+                            </div>
+                          </div>
+                          <div className='all-attend'>
+                            <p>전원 참여</p>
+                            <p>스테이지 진행중입니다</p>
+                          </div>
+                          <div id="stage-payInfo">
+                            <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                          </div>
+                        </div>)}
+                      {/*startFlag가 대기중일때만 Link동작하게 하는 코드 끝*/}
+                    </div>)
+                }
+
+              }
+
           })}
         </div>
-        <p class='more-stage'>
-           <button class='more-stage-btn' onClick={() => handlePageClick({target: {value: curPage}})}> 스테이지 더보기 </button>
+      <SalesPieChart/>
+        <p className='more-stage'>
+          <button className='more-stage-btn' onClick={() => handlePageClick({target: {value: curPage}})}> 스테이지 더보기
+          </button>
         </p>
       </div>
 
     </>
-  );}
-
+  );
+}
 
 
 export default StageList;

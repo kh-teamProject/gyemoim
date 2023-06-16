@@ -13,7 +13,8 @@
              roll.receiveTurn,
              roll.uno
       FROM pf
-             JOIN roll ON PF.PFID = roll.PFID
+      JOIN roll ON PF.PFID = roll.PFID
+      WHERE pf.startFlag NOT LIKE'%완료%'
     </select>
 
     <!--(유진)deposit에 따라 값 달리 가져오기.-->
