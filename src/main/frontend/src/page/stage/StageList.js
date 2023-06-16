@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import {useSelector} from "react-redux";
 import RecommendList from "../../component/UI/stage/RecommendList";
+import SalesPieChart from "../../component/UI/stage/SalesPieChart";
 
 const StageList = () => {
   // 계모임 값 뿌리기
@@ -414,6 +415,7 @@ const StageList = () => {
 
           })}
         </div>
+      <SalesPieChart/>
         <p className='more-stage'>
           <button className='more-stage-btn' onClick={() => handlePageClick({target: {value: curPage}})}> 스테이지 더보기
           </button>
