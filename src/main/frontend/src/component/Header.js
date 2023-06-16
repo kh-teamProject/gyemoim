@@ -1,8 +1,9 @@
+import {useEffect} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
-import {useEffect} from "react";
+
 import logo from "./assert/images/logo0306.png";
 import "./css/Header.module.css";
 
@@ -11,24 +12,22 @@ const Header = () => {
   const dispatch = useDispatch();
   const checkedLogin = useSelector((state) => state.checkedLogin);
 
-  const handleLogout = async () => {
-    try {
-      await axios.post("/api/logout").then((res) => {
-        Cookies.remove("Set-Cookie");
-        dispatch({type: "logout"});
-        navigate("/");
-      });
-    } catch (error) {
-      console.log("로그아웃 에러: " + error);
-    }
-  };
+    const handleLogout = async () => {
+        try {
+            await axios.post("/api/logout").then((res) => {
+                Cookies.remove("Set-Cookie");
+                dispatch({ type: "logout" });
+                window.location.href = '/';
+            });
+        } catch (error) {
+            console.log("로그아웃 에러: " + error);
+        }
+    };
 
-  useEffect(() => {
-    // Check login status on page load
-    if (checkedLogin) {
-      // Perform a request to validate the login status, if needed
-    }
-  }, [checkedLogin]);
+    useEffect(() => {
+        if (checkedLogin) {
+        }
+    }, [checkedLogin]);
 
   return (
     <header>

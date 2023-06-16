@@ -1,8 +1,10 @@
-import {useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
-import Card from "./UI/Card";
+import Cookies from "js-cookie";
+import {useDispatch} from "react-redux";
 
+import Card from "./UI/Card";
 import classes from "../page/css/MyPageModify.module.css";
 
 const MemberInfo = () => {
@@ -19,6 +21,8 @@ const MemberInfo = () => {
     culturalCost: '',
     etx: ''
   });
+  const dispatch = useDispatch();
+
   const [expenditure, setExpenditure] = useState({
     medicalCost: '',
     housingCost: '',
@@ -27,6 +31,7 @@ const MemberInfo = () => {
     etx: ''
   });
   const [enrollDate, setEnrollDate] = useState('');
+  const checkedAdmin = useState(location.pathname.includes('admin'));
 
   useEffect(() => {
     axios.get('/mypage', {
@@ -35,6 +40,7 @@ const MemberInfo = () => {
       }
     })
       .then((res) => {
+        console.log(res.data);
         const date = new Date(res.data.enrollDate);
         const [year, month, day] = [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')];
         setMyInfo(res.data);
@@ -81,13 +87,23 @@ const MemberInfo = () => {
       ...expenditure,
     })
       .then((res) => {
-        alert('회원정보 수정이 완료되었습니다.');
+        alert('회원정보 수정이 완료되었습니다. 다시 로그인 해주세요.');
         navigate('/');
       })
       .catch((error) => {
         console.log(error);
+      });
+
+    axios.post("/api/logout")
+      .then((res) => {
+        Cookies.remove("Set-Cookie");
+        dispatch({ type: "logout" });
+        window.location.href = '/';
       })
-  }
+      .catch((error) => {
+        console.log("로그아웃 에러: " + error);
+      });
+  };
 
   return (
     <div>

@@ -30,6 +30,10 @@ public class AccountController {
   // Read
   @GetMapping("/mypage")
   public HashMap<String, Object> getMyInfo(@RequestParam Integer uNo) {
+    System.out.println("uNo = " + uNo);
+    System.out.println("mypageController");
+    System.out.println(accountService.getMyInfo(uNo));
+    System.out.println("aaaaaaaaaaaaaaaaaaaaa");
     return accountService.getMyInfo(uNo);
   }
 

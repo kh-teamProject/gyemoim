@@ -1,5 +1,5 @@
-import React from "react";
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import NoticeList from "./page/board/NoticeList";
 import QuestionWritePost from './page/board/QuestionWritePost';
 import QuestionDetail from "./page/board/QuestionDetail";
@@ -49,8 +49,29 @@ import RecommendedStage from "./page/account/RecommendedStage";
 import StageWait from "./page/account/StageWait";
 import StageParticipatin from "./page/account/StageParticipatin";
 import StageComplete from "./page/account/StageComplete";
+import jwtDecode from "jwt-decode";
+import Cookies from "js-cookie";
 
 const App = () => {
+
+    const cookie = Cookies.get('Set-Cookie');
+    const [myInfo, setMyInfo] = useState({uNo: 0});
+
+    useEffect(() => {
+      if (Cookies.get('Set-Cookie')) {
+        const token = Cookies.get('Set-Cookie');
+        setMyInfo({
+          uNo: jwtDecode(token).uNo,
+          name: jwtDecode(token).name,
+          userRole: jwtDecode(token).userRole[0]
+
+        });
+        console.log(jwtDecode(token).userRole[0]);
+      } else {
+
+      }
+    }, [myInfo.uNo, myInfo.userRole]);
+
     const router = createBrowserRouter([
       {
         path: '/',
@@ -78,7 +99,8 @@ const App = () => {
           },
           {
             path: 'mypage',
-            element: <MyPageRootLayout/>,
+            element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' || jwtDecode(cookie).userRole[0] === '가회원' ?
+              <MyPageRootLayout/> : <Navigate to="/"/>) : <Navigate to="/"/>,
             children: [
               {
                 path: 'info',
@@ -141,6 +163,8 @@ const App = () => {
             path: 'stage/:pfID',
             element: <Stage/>
           },
+
+          // 권한 상관 x
           {
             path: '/stageSelect',
             element: <StageSelect/>
@@ -149,38 +173,51 @@ const App = () => {
             path: 'stagelist',
             element: <StageList/>
           },
+          //
+
           {
             path: 'test/:pfID',
-            element: <Test/>
+            element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' ?
+              <Test/> : <Navigate to="/"/>) : <Navigate to="/"/>
           },
           {
             path: '/stageCreate',
-            element: <StageCreate/>
+            element: cookie ? (jwtDecode(cookie).userRole[0] !== '가회원' ? <StageCreate/> : <Navigate to="/"/>) :
+              <Navigate to="/"/>
           },
           {
             path: 'ChanHeeTest',
-            element: <ChanHeeTest/>
+            element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' ?
+              <ChanHeeTest/> : <Navigate to="/"/>) : <Navigate to="/"/>
           },
           {
             path: '/stageAgree/:pfID',
-            element: <StagePartIn/>
+            element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' ?
+              <StagePartIn/> : <Navigate to="/"/>) : <Navigate to="/"/>
+          },
+
+          // 권한 상관 x
+          {
+            path: 'board/notice',
+            element: <NoticeList/>
           },
           {
+            path: 'board/notice/detail/:bid',
+            element: <NoticeDetail/>
+          },
+          //
+
+          {
             path: 'board',
-            element: <BoardRootLayout/>,
+            element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' || jwtDecode(cookie).userRole[0] === '가회원' ?
+              <BoardRootLayout/> : <Navigate to="/"/>) : <Navigate to="/"/>,
             children: [
-              {
-                path: 'notice',
-                element: <NoticeList/>
-              },
+
               {
                 path: 'notice/write',
                 element: <NoticeWritePost/>
               },
-              {
-                path: 'notice/detail/:bid',
-                element: <NoticeDetail/>
-              },
+
               {
                 path: 'notice/modify/:bid',
                 element: <NoticeModify/>
@@ -207,7 +244,9 @@ const App = () => {
       },
       {
         path: '/admin',
-        element: <AdminRoot/>,
+        element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' ? <AdminRoot/> : <Navigate to="/"/>) :
+          <Navigate to="/"/>,
+        // element: <AdminRoot/>,
         children: [
           {
             index: true,
@@ -249,7 +288,9 @@ const App = () => {
       },
       {
         path: 'StageReport/:pfID',
-        element: <StageReport/>
+        element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' ?
+          <StageReport/> :
+          <Navigate to="/"/>) : <Navigate to="/"/>
       }
     ]);
 

@@ -6,15 +6,15 @@ import axios from "axios";
 const InterestChart = () => {
   const [interest, setInterest] = useState([
     {
-      count: 0,
-      interest: '여행'
+      COUNT: 0,
+      INTEREST: '여행'
     },
     {
-      count: 0,
-      interest: '전자제품'
+      COUNT: 0,
+      INTEREST: '전자제품'
     },
     {
-      count: 0,
+      COUNT: 0,
       INTEREST: '없음'
     },
     {
@@ -42,6 +42,7 @@ const InterestChart = () => {
   useEffect(() => {
     axios.get('/getInterest')
       .then((res) => {
+        console.log(res)
         setInterest(res.data);
       })
       .catch((error) => {

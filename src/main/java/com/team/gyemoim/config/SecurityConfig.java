@@ -56,10 +56,8 @@ public class SecurityConfig {
                 .logoutSuccessHandler((request, response, authentication) -> {
                     // 로그아웃 성공 시 처리할 로직 작성
                     String token = jwtProvider.resolveToken(request);
-                    System.out.println("로그아웃 위한 토큰 가져 왔니?  " + token);
                     jwtProvider.addToBlacklist(token); // 토큰을 블랙리스트에 추가하여 로그아웃 처리
                     response.setStatus(HttpServletResponse.SC_OK);
-                    System.out.println("성공한건가?");
                 })
 
                 .and()
@@ -74,8 +72,6 @@ public class SecurityConfig {
 
                 .and()
                 .addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class); // Email, Password 검사 전에 jwt 필터 먼저 수행
-
-
 
         return http.build();
     }

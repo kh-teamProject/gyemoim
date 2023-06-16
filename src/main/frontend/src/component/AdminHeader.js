@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
 import classes from './css/AdminHeader.module.css';
+import jwtDecode from "jwt-decode";
 
 const AdminHeader = () => {
   const dispatch = useDispatch();
@@ -15,12 +16,15 @@ const AdminHeader = () => {
     navigate("/");
   }
 
+  const token = Cookies.get('Set-Cookie');
+  const name = jwtDecode(token).name;
+
   return (
     <>
       <header className={`${classes['adminHeader-wrap']}`}>
         <div>
-          <p>민재홍(관리자)</p>
-          <span onClick={logoutHandler} style={{cursor: 'pointer'}}><FaSignOutAlt /></span>
+          <p>{name}(관리자)</p>
+          <span><FaSignOutAlt /></span>
         </div>
       </header>
     </>

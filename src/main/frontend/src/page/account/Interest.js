@@ -1,18 +1,17 @@
 import {useEffect, useState} from "react";
 import {NavLink, useLocation} from "react-router-dom";
 import {FaMoneyBillAlt, FaAvianex, FaApple, FaTshirt, FaCarAlt, FaBirthdayCake, FaHiking} from 'react-icons/fa';
-
-import MyPageSidebar from "../../component/MyPageSidebar";
-import classes from '../css/Interest.module.css';
 import axios from "axios";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 
+import MyPageSidebar from "../../component/MyPageSidebar";
+import classes from '../css/Interest.module.css';
+
 const Interest = () => {
   const location = useLocation();
-
-  const token = Cookies.get('Set-Cookie');
-  const uNo = jwtDecode(token).uNo;
+  const token = jwtDecode(Cookies.get('Set-Cookie'));
+  const uNo = token.uNo;
 
   const [checkedInterest, setCheckedInterest] = useState('');
 
