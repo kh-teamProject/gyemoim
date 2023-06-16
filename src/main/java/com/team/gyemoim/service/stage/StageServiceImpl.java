@@ -4,6 +4,7 @@ package com.team.gyemoim.service.stage;
 import com.team.gyemoim.dto.stage.*;
 import com.team.gyemoim.mapper.StageMapper;
 import com.team.gyemoim.vo.MemberVO;
+import com.team.gyemoim.vo.RollVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -230,17 +230,34 @@ public class StageServiceImpl implements StageService {
     return stageMapper.getMemberInfo(dto);
   }
 
-  // (지연)선택한 계모임 정보 가져오기
+
+  //(지연)선택한 계모임 정보 가져오기
+  //(지연)스테이지에 관한 PfInfo
   @Override
-  public HashMap<String, Object> getStageSelect(Integer pfID) {
-    System.out.println("getStageSelect Service...");
-    return stageMapper.getStageSelect(pfID);
-  }
+  public List<StageSelectDTO> getPfInfo(Integer pfID) { return stageMapper.getPfInfo(pfID);}
+
+  //(지연)계모임 장 Roll 가져오기
+  @Override
+  public List<RollDTO> getStageSelectRoll(RollDTO dto) {return stageMapper.getStageSelectRoll(dto);}
+
 
   // (지연)수령예정표 가져오기
   @Override
-  public List<ReceiptDTO> getReceipt(BigDecimal pfRate) {
-    System.out.println("getReceipt Service...");
-    return stageMapper.getReceipt(pfRate);
+  public List<PfDTO> getReceipt(Integer pfID) {
+    return stageMapper.getReceipt(pfID);
   }
+
+  // (지연)개인 수령예정표 가져오기
+//  @Override
+//  public List<PartiReceiptDTO> getOneReceipt(Integer pfID) {
+//    return stageMapper.getOneReceipt(pfID);
+//  }
+
+  // (지연)참여 순번 가져오기
+  public List<PartiListDTO> getParti(PartiListDTO dto) {
+    return stageMapper.getParti(dto);
+  }
+
+  public List<RollVO> getPartRoll(RollVO vo) { return stageMapper.getPartRoll(vo);}
+  public List<PartiListDTO> getTurnRoll(PartiListDTO dto) { return stageMapper.getTurnRoll(dto);}
 }

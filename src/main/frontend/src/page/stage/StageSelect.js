@@ -1,37 +1,63 @@
-//import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {Link, useLocation} from "react-router-dom";
 import Receipt from "../../component/UI/stage/Receipt"
 import ReceiptTurn from "../../component/UI/stage/ReceiptTurn"
 import classes from "../css/StageSelect.module.css";
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
-const Sidebar = (props) => {
+const Sidebar = () => {
 
-  const [stageData, setStageData] = useState(null);
-  const [error, setError] = useState(null);
+  const [pf, setPf] = useState([]);
+  const [pfData, setPfData] = useState([]);
+  const [roll, setRoll] = useState([]);
+  const [rollData, setRollData] = useState([]);
 
-  const { pfID } = props;
+  const location = useLocation();
+  const pfIDNum = location.pathname.split('/');
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get('/stageSelect?pfID=1');
-        setStageData(response.data);
-      } catch (error) {
-        setError(error);
+    console.log(pfIDNum);
+    const pfID = pfIDNum[pfIDNum.length - 1];
+
+    axios.get('/stageSelect', {
+      params: {
+        pfID: pfID
       }
-    }
-    fetchData();
-  }, [pfID]);
+    })
+      .then((res) => {
+        console.log(res.data.pf);
+        setPf(res.data.pf);
+        console.log(res.data.roll);
+        setRoll(res.data.roll);
 
-  console.log(stageData);
+        const pfNameList = res.data.pf.map((item) => item.pfName);
+        const paymentList = res.data.pf.map((item) => item.payment);
+        const depositList = res.data.pf.map((item) => item.deposit);
+        const pfRateList = res.data.pf.map((item) => item.pfRate);
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!stageData) {
-    return <div>Loading...</div>;
-  } else {
-  }
+        const pfData = {
+          pfID: pfID,
+          pfName: pfNameList.join(''),
+          payment: paymentList.join(''),
+          deposit: depositList.join(''),
+          pfRate: pfRateList.join('')
+        };
+        setPfData(pfData);
+
+
+        const unoList = res.data.roll.map((item) => item.uno);
+
+        const rollData = {
+          uno: unoList.join('')
+        };
+        setRollData(rollData);
+
+        })
+        .catch((error)=>{
+          console.log(error);
+        });
+
+  }, []);
 
   const handleJoin = () => {
     // Handle the logic for joining here
@@ -45,18 +71,19 @@ const Sidebar = (props) => {
     <>
       <div className="Sidebar">
         <div className={classes.sidebar}>
-          <h1>{stageData.pfName}</h1>
+         <div style={{ marginTop: '20px' }}>
+         </div>
           <div className="eachId">
             <div className={classes.eachId}>
               <span className="categoryName"></span>
-              <span id="stageCode">{stageData.PFID}</span>
+              <span id="stageCode">{pfData.pfID}</span>
               <span id="openYn">공개</span>
             </div>
           </div>
           <div className="user">
             <div className={classes.stageInfoCardTop}>
-              <span id="createUser" style={{ color: '#FFFFFF' }}>{stageData.PFMASTER}</span>
-              <h4 id="stageTitle">{stageData.PFNAME}</h4>
+              <span id="createUser" style={{ color: '#FFFFFF' }}>{rollData.uno}</span>
+              <h4 id="stageTitle">{pfData.pfName}</h4>
             </div>
           </div>
           <div className="stageInfoCont">
@@ -64,7 +91,7 @@ const Sidebar = (props) => {
               <div className="price">
                 <div className={classes.price}>
                   약정금:
-                  <span id="totalMonet">{stageData.DEPOSIT}</span>
+                  <span id="totalMonet"> {pfData.deposit}</span>
                   원
                 </div>
               </div>
@@ -73,22 +100,69 @@ const Sidebar = (props) => {
           <div className="priceDetail">
             <div className={classes.priceDetail}>
               월
-              <span id="stageMoney">{stageData.PAYMENT}</span>
+              <span id="stageMoney"> {pfData.payment}</span>
               원
             </div>
-            <div className={classes.priceDetail}>
-              <span id="stageRateTitle1">이율(세후)</span>
+            <div className={classes.priceDetailed}>
+              <span id="stageRateTitle1">이율(세후) </span>
               Up to
-              <span id="stageRate">{stageData.PFRATE}%</span>
+              <span id="stageRate">{pfData.pfRate}%</span>
             </div>
           </div>
           <div className="stageInfoCardBtn">
             <div className={classes.stageInfoCardBtn}>
               <div>
-                <button onClick={handleJoin} className="button">참여하기</button>
-              </div>
-              <div>
-                <button onClick={handleUse} className="button">이용하기</button>
+              <button
+                onClick={handleJoin}
+                className="button-pa"
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  color: '#4169E1',
+                  border: '1px solid #FFFFFF',
+                  height: '46px',
+                  fontSize: '16px',
+                  width: '70%',
+                  fontWeight: 'bold',
+                  margin: '10px 0',
+                  transition: 'background-color 0.3s, color 0.3s',
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#FFFFFF';
+                  e.target.style.color = '#4169E1';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = '#FFFFFF';
+                  e.target.style.color = '#4169E1';
+                }}
+              >
+                참여하기
+              </button>
+
+              <button
+                onClick={handleUse}
+                className="button-use"
+                style={{
+                  backgroundColor: '#4169E1',
+                  color: '#FFFFFF',
+                  border: '1px solid #FFFFFF', // 흰색 테두리
+                  height: '46px',
+                  fontSize: '16px',
+                  width: '70%',
+                  fontWeight: 'bold',
+                  margin: '1px 0',
+                  transition: 'background-color 0.3s', // 부드러운 트랜지션 효과
+                }}
+              onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#FFFFFF';
+                  e.target.style.color = '#4169E1';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = '#4169E1';
+                  e.target.style.color = '#FFFFFF';
+                }}
+              >
+                이용하기
+              </button>
               </div>
             </div>
           </div>
@@ -116,6 +190,7 @@ const Select = () => {
                 <div className="receiptParti">
                   <ReceiptTurn/>
                 </div>
+                <div style={{ marginTop: '30px' }}></div>
                 <div className = "receiptArea">
                   <Receipt/>
                 </div>
@@ -131,3 +206,4 @@ const Select = () => {
 
 
 export default Select;
+

@@ -2,16 +2,13 @@ package com.team.gyemoim.service.stage;
 
 
 import com.team.gyemoim.dto.stage.StageListDTO;
-import com.team.gyemoim.vo.RollVO;
 
 import com.team.gyemoim.dto.stage.*;
 
 import com.team.gyemoim.vo.MemberVO;
+import com.team.gyemoim.vo.RollVO;
 
 
-
-import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -66,10 +63,24 @@ public interface StageService {
  //(찬희) 수익보고서 user 정보 갖고오기
  List<MemberVO> getMemberInfo(StageRollDTO dto);
 
-
  // (지연)선택한 계모임 정보 가져오기
- HashMap<String, Object> getStageSelect(Integer pfID);
+ //(지연)스테이지에 관한 PfInfo
+ List<StageSelectDTO> getPfInfo(Integer pfID);
+
+ //(지연)개인 Roll 정보 갖고오기
+ List<RollDTO> getStageSelectRoll(RollDTO dto);
 
  // (지연)수령예정표 가져오기
- List<ReceiptDTO> getReceipt(BigDecimal pfRate);
+ List<PfDTO> getReceipt(Integer pfID);
+
+ // (지연)개인 수령예정표 가져오기
+// List<PartiReceiptDTO>getOneReceipt(Integer pfID);
+
+// (지연)참여 순번 가져오기
+List<PartiListDTO> getParti(PartiListDTO dto);
+
+List<RollVO> getPartRoll(RollVO vo);
+List<PartiListDTO> getTurnRoll(PartiListDTO dto);
+
 }
+

@@ -115,16 +115,16 @@ const App = () => {
           element: <Stage/>
         },
         {
-           path: '/stageSelect',
-           element: <StageSelect />
-        },
-        {
           path: 'stagelist',
           element: <StageList/>
         },
         {
           path: 'test/:pfID',
           element: <Test/>
+        },
+        {
+          path: '/stageSelect/:pfID',
+          element: <StageSelect/>
         },
         {
           path: '/stageCreate',
