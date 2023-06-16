@@ -23,7 +23,7 @@ const ExpenditureChart = () => {
         console.error(error);
       });
   }, []);
-  console.log(expenditure)
+
   ChartJS.register(ArcElement, Tooltip, Legend);
   const data = {
     labels: ['문화비', '식비', '주거비', '의료비', '기타'],

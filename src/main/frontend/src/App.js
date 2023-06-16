@@ -68,7 +68,6 @@ const App = () => {
           userRole: jwtDecode(token).userRole[0]
 
         });
-        console.log(jwtDecode(token).userRole[0]);
       } else {
 
       }

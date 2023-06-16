@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {ArcElement, Chart as ChartJS, Legend, Tooltip} from "chart.js";
-import {Pie} from "react-chartjs-2";
+import { useEffect, useState } from "react";
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import { Pie } from "react-chartjs-2";
 import axios from "axios";
 
 const InterestChart = () => {
@@ -43,13 +43,14 @@ const InterestChart = () => {
     axios.get('/getInterest')
       .then((res) => {
         const dbData = res.data;
-        dbData.forEach((item) => {
-          interest.map((value, index) => {
-            if(interest[index].INTEREST === item.INTEREST) {
-              return interest[index.COUNT] += item.COUNT;
-            }
-          });
-        })
+        const updatedInterest = interest.map((value) => {
+          const dbItem = dbData.find(item => item.INTEREST === value.INTEREST);
+          if (dbItem) {
+            return { ...value, COUNT: value.COUNT + dbItem.COUNT };
+          }
+          return value;
+        });
+        setInterest(updatedInterest);
       })
       .catch((error) => {
         console.error(error);
@@ -89,7 +90,7 @@ const InterestChart = () => {
   }
 
   return (
-    <Pie data={data}/>
+    <Pie data={data} />
   );
 };
 
