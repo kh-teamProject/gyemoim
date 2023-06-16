@@ -29,12 +29,11 @@ spring:
 jwt:
   header: Gyemoim
   secret: GyemoimChickenMumani
-  token-validity-in-seconds: 1800000  # 30분
+  token-validity-in-seconds: 1800   #30분
 
 
 mybatis:
   mapper-locations: classpath:mapper/**.xml
 
 upload:
-    path: /Users/minjaehong/gyemoim/upload
-
+    path: C:/gyemoim/upload

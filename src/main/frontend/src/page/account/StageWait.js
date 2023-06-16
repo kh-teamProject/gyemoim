@@ -1,8 +1,8 @@
 import {NavLink} from "react-router-dom";
 
 import MyPageSidebar from "../../component/MyPageSidebar";
-import egg from "../../component/images/egg002.png"
 import classes from "../css/MyStage.module.css";
+import Stage from "../../component/Stage";
 
 const StageWait = () => {
   return (
@@ -41,58 +41,11 @@ const StageWait = () => {
         </div>
         <h3>현재 참여중인 스테이지</h3>
         <div className={`${classes['stage-wrap']}`}>
-          <div className={classes.stage}>
-            <h4>따끈한 자본 만들기!!</h4>
-            <ul>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-              <li>2</li>
-              <li>3</li>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-              <li>5</li>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-            </ul>
-            <p>이율(세후)9.81% <span>|</span> 약정금 520만원</p>
-          </div>
-          <div className={classes.stage}>
-            <h4>따끈한 자본 만들기!!</h4>
-            <ul>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-              <li>2</li>
-              <li>3</li>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-              <li>5</li>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-            </ul>
-            <p>이율(세후)9.81% <span>|</span> 약정금 520만원</p>
-          </div>
-          <div className={classes.stage}>
-            <h4>따끈한 자본 만들기!!</h4>
-            <ul>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-              <li>2</li>
-              <li>3</li>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-              <li>5</li>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-            </ul>
-            <p>이율(세후)9.81% <span>|</span> 약정금 520만원</p>
-          </div>
-          <div className={classes.stage}>
-            <h4>따끈한 자본 만들기!!</h4>
-            <ul>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-              <li>2</li>
-              <li>3</li>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-              <li>5</li>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-              <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-            </ul>
-            <p>이율(세후)9.81% <span>|</span> 약정금 520만원</p>
-          </div>
+          <Stage />
+          <Stage />
+          <Stage />
+          <Stage />
+          <Stage />
         </div>
       </div>
     </section>

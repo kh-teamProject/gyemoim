@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import ReplyWrite from "../../component/ReplyWrite";
 import ReplyList from "../../component/ReplyList";
+import classes from "../css/board/BoardDetail.module.css";
 
 const QuestionDetail = () => {
 
@@ -14,6 +15,7 @@ const QuestionDetail = () => {
     const token = jwtDecode(Cookies.get('Set-Cookie'));
     const uNo = token.uNo;
     const name = token.name;
+    const userRole = token.userRole;
 
     // 파라미터 가져오기
     const {bid} = useParams();
@@ -48,7 +50,7 @@ const QuestionDetail = () => {
 
     // 1:1 문의사항 목록으로 이동하는 함수
     const moveToQuestionList = (e) => {
-        window.location.href = "/board/question";
+        navigate("/board/question");
     }
 
     // 글 수정 페이지로 이동하는 함수
@@ -56,13 +58,13 @@ const QuestionDetail = () => {
         await axios.get("/board/modify", {params: {bid: bid}})
             .then((response) => {
                 console.log("QuestionDetail.moveToQuestionModify 문의사항 수정 페이지로 이동 :D");
+                navigate(`/board/question/modify/${bid}`);
             })
             .catch((error) => {
                 console.log("QuestionDetail.moveToQuestionModify 문의사항 수정 페이지 이동 안됨 :<");
                 console.log("문의사항 에러: " + error);
 
             })
-        window.location.href = `/board/question/modify/${bid}`;
     };
 
 
@@ -123,87 +125,79 @@ const QuestionDetail = () => {
 
     return (
         <>
-            <section>
-                <div>
-                    <div>
-                        <div>
-                            <div className="title">
-                                <h1>1:1 문의사항</h1>
-                                <p>문의사항 세부내용</p>
-                            </div>
-                            <div>
+            <div className={`${classes['detail-content']}`}>
+                <div className={`${classes['common_inner_sub']}`}>
+                    <div className={`${classes['evt_detail_ttl']}`}>
+                        <h2>고객 문의사항</h2>
+                        <p>여러분들의 궁금증을 해결해드립니다.</p>
+                    </div>
+                    <div className={`${classes['evt_detail_wrap']}`}>
+                        <div className={`${classes['evt_detail_cont_ttl']}`}>
+                            <h3 id="title" style={{whiteSpace: "normal"}}>{questionDetail.title}</h3>
+                            <span className={`${classes['evt_detail_cont_ttl_date']}`}
+                                  id="date">{new Date(questionDetail.writeDate).toLocaleString()}</span>
+                        </div>
+                        <div className={`${classes['evt_detail_cont']}`} id="contents">
+                            <span style={{fontSize: "x-large"}}>{questionDetail.content}</span>
+                        </div>
 
-                                {/* 수정,삭제,목록보기 버튼 */}
-                                <div>
-                                    <button className="btn btn-primary btn-lg px-4 me-sm-3"
-                                            onClick={moveToQuestionList}>목록보기
-                                    </button>
-                                    <button className="btn btn-primary btn-lg px-4 me-sm-3"
-                                            onClick={moveToQuestionModify}>수정하기
-                                    </button>
-                                    <button className="btn btn-primary btn-lg px-4 me-sm-3"
-                                            onClick={moveToQuestionDelete}>삭제하기
-                                    </button>
-                                </div>
+                        {/* 수정,삭제,목록보기 버튼 */}
+                        <div className={`${classes['stage_step_btn']}`}>
+                            <ul>
+                                <li className={`${classes['blue_bdr']}`}>
+                                    <button onClick={moveToQuestionList}>목록보기</button>
+                                </li>
+                            </ul>
+                            {userRole == '관리자' ? (
+                                <>
+                                    <ul>
+                                        <li className={`${classes['blue_bdr']}`}>
+                                            <button onClick={moveToQuestionModify}>수정하기</button>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li className={`${classes['blue_bdr']}`}>
+                                            <button onClick={moveToQuestionDelete}>삭제하기</button>
+                                        </li>
+                                    </ul>
+                                </>
+                            ) : (
+                                uNo == questionDetail.uno ? (
+                                    <>
+                                        <ul>
+                                            <li className={`${classes['blue_bdr']}`}>
+                                                    <button onClick={moveToQuestionModify}>수정하기</button>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li className={`${classes['blue_bdr']}`}>
+                                                <button onClick={moveToQuestionDelete}>삭제하기</button>
+                                            </li>
+                                        </ul>
+                                    </>
+                                ) : (
+                                    <></>
+                                )
 
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td className="read-detail">
-                                            <div className="col-3"><b>작성자: </b>{questionDetail.name}</div>
-                                            <div className="col-3"><b>제목: </b>{questionDetail.title}</div>
-                                            <div className="col-3"><b>작성일자: </b>{questionDetail.writeDate}</div>
-                                            <div className="col-3"><b>조회수: </b>{questionDetail.views}</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="col-3"><b>내용: </b>{questionDetail.content}</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-start AttachedFile">
-                                            <b>첨부파일 : </b>
-                                            {attachments.length > 0 ? (
-                                                attachments.map((attachment) => (
-                                                    <div key={attachment.id}>
-                                                        {isImageFile(attachment.fileName) ? (
-                                                            <img
-                                                                src={`/attachments/download/${attachment.id}`}
-                                                                alt={attachment.fileName}
-                                                                width="200"
-                                                                height="200"
-                                                            />
-                                                        ) : (
-                                                            <button onClick={() => downloadAttachment(attachment.id)}>
-                                                                {attachment.fileName}
-                                                            </button>
-                                                        )}
-                                                    </div>
-                                                ))
-                                            ) : (
-                                                <div>첨부파일이 없습니다.</div>
-                                            )}
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-
-                                {/* 댓글 작성 컴포넌트 */}
-                                {
-                                    (uNo != null) ? // 로그인한 사용자만 댓글 작성 가능
-                                        <ReplyWrite bid={bid}/>
-                                        :
-                                        null
-                                }
-
-                                {/* 댓글 리스트 컴포넌트 */}
-                                <ReplyList bid={bid}/>
-
-                            </div>
+                            )}
                         </div>
                     </div>
+
+
+                    {/* 댓글 테이블 */}
+                    {/* 댓글 작성 컴포넌트 */}
+                    {
+                        (uNo != null) ? // 로그인한 사용자만 댓글 작성 가능
+                            <ReplyWrite bid={bid}/>
+                            :
+                            null
+                    }
+
+                    {/* 댓글 리스트 컴포넌트 */}
+                    <ReplyList bid={bid}/>
+
                 </div>
-            </section>
+            </div>
         </>
     );
 }

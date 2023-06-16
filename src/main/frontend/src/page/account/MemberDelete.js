@@ -1,51 +1,50 @@
+import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import MyPageSidebar from "../../component/MyPageSidebar";
-import classes from "../css/MyPage.module.css";
-import {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
+
+import MyPageSidebar from "../../component/MyPageSidebar";
+import classes from "../css/MyPage.module.css";
 
 const MemberDelete = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const dispatch = useDispatch();
+
   const token = Cookies.get('Set-Cookie');
   const uNo = jwtDecode(token).uNo;
 
-  const [passwordIsValid, setPasswordIsValid] = useState(true);
   const [enteredPassword, setEnteredPassword] = useState('');
-  const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    axios.get('/getPassword', {
-      params: {
-        uNo: 3
-      }
-    }).then(res => {
-      setPassword(res.data);
-    })
-      .catch(error => {
-        console.log("ERROR: " + error);
-      })
-  });
 
-  const checkedPwdHandler = (e) => {
-    setPasswordIsValid(e.target.value == password);
-  }
+  const memberDeleteHandler = (e) => {
+    e.preventDefault();
 
-  const memberDeleteHandler = () => {
     if (enteredPassword.trim() === '') {
       alert('비밀번호를 입력해주세요.');
       return;
     }
+
     const checkDelete = window.confirm("회원탈퇴를 진행하시겠습니까?");
 
     if (checkDelete) {
-      axios.post(`/memberDelete/${uNo}`)
+      axios.post(`/memberDelete/${uNo}`, null, {
+        params: {
+          password: enteredPassword
+        }
+      })
         .then((res) => {
-          alert('회원이 정상적으로 탈퇴되었습니다.');
-          navigate('/')
+          if (res.data) {
+            alert('계이득 사이트를 이용해 주셔서 감사합니다.\n회원이 정상적으로 탈퇴되었습니다.');
+            Cookies.remove("Set-Cookie");
+            dispatch({type: "logout"});
+            navigate('/')
+          } else {
+            alert('비밀번호가 일치하지 않습니다.');
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -86,23 +85,19 @@ const MemberDelete = () => {
             </li>
           </ul>
         </div>
-        <div>
-          <h2></h2>
+        <div className={classes.field}>
           <input
             type="password"
             name={"password"}
-            className={`${classes['password-input']} ${passwordIsValid ? '' : classes.isActive}`}
+            className={`${classes['password-input']}`}
             onChange={(e) => {
               setEnteredPassword(e.target.value)
             }}
-            onBlur={checkedPwdHandler}
           />
           <br/>
           <button
-            type={"submit"}
             className={`${classes['check-btn']}`}
             onClick={memberDeleteHandler}
-            disabled={!passwordIsValid}
           >
             확인
           </button>

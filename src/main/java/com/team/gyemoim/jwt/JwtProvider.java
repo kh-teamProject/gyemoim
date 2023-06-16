@@ -22,8 +22,10 @@ public class JwtProvider {
 
     @Value("${jwt.header}")
     private String header;
+
     @Value("${jwt.secret}")
     private String secretKey;
+
     @Value("${jwt.token-validity-in-seconds}")
     private long tokenValidMillisecond;
 
@@ -38,9 +40,8 @@ public class JwtProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes()); // SecretKey Base64로 인코딩
     }
 
-
     // JWT 토큰 생성
-    public String createToken(Integer uNo,String name, String email, List<String> userRole) {
+    public String createToken(Integer uNo, String name, String email, List<String> userRole) {
         Claims claims = Jwts.claims();
         claims.put("uNo", uNo);
         claims.put("name", name);
@@ -55,11 +56,10 @@ public class JwtProvider {
                 .setHeader(map)
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + tokenValidMillisecond)) // 토큰 만료일 설정
+                .setExpiration(new Date(now.getTime() + tokenValidMillisecond * 1000)) // 토큰 만료일 설정
                 .signWith(SignatureAlgorithm.HS512, secretKey) // 암호화
                 .compact();
     }
-
 
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
@@ -67,7 +67,6 @@ public class JwtProvider {
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
-
 
     // 유저 이름 추출
     public String getEmail(String token) {
@@ -77,7 +76,6 @@ public class JwtProvider {
                 .getBody()
                 .getSubject();
     }
-
 
     // Request header에서 token 꺼내옴
     public String resolveToken(HttpServletRequest request) {
@@ -94,16 +92,12 @@ public class JwtProvider {
     // 토큰을 블랙리스트에 추가하여 로그아웃 처리
     public void addToBlacklist(String token) {
         tokenBlacklist.add(token);
-        System.out.println("addToBlacklist" + tokenBlacklist);
     }
 
     // 토큰이 블랙리스트에 있는지 확인
     public boolean isInBlacklist(String token) {
-        System.out.println(token);
-        System.out.println("isInBlacklist" + tokenBlacklist);
         return tokenBlacklist.contains(token);
     }
-
 
     // Token 유효성 검사
     public boolean validateToken(String token) {
@@ -122,5 +116,6 @@ public class JwtProvider {
         }
         return false;
     }
+
 }
 

@@ -114,8 +114,13 @@ public class AccountServiceImpl implements AccountService {
 
   // 회원 탈퇴
   @Override
-  public void memberDelete(Integer uNo) {
-    accountMapper.memberDelete(uNo);
+  public boolean memberDelete(Integer uNo, String password) {
+    String userPassword = accountMapper.getPassword(uNo);
+    if (passwordEncoder.matches(password, userPassword)) {
+      accountMapper.memberDelete(uNo);
+      return true;
+    }
+    return false;
   }
 
 }

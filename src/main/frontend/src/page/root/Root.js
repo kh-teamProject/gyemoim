@@ -1,28 +1,39 @@
 import {useEffect, useState} from "react";
 import {NavLink, Outlet} from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 import {FaHome} from "react-icons/fa";
 
 import Header from "../../component/Header";
 import Footer from "../../component/Footer";
 import classes from '../css/Root.module.css';
-import axios from "axios";
 
 const RootLayout = () => {
   const [adminCheck, setAdminCheck] = useState(false);
+  let uNo, name;
+
+  if (Cookies.get('Set-Cookie')) {
+    const token = Cookies.get('Set-Cookie');
+    uNo = jwtDecode(token).uNo;
+    name = jwtDecode(token).name;
+  }
 
   useEffect(() => {
-    axios.get('/mypage', {
-      params: {
-        uNo: 0
-      }
-    })
-      .then((res) => {
-        setAdminCheck(res.data.USERROLE === '운영자');
-        console.log(res.data);
+    if (uNo !== undefined) {
+      axios.get('/mypage', {
+        params: {
+          uNo
+        }
       })
-      .catch((error) => {
-        console.log(error);
-      })
+        .then((res) => {
+          setAdminCheck(res.data.userRole === '관리자');
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
   }, []);
 
   return (
@@ -30,20 +41,20 @@ const RootLayout = () => {
       {
         adminCheck &&
         <div className={`${classes['admin-bar']}`}>
-          <p>김찬희 관리자님 환영합니다.</p>
+          <p>{name} 관리자님 환영합니다.</p>
           <div className={`${classes['link-wrap']}`}>
             <NavLink to={'/admin'}>
               관리자 홈
-              <FaHome />
+              <FaHome/>
             </NavLink>
           </div>
         </div>
       }
-      <Header />
+      <Header/>
       <main>
-        <Outlet />
+        <Outlet/>
       </main>
-      <Footer />
+      <Footer/>
     </>
   );
 };

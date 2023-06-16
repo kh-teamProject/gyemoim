@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -21,5 +23,15 @@ public class AdminAccountServiceImpl implements AdminAccountService {
   @Override
   public List<MemberVO> getMember() {
     return accountMapper.getMember();
+  }
+
+  @Override
+  public List<Map<String, Object>> getInterest() {
+    return accountMapper.getInterest();
+  }
+
+  @Override
+  public List<Map<String, Object>> getAverageExpenditure() {
+    return accountMapper.getAverageExpenditure();
   }
 }

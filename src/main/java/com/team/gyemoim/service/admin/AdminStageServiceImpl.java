@@ -23,6 +23,13 @@ public class AdminStageServiceImpl implements AdminStageService{
     return adminStageMapper.updateStatus(pfID);
   }
 
+  //(현지) PF 데이터 가져와서 차트 보내기
+  @Override
+  public List<AdminStageDetailDTO> getStageChart() {
+    System.out.println("[서비스] 스테이지 차트가져오기 ");
+    return adminStageMapper.getStageChart();
+  }
+
   //(유진) 스테이지 참여 회원정보 가져오기
 
   private final AdminStageMapper adminStageMapper;

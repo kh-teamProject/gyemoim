@@ -10,3 +10,24 @@
 .adminSidebar-wrap > img {
   margin-top: 20px;
 }
+
+.adminSidebar-wrap > ul > li {
+  padding-bottom: 7px;
+  font-weight: bold;
+}
+
+.adminBoardToggle-button {
+  display: contents;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.adminBoardToggleContents {
+  font-size: 16px;
+}
+
+.adminBoardToggleContents > li {
+  padding-bottom: 2px;
+  padding-top: 2px;
+  padding-left: 30px;
+}

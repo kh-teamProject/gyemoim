@@ -131,7 +131,7 @@ const StageReport = (props) => {
     <PDFViewer style={{ width: "100%", height: "100vh" }}>
       <Document>
         <Page size="A4" style={styles.page}>
-          <Text style={[styles.bold, styles.title]}>수익보고서</Text>
+          <Text style={[styles.bold, styles.title]}>결산보고서</Text>
 
           //회원정보 테이블
           <Text style={[styles.light, styles.tableDiv]}>{'<'}회원 정보{'>'}</Text>
@@ -231,21 +231,41 @@ const StageReport = (props) => {
                </View>
               </View>
 
-              <View style={styles.tableRow}>
-                <View style={[styles.tableCol, styles.tableGray]}>
-                  <Text style={[styles.tableCell, styles.light]}>수익</Text>
+
+          </View>
+
+         // 수익 정보
+          <Text style={[styles.light, styles.tableDiv, styles.gap]}>{'<'}수익 정보{'>'}</Text>
+          <View style={styles.table}>
+                <View style={styles.tableRow}>
+                  <View style={[styles.tableCol, styles.tableGray]}>
+                    <Text style={[styles.tableCell, styles.light]}>실 이득</Text>
+                  </View>
+                  <View style={styles.tableThreeCol}>
+                    <Text style={[styles.tableCell, styles.light]}>실이득</Text>
+                  </View>
                 </View>
-                <View style={styles.tableCol}>
-                  <Text style={[styles.tableCell, styles.light]}>12345원</Text>
-                </View>
-                <View style={[styles.tableCol, styles.tableGray]}>
-                 <Text style={[styles.tableCell, styles.light]}>수익률</Text>
-               </View>
-               <View style={styles.tableCol}>
-                 <Text style={[styles.tableCell, styles.light]}>10%</Text>
-               </View>
+
+                <View style={styles.tableRow}>
+                    <View style={[styles.tableCol, styles.tableGray]}>
+                      <Text style={[styles.tableCell, styles.light]}>수익</Text>
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={[styles.tableCell, styles.light]}>12345원</Text>
+                    </View>
+                    <View style={[styles.tableCol, styles.tableGray]}>
+                     <Text style={[styles.tableCell, styles.light]}>수익률</Text>
+                   </View>
+                   <View style={styles.tableCol}>
+                     <Text style={[styles.tableCell, styles.light]}>10%</Text>
+                   </View>
               </View>
           </View>
+          <Text style={[styles.light, styles.tableDiv, styles.gap]}>*예측 은행이자 : </Text>
+          <Text style={[styles.light, styles.tableDiv, styles.gap]}>=p* r * ((1+r)^n-1 )</Text>
+          <Text style={[styles.light, styles.tableDiv, styles.gap]}>p: 월불입액</Text>
+          <Text style={[styles.light, styles.tableDiv, styles.gap]}>r: 이자</Text>
+          <Text style={[styles.light, styles.tableDiv, styles.gap]}>n: 기간</Text>
 
         </Page>
       </Document>

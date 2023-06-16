@@ -2,14 +2,13 @@ main {
   min-height: 587px;
 }
 
-h2 {
+.memberText {
   font-size: 2.5rem;
   margin: 20px 0;
 }
 
 .field {
   font-size: 1.25rem;
-  font-weight: bold;
   margin-bottom: 15px;
 }
 
@@ -59,7 +58,7 @@ h2 {
   box-sizing: border-box;
 }
 
-.field .link-btn, .field .submit-btn {
+.field .link-btn, .field .submit-btn, .check-btn {
   display: inline-block;
   width: 100px;
   height: 40px;
@@ -70,8 +69,13 @@ h2 {
   cursor: pointer;
 }
 
-.field .submit-btn {
+.memberDelete-wrap {
+  min-height: 680px;
+}
+
+.check-btn {
   border: 0;
   font-size: 1rem;
   font-weight: bold;
+  margin-top: 20px;
 }

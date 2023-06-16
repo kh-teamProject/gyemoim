@@ -13,7 +13,8 @@
              roll.receiveTurn,
              roll.uno
       FROM pf
-             JOIN roll ON PF.PFID = roll.PFID
+      JOIN roll ON PF.PFID = roll.PFID
+      WHERE pf.startFlag NOT LIKE'%완료%'
     </select>
 
     <!--(유진)deposit에 따라 값 달리 가져오기.-->
@@ -157,6 +158,7 @@
         JOIN PF p ON p.pfRate = i.pfRate
         WHERE p.deposit = i.deposit
         AND r.pfID = #{pfID}
+        AND p.pfID = #{pfID}
         AND uNo = #{uNo}
     </select>
 
@@ -251,10 +253,10 @@
         WHERE pfID = #{pfID}
     </select>
 
-    <!--(찬희)stageBalance - *번의 uPayment-->
+    <!--(찬희)stageBalance - *번의 uTotalReceipts-->
     <update id="stageBalanceMinus">
         UPDATE PF
-        SET stageBalance = stageBalance - deposit
+        SET stageBalance = stageBalance - #{uTotalReceipts}
         WHERE pfID = #{pfID}
     </update>
 

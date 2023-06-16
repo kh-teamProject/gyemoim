@@ -137,9 +137,11 @@ public class BoardServiceImpl implements BoardService {
 
     // 특정 글 읽기 (조회수 수정)
     @Override
-    public BoardVO readDetail(int bid) throws Exception {
-        boardMapper.updateViewCnt(bid); // 조회수 올리기
-
+    public BoardVO readDetail(int bid, boolean increaseViews) throws Exception {
+        // 조회수 증가 여부에 따른 조회수 증가하기
+        if (increaseViews) {
+            boardMapper.updateViewCnt(bid);// 조회수 올리기
+        }
         return boardMapper.readDetail(bid);
     }
 
@@ -161,7 +163,7 @@ public class BoardServiceImpl implements BoardService {
 
     // 게시글 및 첨부파일 수정하기
     @Override
-    public void modifyUpdate(BoardModifyDTO boardModifyDTO, MultipartFile file) throws Exception {
+    public void modifyUpdate(BoardModifyDTO boardModifyDTO) throws Exception {
 
         // BoardModifyDTO 이용하여 BoardVO 생성하고 DB에 게시글 수정
         BoardVO boardVO = new BoardVO();
@@ -170,19 +172,6 @@ public class BoardServiceImpl implements BoardService {
         System.out.println("******* 서비스 boardModifyDto : " + boardModifyDTO);
 
         boardMapper.modifyUpdate(boardModifyDTO);
-
-        // 수정된 게시글에 첨부파일 존재하면 첨부파일 저장
-        if (file != null && !file.isEmpty()) {
-            // AttachedVO 객체 생성 및 정보 저장
-            AttachedVO attachedVO = new AttachedVO();
-            attachedVO = attachedVO.dtoToVO(boardModifyDTO.getBid(), file);
-            attachedVO.setFilePath(saveFile(file)); // 업로드 경로에 파일 저장
-
-            // AttachedVO 객체를 데이터베이스에 저장 (첨부파일 생성)
-            System.out.println(attachedVO);
-            boardMapper.saveAttached(attachedVO);
-        }
-
     }
 
 

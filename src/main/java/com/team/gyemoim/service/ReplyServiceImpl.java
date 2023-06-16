@@ -20,32 +20,6 @@ public class ReplyServiceImpl implements ReplyService {
         this.replyMapper = replyMapper;
     }
 
-
-    /*// 댓글 작성
-    @Override
-    public void replyWrite(ReplyVO replyVO) throws Exception {
-        System.out.println("ReplyServiceImpl_replyWrite_작동됨" + replyVO);
-        replyMapper.replyWrite(replyVO);
-    }
-    // 댓글 조회
-    @Override
-    public List<ReplyVO> reply(int bid) throws Exception {
-        return replyMapper.reply(bid);
-    }
-    // 댓글 수정
-    @Override
-    public void replyModify(ReplyVO replyVO) throws Exception {
-        System.out.println("ReplyServiceImpl_replyModify_작동됨" + replyVO);
-        replyMapper.replyModify(replyVO);
-    }
-    // 댓글 삭제
-    @Override
-    public void replyDelete(ReplyVO replyVO) throws Exception {
-        System.out.println("ReplyServiceImpl_replyDelete_작동됨" + replyVO);
-        replyMapper.replyDelete(replyVO);
-    }*/
-
-
     /* 댓글 작성 */
     public CreateReplyResponseDTO createReply(int bid, CreateReplyRequestDTO createReplyRequestDTO) throws Exception {
         CreateReplyParamDTO createReplyParamDTO = new CreateReplyParamDTO(bid, createReplyRequestDTO);
@@ -59,7 +33,6 @@ public class ReplyServiceImpl implements ReplyService {
         System.out.println("************ 서비스 댓글 리스트 ************");
         System.out.println("************ 가져온 게시글 번호: " + bid + " ************");
         System.out.println("************ 서비스_댓글 리스트 : " + replyMapper.getReplyList(bid));
-
 
         return replyMapper.getReplyList(bid);
     }

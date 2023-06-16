@@ -53,7 +53,6 @@ input.aa + label {
 
 .flex1{
     flex:1;
-     padding: 1rem;
 
 }
 
@@ -63,7 +62,7 @@ input.aa + label {
    border: 3px solid  #004DC1;
     background-color: #004DC1;
     color: white ;
-    width: 15rem;
+    width: 10rem;
      height: 4rem;
     border-radius: 10px;
     font-size: 1.3rem;
@@ -74,7 +73,7 @@ input.aa + label {
    border: 3px solid  #004DC1;
     background-color: #004DC1;
     color: white ;
-   width: 8.5rem;
+    width: 9rem;
      height: 4rem;
     border-radius: 10px;
     font-size: 1.3rem;
@@ -93,146 +92,14 @@ input.aa + label {
      margin : 0.5rem;
 }
 */
-.button1{
-  text-align: center;
-   border: 3px solid  #004DC1;
-    background-color: white;
-    color: #004DC1;
-   width: 4rem;
-     height: 4rem;
-     border-radius: 50%;
-    font-size: 1.3rem;
-     margin : 0.5rem;
-}
-
-.button1:hover{
-  text-align: center;
-   border: 3px solid  #004DC1;
-    background-color:  #004DC1;
-    color:white;
-   width: 4rem;
-     height: 4rem;
-     border-radius: 50%;
-    font-size: 1.3rem;
-     margin : 0.5rem;
-}
 
 
-.buttonSmall2Click {
-  text-align: center !important;
- border: 3px solid  #004DC1!important;
-  background-color: #004DC1!important;
-  color: white !important;
-   width: 4rem !important;
-       height: 4rem !important;
-       border-radius: 50% !important;
-      font-size: 1.3rem !important;
-       margin : 0.5rem !important;
-}
-
-.buttonSmall2:hover {
-  text-align: center;
-   border: 3px solid  #004DC1;
-    background-color: #004DC1;
-    color: white ;
-       width: 4rem;
-         height: 4rem;
-     border-radius: 50%;
-    font-size: 1.3rem;
-     margin : 0.5rem;
-    cursor: pointer;
-}
-
-
-.buttonSmall3 {
-  text-align: center;
-   border: 3px solid  #004DC1;
-    background-color: white;
-    color: #004DC1;
-   width: 15rem;
-     height: 4rem;
-     border-radius: 3rem;
-    font-size: 1.3rem;
-    margin : 1rem;
-}
-.buttonSmall3:hover {
-  text-align: center;
-   border: 3px solid  #004DC1;
-    background-color: #004DC1;
-    color: white ;
-  width: 15rem;
-     height: 4rem;
-     border-radius: 3rem;
-    font-size: 1.3rem;
-    cursor: pointer;
-     margin : 1rem;
-}
-
-.buttonSmall4 {
-  text-align: center;
-   border: 3px solid  #004DC1;
-    background-color: white;
-    color: #004DC1;
-   width: 7rem;
-     height: 4rem;
-     border-radius: 1rem;
-    font-size: 1.3rem;
-     margin : 0.5rem;
-}
-
-
-.buttonSmall4:hover {
-  text-align: center;
-   border: 3px solid  #004DC1;
-    background-color: #004DC1;
-    color: white ;
-     width: 7rem;
-    height: 4rem;
-    border-radius: 1rem;
-    font-size: 1.3rem;
-     margin : 0.5rem;
-    cursor: pointer;
-}
-
-
-.selectInput {
-    display: none;
-}
-
-.selectLabel {
-  margin : 0.5rem;
- text-align: center;
-  display: inline-block;
-  cursor: pointer;
-   border: 3px solid  #004DC1;
-    background-color:white ;
-    color: #004DC1 ;
-   width: 13rem;
-    height: 4rem;
-    line-height:50px;
-    border-radius: 10px;
-    font-size: 1.3rem;
-}
-.selectLabel:hover {
-  margin : 0.5rem;
- text-align: center;
-  display: inline-block;
-  cursor: pointer;
-   border: 3px solid  #004DC1;
-    background-color: #004DC1;
-    color: white ;
-   width: 13rem;
-    height: 4rem;
-    line-height:50px;
-    border-radius: 10px;
-    font-size: 1.3rem;
-}
 
 
 .inputStage {
   border-radius: 4px;
   border: 1px solid #8491a7;
-   width: 25rem;
+   width: 18rem;
   height: 4rem;
   font-size: 16px;
   line-height: 24px;
@@ -270,12 +137,9 @@ input.aa + label {
 
   background: #fff;
   border-radius: 7px;
-  display: inline-block;
-
-  width: 120rem;
+  display: inline-table;
+  width: 1000px;
   margin: 5rem;
-
-
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
@@ -298,6 +162,7 @@ input.aa + label {
 }
 
 .table tr {
+font-size: 1rem;
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
 }
@@ -331,3 +196,127 @@ table td {
   .warningMsg{
     color: red;
   }
+
+
+.selected {
+    background-color: red;
+
+}
+
+  input.button0{
+        display: none;
+  }
+  label.button0{
+    padding: 1rem;
+    margin: 1rem;
+    cursor: pointer;
+     text-align: center;
+    border: 2px solid  #004DC1;
+    background-color: white;
+    color: #004DC1;
+   width: 7rem;
+    padding: 0.8rem 1rem;
+     border-radius: 1rem;
+    font-size: 1.3rem;
+     margin : 0.5rem;
+  }
+
+  input:checked + label.button0{
+  background-color:  #004DC1;
+    color:white;
+    }
+
+  input.button1{
+   display: none;
+  }
+
+  label.button1{
+  margin : 0.5rem;
+ text-align: center;
+  display: inline-block;
+  cursor: pointer;
+   border: 2px solid  #004DC1;
+    background-color:white ;
+    color: #004DC1 ;
+   width: 13rem;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+}
+
+  input:checked + label.button1{
+  background-color:  #004DC1;
+    color:white;
+    }
+
+
+input.button3{
+     display: none;
+ }
+
+   label.button3{
+    margin : 0.5rem;
+   text-align: center;
+    display: inline-block;
+    cursor: pointer;
+     border: 2px solid  #004DC1;
+      background-color:white ;
+      color: #004DC1 ;
+
+      padding: 1rem 1rem;
+      border-radius: 50%;
+      font-size: 1.3rem;
+ }
+
+  input:checked + label.button3{
+  background-color:  #004DC1;
+    color:white;
+    }
+
+  input.button4{
+        display: none;
+  }
+  label.button4{
+    padding: 1rem;
+    margin: 1rem;
+    cursor: pointer;
+     text-align: center;
+    border: 2px solid  #004DC1;
+    background-color: white;
+    color: #004DC1;
+   width: 7rem;
+    padding: 0.8rem 1rem;
+     border-radius: 1rem;
+    font-size: 1.3rem;
+     margin : 0.5rem;
+  }
+
+  input:checked + label.button4{
+  background-color:  #004DC1;
+    color:white;
+    }
+
+
+input.button5{
+     display: none;
+}
+
+label.button5{
+    margin : 0.5rem;
+    text-align: center;
+  display: inline-block;
+  cursor: pointer;
+   border: 2px solid  #004DC1;
+    background-color:white ;
+    color: #004DC1 ;
+   width: 9rem;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+}
+
+input:checked + label.button5{
+      background-color:  #004DC1;
+        color:white;
+
+}

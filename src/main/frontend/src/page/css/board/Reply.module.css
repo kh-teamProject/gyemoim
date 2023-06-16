@@ -1,0 +1,131 @@
+.reply-ttl {
+    display: flex;
+    justify-content: center;
+    margin-top: 7%;
+}
+
+.reply-ttl > div {
+    display: flex;
+    justify-content: space-between;
+    width: 870px;
+    padding: 20px 0;
+}
+
+.profile-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: ivory;
+}
+
+.reply-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.reply-name {
+    font-weight: bold;
+    font-size: 20px;
+    padding-left: 20px;
+    padding-bottom: 5px;
+    order: 1;
+}
+
+.reply-repDate {
+    font-size: 16px;
+    padding-left: 20px;
+    order: 2;
+}
+
+.reply-button-box {
+    display: flex;
+    align-items: center;
+}
+
+.reply-write-button {
+    width: 98px;
+    height: 40px;
+    font-size: 14px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    border-style: solid;
+    border-color: lightgray;
+}
+
+.reply-modify-button {
+    width: 65px;
+    height: 50px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid black;
+    background-color: #ffffff;
+}
+
+.reply-delete-button {
+    width: 65px;
+    height: 50px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid red;
+    background-color: white;
+}
+
+.replyModifyImg {
+    width: 13px;
+    height: 13px;
+    padding-right: 3px;
+}
+
+.replyDeleteImg {
+    width: 13px;
+    height: 13px;
+    padding-right: 3px;
+}
+
+.chat-img {
+    width: 15px;
+    height: 15px;
+    padding-right: 5px;
+    line-height: 5px;
+}
+
+.reply-content {
+    width: 870px;
+    height: 131px;
+    border-radius: 4px;
+    display: contents;
+    resize: none;
+}
+
+.reply-content textarea {
+    resize: none;
+    border-radius: 12px;
+    width: 870px;
+    height: 131px;
+}
+
+.reply-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reply-list > h5 {
+    font-size: 18px;
+    font-style: normal;
+    padding-left: 5px;
+}
+
+.reply-list-img {
+    width: 15px;
+    height: 15px;
+}
+
+

@@ -52,7 +52,7 @@ public interface AccountService {
   // Delete
 
   // 회원 탈퇴
-  void memberDelete(Integer uNo);
+  boolean memberDelete(Integer uNo, String password);
 
   void updateExpenditure(MyPageDTO dto);
 

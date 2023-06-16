@@ -8,6 +8,7 @@ import com.team.gyemoim.vo.ExpenditureVO;
 import com.team.gyemoim.vo.MyAccountVO;
 import com.team.gyemoim.vo.MyAccountHistoryVO;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -29,12 +30,11 @@ public class AccountController {
   // Read
   @GetMapping("/mypage")
   public HashMap<String, Object> getMyInfo(@RequestParam Integer uNo) {
+    System.out.println("uNo = " + uNo);
+    System.out.println("mypageController");
+    System.out.println(accountService.getMyInfo(uNo));
+    System.out.println("aaaaaaaaaaaaaaaaaaaaa");
     return accountService.getMyInfo(uNo);
-  }
-
-  @GetMapping("/getPassword")
-  public String getPassword(@RequestParam Integer uNo) {
-    return accountService.getPassword(uNo);
   }
 
   // 계모임 계좌 정보 가져오기
@@ -58,8 +58,6 @@ public class AccountController {
   // 비밀번호 체크
   @PostMapping("/checkedPwd/{uNo}")
   public boolean checkedPwd(@PathVariable Integer uNo, @RequestParam String password) {
-    System.out.println("uNo = " + uNo);
-    System.out.println("password = " + password);
     return accountService.checkedPwd(uNo, password);
   }
   // Update
@@ -84,8 +82,9 @@ public class AccountController {
 
   // 내 관심사 수정하기
   @PostMapping("/interestUpdate")
-  public void interestUpdate(InterestDTO interestDTO) {
+  public ResponseEntity<?> interestUpdate(InterestDTO interestDTO) {
     accountService.interestUpdate(interestDTO);
+    return ResponseEntity.ok("관심사 수정 완료");
   }
 
   // 계모임 계좌 정보 업데이트
@@ -99,7 +98,7 @@ public class AccountController {
   
   // 회원 탈퇴
   @PostMapping("/memberDelete/{uNo}")
-  public void memberDelete(@PathVariable Integer uNo) {
-    accountService.memberDelete(uNo);
+  public boolean memberDelete(@PathVariable Integer uNo, @RequestParam String password) {
+    return accountService.memberDelete(uNo, password);
   }
 }

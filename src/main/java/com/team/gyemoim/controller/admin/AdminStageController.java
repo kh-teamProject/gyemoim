@@ -46,6 +46,15 @@ public HashMap<String,Object> stage() {
         return adminStageService.checkPFID(pfID);
     }
 
+    //(현지) PF 데이터 가져와서 차트 보내기
+    @GetMapping("/admin/stage/Chart")
+    @ResponseBody
+    public HashMap<String,Object> Chart() {
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("Chart",adminStageService.getStageList());
+        System.out.println("[컨트롤러] 차트에 스테이지 가져오기");
+        return map;
+    }
 
 
   //유진 계모임 관리자 디테일

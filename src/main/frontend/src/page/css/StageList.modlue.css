@@ -20,30 +20,54 @@
     padding-bottom: 12px;
     position: relative;
 }
+/*
 .stage-ing{
     background: url(../../component/images/grey_dimm.png);
     top: 125px;
     width: 100%;
     z-index: 5;
 }
+*/
+.stage-ing {
+    text-align: center;
+    background: #f1f1f1;
+    border: 1px solid #d6d6d6;
+    float: left;
+    margin: -1px 0 0 -1px;
+    position: relative;
+    width: 350px;
+    box-sizing: border-box;
+    color: #505050;
+    letter-spacing: -.5px;
+    padding: 0;
+    text-decoration: none;
+    vertical-align: baseline;
+    min-height: 330px;
+}
+
 .all-attend{
     background: #fff;
     border: 2px solid #2a7fab;
-    height: 130px;
+    height: 280px;
     line-height: 46px;
     width: 280px;
     margin: auto;
     /*margin-top: 80px;*/
     border-radius: 10px;
-}
-.all-attend p{
+    position: absolute;
+    top: 8%;
+    left: 10%;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+}
+.all-attend p{
     /*position: relative;*/
     color: #2a7fab;
     font-size: 22px;
     font-weight: 400;
     top: 30%;
+    margin: 0;
 }
 .more-stage{
     background: url(../../component/images/verti_ellipsis.png) center top no-repeat;
@@ -92,14 +116,12 @@
     border-radius: 10px;
 }
 
-
 #rec-turn{
     list-style-type: none;
     border: 1px solid #0693c1;
     border-radius: 50%;
     box-sizing: border-box;
     color: #0693c1;
-    display: inline-block;
     font-size: 17px;
     font-weight: 400;
     height: 32px;
@@ -124,11 +146,37 @@
     padding: 0;
     text-decoration: none;
     vertical-align: baseline;
+    min-height: 330px;
 }
 
 #stage-payInfo{
     font-size: 20px;
     margin-top: 38px;
     text-align: center;
-    border-bottom: 1px solid #f0f0f0;
+}
+
+#rec-turn img{
+    width: 115%;
+    margin: -5px -3px;
+}
+
+.speechImg{
+    position: relative;
+}
+.speechImg img{
+    width: 52%;
+}
+.speechImg span{
+    font-size: 1rem;
+    font-weight: bold;
+    position: absolute;
+    left: 184px;
+    top: 20px;
+    text-align: center;
+    width: 70px;
+    color: black;
+ }
+.stageListUl{
+    display: flex;
+    justify-content: center;
 }

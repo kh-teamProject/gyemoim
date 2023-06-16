@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InterestDTO {
-  Integer uno;
+  Integer uNo;
   String interest;
 }

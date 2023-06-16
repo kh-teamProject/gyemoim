@@ -27,6 +27,7 @@ const DetailsInquiry = () => {
     })
       .then((res) => {
         setMyAccountHistory(res.data);
+        console.log(res);
         setMyAccountHistoryIsValid(res.data[0] === undefined);
       })
       .catch((error) => {

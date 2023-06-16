@@ -9,15 +9,19 @@ import ReplyWrite from "../../component/ReplyWrite";
 import ReplyList from "../../component/ReplyList";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
+import viewImg from "../../component/images/view.png";
+import commentImg from "../../component/images/comment-alt.png";
 
 
 const NoticeDetail = () => {
 
     const [noticeDetail, setNoticeDetail] = useState({});
+    let replySum = 0; // 댓글 총 갯수
     // 파라미터 가져오기
     const {bid} = useParams();
     const token = jwtDecode(Cookies.get('Set-Cookie'));
     const uNo = token.uNo;
+    const userRole = token.userRole; // 운영자
 
     const navigate = useNavigate();
 
@@ -35,6 +39,10 @@ const NoticeDetail = () => {
                 console.log("readerUNo 가져와지니? " + uNo);
 
                 setNoticeDetail(response.data);
+
+                axios.get("/reply/list", {params: {"bid": bid}}).then((response) => {
+                    const replySum = response.data.length;
+                })
             })
             .catch((error) => {
                 console.log("NoticeDetail_getNoticeDetail 게시글 못가져옴 :<");
@@ -51,7 +59,7 @@ const NoticeDetail = () => {
 
     // 공지사항 목록으로 이동하는 함수
     const moveToNoticeList = (event) => {
-        window.location.href = '/board/notice';
+       navigate('/board/notice');
     };
 
     // 글 수정 페이지로 이동하는 함수
@@ -59,13 +67,12 @@ const NoticeDetail = () => {
         await axios.get("/board/modify", {params: {bid: bid}})
             .then((response) => {
                 console.log("NoticeDetail.moveToNoticeModify 글 수정 페이지로 이동 :D ");
-
+                navigate(`/board/notice/modify/${bid}`);
             })
             .catch((error) => {
                 console.log("NoticeDetail.moveToNoticeModify 글 수정 페이지 이동 안됨 :< ");
                 console.log(error);
             })
-        window.location.href = `/board/notice/modify/${bid}`;
     };
 
 
@@ -121,17 +128,23 @@ const NoticeDetail = () => {
                     <div className={`${classes['evt_detail_wrap']}`}>
                         <div className={`${classes['evt_detail_cont_ttl']}`}>
                             <h3 id="title" style={{whiteSpace: "normal"}}>{noticeDetail.title}</h3>
+                            <div style={{display: "flex"}}>
                             <span className={`${classes['evt_detail_cont_ttl_date']}`}
                                   id="date">{new Date(noticeDetail.writeDate).toLocaleString()}</span>
+                                <span className={`${classes['evt_detail_cont_ttl_views']}`}><img src={viewImg}
+                                                                                                 className={`${classes['view-img']}`}/>{noticeDetail.views}</span>
+                                <span className={`${classes['evt_detail_cont_ttl_comment']}`}><img src={commentImg}
+                                                                                                   className={`${classes['comment-img']}`}/>{replySum}</span>
+                            </div>
                             <div className={`${classes['evt_share_btns']}`}>
-                                <button onClick={handleFacebookShare}>
-                                    <img src={facebookImg} className={`${classes['facebook-img']}`}/>
+                                <button className={`${classes['event_btns']}`} onClick={handleFacebookShare}>
+                                    <img alt="facebook-img" src={facebookImg} className={`${classes['facebook-img']}`}/>
                                 </button>
-                                <button onClick={handleKakaoTalkShare} id="kakaotalk">
-                                    <img src={kakaotalkImg} className={`${classes['kakaotalk-img']}`}/>
+                                <button className={`${classes['event_btns']}`} onClick={handleKakaoTalkShare} id="kakaotalk">
+                                    <img alt="kakaotalk-img" src={kakaotalkImg} className={`${classes['kakaotalk-img']}`}/>
                                 </button>
-                                <button onClick={handleLinkCopy}>
-                                    <img src={linkImg} className={`${classes['link-img']}`}/>
+                                <button className={`${classes['event_btns']}`} onClick={handleLinkCopy}>
+                                    <img alt="link-img" src={linkImg} className={`${classes['link-img']}`}/>
                                 </button>
                             </div>
                         </div>
@@ -140,46 +153,31 @@ const NoticeDetail = () => {
                         </div>
 
                         {/* 수정,삭제,목록보기 버튼 */}
-                        <div className={`${classes['stage_step_btn']}`}>
-                            <ul>
-                                <li className={`${classes['blue_bdr']}`}>
-                                    <button onClick={moveToNoticeList}>목록보기</button>
-                                </li>
-                            </ul>
-                            <ul>
-                                <li className={`${classes['blue_bdr']}`}>
-                                    <button onClick={moveToNoticeModify}>수정하기</button>
-                                </li>
-                            </ul>
-                            <ul>
-                                <li className={`${classes['blue_bdr']}`}>
-                                    <button onClick={moveToNoticeDelete}>삭제하기</button>
-                                </li>
-                            </ul>
+                        <div className={`${classes['stage_step_btn-box']}`}>
+                            <div className={`${classes['stage_step_btn']}`}>
+                                <ul>
+                                    <li className={`${classes['blue_bdr']}`}>
+                                        <button onClick={moveToNoticeList}>목록보기</button>
+                                    </li>
+                                </ul>
+                                {userRole == '관리자' && (
+                                    <>
+                                        <ul>
+                                            <li className={`${classes['blue_bdr']}`}>
+                                                <button onClick={moveToNoticeModify}>수정하기</button>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li className={`${classes['blue_bdr']}`}>
+                                                <button onClick={moveToNoticeDelete}>삭제하기</button>
+                                            </li>
+                                        </ul>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
 
-
-                    {/*댓글 시작
-                    <div id="replyArea">
-                        <div className={`${classes['card-body']}`}>
-                                        <textarea className="form-control" name="comm" id="newReplyComm" cols="30"
-                                                  rows="3"
-                                                  placeholder="댓글을 입력해주세요"></textarea>
-                            <input className="form-control" type="hidden" id="newReplyBid" name="bid"
-                                   value={noticeDetail.bid || ''}/>
-                            <input className="form-control" type="hidden" id="newReplyUNo" name="uno"
-                                   value="{login.uno}"/>
-                            <input className="form-control" type="hidden" id="newReplyName" name="name"
-                                   value="{login.name}"/>
-
-                            <button type="submit"
-                                    className="btn btn-primary btn-md px-3 mt-2 me-sm-3 replyAddBtn"
-                                    id="replyAddBtn">댓글 작성
-                            </button>
-
-                        </div>
-                    </div>*/}
 
                     {/* 댓글 테이블 */}
                     {/* 댓글 작성 컴포넌트 */}
