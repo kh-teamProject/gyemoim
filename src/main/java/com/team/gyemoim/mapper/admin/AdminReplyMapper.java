@@ -13,4 +13,6 @@ public interface AdminReplyMapper {
     // 검색된 댓글 목록 리스트 조회
     List<AdminReplyListDTO> searchReplyList(AdminReplyListParamDTO dto) throws Exception;
 
+    // 검색 댓글 갯수 구하기
+    int searchCount(AdminReplyListParamDTO dto) throws Exception;
 }

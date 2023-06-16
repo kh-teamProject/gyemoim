@@ -10,4 +10,6 @@ public interface AdminReplyService {
 
     // 댓글 검색 리스트 가져오기
     List<AdminReplyListDTO> searchReplyList(AdminReplyListParamDTO dto) throws Exception;
+    // 검색 댓글 갯수 구하기
+    int searchCount(AdminReplyListParamDTO dto) throws Exception;
 }

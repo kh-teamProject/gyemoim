@@ -134,8 +134,6 @@ const Reply = (props) => {
                         </>
                 }
             </div>
-
-
         </>
     )
 }

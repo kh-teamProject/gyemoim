@@ -1,8 +1,7 @@
 import {useEffect, useState} from "react";
-import classes from "../css/admin/AccountManagement.module.css";
-import {useNavigate} from "react-router-dom";
-import Paging from "../../component/Paging";
 import axios from "axios";
+import Reply from "../../component/Reply";
+import className from "../css/admin/ReplyManagement.css";
 
 const ReplyManagement = () => {
     // 댓글 리스트
@@ -12,9 +11,6 @@ const ReplyManagement = () => {
     const [searchKeywordVal, setSearchKeywordVal] = useState("");
     const [typeVal, setTypeVal] = useState("");
 
-
-    // Link 용 함수
-    const navigate = useNavigate();
 
     // API 호출하여 댓글 리스트 목록 가져오기 (게시판종류, 검색타입, 검색어)
     const fetchReplyList = async (type, searchType, searchKeyword) => {
@@ -28,7 +24,6 @@ const ReplyManagement = () => {
         })
             .then((response) => {
                 console.log("댓글 목록 리스트 : " + response.data);
-
                 setReplyList(response.data);
             })
             .catch((error) => {
@@ -36,6 +31,7 @@ const ReplyManagement = () => {
             })
     };
 
+    // 초기 렌더링
     useEffect(() => {
         fetchReplyList("", "", "");
     }, []);
@@ -75,7 +71,7 @@ const ReplyManagement = () => {
         const seconds = String(date.getSeconds()).padStart(2, '0');
 
         return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
-    }
+    };
 
 
     return (
@@ -153,7 +149,11 @@ const ReplyManagement = () => {
                                             {item.bid}
                                         </td>
                                         <td>
-                                            {item.replyComm}
+                                            <button style={{
+                                                display: 'contents',
+                                                fontSize: '15px',
+                                                blockSize: '30px'
+                                            }}>{item.replyComm}</button>
                                         </td>
                                         <td>
                                             {item.name}

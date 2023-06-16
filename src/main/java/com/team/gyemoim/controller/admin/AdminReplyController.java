@@ -25,4 +25,12 @@ public class AdminReplyController {
 
         return adminReplyService.searchReplyList(dto);
     }
+    
+    /* [GET] 검색된 댓글 갯수 조회 API */
+    @GetMapping("/admin/reply/searchCount")
+    public int searchCount(AdminReplyListParamDTO dto) throws Exception {
+        System.out.println("************ AdminReplyController_searchCount 댓글 개수 성공 :D **************");
+
+        return adminReplyService.searchCount(dto);
+    }
 }
