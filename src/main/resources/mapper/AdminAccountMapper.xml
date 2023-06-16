@@ -9,4 +9,19 @@
     ORDER BY UNO DESC
   </select>
 
+  <select id="getInterest" resultType="Map">
+    SELECT interest, count(*) as count
+    FROM MEMBER
+    GROUP BY interest
+  </select>
+
+  <select id="getAverageExpenditure" resultType="Map">
+    SELECT TRUNC(avg(medicalCost))  as medicalCost,
+           TRUNC(avg(foodCost))     as foodCost,
+           TRUNC(avg(housingCost))  as housingCost,
+           TRUNC(avg(culturalCost)) as culturalCost,
+           TRUNC(avg(etc))          as etc
+    FROM EXPENDITURE
+  </select>
+
 </mapper>

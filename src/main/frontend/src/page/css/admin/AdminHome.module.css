@@ -1,0 +1,14 @@
+.chartWrap {
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.interestChart, .expenditureChart {
+  margin-top: 20px;
+  width: 500px;
+}
+
+.interestChart > h2, .expenditureChart > h2 {
+  font-size: 1.5rem;
+}

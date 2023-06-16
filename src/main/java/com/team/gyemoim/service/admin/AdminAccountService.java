@@ -2,7 +2,9 @@ package com.team.gyemoim.service.admin;
 
 import com.team.gyemoim.vo.MemberVO;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface AdminAccountService {
 
@@ -10,4 +12,8 @@ public interface AdminAccountService {
 
   // 회원정보 전체 불러오기
   List<MemberVO> getMember();
+
+  List<Map<String, Object>> getInterest();
+
+  List<Map<String, Object>> getAverageExpenditure();
 }
