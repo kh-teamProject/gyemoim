@@ -48,16 +48,12 @@ public class MemberController {
             SingleDataResponse<MemberDTO> response = responseService.getSingleDataResponse(true, "회원가입 성공", account);
             responseEntity = ResponseEntity.status(HttpStatus.CREATED).body(response);
 
-            System.out.println("회원가입 성공");
-            System.out.println(account);
-
         } catch (DuplicatedUsernameException exception) {
             logger.debug(exception.getMessage());
             BaseResponse response = responseService.getBaseResponse(false, exception.getMessage());
 
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 
-            System.out.println("회원가입 실패");
         }
 
         return responseEntity;
@@ -69,7 +65,7 @@ public class MemberController {
         String email = request.get("email");
         boolean exists = memberService.isEmailExist(email);
         Map<String, Boolean> response = Collections.singletonMap("exists", exists);
-        System.out.println("이메일 중복 확인: " + response);   // 존재하면 true
+
         return ResponseEntity.ok(response);
     }
 
@@ -98,18 +94,15 @@ public class MemberController {
         String ePw = requestBody.get("ePw");
 
         if (StringUtils.isEmpty(email) || StringUtils.isEmpty(ePw)) {
-            System.out.println("error: 이메일과 인증 번호를 모두 입력해야 합니다.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\": \"이메일과 인증 번호를 모두 입력해야 합니다.\"}");
         }
 
         boolean isValid = memberService.verifyEmailCode(email, ePw);
 
         if (isValid) {
-            System.out.println("message: 이메일 인증이 완료되었습니다.");
             return ResponseEntity.ok("{\"message\": \"이메일 인증이 완료되었습니다. 회원 가입이 완료되었습니다.\"}");
 
         } else {
-            System.out.println("error: 유효하지 않은 인증 번호입니다.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\": \"유효하지 않은 인증 번호입니다.\"}");
         }
     }
@@ -138,10 +131,6 @@ public class MemberController {
             cookie.setHttpOnly(true); // httpOnly 플래그 활성화
             response.addCookie(cookie);
 
-            System.out.println("로그인 성공");
-            System.out.println(httpHeaders);
-            System.out.println(responseEntity);
-
         } catch (LoginFailedException exception) {
             logger.debug(exception.getMessage());
 
@@ -149,7 +138,6 @@ public class MemberController {
 
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 
-            System.out.println("로그인 실패");
         }
 
         return responseEntity;
@@ -165,9 +153,6 @@ public class MemberController {
         jwtProvider.addToBlacklist(token);
         jwtProvider.isInBlacklist(token);
 
-        System.out.println("로그아웃 성공");
-        System.out.println(token);
-
         return ResponseEntity.ok("로그아웃 성공");
     }
 
@@ -175,8 +160,6 @@ public class MemberController {
     // Email 찾기
     @GetMapping("/account/member-email-search")
     public String memberEmailSearch(MemberDTO memberDTO) {
-
-        System.out.println("Email Search: " + memberDTO);
 
         return memberService.memberEmailSearch(memberDTO);
     }
@@ -190,17 +173,14 @@ public class MemberController {
         String phone = requestBody.get("phone");
 
         if (email == null || email.isEmpty() || name == null || name.isEmpty()) {
-            System.out.println("error: 이메일이 제공되지 않았습니다.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{'error': '이메일이 제공되지 않았습니다.'}");
 
         }
         try {
             memberService.resetPassword(email, name, phone);
-            System.out.println("message: 임시 비밀번호 발급 이메일이 전송되었습니다.");
             return ResponseEntity.ok("{'message': '임시 비밀번호 발급 이메일이 전송되었습니다.'}");
 
         } catch (NoSuchElementException e) {
-            System.out.println("error: 일치하는 회원이 없습니다.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{'error': '일치하는 회원이 없습니다.'}");
         }
 
@@ -210,16 +190,11 @@ public class MemberController {
     @PutMapping("/myPage/info/pwdUpdate/{uNo}")
     public ResponseEntity<String> pwdUpdate(@PathVariable("uNo") Integer uNo, @RequestParam String newPassword) {
         try {
-
             memberService.pwdUpdate(uNo, newPassword);
-            System.out.println("Ctrl new Pwd SUCCESS");
-            System.out.println("newPassword = " + newPassword);
             return ResponseEntity.ok("비밀번호 변경 성공");
         } catch (Exception e) {
-            System.out.println("Ctrl new Pwd FAILS");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비밀번호 변경 실패: " + e.getMessage());
         }
     }
-
 
 }

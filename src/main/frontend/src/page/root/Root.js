@@ -6,44 +6,32 @@ import Header from "../../component/Header";
 import Footer from "../../component/Footer";
 import classes from '../css/Root.module.css';
 import axios from "axios";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 const RootLayout = () => {
   const [adminCheck, setAdminCheck] = useState(false);
-
-  useEffect(() => {
-    axios.get('/mypage', {
-      params: {
-        uNo: 0
-      }
-    })
-      .then((res) => {
-        setAdminCheck(res.data.USERROLE === '운영자');
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }, []);
+  const [myInfo, setMyInfo] = useState({uNo: 0});
 
   return (
     <>
       {
         adminCheck &&
         <div className={`${classes['admin-bar']}`}>
-          <p>김찬희 관리자님 환영합니다.</p>
+          <p>{myInfo.name} 관리자님 환영합니다.</p>
           <div className={`${classes['link-wrap']}`}>
             <NavLink to={'/admin'}>
               관리자 홈
-              <FaHome />
+              <FaHome/>
             </NavLink>
           </div>
         </div>
       }
-      <Header />
+      <Header/>
       <main>
-        <Outlet />
+        <Outlet/>
       </main>
-      <Footer />
+      <Footer/>
     </>
   );
 };

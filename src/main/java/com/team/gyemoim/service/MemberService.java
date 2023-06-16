@@ -66,9 +66,6 @@ public class MemberService {
   public MimeMessage createMessage(String email) throws MessagingException, UnsupportedEncodingException {
     String ePw = createKey();
 
-    System.out.println("보내는 대상: " + email);
-    System.out.println("인증 번호: " + ePw);
-
     MimeMessage message = mailSender.createMimeMessage();
     MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
@@ -189,9 +186,6 @@ public class MemberService {
     memberMapper.updatePassword(memberDTO);
     sendPasswordResetEmail(memberDTO.getEmail(), newPassword);
 
-    System.out.println("보내는 대상 : " + email);
-    System.out.println("임시 비밀번호 : " + newPassword);
-
   }
 
   // 임시 비밀번호 이메일 발송
@@ -254,7 +248,6 @@ public class MemberService {
   // password update
   public void pwdUpdate(Integer uNo, String newPassword) {
     String encodePwd = passwordEncoder.encode(newPassword);
-    System.out.println("*비밀번호 변경 성공* " + "uNo: " + uNo + ", newPwd: " + encodePwd);
     memberMapper.pwdUpdate(uNo, encodePwd);
   }
 

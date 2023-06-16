@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 public class MemberVO {
 
-  private Integer uno; // 회원번호
+  private Integer uNo; // 회원번호
   private String email; //이메일
   private String password; //패스워드
   private String name; //이름

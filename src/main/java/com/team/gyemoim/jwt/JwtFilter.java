@@ -39,6 +39,7 @@ public class JwtFilter extends GenericFilterBean {
 
         } else {
             logger.debug("유효한 Jwt 토큰이 없거나 블랙리스트에 있습니다, uri: {}", requestURI);
+
         }
 
 

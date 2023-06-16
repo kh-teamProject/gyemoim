@@ -5,9 +5,14 @@ import {FaMoneyBillAlt, FaAvianex, FaApple, FaTshirt, FaCarAlt, FaBirthdayCake, 
 import MyPageSidebar from "../../component/MyPageSidebar";
 import classes from '../css/Interest.module.css';
 import axios from "axios";
+import jwtDecode from "jwt-decode";
+import Cookies from "js-cookie";
 
 const Interest = () => {
   const location = useLocation();
+
+  const token = jwtDecode(Cookies.get('Set-Cookie'));
+  const uNo = token.uNo;
 
   const [interest, setInterest] = useState('');
   const [checkedInterest, setCheckedInterest] = useState('');
@@ -17,7 +22,7 @@ const Interest = () => {
   useEffect(() => {
     axios.get('/mypage', {
       params: {
-        uNo: 3
+        uNo
       }
     })
       .then((res) => {
@@ -42,7 +47,7 @@ const Interest = () => {
 
     axios.post('/interestUpdate', null, {
       params: {
-        uno: 3,
+        uNo,
         interest: checkedInterest,
       }
     })

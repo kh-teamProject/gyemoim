@@ -17,7 +17,7 @@ const Header = () => {
             await axios.post("/api/logout").then((res) => {
                 Cookies.remove("Set-Cookie");
                 dispatch({ type: "logout" });
-                navigate("/");
+                window.location.href = '/';
             });
         } catch (error) {
             console.log("로그아웃 에러: " + error);
@@ -25,9 +25,7 @@ const Header = () => {
     };
 
     useEffect(() => {
-        // Check login status on page load
         if (checkedLogin) {
-            // Perform a request to validate the login status, if needed
         }
     }, [checkedLogin]);
 

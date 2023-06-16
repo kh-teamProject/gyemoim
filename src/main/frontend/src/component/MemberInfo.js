@@ -1,7 +1,9 @@
 import classes from "../page/css/MyPageModify.module.css";
 import {useLocation, useNavigate} from "react-router-dom";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
+import {useDispatch} from "react-redux";
 
 const MemberInfo = () => {
   const navigate = useNavigate();
@@ -9,6 +11,8 @@ const MemberInfo = () => {
   const location = useLocation();
   const pathParts = location.pathname.split('/');
   const lastPath = pathParts[pathParts.length - 1];
+
+  const dispatch = useDispatch();
 
   const [myInfo, setMyInfo] = useState({});
   const [expenditure, setExpenditure] = useState({
@@ -19,6 +23,7 @@ const MemberInfo = () => {
     etx: ''
   });
   const [enrollDate, setEnrollDate] = useState('');
+  const checkedAdmin = useState(location.pathname.includes('admin'));
 
   useEffect(() => {
     axios.get('/mypage', {
@@ -27,6 +32,7 @@ const MemberInfo = () => {
       }
     })
       .then((res) => {
+        console.log(res.data);
         const date = new Date(res.data.enrollDate);
         const [year, month, day] = [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')];
         setMyInfo(res.data);
@@ -73,13 +79,23 @@ const MemberInfo = () => {
       ...expenditure,
     })
       .then((res) => {
-        alert('회원정보 수정이 완료되었습니다.');
+        alert('회원정보 수정이 완료되었습니다. 다시 로그인 해주세요.');
         navigate('/');
       })
       .catch((error) => {
         console.log(error);
+      });
+
+    axios.post("/api/logout")
+      .then((res) => {
+        Cookies.remove("Set-Cookie");
+        dispatch({ type: "logout" });
+        window.location.href = '/';
       })
-  }
+      .catch((error) => {
+        console.log("로그아웃 에러: " + error);
+      });
+  };
 
   return (
     <div>
@@ -139,7 +155,13 @@ const MemberInfo = () => {
         </div>
         <div className={classes.field}>
           <label htmlFor="">회원구분</label>
-          <input type="text" id="" value={myInfo.userRole || ''} readOnly />
+          {
+            checkedAdmin ?
+                <input type="text" id="" value={myInfo.userRole || ''} />
+                :
+                <input type="text" id="" value={myInfo.userRole || ''} readOnly />
+          }
+
         </div>
         <div className={classes.field}>
           <button type={"submit"} className={`${classes['submit-btn']}`}>수정완료</button>
