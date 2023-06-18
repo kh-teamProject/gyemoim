@@ -151,7 +151,7 @@
     <!--(찬희)개인 RollList -->
     <select id="getRollList" resultType="com.team.gyemoim.dto.stage.StageRollDTO"
             parameterType="com.team.gyemoim.dto.stage.StageRollDTO">
-        SELECT DISTINCT r.*, i.uPayment, i.uTotalPayment, i.uTotalReceipts
+        SELECT DISTINCT r.*, i.uPayment, i.uTotalPayment, i.uTotalReceipts, i.uReceipt
         FROM ROLL r
         JOIN receiptSchedule i ON i.receiveTurn = r.receiveTurn
         JOIN PF p ON p.pfRate = i.pfRate

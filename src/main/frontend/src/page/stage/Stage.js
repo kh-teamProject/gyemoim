@@ -161,7 +161,7 @@ const Stage = () => {
                         <div className={classes.boxButton}>
                             <BoxButton title="이율표 확인하기 >" desc="순번에 따른 얼마를 받게되는지 궁금할 땐," handler={receiptHandler}></BoxButton>
                             {receipt && <StageModal id={'receipt'}  title={pfData.pfName} schedule={schedule} onConfirm={errorReceiptHandler} />}
-                            <Link to={'/login'}><BoxButton title="고객문의 바로가기 >" desc="무엇을 도와드릴까요?"></BoxButton></Link>
+                            <Link to={'/board/question'}><BoxButton title="고객문의 바로가기 >" desc="무엇을 도와드릴까요?"></BoxButton></Link>
                         </div>
 
                         <div className={classes.stageZone}>

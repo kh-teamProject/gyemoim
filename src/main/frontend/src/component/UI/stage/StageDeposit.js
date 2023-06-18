@@ -51,8 +51,8 @@ function StageDeposit(props){
                 <p>이번 달 입금 할 금액 : {uPayment}원</p>
                 </>
                 : <>
-                <p>수령금액 : {uTotalReceipts}원 </p>
-                <p>나의 이율표 출력하기</p>
+                <p>실 수령금액 : {uTotalReceipts}원 </p>
+                <p>나의 결산보고서 출력하기</p>
                 </>
             }
             </div>
@@ -84,7 +84,12 @@ function StageDeposit(props){
                 <p>*매달 <span className={classes.red}>24일 전</span>에 입금해주세요.</p>
                 <p>*곗돈은 <span className={classes.red}>매달 30일</span>에 My계좌로 입금됩니다.</p>
             </>}
-            {props.startFlag==='완료' && <p>*스테이지의 이율표를 PDF 파일로 출력하실 수 있습니다.</p>}
+            {props.startFlag==='완료' &&
+            <>
+                <p>*스테이지가 완료되었습니다.</p>
+                <p>*결산보고서를 PDF 파일로 출력하실 수 있습니다.</p>
+            </>
+            }
 
         </div>
 

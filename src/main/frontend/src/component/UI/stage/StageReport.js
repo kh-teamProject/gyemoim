@@ -5,7 +5,7 @@ import {useLocation} from "react-router-dom";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 
-import { PDFViewer, Document, Page, View , Text, StyleSheet, Font } from "@react-pdf/renderer";
+import { PDFViewer, Document, Page, View , Text, StyleSheet, Font, Image } from "@react-pdf/renderer";
 
 Font.register({
   family: 'SpoqaHanSans_R',
@@ -34,6 +34,8 @@ const StageReport = (props) => {
     const location = useLocation();
     const pfIDNum = location.pathname.split('/');
 
+    const result = pfData.payment * 0.02 * (Math.pow(1 + 0.02, rollData.receiveTurn) - 1);
+
    useEffect(() => {
       axios.get('/StageReport', {
         params: {
@@ -50,6 +52,7 @@ const StageReport = (props) => {
         //pfData
         const depositList = res.data.pf.map((item) => item.deposit);
         const pfNameList = res.data.pf.map((item) => item.pfName);
+
         const startDateList = res.data.pf.map((item) => {
           const startDateData = moment(item.startDate).format('YYYY.MM.DD');
           return startDateData;
@@ -64,6 +67,7 @@ const StageReport = (props) => {
           .replace(/\B(?=(\d{4})+(?!\d))/g, ',');
         const pfRateList = res.data.pf.map((item) => item.pfRate);
         const pfEntryList = res.data.pf.map((item) => item.pfEntry);
+        const pfPaymentList = res.data.pf.map((item) => item.payment);
         const stageBalanceList = res.data.pf.map((item) => item.stageBalance);
 
         const pfData = {
@@ -73,6 +77,7 @@ const StageReport = (props) => {
         startDate: startDateList.join(''),
         endDate: endDateList.join(''),
         pfEntry: pfEntryList.join(''),
+        payment: pfPaymentList,
         stageBalance: stageBalanceList.join('')
         };
         setPfData(pfData);
@@ -82,23 +87,29 @@ const StageReport = (props) => {
         const RollUno = res.data.roll.map((item) => item.uno);
         const RollReceiveTurn = res.data.roll.map((item) => item.receiveTurn);
         const RollUPayment = res.data.roll.map((item) => item.upayment);
+        const RollUPaymentWithComma = RollUPayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         const RollMyBalance = res.data.roll.map((item) => item.myBalance);
         const RollPaymentCheck = res.data.roll.map((item) => item.paymentCheck);
         const RollUTotalReceipts = res.data.roll.map((item) => item.utotalReceipts);
-        const RollUTotalReceiptsWithComma = RollUTotalReceipts.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        const RollUTotalReceiptsWithComma = RollUTotalReceipts.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         const RollUTotalPayment = res.data.roll.map((item) => item.utotalPayment);
-        const RollRollUTotalPaymentWithComma = RollUTotalPayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        const RollUTotalPaymentWithComma = RollUTotalPayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        const RollUReceipt = res.data.roll.map((item) => item.ureceipt);
+        const RollUReceiptWithComma = RollUReceipt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
 
 
         const rollData = {
         depositCnt: RollDepositCnt.join(''),
         uNo: RollUno.join(''),
-        receiveTurn: RollReceiveTurn.join(''),
-        uPayment: RollUPayment.join(''),
+        receiveTurn: RollReceiveTurn,
+        uPaymentOriginal : RollUPayment,
+        uPayment: RollUPaymentWithComma,
         myBalance: RollMyBalance.join(''),
         paymentCheck: RollPaymentCheck.join(''),
         uTotalReceipts: RollUTotalReceiptsWithComma,
-        uTotalPayment: RollRollUTotalPaymentWithComma
+        uTotalPayment: RollUTotalPaymentWithComma,
+        uReceipt: RollUReceiptWithComma
         };
         setRollData(rollData);
 
@@ -216,20 +227,16 @@ const StageReport = (props) => {
                  <Text style={[styles.tableCell, styles.light]}>{rollData.receiveTurn}번</Text>
                </View>
               </View>
-                <View style={styles.tableRow}>
-                <View style={[styles.tableCol, styles.tableGray]}>
-                  <Text style={[styles.tableCell, styles.light]}>총 입금액</Text>
-                </View>
-                <View style={styles.tableCol}>
-                  <Text style={[styles.tableCell, styles.light]}>{rollData.uTotalPayment}원</Text>
-                </View>
-                <View style={[styles.tableCol, styles.tableGray]}>
-                 <Text style={[styles.tableCell, styles.light]}>실 지급액</Text>
+               <View style={styles.tableRow}>
+                 <View style={[styles.tableCol, styles.tableGray]}>
+                   <Text style={[styles.tableCell, styles.light]}>총 납입금</Text>
+                   <Text style={[styles.tableCell, styles.light, styles.textGray, styles.textSmall]}>월 납입금 X 불입 개월 수</Text>
+                 </View>
+                 <View style={styles.tableThreeCol}>
+                   <Text style={[styles.tableCell, styles.light]}>{rollData.uTotalPayment}원</Text>
+                   <Text style={[styles.tableCell, styles.light, styles.textGray, styles.textSmall]}>({rollData.uPayment}원 x {pfData.pfEntry}개월)</Text>
+                 </View>
                </View>
-               <View style={styles.tableCol}>
-                 <Text style={[styles.tableCell, styles.light]}>{rollData.uTotalReceipts}원</Text>
-               </View>
-              </View>
 
 
           </View>
@@ -238,34 +245,41 @@ const StageReport = (props) => {
           <Text style={[styles.light, styles.tableDiv, styles.gap]}>{'<'}수익 정보{'>'}</Text>
           <View style={styles.table}>
                 <View style={styles.tableRow}>
-                  <View style={[styles.tableCol, styles.tableGray]}>
-                    <Text style={[styles.tableCell, styles.light]}>실 이득</Text>
-                  </View>
-                  <View style={styles.tableThreeCol}>
-                    <Text style={[styles.tableCell, styles.light]}>실이득</Text>
-                  </View>
+                    <View style={[styles.tableCol, styles.tableGray]}>
+                      <Text style={[styles.tableCell, styles.light]}>실 지급액</Text>
+                    </View>
+                    <View style={styles.tableCol}>
+                      <Text style={[styles.tableCell, styles.light]}>{rollData.uTotalReceipts}원</Text>
+                    </View>
+                    <View style={[styles.tableCol, styles.tableGray]}>
+                     <Text style={[styles.tableCell, styles.light]}>실 이득</Text>
+                   </View>
+                   <View style={styles.tableCol}>
+                     <Text style={[styles.tableCell, styles.light]}>{rollData.uReceipt}원</Text>
+                   </View>
                 </View>
 
                 <View style={styles.tableRow}>
-                    <View style={[styles.tableCol, styles.tableGray]}>
-                      <Text style={[styles.tableCell, styles.light]}>수익</Text>
-                    </View>
-                    <View style={styles.tableCol}>
-                      <Text style={[styles.tableCell, styles.light]}>12345원</Text>
-                    </View>
-                    <View style={[styles.tableCol, styles.tableGray]}>
-                     <Text style={[styles.tableCell, styles.light]}>수익률</Text>
-                   </View>
-                   <View style={styles.tableCol}>
-                     <Text style={[styles.tableCell, styles.light]}>10%</Text>
-                   </View>
-              </View>
+                 <View style={[styles.tableCol, styles.tableGray]}>
+                   <Text style={[styles.tableCell, styles.light]}>수익</Text>
+                   <Text style={[styles.tableCell, styles.light, styles.textGray, styles.textSmall]}>*예측 은행이자</Text>
+                 </View>
+                 <View style={styles.tableThreeCol}>
+                   <Text style={[styles.tableCell, styles.light]}>{result}원</Text>
+                   <Text style={[styles.tableCell, styles.light, styles.textGray, styles.textSmall]}>
+                       =<Text style={styles.textRed}>{rollData.uPayment}</Text> * 0.02 * ((1+0.02)^<Text style={styles.textRed}>{rollData.receiveTurn}</Text>-1 )
+                   </Text>
+                 </View>
+               </View>
+
           </View>
-          <Text style={[styles.light, styles.tableDiv, styles.gap]}>*예측 은행이자 : </Text>
-          <Text style={[styles.light, styles.tableDiv, styles.gap]}>=p* r * ((1+r)^n-1 )</Text>
-          <Text style={[styles.light, styles.tableDiv, styles.gap]}>p: 월불입액</Text>
-          <Text style={[styles.light, styles.tableDiv, styles.gap]}>r: 이자</Text>
-          <Text style={[styles.light, styles.tableDiv, styles.gap]}>n: 기간</Text>
+          <Text style={[styles.light, styles.tableDiv, styles.gap]}>*예측 은행이자 : <Text style={[styles.light, styles.tableDiv]}>=p* r * ((1+r)^n-1 )</Text></Text>
+          <Text style={[styles.light, styles.textSmall]}>p: 월불입액, r: 이자, n: 기간</Text>
+          <Text style={[styles.light, styles.footer]}>
+            <Text style={styles.textFooterSub}>목독이 필요할땐, </Text>
+            <Text style={styles.textFooter}>계이득</Text>
+          </Text>
+                      <Image src={require('../../assert/images/gyemoim_stamp.png')} style={styles.footerImg}/ >
 
         </Page>
       </Document>
@@ -298,6 +312,8 @@ const styles = StyleSheet.create({
   },
   light: {
       fontFamily: 'SpoqaHanSans_L',
+        paddingTop: 2,
+        paddingBottom: 2,
     },
   english: {},
   tableDiv:{
@@ -336,6 +352,32 @@ const styles = StyleSheet.create({
     },
     textLeft:{
         textAlign: "left",
+    },
+    textGray: {
+        color: "#4f4f4f",
+    },
+    textRed: {
+        color: "#FF204B",
+    },
+    textSmall: {
+        fontSize: 9
+    },
+    footer: {
+        position: "absolute",
+        bottom: 45,
+        left: "200px",
+    },
+    textFooter: {
+        fontSize: 20
+    },
+    textFooterSub: {
+        fontSize: 13
+    },
+    footerImg: {
+        width: '80px',
+        position: "absolute",
+        bottom: 20,
+        right: "180px",
     }
 });
 
