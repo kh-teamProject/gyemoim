@@ -20,9 +20,6 @@ const Home = () => {
     const [noticeList, setNoticeList] = useState([]);
 
 
-    console.log('allPf', allPf);
-
-    console.log(stageList);
 useEffect(() => {
     axios.get('/getStageList', {
       params: {

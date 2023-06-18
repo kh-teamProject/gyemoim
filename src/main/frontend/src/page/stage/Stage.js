@@ -28,10 +28,8 @@ const Stage = () => {
     const [pfData, setPfData] = useState([]);
     const [rollData, setRollData] = useState([]);
 
-    console.log(schedule);
     const location = useLocation();
     const pfIDNum = location.pathname.split('/');
-
 
   useEffect(() => {
     axios.get('/stage', {

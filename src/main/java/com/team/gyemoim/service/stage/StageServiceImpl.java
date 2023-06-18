@@ -195,9 +195,7 @@ public class StageServiceImpl implements StageService {
   @Override
   @Scheduled(cron = "0 40 19 31 * ?") // 매달 25일 0시 0분 0초에 실행
   public void performUpdate() {
-    log.info("들어오세요 쫌 !!!!! 왜 안돼? 왜? 왜지? 모지?");
     if( stageRollDTO != null) {
-      log.info("들어오세요 쫌 !!!!!");
       int currentStageBalance = stageMapper.getStageBalance(stageRollDTO);
       int stageDeposit = stageMapper.getStageDeposit(stageRollDTO);
       int uTotalReceipts = stageMapper.getUTotalReceipts(stageRollDTO);
@@ -208,7 +206,6 @@ public class StageServiceImpl implements StageService {
       stageRollDTO.setUNo(uNo);
       // stageBalance >= deposit : stageBalance -> uPayment 이동
       if (currentStageBalance >= stageDeposit) {
-        log.info("currentStageBalance: " + currentStageBalance + ",stageDeposit : " + stageDeposit);
         //1. 스테이지(pf) stageBalance - *번의 uPayment
         stageMapper.stageBalanceMinus(stageRollDTO);
         //2. *번의 계좌(myAccount)의 uPayment + stageBalance
