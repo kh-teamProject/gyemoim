@@ -77,7 +77,7 @@ function StageDeposit(props){
             {props.startFlag==='대기중' &&
             <>
                 <p>*스테이지가 시작되면 입금하기 버튼이 활성화됩니다.</p>
-                <p>*계좌에 금액이 부족하실 경우 마이페이지에서 충전해주시기 바랍니다. <Link to={'/mypage'}>마이페이지 ></Link></p>
+                <p>*계좌에 금액이 부족하실 경우 마이페이지에서 충전해주시기 바랍니다. <Link to={'/mypage/bankAccount/deposit'}>마이페이지 ></Link></p>
             </>}
             {props.startFlag==='참여중' &&
             <>
