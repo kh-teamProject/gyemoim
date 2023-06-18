@@ -17,7 +17,7 @@ const QuestionWritePost = () => {
     const [questionFormData, setQuestionFormData] = useState({
         uno: uno,
         name: writer, // 글 작성자 이름
-        type: "1:1 문의사항", // 게시글 타입
+        bType: "1:1 문의사항", // 게시글 타입
         title: "", // 게시글 제목
         content: "", // 게시글 내용
         secret: "P", // 글 여부 (공개/비공개)
@@ -97,7 +97,7 @@ const QuestionWritePost = () => {
             console.log("업로드할 첨부파일 : " + file);
             console.log("글 작성자의 uNo 또는 uno: " + questionFormData.uno);
             console.log("글 작성자의 name: " + questionFormData.name);
-            console.log("글 게시물 종류: " + questionFormData.type);
+            console.log("글 게시물 종류: " + questionFormData.bType);
             console.log("글 게시물 제목: " + questionFormData.title);
             console.log("글 게시물 내용: " + questionFormData.content);
             console.log("글 게시물 공개여부: " + questionFormData.secret);

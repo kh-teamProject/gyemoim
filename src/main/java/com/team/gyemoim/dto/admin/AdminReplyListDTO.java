@@ -12,5 +12,5 @@ public class AdminReplyListDTO {
     private String name;
     private Date repDate;
     private String replyComm;
-    private String type; // Board 테이블에 있는 게시글 종류
+    private String bType; // Board 테이블에 있는 게시글 종류
 }

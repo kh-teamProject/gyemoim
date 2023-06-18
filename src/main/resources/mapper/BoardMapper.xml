@@ -33,7 +33,7 @@
             resultType="com.team.gyemoim.vo.BoardVO">
         SELECT *
         FROM BOARD
-        WHERE type = #{type}
+        WHERE bType = #{bType}
         <if test="searchType != ''  and searchKeyword != '' ">
             <if test="searchType == 'title'">
                 AND title LIKE '%' || #{searchKeyword} || '%'
@@ -86,8 +86,8 @@
 
     <!-- 글 작성하기 -->
     <insert id="insert" parameterType="com.team.gyemoim.vo.BoardVO">
-        INSERT INTO board (bid, uNo, name, type, title, views, content, writeDate, secret)
-        VALUES (#{bid}, #{uNo}, #{name}, #{type}, #{title}, 0, #{content}, sysdate, #{secret})
+        INSERT INTO board (bid, uNo, name, bType, title, views, content, writeDate, secret)
+        VALUES (#{bid}, #{uNo}, #{name}, #{bType}, #{title}, 0, #{content}, sysdate, #{secret})
     </insert>
 
 

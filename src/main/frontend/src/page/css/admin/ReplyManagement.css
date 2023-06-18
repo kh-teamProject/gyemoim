@@ -1,23 +1,39 @@
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(0, 0, 0, 0.5);/* 배경색과 투명도를 조절할 수 있습니다 */
-    z-index: 9999; /* 다른 요소들보다 위에 표시되도록 z-index를 설정합니다 */
-}
-
 .modal {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    max-width: 90%;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);/* 배경 어둡게 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
     background-color: #fff;
     padding: 20px;
+    position: relative;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 10000; /* 모달 창을 더 위에 표시하려면 더 큰 z-index 값을 설정합니다 */
+    max-width: 935px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+}
+
+/* 화면이 작을 경우 모달 스크롤 가능하도록 설저 */
+@media screen and (max-height: 700px){
+    .modal-content {
+        max-height: 80%;
+        overflow: auto;
+    }
 }

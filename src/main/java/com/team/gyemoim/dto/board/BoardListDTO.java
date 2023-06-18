@@ -11,12 +11,12 @@ public class BoardListDTO {
 
 
     // 게시글 타입 (공지사항 vs 1:1 문의사항)
-    private String type;
+    private String bType;
 
 
-    public BoardListDTO(String searchType, String searchKeyword, String type) {
+    public BoardListDTO(String searchType, String searchKeyword, String bType) {
         this.searchType = searchType;
         this.searchKeyword = searchKeyword;
-        this.type = type;
+        this.bType = bType;
     }
 }

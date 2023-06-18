@@ -4,13 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team.gyemoim.config.FileUploadConfig;
 import com.team.gyemoim.dto.board.*;
 import com.team.gyemoim.service.BoardService;
-import com.team.gyemoim.service.ReplyService;
 import com.team.gyemoim.vo.AttachedVO;
 import com.team.gyemoim.vo.BoardVO;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +34,7 @@ public class BoardController {
     @GetMapping("/board/searchList")
     public List<BoardVO> searchList(BoardListDTO dto) throws Exception {
         System.out.println("****************** 게시글 리스트 searchList 컨트롤러 성공 :D ******************");
-        System.out.println("가져오는 게시글 종류: " + dto.getType());
+        System.out.println("가져오는 게시글 종류: " + dto.getBType());
         System.out.println("가져오는 검색어: " + dto.getSearchKeyword());
 
         return boardService.searchList(dto);

@@ -11,7 +11,7 @@ const QuestionList = () => {
     const [questionList, setQuestionList] = useState([]);
 
     // 게시글 타입 : 1:1 문의사항
-    const type = "1:1 문의사항";
+    const bType = "1:1 문의사항";
 
     // 페이징 관련 변수
     // 1) 현재페이지 : nowPage
@@ -40,7 +40,7 @@ const QuestionList = () => {
         // 검색된 List<BoardVO> 리턴받음
         await axios.get("/board/searchList", {
             params: {
-                "type": type,
+                "bType": bType,
                 "searchType": searchType,
                 "searchKeyword": searchKeyword,
             }

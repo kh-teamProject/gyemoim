@@ -105,7 +105,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardVO> searchList(BoardListDTO dto) throws Exception {
         System.out.println("******************** 게시글 리스트 searchList 서비스 성공 :D ********************");
-        System.out.println("가져오는 게시글 종류: " + dto.getType());
+        System.out.println("가져오는 게시글 종류: " + dto.getBType());
         return boardMapper.searchList(dto);
     }
 

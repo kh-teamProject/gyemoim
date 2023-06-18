@@ -13,7 +13,7 @@ const NoticeList = () => {
     const [noticeList, setNoticeList] = useState([]);
 
     // 게시글 타입 : 공지사항
-    const type = "공지사항";
+    const bType = "공지사항";
 
     // 페이징 관련 변수
     // 1) 현재페이지 : nowPage
@@ -44,7 +44,7 @@ const NoticeList = () => {
         // 검색된 List<BoardVO> 리턴받음
         await axios.get("/board/searchList", {
             params: {
-                "type": type,
+                "bTyp": bType,
                 "searchType": searchType,
                 "searchKeyword": searchKeyword,
             },
