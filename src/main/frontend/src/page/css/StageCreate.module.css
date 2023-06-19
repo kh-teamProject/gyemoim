@@ -40,7 +40,7 @@ input.aa + label {
 .flexD{
     display: flex;
      gap: 1rem;
-     padding: 1rem 2rem;
+     padding: 1rem;
      justify-content: space-between;
 }
 
@@ -48,14 +48,24 @@ input.aa + label {
 .flex2{
     flex:2;
      margin: 3rem;
-
 }
 
 .flex1{
     flex:1;
-
 }
-
+h4{
+    margin: 0 0 10px;
+}
+.stageName{
+    padding: 0 !important;
+}
+.borderLeft{
+    border-left: 1px solid #e0e0e0;
+}
+.receiveTurn, .rate{
+    display: flex;
+flex-wrap: wrap;
+}
 /*버튼*/
 .button {
   text-align: center;
@@ -134,13 +144,12 @@ input.aa + label {
 
 /*박스 */
 .box {
-
   background: #fff;
   border-radius: 7px;
-  display: inline-table;
-  width: 1000px;
-  margin: 5rem;
+  display: inline-block;
+  width: 1300px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  margin-bottom: 5rem;
 }
 
 
@@ -183,6 +192,7 @@ font-size: 1rem;
 .table th,
 table td {
   padding: .5em 1em;
+  word-break: keep-all;
 }
 
   .table tr:hover {
@@ -208,17 +218,15 @@ table td {
   }
   label.button0{
     padding: 1rem;
-    margin: 1rem;
     cursor: pointer;
      text-align: center;
     border: 2px solid  #004DC1;
     background-color: white;
     color: #004DC1;
-   width: 7rem;
-    padding: 0.8rem 1rem;
-     border-radius: 1rem;
-    font-size: 1.3rem;
-     margin : 0.5rem;
+
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    margin: 0.5rem;
   }
 
   input:checked + label.button0{
@@ -238,10 +246,9 @@ table td {
    border: 2px solid  #004DC1;
     background-color:white ;
     color: #004DC1 ;
-   width: 13rem;
+   width: 10rem;
     padding: 0.8rem 1rem;
-    border-radius: 10px;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
   input:checked + label.button1{
@@ -262,10 +269,8 @@ input.button3{
      border: 2px solid  #004DC1;
       background-color:white ;
       color: #004DC1 ;
-
-      padding: 1rem 1rem;
-      border-radius: 50%;
-      font-size: 1.3rem;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
  }
 
   input:checked + label.button3{
@@ -284,10 +289,8 @@ input.button3{
     border: 2px solid  #004DC1;
     background-color: white;
     color: #004DC1;
-   width: 7rem;
     padding: 0.8rem 1rem;
-     border-radius: 1rem;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
      margin : 0.5rem;
   }
 
@@ -309,14 +312,56 @@ label.button5{
    border: 2px solid  #004DC1;
     background-color:white ;
     color: #004DC1 ;
-   width: 9rem;
-    padding: 0.8rem 1rem;
-    border-radius: 10px;
-    font-size: 1.3rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 35px;
+    font-size: 1rem;
 }
 
 input:checked + label.button5{
       background-color:  #004DC1;
         color:white;
 
+}
+
+/*아이콘*/
+label > svg{
+    margin-right: 0.3rem;
+    vertical-align: -0.1rem;
+}
+
+/*3D 버튼*/
+.button001 {
+  display: inline-block;
+  position: relative;
+  width: 120px;
+  padding: 0;
+  margin: 0px 20px 10px 0;
+  font-weight: 600;
+  text-align: center;
+  line-height: 50px;
+  color: #FFF;
+  border-radius: 5px;
+  transition: all 0.2s ;
+  font-size: 1.15rem;
+  border: 2px solid black;
+}
+.widthBig{
+  width: 14rem;
+}
+.btnBlueGreen {
+  background: #ff6436;
+}
+.btnBlueGreen.btnPush {
+  box-shadow: 3px 5px 0px 0px #ff8678;
+}
+.btnPush:hover {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.btnBlueGreen.btnPush:hover {
+  box-shadow: 0px 0px 0px 0px #ff6436;
+}
+.marginTop01{
+    margin-top: 1rem;
 }

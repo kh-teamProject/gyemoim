@@ -209,11 +209,9 @@ const countClickHandler = (value) => {
       <form action="/register" method="get">
       <div className={styles.flexD}>
        <div className={styles.flex1}>
-
         <div className={styles.flex2}>
           <h4>스테이지 이름</h4>
-          <div className={styles.flexD}>
-
+          <div  className={[styles.stageName, styles.flexD].join(' ')}>
            <div className={styles.flex1}>
           <input className={styles.inputStage}
             style={{borderColor: isDuplicate ? 'red' : 'gray'}}
@@ -229,8 +227,8 @@ const countClickHandler = (value) => {
 
           </div>
 
-            <div className={styles.flex1}>
-             <button className={styles.buttonSmall} type="button" onClick={handleCheckDuplicate}>중복체크</button>
+            <div className={[styles.flex1, styles.textLeft].join(' ')}>
+             <button className={[styles.button001, styles.btnPush, styles.btnBlueGreen, styles.textLeft].join(' ')} type="button" onClick={handleCheckDuplicate}>중복체크</button>
             </div>
 
             </div>
@@ -287,7 +285,7 @@ const countClickHandler = (value) => {
 
         <div className={styles.flex2}>
         <h4>이율</h4>
-          <div className={styles.textLeft}>
+         <div className={[styles.textLeft, styles.rate].join(' ')}>
           {count === "5" && (
             <>
              <Rate name="rate" value="1.86" onClick={rateHandler} id="R1"/>
@@ -310,17 +308,17 @@ const countClickHandler = (value) => {
      </div>
      </div>
 
-        <div className={styles.flex2}>
+        <div className={[styles.flex1, styles.borderLeft].join(' ')}>
         <div className={styles.flex2}>
           <input
             type="button"
-            className={styles.button}
+            className={[styles.button001, styles.btnPush, styles.btnBlueGreen, styles.widthBig].join(' ')}
             onClick={importTableClick}
             value={rateTable}
           />
           {isImportTable && (
             <>
-            <div className={styles.flex1}>
+            <div className={[styles.flex1, styles.marginTop01].join(' ')}>
               <table  className={styles.table}>
                 <thead>
                   <tr>
@@ -355,34 +353,38 @@ const countClickHandler = (value) => {
 
          <div className={styles.flex2}>
         <h4>나의 순번</h4>
-         <div className={styles.textLeft}>
+         <div className={[styles.textLeft, styles.receiveTurn].join(' ')}>
           {count === "5" && (
             <>
           <Turn name="turn" value="1" onClick={turnHandler} id="T51"/>
-           <label htmlFor="T51" className={styles.button4} >1</label>
+           <label htmlFor="T51" className={styles.button4} >1번</label>
             <Turn name="turn" value="2" onClick={turnHandler} id="T52"/>
-           <label htmlFor="T52" className={styles.button4} >2</label>
+           <label htmlFor="T52" className={styles.button4} >2번</label>
            <Turn name="turn" value="3" onClick={turnHandler} id="T53"/>
-           <label htmlFor="T53" className={styles.button4} >3</label>
+           <label htmlFor="T53" className={styles.button4} >3번</label>
            <Turn name="turn" value="4" onClick={turnHandler} id="T54"/>
-           <label htmlFor="T54" className={styles.button4} >4</label>
+           <label htmlFor="T54" className={styles.button4} >4번</label>
            <Turn name="turn" value="5" onClick={turnHandler} id="T55"/>
-           <label htmlFor="T55" className={styles.button4} >5</label>
+           <label htmlFor="T55" className={styles.button4} >5번</label>
 
             </>
           )}
           {count === "7" && (
             <>
           <Turn name="turn" value="1" onClick={turnHandler} id="T71"/>
-           <label htmlFor="T71" className={styles.button4} >1</label>
+           <label htmlFor="T71" className={styles.button4} >1번</label>
             <Turn name="turn" value="2" onClick={turnHandler} id="T72"/>
-           <label htmlFor="T72" className={styles.button4} >2</label>
+           <label htmlFor="T72" className={styles.button4} >2번</label>
            <Turn name="turn" value="3" onClick={turnHandler} id="T73"/>
-           <label htmlFor="T73" className={styles.button4} >3</label>
+           <label htmlFor="T73" className={styles.button4} >3번</label>
            <Turn name="turn" value="4" onClick={turnHandler} id="T74"/>
-           <label htmlFor="T74" className={styles.button4} >4</label>
+           <label htmlFor="T74" className={styles.button4} >4번</label>
            <Turn name="turn" value="5" onClick={turnHandler} id="T75"/>
-           <label htmlFor="T75" className={styles.button4} >5</label>
+           <label htmlFor="T75" className={styles.button4} >5번</label>
+          <Turn name="turn" value="6" onClick={turnHandler} id="T76"/>
+          <label htmlFor="T76" className={styles.button4} >6번</label>
+          <Turn name="turn" value="7" onClick={turnHandler} id="T77"/>
+          <label htmlFor="T77" className={styles.button4} >7번</label>
             </>
           )}
         </div>
@@ -402,8 +404,7 @@ const countClickHandler = (value) => {
             <label htmlFor="CA3" className={styles.button5} ><FaApple /> 전자제품</label>
             <Category  name="category" value="패션잡화" onClick={categoryHandler}  id="CA4"> </Category>
             <label htmlFor="CA4" className={styles.button5} ><FaTshirt /> 패션잡화</label>
-            </div>
-             <div>
+
             <Category  name="category" value="취미" onClick={categoryHandler}  id="CA5"> </Category>
             <label htmlFor="CA5" className={styles.button5} ><FaHiking /> 취미</label>
             <Category  name="category" value="웨딩" onClick={categoryHandler}  id="CA6"> </Category>
@@ -419,7 +420,7 @@ const countClickHandler = (value) => {
 
            <div className={styles.flex1}>
              <Link to={`/stageAgree/${name}`}>
-             <button className={styles.button}  onClick={()=>{
+             <button className={[styles.button001, styles.btnPush, styles.btnBlueGreen, styles.widthBig].join(' ')}  onClick={()=>{
              submitClick()
              }}>생성하기</button>
             </Link>
