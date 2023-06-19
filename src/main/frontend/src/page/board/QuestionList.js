@@ -11,7 +11,7 @@ const QuestionList = () => {
     const [questionList, setQuestionList] = useState([]);
 
     // 게시글 타입 : 1:1 문의사항
-    const type = "1:1 문의사항";
+    const bType = "1:1 문의사항";
 
     // 페이징 관련 변수
     // 1) 현재페이지 : nowPage
@@ -31,6 +31,7 @@ const QuestionList = () => {
     // 로그인 토큰에서 회원번호 uno 가 있으면 가져오고 아니면 null 로 설정
     const token = Cookies.get('Set-Cookie');
     const uno = token ? jwtDecode(token).uNo : null;
+    const userRole = jwtDecode(token).userRole;
 
 
     // API 호출하여 게시글 목록 가져오기
@@ -39,7 +40,7 @@ const QuestionList = () => {
         // 검색된 List<BoardVO> 리턴받음
         await axios.get("/board/searchList", {
             params: {
-                "type": type,
+                "btype": bType,
                 "searchType": searchType,
                 "searchKeyword": searchKeyword,
             }
@@ -103,6 +104,7 @@ const QuestionList = () => {
     // (board.secret == 'S') && (board.uNo != login.uNo) 인 경우 발생하는 함수
     const handleSecretClick = () => {
         alert("다른 사람의 비밀글은 볼 수 없습니다.");
+        console.log("userRole = " + userRole);
     };
 
     // 글쓰기 버튼 클릭시 문의사항 글쓰기 페이지로 이동하는 함수
@@ -139,7 +141,8 @@ const QuestionList = () => {
                                     </td>
                                     <td>
                                         <span className={`${classes['search-window']}`}>
-                                        <input type="text" className={`${classes['input-text']}`} placeholder="검색어를 입력하세요."
+                                        <input type="text" className={`${classes['input-text']}`}
+                                               placeholder="검색어를 입력하세요."
                                                value={searchKeywordVal} onChange={changeSearchKeyword}/></span>
                                     </td>
                                     <td>
@@ -160,19 +163,24 @@ const QuestionList = () => {
                                 <tr>
                                     <th className={`${classes['board-column']}`} style={{
                                         borderSpacing: "30px"
-                                    }}>글번호</th>
+                                    }}>글번호
+                                    </th>
                                     <th className={`${classes['board-column']}`} style={{
                                         borderSpacing: "10px"
-                                    }}>제목</th>
+                                    }}>제목
+                                    </th>
                                     <th className={`${classes['board-column']}`} style={{
                                         borderSpacing: "10px"
-                                    }}>작성자</th>
+                                    }}>작성자
+                                    </th>
                                     <th className={`${classes['board-column']}`} style={{
                                         borderSpacing: "10px"
-                                    }}>작성일</th>
+                                    }}>작성일
+                                    </th>
                                     <th className={`${classes['board-column']}`} style={{
                                         borderSpacing: "10px"
-                                    }}>조회수</th>
+                                    }}>조회수
+                                    </th>
                                 </tr>
                                 </thead>
 
@@ -194,12 +202,32 @@ const QuestionList = () => {
                                                     }}>{item.bid}</td>
                                                     <td className={`${classes['text-center'], classes['title-link']}`}>
                                                         {item.secret === 'S' ? (
-                                                                <Link to="#" onClick={handleSecretClick}>[비밀글]</Link>) :
-                                                            (<Link
+                                                            userRole == "관리자" ? (
+                                                                <Link
+                                                                    to={`/board/question/detail/${item.bid}`}
+                                                                    className={`${classes['title-link']}`}>
+                                                                    [비밀글]
+                                                                </Link>
+                                                            ) : (
+                                                                uno === item.uno ? (
+                                                                    <Link
+                                                                        to={`/board/question/detail/${item.bid}`}
+                                                                        className={`${classes['title-link']}`}>
+                                                                        [비밀글]
+                                                                    </Link>
+                                                                ) : (
+                                                                    <Link to="#"
+                                                                          onClick={handleSecretClick}>[비밀글]
+                                                                    </Link>
+                                                                )
+                                                            )
+                                                        ) : (
+                                                            <Link
                                                                 to={`/board/question/detail/${item.bid}`}
                                                                 className={`${classes['title-link']}`}>
                                                                 {item.title}
-                                                            </Link>)}
+                                                            </Link>
+                                                        )}
                                                     </td>
                                                     <td className={`${classes['text-center']}`}>{item.name}</td>
                                                     <td className={`${classes['text-center']}`}>{formattedWriteDate}</td>
@@ -251,7 +279,7 @@ const QuestionList = () => {
                             {/* 글쓰기 버튼 */}
                             <div className={`${classes['board-write']}`}>
                                 {uno && (
-                                    <button onClick={moveQuestionWrite}> 등록하기</button>
+                                    <button onClick={moveQuestionWrite}> 문의하기</button>
                                 )}
                             </div>
                         </div>

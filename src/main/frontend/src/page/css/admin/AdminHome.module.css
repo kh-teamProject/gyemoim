@@ -4,11 +4,11 @@
   gap: 40px;
 }
 
-.interestChart, .expenditureChart {
+.interestChart, .expenditureChart, .userRoleChart {
   margin-top: 20px;
   width: 500px;
 }
 
-.interestChart > h2, .expenditureChart > h2 {
+.interestChart > h2, .expenditureChart > h2, .userRoleChart > h2 {
   font-size: 1.5rem;
 }

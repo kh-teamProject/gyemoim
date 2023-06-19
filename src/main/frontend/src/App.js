@@ -24,7 +24,6 @@ import StageList from './page/stage/StageList';
 import Account from "./page/account/Account";
 import Stage from './page/stage/Stage';
 import StageSelect from './page/stage/StageSelect';
-import ChanHeeTest from './page/ChanHeeTest';
 import CheckedPwd from "./page/account/CheckedPwd";
 import Deposit from "./page/account/Deposit";
 import Interest from "./page/account/Interest";
@@ -34,9 +33,10 @@ import DetailsInquiry from "./page/account/DetailsInquiry";
 import AccountManagement from "./page/admin/AccountManagement";
 import AdminHome from "./page/AdminHome";
 import StageManagement from "./page/admin/StageManagement";
-import BoardManagement from "./page/admin/BoardManagement";
+import ReplyManagement from "./page/admin/ReplyManagement";
 import StageReport from "./component/UI/stage/StageReport";
 import AdminStageList from "./page/admin/AdminStageList";
+
 import AdminStageDetail from "./page/admin/AdminStageDetail";
 import TestAdminAccountDetail from "./page/admin/TestAdminAccountDetail";
 import AccountModify from "./page/admin/AccountModify";
@@ -63,11 +63,8 @@ const App = () => {
           uNo: jwtDecode(token).uNo,
           name: jwtDecode(token).name,
           userRole: jwtDecode(token).userRole[0]
-
         });
         console.log(jwtDecode(token).userRole[0]);
-      } else {
-
       }
     }, [myInfo.uNo, myInfo.userRole]);
 
@@ -138,23 +135,23 @@ const App = () => {
               },
               {
                 path: 'stage',
-                element: <MyStage />
+                element: <MyStage/>
               },
               {
                 path: 'stage/wait',
-                element: <StageWait />
+                element: <StageWait/>
               },
               {
                 path: 'stage/participagin',
-                element: <StageParticipatin />
+                element: <StageParticipatin/>
               },
               {
                 path: 'stage/complete',
-                element: <StageComplete />
+                element: <StageComplete/>
               },
               {
                 path: 'stage/recommendedStage',
-                element: <RecommendedStage />
+                element: <RecommendedStage/>
               }
             ]
           },
@@ -165,22 +162,22 @@ const App = () => {
 
           // 권한 상관 x
           {
-            path: 'stageSelect/:pfID',
+            path: '/stageSelect/:pfID',
             element: <StageSelect/>
           },
           {
             path: 'stagelist',
             element: <StageList/>
           },
+<<<<<<< HEAD
+=======
+          //
+
+>>>>>>> 93def4b275c7426be1889fa2ae2147e59df22ffd
           {
             path: '/stageCreate',
             element: cookie ? (jwtDecode(cookie).userRole[0] !== '가회원' ? <StageCreate/> : <Navigate to="/"/>) :
               <Navigate to="/"/>
-          },
-          {
-            path: 'ChanHeeTest',
-            element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' ?
-              <ChanHeeTest/> : <Navigate to="/"/>) : <Navigate to="/"/>
           },
           {
             path: '/stageAgree/:pfID',
@@ -249,6 +246,10 @@ const App = () => {
             element: <AccountManagement/>
           },
           {
+            path: 'account/detail/:uno',
+            element: <TestAdminAccountDetail/>
+          },
+          {
             path: 'account/modify/:uNo',
             element: <AccountModify/>
           },
@@ -260,6 +261,7 @@ const App = () => {
             path: 'stage/list',
             element: <AdminStageList/>
           },
+
           {
             path: 'stage/detail/:pfID',
             element: <AdminStageDetail/>
@@ -269,8 +271,8 @@ const App = () => {
             element: <AdminStageDetail/>
           },
           {
-            path: 'board',
-            element: <BoardManagement/>
+            path: 'reply',
+            element: <ReplyManagement/>
           }
         ]
       },

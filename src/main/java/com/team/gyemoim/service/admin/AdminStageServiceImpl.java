@@ -13,7 +13,7 @@ public class AdminStageServiceImpl implements AdminStageService{
   //(현지) 계모임 리스트 조회
   @Override
   public List<AdminStageDetailDTO> getStageList() {
-    System.out.println("[서비스] 스테이지 가져오기");
+
     return adminStageMapper.getStageList();
   }
 
@@ -21,6 +21,13 @@ public class AdminStageServiceImpl implements AdminStageService{
   @Override
   public Integer checkPFID(Integer pfID) {
     return adminStageMapper.updateStatus(pfID);
+  }
+
+  //(현지) PF 데이터 가져와서 차트 보내기
+  @Override
+  public List<AdminStageDetailDTO> getStageChart() {
+
+    return adminStageMapper.getStageChart();
   }
 
   //(유진) 스테이지 참여 회원정보 가져오기

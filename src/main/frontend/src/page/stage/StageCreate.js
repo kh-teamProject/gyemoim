@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { useParams} from 'react-router-dom';
+import {FaMoneyBillAlt, FaAvianex, FaApple, FaTshirt, FaCarAlt, FaBirthdayCake, FaHiking} from 'react-icons/fa';
 
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
@@ -10,7 +11,6 @@ import jwtDecode from "jwt-decode";
 import styles from "../css/StageCreate.module.css";
 
 import Participants from "../../component/UI/stage/Participants";
-
 
 
 import Rate from "../../component/UI/stage/Rate";
@@ -23,8 +23,13 @@ import Category from "../../component/UI/stage/Category";
 
 
 const StageCreate = () => {
+
+
  const token = jwtDecode(Cookies.get('Set-Cookie'));
    const uNo = token.uNo;
+
+
+const [selectedValue, setSelectedValue] = useState("");
 
   const [name, setName] = useState("");
   const [count, setCount] = useState("");
@@ -99,8 +104,7 @@ const [isDuplicate, setIsDuplicate] = useState(false);
 
   const rateHandler = (rateData) => {
     setRate(rateData);
-  };
-
+};
 
   const importTableClick = () => {
     if (!isImportTable) {
@@ -204,12 +208,10 @@ const countClickHandler = (value) => {
 
       <form action="/register" method="get">
       <div className={styles.flexD}>
-       <div className={styles.flex2}>
-
+       <div className={styles.flex1}>
         <div className={styles.flex2}>
           <h4>스테이지 이름</h4>
-          <div className={styles.flexD}>
-
+          <div  className={[styles.stageName, styles.flexD].join(' ')}>
            <div className={styles.flex1}>
           <input className={styles.inputStage}
             style={{borderColor: isDuplicate ? 'red' : 'gray'}}
@@ -225,8 +227,8 @@ const countClickHandler = (value) => {
 
           </div>
 
-            <div className={styles.flex1}>
-             <button className={styles.buttonSmall} type="button" onClick={handleCheckDuplicate}>중복체크</button>
+            <div className={[styles.flex1, styles.textLeft].join(' ')}>
+             <button className={[styles.button001, styles.btnPush, styles.btnBlueGreen, styles.textLeft].join(' ')} type="button" onClick={handleCheckDuplicate}>중복체크</button>
             </div>
 
             </div>
@@ -236,12 +238,13 @@ const countClickHandler = (value) => {
         <div className={styles.flex2}>
         <h4>참여인원</h4>
         <div className={styles.textLeft}>
-          <button type="button" name="count" value="5"  onClick={countHandler} className={styles.button1} >5명</button>
-          <button type="button" name="count" value="7"  onClick={countHandler} className={styles.button1}>7명 </button>
 
+        <input className={styles.button3} type="radio" name="count" value="5"  onClick={countHandler}  id="C5"  />
+        <label htmlFor ="C5" className={styles.button3} >5명 </label>
+         <input className={styles.button3}  type="radio" name="count" value="7"  onClick={countHandler}  id="C7"  />
+        <label htmlFor ="C7" className={styles.button3} >7명 </label>
         </div>
          </div>
-
 
         <div className={styles.flex2}>
         <h4>약정금액(총 금액)</h4>
@@ -249,23 +252,31 @@ const countClickHandler = (value) => {
           {count === "5" && (
             <>
 
-            <label  className={styles.selectLabel}><Participants name="deposit" value="500000"   onClick={depositHandler} >50만원(월10만원) </Participants> </label>
-             <label  className={styles.selectLabel}> <Participants name="deposit" value="1000000"  onClick={depositHandler}>100만원(월20만원) </Participants></label>
-             <label  className={styles.selectLabel}><Participants name="deposit" value="1500000" onClick={depositHandler}>150만원(월30만원) </Participants></label>
-
-            <label  className={styles.selectLabel}><Participants name="deposit" value="2000000" onClick={depositHandler}>200만원(월40만원) </Participants></label>
-            <label  className={styles.selectLabel}> <Participants name="deposit" value="2500000" onClick={depositHandler}>250만원(월50만원) </Participants></label>
+           <Participants name="deposit" value="500000"   onClick={depositHandler} id="P51" />
+           <label htmlFor="P51" className={styles.button1} >50만원(월10만원) </label>
+          <Participants name="deposit" value="1000000"   onClick={depositHandler} id="P52" />
+          <label htmlFor="P52" className={styles.button1} >100만원(월20만원)</label>
+          <Participants name="deposit" value="1500000"   onClick={depositHandler} id="P53" />
+           <label htmlFor="P53" className={styles.button1} >150만원(월30만원)</label>
+           <Participants name="deposit" value="1500000"   onClick={depositHandler} id="P54" />
+          <label htmlFor="P54" className={styles.button1} >200만원(월40만원)</label>
+          <Participants name="deposit" value="1500000"   onClick={depositHandler} id="P55" />
+            <label htmlFor="P55" className={styles.button1} >250만원(월50만원)</label>
 
             </>
           )}
           {count === "7" && (
             <>
-              <label  className={styles.selectLabel}><Participants name="deposit" value="700000" onClick={depositHandler}>70만원(월10만원) </Participants></label>
-              <label  className={styles.selectLabel}><Participants name="deposit" value="1400000" onClick={depositHandler}>140만원(월20만원) </Participants></label>
-
-              <label  className={styles.selectLabel}><Participants name="deposit" value="2100000" onClick={depositHandler}>210만원(월30만원) </Participants></label>
-             <label  className={styles.selectLabel}> <Participants name="deposit" value="2800000" onClick={depositHandler}>280만원(월40만원) </Participants></label>
-            <label  className={styles.selectLabel}>  <Participants name="deposit" value="3500000" onClick={depositHandler}>350만원(월50만원) </Participants></label>
+               <Participants name="deposit" value="700000"   onClick={depositHandler} id="P71" />
+               <label htmlFor="P71" className={styles.button1} >70만원(월10만원) </label>
+              <Participants name="deposit" value="1400000"   onClick={depositHandler} id="P72" />
+              <label htmlFor="P72" className={styles.button1} >140만원(월20만원)</label>
+              <Participants name="deposit" value="2100000"   onClick={depositHandler} id="P73" />
+               <label htmlFor="P73" className={styles.button1} >210만원(월30만원)</label>
+               <Participants name="deposit" value="2800000"   onClick={depositHandler} id="P74" />
+              <label htmlFor="P74" className={styles.button1} >280만원(월40만원)</label>
+              <Participants name="deposit" value="3500000"   onClick={depositHandler} id="P75" />
+                <label htmlFor="P75" className={styles.button1} >350만원(월50만원)</label>
             </>
           )}
         </div>
@@ -274,22 +285,22 @@ const countClickHandler = (value) => {
 
         <div className={styles.flex2}>
         <h4>이율</h4>
-
-          <div className={styles.textLeft}>
+         <div className={[styles.textLeft, styles.rate].join(' ')}>
           {count === "5" && (
             <>
-               <Rate name="rate" value="1.86" onClick={rateHandler}>
-              </Rate>
-              <Rate name="rate" value="3.97" onClick={rateHandler}>
-              </Rate>
+             <Rate name="rate" value="1.86" onClick={rateHandler} id="R1"/>
+             <label htmlFor="R1" className={styles.button0} >1.86</label>
+              <Rate name="rate" value="3.97" onClick={rateHandler} id="R2" />
+             <label htmlFor="R2" className={styles.button0} >3.97</label>
             </>
           )}
           {count === "7" && (
             <>
-              <Rate name="rate" value="2.65" onClick={rateHandler}>
-              </Rate>
-              <Rate name="rate" value="7.6" onClick={rateHandler}>
-              </Rate>
+             <Rate name="rate" value="2.65" onClick={rateHandler} id="R3" />
+             <label htmlFor="R3" className={styles.button0} >2.65</label>
+              <Rate name="rate" value="7.6" onClick={rateHandler} id="R4" />
+              <label htmlFor="R4" className={styles.button0} >7.6</label>
+
             </>
           )}
 
@@ -297,17 +308,17 @@ const countClickHandler = (value) => {
      </div>
      </div>
 
-        <div className={styles.flex2}>
+        <div className={[styles.flex1, styles.borderLeft].join(' ')}>
         <div className={styles.flex2}>
           <input
             type="button"
-            className={styles.button}
+            className={[styles.button001, styles.btnPush, styles.btnBlueGreen, styles.widthBig].join(' ')}
             onClick={importTableClick}
             value={rateTable}
           />
           {isImportTable && (
             <>
-            <div className={styles.flex1}>
+            <div className={[styles.flex1, styles.marginTop01].join(' ')}>
               <table  className={styles.table}>
                 <thead>
                   <tr>
@@ -340,34 +351,40 @@ const countClickHandler = (value) => {
          </div>
 
 
-
-
-
          <div className={styles.flex2}>
         <h4>나의 순번</h4>
-         <div className={styles.textLeft}>
+         <div className={[styles.textLeft, styles.receiveTurn].join(' ')}>
           {count === "5" && (
             <>
-         <Turn name="turn" value="1" onClick={turnHandler}> </Turn>
-          <Turn name="turn" value="2" onClick={turnHandler}> </Turn>
-          <Turn name="turn" value="3" onClick={turnHandler}></Turn>
-          <div>
-         <Turn name="turn" value="4" onClick={turnHandler}></Turn>
-          <Turn name="turn" value="5" onClick={turnHandler}> </Turn>
-          </div>
+          <Turn name="turn" value="1" onClick={turnHandler} id="T51"/>
+           <label htmlFor="T51" className={styles.button4} >1번</label>
+            <Turn name="turn" value="2" onClick={turnHandler} id="T52"/>
+           <label htmlFor="T52" className={styles.button4} >2번</label>
+           <Turn name="turn" value="3" onClick={turnHandler} id="T53"/>
+           <label htmlFor="T53" className={styles.button4} >3번</label>
+           <Turn name="turn" value="4" onClick={turnHandler} id="T54"/>
+           <label htmlFor="T54" className={styles.button4} >4번</label>
+           <Turn name="turn" value="5" onClick={turnHandler} id="T55"/>
+           <label htmlFor="T55" className={styles.button4} >5번</label>
+
             </>
           )}
           {count === "7" && (
             <>
-          <Turn name="turn" value="1" onClick={turnHandler}></Turn>
-          <Turn name="turn" value="2" onClick={turnHandler}> </Turn>
-          <Turn name="turn" value="3" onClick={turnHandler}> </Turn>
-          <div>
-         <Turn name="turn" value="4" onClick={turnHandler}> </Turn>
-          <Turn name="turn" value="5" onClick={turnHandler}> </Turn>
-         <Turn name="turn" value="6" onClick={turnHandler}> </Turn>
-        <Turn name="turn" value="7" onClick={turnHandler}> </Turn>
-        </div>
+          <Turn name="turn" value="1" onClick={turnHandler} id="T71"/>
+           <label htmlFor="T71" className={styles.button4} >1번</label>
+            <Turn name="turn" value="2" onClick={turnHandler} id="T72"/>
+           <label htmlFor="T72" className={styles.button4} >2번</label>
+           <Turn name="turn" value="3" onClick={turnHandler} id="T73"/>
+           <label htmlFor="T73" className={styles.button4} >3번</label>
+           <Turn name="turn" value="4" onClick={turnHandler} id="T74"/>
+           <label htmlFor="T74" className={styles.button4} >4번</label>
+           <Turn name="turn" value="5" onClick={turnHandler} id="T75"/>
+           <label htmlFor="T75" className={styles.button4} >5번</label>
+          <Turn name="turn" value="6" onClick={turnHandler} id="T76"/>
+          <label htmlFor="T76" className={styles.button4} >6번</label>
+          <Turn name="turn" value="7" onClick={turnHandler} id="T77"/>
+          <label htmlFor="T77" className={styles.button4} >7번</label>
             </>
           )}
         </div>
@@ -377,15 +394,24 @@ const countClickHandler = (value) => {
          <div className={styles.flex2}>
           <h4>관심사</h4>
         <div className={styles.textLeft}>
-         <Category  name="category" value="목돈" onClick={categoryHandler}> </Category>
-        <Category  name="category" value="여행" onClick={categoryHandler}> </Category>
-        <Category  name="category" value="전자제품" onClick={categoryHandler}> </Category>
+
         <div>
-        <Category  name="category" value="패션잡화" onClick={categoryHandler}> </Category>
-        <Category  name="category" value="취미" onClick={categoryHandler}> </Category>
-        <Category  name="category" value="웨딩" onClick={categoryHandler}> </Category>
-        <Category  name="category" value="자동차" onClick={categoryHandler}> </Category>
-        </div>
+         <Category  name="category" value="목돈" onClick={categoryHandler}  id="CA1"> </Category>
+          <label htmlFor="CA1" className={styles.button5} ><FaMoneyBillAlt /> 목돈</label>
+          <Category  name="category" value="여행" onClick={categoryHandler}  id="CA2"> </Category>
+           <label htmlFor="CA2" className={styles.button5} ><FaAvianex /> 여행</label>
+           <Category  name="category" value="전자제품" onClick={categoryHandler}  id="CA3"> </Category>
+            <label htmlFor="CA3" className={styles.button5} ><FaApple /> 전자제품</label>
+            <Category  name="category" value="패션잡화" onClick={categoryHandler}  id="CA4"> </Category>
+            <label htmlFor="CA4" className={styles.button5} ><FaTshirt /> 패션잡화</label>
+
+            <Category  name="category" value="취미" onClick={categoryHandler}  id="CA5"> </Category>
+            <label htmlFor="CA5" className={styles.button5} ><FaHiking /> 취미</label>
+            <Category  name="category" value="웨딩" onClick={categoryHandler}  id="CA6"> </Category>
+            <label htmlFor="CA6" className={styles.button5} ><FaBirthdayCake /> 웨딩</label>
+             <Category  name="category" value="자동차" onClick={categoryHandler}  id="CA7"> </Category>
+              <label htmlFor="CA7" className={styles.button5} ><FaCarAlt /> 자동차</label>
+              </div>
          </div>
 
         </div>
@@ -394,7 +420,7 @@ const countClickHandler = (value) => {
 
            <div className={styles.flex1}>
              <Link to={`/stageAgree/${name}`}>
-             <button className={styles.button}  onClick={()=>{
+             <button className={[styles.button001, styles.btnPush, styles.btnBlueGreen, styles.widthBig].join(' ')}  onClick={()=>{
              submitClick()
              }}>생성하기</button>
             </Link>

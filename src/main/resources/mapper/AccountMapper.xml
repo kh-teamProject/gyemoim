@@ -135,4 +135,20 @@
     WHERE uNo = #{uNo}
   </select>
 
+  <select id="getMyPfList" resultType="com.team.gyemoim.vo.PFVO">
+    SELECT *
+    FROM PF p, ROLL r
+    WHERE p.PFID = r.PFID AND p.STARTFLAG = #{arg0} AND r.UNO = (
+        SELECT UNO
+        FROM MEMBER
+        WHERE uNo = #{arg1}
+      )
+  </select>
+
+  <select id="getStageRollList" resultType="com.team.gyemoim.vo.RollVO">
+    SELECT *
+    FROM ROLL
+    WHERE PFID = #{pfID}
+  </select>
+
 </mapper>

@@ -3,25 +3,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.gyemoim.mapper.admin.AdminAccountMapper">
 
-  <select id="getMember" resultType="com.team.gyemoim.vo.MemberVO">
-    SELECT *
-    FROM MEMBER
-    ORDER BY UNO DESC
-  </select>
+    <select id="getMember" resultType="com.team.gyemoim.vo.MemberVO">
+        SELECT *
+        FROM MEMBER
+        ORDER BY UNO DESC
+    </select>
 
-  <select id="getInterest" resultType="Map">
-    SELECT interest, count(*) as count
-    FROM MEMBER
-    GROUP BY interest
-  </select>
+    <select id="getInterest" resultType="Map">
+        SELECT interest, count(*) as count
+        FROM MEMBER
+        GROUP BY interest
+    </select>
 
-  <select id="getAverageExpenditure" resultType="Map">
-    SELECT TRUNC(avg(medicalCost))  as medicalCost,
-           TRUNC(avg(foodCost))     as foodCost,
-           TRUNC(avg(housingCost))  as housingCost,
-           TRUNC(avg(culturalCost)) as culturalCost,
-           TRUNC(avg(etc))          as etc
-    FROM EXPENDITURE
-  </select>
+    <select id="getAverageExpenditure" resultType="Map">
+        SELECT TRUNC(avg(medicalCost))  as medicalCost,
+               TRUNC(avg(foodCost))     as foodCost,
+               TRUNC(avg(housingCost))  as housingCost,
+               TRUNC(avg(culturalCost)) as culturalCost,
+               TRUNC(avg(etc))          as etc
+        FROM EXPENDITURE
+    </select>
+
+    <select id="getMemberRole" resultType="Map">
+        SELECT userRole, count(*) as count
+        FROM MEMBER
+        WHERE userRole IN ('가회원', '정회원')
+        GROUP BY userRole
+    </select>
+    
+    <select id="getTotalMemberCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) as TotalMember
+        FROM MEMBER
+        WHERE userRole IN ('가회원', '정회원')
+    </select>
 
 </mapper>

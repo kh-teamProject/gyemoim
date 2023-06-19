@@ -18,6 +18,8 @@ const StagePartIn = () => {
 
   const [data, setData] = useState([]);
   const [page, setPage] = useState(null);
+   const [checked, setChecked] = useState(false);
+
 
   const modalHandler = () => {
     setPage('Modal');
@@ -27,6 +29,13 @@ const StagePartIn = () => {
     setPage(null);
   };
 
+ const handleCheckboxChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
+  const handleButtonClick = () => {
+    // 버튼을 클릭할 때 실행되는 로직
+  };
 
   return (
     <>
@@ -49,6 +58,7 @@ const StagePartIn = () => {
                 <p>모든 순번이 참가하면 영업일 기준으로 스테이가 생성됩니다.</p>
                 <p>스테이지 완료시까지 약정기간 동안 매월 지정된 날짜에 약정된 월입금액을 입금할 의무가 있으며 의무 불 이행시 연체이자가 부가됩니다.</p>
 
+
                 <h4>2)연체</h4>
 
                 <p>약정금을 지급받은 후 입금에 대한 의무를 불이행하여 연체가 발생하는 경우 연체금 상환을 위한 채권추심 절차가 진행됩니다.</p>
@@ -60,13 +70,13 @@ const StagePartIn = () => {
       </div>
 
       <div className={styles.flex1}>
-          <input type="radio" />
+          <input type="radio" checked={checked} onChange={handleCheckboxChange} />
           위 내용을 확인하였으며, 동의하고 스테이지에 참여합니다.
-      </div>
+       </div>
 
 
       <div className={styles.flex1}>
-        <button className={styles.button} onClick={modalHandler}>스테이지 확인 </button>
+        <button className={styles.button} onClick={modalHandler} disabled={!checked}>스테이지 확인 </button>
          {page && <StageCreateModal onConfirm={pageHandler}/>}
         </div>
      </div>

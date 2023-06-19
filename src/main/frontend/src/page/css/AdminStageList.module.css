@@ -1,7 +1,18 @@
 body{
  background: #F7F7F7;
   text-align: center;
+     margin: auto;
+    min-width: 300px;
+    max-width: 100%;
+    border-collapse: collapse;
 }
+
+.width{
+    margin: 3rem;
+
+}
+
+
 
 tr{
 
@@ -65,20 +76,29 @@ input.aa + label {
 
 }
 
+.head{
+  margin: auto;
+  min-width: 300px;
+  max-width: 100%;
+
+
+}
 
 /*대기중 슬라이스*/
 .slice{
+
   position: relative;
-    padding: 0.5rem 0 1.5rem;
-    left: 36rem;
+    padding: 2%;
+    left: 27%;
     display: inline-block;
 
 }
 
 .slice2{
-  position: relative;
-    padding: 0.5rem 0 1.5rem;
-    right: 46rem;
+
+    position: relative;
+   padding: 1%;
+    right: 36%;
     display: inline-block;
 
 }
@@ -177,17 +197,7 @@ border: 3px solid #004DC1 !important;
 
 
 
-/*박스 */
-.box {
-  background: #fff;
-  border-radius: 7px;
-  display: inline-block;
-  height: 100%;
-  margin: 1rem;
-  position: relative;
-  width: 90%;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
+
 
 
 /*테이블*/
@@ -237,4 +247,9 @@ table td {
 }
   .warningMsg{
     color: red;
+  }
+
+ canvas {
+    width: 300px;
+    height: 300px;
   }

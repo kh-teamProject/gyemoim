@@ -28,7 +28,6 @@ const RootLayout = () => {
       })
         .then((res) => {
           setAdminCheck(res.data.userRole === '관리자');
-          console.log(res.data);
         })
         .catch((error) => {
           console.log(error);

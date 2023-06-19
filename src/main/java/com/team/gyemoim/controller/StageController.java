@@ -2,13 +2,13 @@ package com.team.gyemoim.controller;
 
 import com.team.gyemoim.dto.stage.*;
 import com.team.gyemoim.service.stage.StageService;
+import com.team.gyemoim.vo.RollVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
-import java.math.BigDecimal;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,8 +21,6 @@ public class StageController {
     //(현지) <스테이지 생성> _스테이지 생성(PF)
     @PostMapping(value ="/stageCreate")
     public void stageCreate(StageCreateDTO stageCreateDTO,StageParticipateDTO stageParticipateDTO,ImportDTO importDTO) throws Exception{
-        System.out.println("[컨트롤러] 스테이지 생성 ");
-        System.out.println("stageCreateDTO = " + stageCreateDTO);
          stageService.stageCreate(stageCreateDTO);
         stageService.stageParticipate(stageParticipateDTO);
     }
@@ -32,7 +30,6 @@ public class StageController {
     // (현지)<스테이지생성>_참가 데이터(pfID,receiveTurn,pfMaster) 생성(ROLL)
     @PostMapping(value ="/stageAgree")
     public void stageCreate(StageParticipateDTO stageParticipateDTO) throws Exception{
-        System.out.println("[컨트롤러] 스테이지 참가 ");
         stageService.stageParticipate(stageParticipateDTO);
     }
   
@@ -61,9 +58,7 @@ public class StageController {
     // (현지)<스테이지생성>_중복체크
     @PostMapping(value ="/checkPfName")
     public boolean checkPfName(@RequestParam("pfName") String pfName) {
-         System.out.println("[컨트롤러] 중복체크 " + pfName);
          int count = stageService.checkPfName(pfName);
-        System.out.println("[컨트롤러] 중복체크 count " + count);
         return count>0;
     }
   
@@ -89,7 +84,6 @@ public class StageController {
     @GetMapping("/stage")
     @ResponseBody
     public HashMap<String, Object> stage(@RequestParam Integer pfID, StageRollDTO dto) {
-        log.info("*******찬희 컨트롤러");
         HashMap<String,Object> map = new HashMap<String,Object>();
         map.put("pf", stageService.getPfList(pfID));
         Integer myBalance = stageService.getMyAccount(dto);
@@ -100,14 +94,12 @@ public class StageController {
         map.put("roll", rollList);
         map.put("import", stageService.getImportList(pfID));
         map.put("memList", stageService.getMemList(pfID));
-        log.info("importimportimportimportimport"+ stageService.getImportList(pfID));
         return map;
     }
     //(찬희) 수익보고서
     @GetMapping("/StageReport")
     @ResponseBody
     public HashMap<String, Object> stageReport(@RequestParam Integer pfID, StageRollDTO dto) {
-        log.info("*******stageReport 컨트롤러 + " + pfID);
         HashMap<String,Object> map = new HashMap<String,Object>();
         map.put("pf", stageService.getPfList(pfID));
         Integer myBalance = stageService.getMyAccount(dto);
@@ -134,9 +126,7 @@ public class StageController {
     //(찬희) stage 입금하기
     @PostMapping("/deposit")
     public String stageDeposit(StageRollDTO dto){
-        log.info("deposit 컨트롤러" + dto);
         stageService.stageDeposit(dto);
-        //stageService.performUpdate();
         return "success";
     }
 
@@ -145,25 +135,45 @@ public class StageController {
   @DeleteMapping("/stageOut")
   public String stageOut(StageINDTO dto) {
       stageService.stageOut(dto); // 버튼 누르면 roll_uNo:delete
-      log.info("stageOutOoooooooooooooooo"+dto);
       return "success";
   }
 
 
-    // (지연)선택한 계모임 정보 가져오기
-    @GetMapping("/stageSelect")
-    public HashMap<String, Object> getStageSelect(@RequestParam Integer pfID) {
-        return stageService.getStageSelect(pfID);
-    }
+  // (지연)선택한 계모임 정보 가져오기
+  @GetMapping("/stageSelect")
+  @ResponseBody
+  public HashMap<String, Object> getStageSelect(@RequestParam Integer pfID, RollDTO dto) {
+      HashMap<String,Object> map = new HashMap<String,Object>();
+      map.put("pf", stageService.getPfInfo(pfID));
 
+      map.put("roll", stageService.getStageSelectRoll(dto));
+      return map;
+  }
 
+  // (지연)스테이지 선택 수령예정표 가져오기
+  @GetMapping("/Receipt")
+  @ResponseBody
+  public HashMap<String, Object> Receipt(@RequestParam Integer pfID, PfDTO dto) {
+      HashMap<String,Object> map = new HashMap<String,Object>();
+      map.put("pf", stageService.getPfInfo(pfID));
 
-    // (지연)스테이지 선택 수령예정표 가져오기
-    @GetMapping("/Receipt")
-    public List<ReceiptDTO> getReceipt(@RequestParam BigDecimal pfRate) {
-        System.out.println(stageService.getReceipt(pfRate));
-        return stageService.getReceipt(pfRate);
-    }
+      map.put("receipt", stageService.getReceipt(pfID));
 
+      return map;
+  }
+
+  // (지연)스테이지 선택 참여 순번 가져오기
+  @GetMapping("/Parti")
+  @ResponseBody
+  public HashMap<String, Object> Parti(@RequestParam Integer pfID, PartiListDTO dto, RollVO vo) {
+      HashMap<String,Object> map = new HashMap<String,Object>();
+
+      map.put("pf", stageService.getPfInfo(pfID));
+      map.put("parti", stageService.getParti(dto));
+      map.put("partiRoll", stageService.getPartRoll(vo));
+      map.put("turnRoll", stageService.getTurnRoll(dto));
+
+      return map;
+  }
 
 }

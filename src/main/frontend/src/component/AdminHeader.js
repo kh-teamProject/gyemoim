@@ -24,7 +24,7 @@ const AdminHeader = () => {
       <header className={`${classes['adminHeader-wrap']}`}>
         <div>
           <p>{name}(관리자)</p>
-          <span><FaSignOutAlt /></span>
+          <span><FaSignOutAlt onClick={logoutHandler} style={{cursor: 'pointer'}}/></span>
         </div>
       </header>
     </>

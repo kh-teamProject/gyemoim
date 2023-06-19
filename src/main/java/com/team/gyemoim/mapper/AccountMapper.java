@@ -3,9 +3,7 @@ package com.team.gyemoim.mapper;
 import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
-import com.team.gyemoim.vo.ExpenditureVO;
-import com.team.gyemoim.vo.MyAccountVO;
-import com.team.gyemoim.vo.MyAccountHistoryVO;
+import com.team.gyemoim.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -38,6 +36,8 @@ public interface AccountMapper {
   // 비밀번호 체크
   String checkedPwd(@Param("uNo") Integer uNo, @Param("password") String password);
 
+  List<PFVO> getMyPfList(String startFlag, Integer uNo);
+
   // Update
   // 내 정보 수정하기
   void myInfoModify(MyPageDTO dto);
@@ -64,4 +64,5 @@ public interface AccountMapper {
 
   void updateExpenditure(MyPageDTO dto);
 
+  List<RollVO> getStageRollList(Integer pfID);
 }

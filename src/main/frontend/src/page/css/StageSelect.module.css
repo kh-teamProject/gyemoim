@@ -1,21 +1,10 @@
-.button {
-  text-align: center;
-   border: 3px solid  #004DC1;
-    background-color: #004DC1;
-    color: white ;
-    width: 300px;
-    height: 68px;
-    border-radius: 10px;
-    font-size: 1.3rem;
-}
-
 .select {
   background-color: #f7f7f7;
 }
 
 .sidebar {
   background-color: #4169E1;
-  padding: 20px;
+  padding: 5px;
   box-sizing: border-box;
 }
 
@@ -28,14 +17,14 @@
 .eachId {
     background: #fff;
     border-radius: 14px;
-    color: #0693c1;
+    color: #4169E1;
     display: inline-block;
     font-size: 14px;
     font-weight: 400;
     height: 28px;
     line-height: 28px;
     padding: 0 20px;
-    text-align: center;
+    text-align: left;
 }
 
 .stageInfoCardTop {
@@ -73,14 +62,27 @@
     font-weight: 500;
     line-height: 28px;
     margin-top: 18px;
+    margin-bottom: 1px;
     text-align: center;
 }
 
-
-
-
-.btn {
-  background-color: blue;
-  color: white;
-  font-size: 16px;
+.priceDetailed {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    margin-top: 0px;
+    margin-bottom: 100px;
+    text-align: center;
 }
+
+.pfInfo {
+    color: #fff;
+    display: block;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    margin-top: 18px;
+    font-weight: bold;
+}
+

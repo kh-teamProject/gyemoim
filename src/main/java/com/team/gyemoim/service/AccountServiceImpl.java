@@ -4,9 +4,7 @@ import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.mapper.AccountMapper;
-import com.team.gyemoim.vo.ExpenditureVO;
-import com.team.gyemoim.vo.MyAccountVO;
-import com.team.gyemoim.vo.MyAccountHistoryVO;
+import com.team.gyemoim.vo.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -84,6 +82,16 @@ public class AccountServiceImpl implements AccountService {
   public boolean checkedPwd(Integer uNo, String password) {
     String dbPassword = accountMapper.checkedPwd(uNo, password);
     return passwordEncoder.matches(password, dbPassword);
+  }
+
+  @Override
+  public List<PFVO> getMyPfList(String startFlag, Integer uNo) {
+    return accountMapper.getMyPfList(startFlag, uNo);
+  }
+
+  @Override
+  public List<RollVO> getStageRollList(Integer pfID) {
+    return accountMapper.getStageRollList(pfID);
   }
 
   // Update

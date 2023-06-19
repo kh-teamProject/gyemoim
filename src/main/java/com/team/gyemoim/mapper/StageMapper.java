@@ -2,21 +2,18 @@ package com.team.gyemoim.mapper;
 
 import com.team.gyemoim.dto.stage.StageListDTO;
 
-import com.team.gyemoim.vo.RollVO;
-
 import com.team.gyemoim.dto.stage.ImportDTO;
 import com.team.gyemoim.dto.stage.StageCreateDTO;
 import com.team.gyemoim.dto.stage.StageParticipateDTO;
 import com.team.gyemoim.vo.MemberVO;
 
 
+import com.team.gyemoim.vo.RollVO;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.math.BigDecimal;
 import com.team.gyemoim.dto.stage.*;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -114,11 +111,25 @@ public interface StageMapper {
     //(찬희) 현재 *번째의 uNo 정보 갖고오기
     int getUNoForMyAccount(StageRollDTO stageRollDTO);
 
-  // (지연)선택한 계모임 정보 가져오기
-  HashMap<String, Object> getStageSelect(Integer pfID);
 
-    // (지연)수령예정표 가져오기
-    List<ReceiptDTO> getReceipt(BigDecimal pfRate);
+  //(지연)선택한 계모임 정보 가져오기, 스테이지에 관한 pfInfo
+  List<StageSelectDTO> getPfInfo(Integer pfID);
+
+  //(지연) 계모임 장 Roll 정보 가져오기
+  List<RollDTO> getStageSelectRoll(RollDTO dto);
+
+  //(지연)수령예정표 가져오기
+  List<PfDTO> getReceipt(Integer pfID);
+
+  //(지연)참여 순번 가져오기
+  List<PartiListDTO> getParti(PartiListDTO dto);
+
+  //(지연)참여 순번 가져오기
+  List<RollVO> getPartRoll(RollVO vo);
+
+  //(지연)참여 순번 가져오기
+  List<PartiListDTO> getTurnRoll(PartiListDTO dto);
+
 
     //(찬희) 나가는 사람이 마지막 사람이면 스테이지 삭제
     void stageDelete(StageINDTO dto);

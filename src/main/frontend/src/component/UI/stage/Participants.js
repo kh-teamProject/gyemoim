@@ -28,13 +28,13 @@ const Participants = (props) => {
 
     return (
     <>
-
       <input
         type="radio"
+        id={props.id}
         value={props.value}
         name={props.name}
         onClick={depositHandler}
-        className={styles.selectInput}
+        className={styles.button1}
       />
        {props.children}
 </>

@@ -12,10 +12,8 @@ public class StageCreateDTO {
     private  BigDecimal pfRate; //이율
     private Integer deposit;//약정금
     private Integer payment; //월 입금액
-    //private Integer receiveTurn; //순번
     private String  interest; //관심사
     private String pRank; //신용등급
-
     private String  startDate; //시작일자
     private String  endDate; //종료일자
     private Integer StageBalance; //순번

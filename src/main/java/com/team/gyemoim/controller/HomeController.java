@@ -20,11 +20,10 @@ public class HomeController {
 
     @GetMapping("getStageList")
     public HashMap<String, Object> home(HomeListDTO dto) {
-        log.info("홈 컨트롤러");
         HashMap<String,Object> map = new HashMap<String,Object>();
         //시각화
         //1. 스테이지 전체 수
-        map.put("allPf", homeService.getAllPfList());
+        map.put("allPf", homeService.getAllPfCount());
         //2. 스테이지 대기중 수
         map.put("waitingPf", homeService.getAllWaitingPfList());
         //3. 스테이지 참여중 수
@@ -32,8 +31,8 @@ public class HomeController {
         //4. 스테이지 완료 수
         map.put("completePf", homeService.getAllCompletePfList());
         //5. 총 참여인원
+        map.put("allRoll", homeService.getAllRollCount());
         //6. 현재 스테이지 누적 운영 금액
-
 
         // 스테이지 리스트
         //1. 전체 계모임 중 랜덤 6개 select + 대기중만 표시

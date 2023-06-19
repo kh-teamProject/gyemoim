@@ -20,6 +20,7 @@ public class StageRollDTO {
   private Integer pfEntry; //계모임 참가자 수
   private Integer uTotalReceipts; //개인별 실 지급금
   private Integer uTotalPayment; //개인별 총 입금액
+  private Integer uReceipt; //개인별 실 이득
   private Date stageInDate; // 스테이지 입장 시간
 
   //출입금 이력 로그를 남겨야 함

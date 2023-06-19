@@ -4,6 +4,7 @@ package com.team.gyemoim.service.stage;
 import com.team.gyemoim.dto.stage.*;
 import com.team.gyemoim.mapper.StageMapper;
 import com.team.gyemoim.vo.MemberVO;
+import com.team.gyemoim.vo.RollVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -48,7 +48,6 @@ public class StageServiceImpl implements StageService {
   //(현지) <스테이지 생성> _스테이지 생성(PF)
   @Override
   public void stageCreate(StageCreateDTO stageCreateDTO) {
-    System.out.println("[서비스] 스테이지 생성 ");
     stageMapper.stageCreate(stageCreateDTO);
 
   }
@@ -56,35 +55,30 @@ public class StageServiceImpl implements StageService {
   // (현지)<스테이지생성>_참가 데이터(pfID,receiveTurn,pfMaster) 생성(ROLL)
   @Override
   public void stageParticipate(StageParticipateDTO stageParticipateDTO) {
-    System.out.println("[서비스] 스테이지 참가 ");
     stageMapper.stageParticipate(stageParticipateDTO);
   }
 
   // (현지)<스테이지생성>_중복체크
   @Override
   public int checkPfName(String pfName) {
-    System.out.println("[서비스] 스테이지 이름 중복체크 ");
     return stageMapper.checkPfName(pfName);
   }
 
   //(현지)<스테이지생성>_스테이지 pfID 가져오기
   @Override
   public List<StageCreateDTO> stagePartIn1(String pfName) {
-    System.out.println("[서비스] 참가스테이지 번호 가져오기");
     return stageMapper.stagePartIn1(pfName);
   }
 
   // (현지)  <스테이지생성>_수령예정표
   @Override
   public List<ImportDTO> importGet(ImportDTO importDTO) {
-    System.out.println("[서비스] 수령예정표 가져오기");
     return stageMapper.importGet(importDTO);
   }
 
   //(현지)<스테이지생성>_스테이지 정보 가져오기
   @Override
   public List<ImportDTO> stagePartIn2(ImportDTO importDTO) {
-    System.out.println("[서비스] 참가스테이지 정보 가져오기");
     return stageMapper.stagePartIn2(importDTO);
   }
 
@@ -195,9 +189,7 @@ public class StageServiceImpl implements StageService {
   @Override
   @Scheduled(cron = "0 40 19 31 * ?") // 매달 25일 0시 0분 0초에 실행
   public void performUpdate() {
-    log.info("들어오세요 쫌 !!!!! 왜 안돼? 왜? 왜지? 모지?");
     if( stageRollDTO != null) {
-      log.info("들어오세요 쫌 !!!!!");
       int currentStageBalance = stageMapper.getStageBalance(stageRollDTO);
       int stageDeposit = stageMapper.getStageDeposit(stageRollDTO);
       int uTotalReceipts = stageMapper.getUTotalReceipts(stageRollDTO);
@@ -208,7 +200,6 @@ public class StageServiceImpl implements StageService {
       stageRollDTO.setUNo(uNo);
       // stageBalance >= deposit : stageBalance -> uPayment 이동
       if (currentStageBalance >= stageDeposit) {
-        log.info("currentStageBalance: " + currentStageBalance + ",stageDeposit : " + stageDeposit);
         //1. 스테이지(pf) stageBalance - *번의 uPayment
         stageMapper.stageBalanceMinus(stageRollDTO);
         //2. *번의 계좌(myAccount)의 uPayment + stageBalance
@@ -228,17 +219,29 @@ public class StageServiceImpl implements StageService {
     return stageMapper.getMemberInfo(dto);
   }
 
-  // (지연)선택한 계모임 정보 가져오기
+
+  //(지연)선택한 계모임 정보 가져오기, 스테이지에 관한 pfInfo
   @Override
-  public HashMap<String, Object> getStageSelect(Integer pfID) {
-    System.out.println("getStageSelect Service...");
-    return stageMapper.getStageSelect(pfID);
-  }
+  public List<StageSelectDTO> getPfInfo(Integer pfID) { return stageMapper.getPfInfo(pfID);}
+
+  //(지연)계모임 장 Roll 가져오기
+  @Override
+  public List<RollDTO> getStageSelectRoll(RollDTO dto) {return stageMapper.getStageSelectRoll(dto);}
 
   // (지연)수령예정표 가져오기
   @Override
-  public List<ReceiptDTO> getReceipt(BigDecimal pfRate) {
-    System.out.println("getReceipt Service...");
-    return stageMapper.getReceipt(pfRate);
+  public List<PfDTO> getReceipt(Integer pfID) {
+    return stageMapper.getReceipt(pfID);
   }
+
+  // (지연)참여 순번 가져오기
+  public List<PartiListDTO> getParti(PartiListDTO dto) {
+    return stageMapper.getParti(dto);
+  }
+
+  //(지연)참여 순번 가져오기
+  public List<RollVO> getPartRoll(RollVO vo) { return stageMapper.getPartRoll(vo);}
+
+  //(지연)참여 순번 가져오기
+  public List<PartiListDTO> getTurnRoll(PartiListDTO dto) { return stageMapper.getTurnRoll(dto);}
 }
