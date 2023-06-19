@@ -166,7 +166,7 @@ const App = () => {
 
           // 권한 상관 x
           {
-            path: '/stageSelect',
+            path: 'stageSelect/:pfID',
             element: <StageSelect/>
           },
           {
@@ -255,10 +255,6 @@ const App = () => {
           {
             path: 'account',
             element: <AccountManagement/>
-          },
-          {
-            path: 'account/detail/:uno',
-            element: <TestAdminAccountDetail/>
           },
           {
             path: 'account/modify/:uNo',
