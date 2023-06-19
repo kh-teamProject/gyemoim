@@ -8,7 +8,7 @@ const HomeStageList = (props) => {
     const filteredStageUserList = props.stageUserList.filter(item => item.pfID === stage.pfID);
 
     return (
-      <Link to={`/stage/${stage.pfID}`} key={index}>
+      <Link to={`/stageSelect/${stage.pfID}`} key={index}>
         <div className={classes.stageBox}>
           <div className={classes.stageTitle}>{stage.pfName}</div>
           {/* <div className={classes.stageInterest}><FaMoneyBillAlt /><span>목돈</span></div> */}
