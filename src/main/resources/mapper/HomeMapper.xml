@@ -1,30 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.gyemoim.mapper.HomeMapper">
-    <!--(찬희) 랜덤으로 6개의 대기중인 PF 정보 추출-->
-    <select id="getPfHomeList" resultType="com.team.gyemoim.dto.HomeListDTO">
-        SELECT *
-        FROM (
-        SELECT *
-        FROM PF
-        WHERE startFlag = '대기중'
-        ORDER BY dbms_random.value
-        )
-        WHERE  6 >= ROWNUM
-    </select>
 
-    <!--(찬희) 각 계모임의 roll 정보 추출-->
-    <select id="getPfRollList" resultType="com.team.gyemoim.dto.HomeListDTO">
-        SELECT
-        roll.pfID,
-        roll.receiveTurn,
-        roll.uNo
-        FROM pf
-        JOIN roll ON PF.PFID = roll.PFID
-    </select>
 
     <!--(찬희) 총 PF-->
-    <select id="getAllPfList" resultType="Integer">
+    <select id="getAllPfCount" resultType="Integer">
         SELECT count(*)
         FROM PF
     </select>
@@ -50,6 +30,33 @@
         WHERE startFlag = '완료'
     </select>
 
+    <!--(찬희) 총 참여자 수 추출-->
+    <select id="getAllRollCount" resultType="Integer">
+        SELECT count(*)
+        FROM Roll
+    </select>
+
+    <!--(찬희) 랜덤으로 6개의 대기중인 PF 정보 추출-->
+    <select id="getPfHomeList" resultType="com.team.gyemoim.dto.HomeListDTO">
+        SELECT *
+        FROM (
+        SELECT *
+        FROM PF
+        WHERE startFlag = '대기중'
+        ORDER BY dbms_random.value
+        )
+        WHERE  6 >= ROWNUM
+    </select>
+
+    <!--(찬희) 각 계모임의 roll 정보 추출-->
+    <select id="getPfRollList" resultType="com.team.gyemoim.dto.HomeListDTO">
+        SELECT
+        roll.pfID,
+        roll.receiveTurn,
+        roll.uNo
+        FROM pf
+        JOIN roll ON PF.PFID = roll.PFID
+    </select>
     <!--(찬희) 공지사항 최신 3개 리스트 출력-->
     <select id="getNoticeHomeList" resultType="com.team.gyemoim.dto.HomeNoticeDTO">
         SELECT *

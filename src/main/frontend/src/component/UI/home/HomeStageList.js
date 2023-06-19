@@ -3,7 +3,6 @@ import {Link, useLocation} from "react-router-dom";
 import classes from '../../../page/css/Home.module.css';
 
 const HomeStageList = (props) => {
-    console.log('props.stageList', props.stageUserList);
     const stageItems = props.stageList.map((stage, index) => {
     const formattedDeposit = (stage.deposit / 10000).toFixed(0) + '만';
     const filteredStageUserList = props.stageUserList.filter(item => item.pfID === stage.pfID);

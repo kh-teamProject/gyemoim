@@ -89,7 +89,6 @@ public class StageController {
     @GetMapping("/stage")
     @ResponseBody
     public HashMap<String, Object> stage(@RequestParam Integer pfID, StageRollDTO dto) {
-        log.info("*******찬희 컨트롤러");
         HashMap<String,Object> map = new HashMap<String,Object>();
         map.put("pf", stageService.getPfList(pfID));
         Integer myBalance = stageService.getMyAccount(dto);
@@ -100,14 +99,12 @@ public class StageController {
         map.put("roll", rollList);
         map.put("import", stageService.getImportList(pfID));
         map.put("memList", stageService.getMemList(pfID));
-        log.info("importimportimportimportimport"+ stageService.getImportList(pfID));
         return map;
     }
     //(찬희) 수익보고서
     @GetMapping("/StageReport")
     @ResponseBody
     public HashMap<String, Object> stageReport(@RequestParam Integer pfID, StageRollDTO dto) {
-        log.info("*******stageReport 컨트롤러 + " + pfID);
         HashMap<String,Object> map = new HashMap<String,Object>();
         map.put("pf", stageService.getPfList(pfID));
         Integer myBalance = stageService.getMyAccount(dto);
@@ -134,9 +131,7 @@ public class StageController {
     //(찬희) stage 입금하기
     @PostMapping("/deposit")
     public String stageDeposit(StageRollDTO dto){
-        log.info("deposit 컨트롤러" + dto);
         stageService.stageDeposit(dto);
-        //stageService.performUpdate();
         return "success";
     }
 
@@ -145,7 +140,6 @@ public class StageController {
   @DeleteMapping("/stageOut")
   public String stageOut(StageINDTO dto) {
       stageService.stageOut(dto); // 버튼 누르면 roll_uNo:delete
-      log.info("stageOutOoooooooooooooooo"+dto);
       return "success";
   }
 

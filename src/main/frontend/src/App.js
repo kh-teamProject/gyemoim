@@ -24,7 +24,6 @@ import StageList from './page/stage/StageList';
 import Account from "./page/account/Account";
 import Stage from './page/stage/Stage';
 import StageSelect from './page/stage/StageSelect';
-import ChanHeeTest from './page/ChanHeeTest';
 import CheckedPwd from "./page/account/CheckedPwd";
 import Deposit from "./page/account/Deposit";
 import Interest from "./page/account/Interest";
@@ -187,11 +186,8 @@ const App = () => {
               <Navigate to="/"/>
           },
           {
-            path: 'ChanHeeTest',
-            element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' ?
-              <ChanHeeTest/> : <Navigate to="/"/>) : <Navigate to="/"/>
-          },
           {
+              <ChanHeeTest/> : <Navigate to="/"/>) : <Navigate to="/"/>
             path: '/stageAgree/:pfID',
             element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' ?
               <StagePartIn/> : <Navigate to="/"/>) : <Navigate to="/"/>

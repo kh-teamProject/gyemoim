@@ -113,6 +113,7 @@ const DepositModalOverlay = (props) => {
           })
         .then(response => {
           console.log('입금 요청이 성공했습니다.');
+                window.location.reload(); // 페이지 새로고침
         })
         .catch(error => {
           // 요청 실패 시 처리
@@ -121,7 +122,7 @@ const DepositModalOverlay = (props) => {
     };
 
 return (
-    <div className={[classes.modal, classes.deposit].join(' ')}>
+    <div className={[classes.modal, classes.deposit].join(' ')} >
       <p className={classes.title}>"{props.title}" 입금하기</p>
       {props.roll.map((value, index) => (
       <>

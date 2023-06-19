@@ -12,6 +12,7 @@ const Home = () => {
     const [stageUserList, setStageUserList] = useState([]);
 
     const [allPf, setAllPf] = useState();
+    const [allRoll, setAllRoll] = useState();
     const [waitingPf, setWaitingPf] = useState();
     const [partPf, setPartPf] = useState();
     const [completePf, setCompletePf] = useState();
@@ -19,9 +20,6 @@ const Home = () => {
     const [noticeList, setNoticeList] = useState([]);
 
 
-    console.log('allPf', allPf);
-
-    console.log(stageList);
 useEffect(() => {
     axios.get('/getStageList', {
       params: {
@@ -33,6 +31,7 @@ useEffect(() => {
         setStageUserList(res.data.stageUserList);
 
         setAllPf(res.data.allPf);
+        setAllRoll(res.data.allRoll);
         setWaitingPf(res.data.waitingPf);
         setPartPf(res.data.partPf);
         setCompletePf(res.data.completePf);
@@ -55,8 +54,20 @@ useEffect(() => {
                 <Link to={'/stageList'}><button className={classes.createButton}>계모임 구경하기</button></Link>
             </div> {/* main_banner end */}
 
-            <div className={classes.mainChartArea}> {/*main_chart start*/}
-                <HomeChart allPf={allPf} />
+            {/*main_chart start*/}
+            <div className={classes.mainChartArea}>
+                <div className={classes.allText}>
+                    <div className={classes.stageCount}>
+                        <div><p>대기중 스테이지 수 : </p><span>{waitingPf}</span>개</div>
+                        <div><p>참여중 스테이지 수 : </p><span>{partPf}</span>개</div>
+                        <div><p>완료 스테이지 수 : </p><span>{completePf}</span>개</div>
+                    </div>
+                    <div className={classes.allCount}>
+                        <div><p>총 스테이지 참여자 수 : </p><span>{allPf}</span>명</div>
+                        <div><p>총 스테이지 수 : </p><span>{allRoll}</span>개</div>
+                    </div>
+                </div>
+                <HomeChart allPf={allPf} waitingPf={waitingPf} partPf={partPf} completePf={completePf}/>
             </div> {/* main_chart end */}
         </div>{/* Visual start */}
 

@@ -11,6 +11,7 @@ public class StagePfDTO {
   private String pfName; //계모임 이름
   private String startFlag; //계모임 시작여부
   private Integer deposit; //약정금
+  private Integer payment; //월 입금액
   private Integer pfEntry; //계모임 참가자 수
   private BigDecimal pfRate; //계모임 이율
   private Integer receiveTurn; //곗돈 수령순서

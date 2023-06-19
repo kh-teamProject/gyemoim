@@ -54,7 +54,7 @@
 }
 /* receipt */
 .modal.receipt{
-    top: 15vh;
+    top: 10vh;
     padding: 2rem 2rem 3rem;
 }
 .modal.receipt p:first-child{
@@ -74,7 +74,7 @@
 
 .modal.receipt table thead th{
     background: #f7f7f7;
-    color: #505050;
+    color: #516d98;
     font-weight: 600;
     width: 10%;
     height: 40px;
