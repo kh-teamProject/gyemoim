@@ -50,7 +50,9 @@ useEffect(() => {
         <div className={[classes.VisualArea, classes.section].join(' ')}>
             <div className={classes.mainBanner} > {/* main_banner start */}
                 <p>목돈이 필요할 땐,</p>
+
                 <h2>곗돈을 투명하게 관리하는<br />계이득</h2>
+
                 <Link to={'/stageList'}><button className={classes.createButton}>계모임 구경하기</button></Link>
             </div> {/* main_banner end */}
 

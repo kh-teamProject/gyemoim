@@ -38,7 +38,6 @@ import StageReport from "./component/UI/stage/StageReport";
 import AdminStageList from "./page/admin/AdminStageList";
 
 import AdminStageDetail from "./page/admin/AdminStageDetail";
-import Test from "./page/Test";
 import TestAdminAccountDetail from "./page/admin/TestAdminAccountDetail";
 import AccountModify from "./page/admin/AccountModify";
 import './App.css';
@@ -67,9 +66,10 @@ const App = () => {
                 });
                 console.log(jwtDecode(token).userRole[0]);
             } else {
-
             }
         }, [myInfo.uNo, myInfo.userRole]);
+
+
 
 
         const router = createBrowserRouter([
@@ -175,11 +175,6 @@ const App = () => {
                     },
                     //
 
-                    {
-                        path: 'test/:pfID',
-                        element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' ?
-                            <Test/> : <Navigate to="/"/>) : <Navigate to="/"/>
-                    },
                     {
                         path: '/stageCreate',
                         element: cookie ? (jwtDecode(cookie).userRole[0] !== '가회원' ? <StageCreate/> : <Navigate to="/"/>) :

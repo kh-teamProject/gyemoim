@@ -23,6 +23,7 @@ public class AdminStageDetailDTO {
     private Integer stageBalance; //계모임 통장 잔액
 
   // (유진)스테이지 참여 회원 정보
+  private Integer payment; // 월 납입금
   private Integer uNo; //회원번호
   private String name; //회원 이름
   private Integer uPayment; //개인별 월입금액

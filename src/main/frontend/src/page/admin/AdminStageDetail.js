@@ -1,25 +1,23 @@
 import {useEffect, useState} from "react";
-import styles from "../../page/css/StageAgree.module.css";
+import styles from "../css/admin/AdminStageDetail.modlue.css";
 import axios from "axios";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import SalesPieChart from "../../component/UI/stage/SalesPieChart";
 
 
 const AdminStageDetail = () => {
-
-
   const {pfID} = useParams();
   console.log(pfID);
-  // const intPFID = Number(pfID);
-
-  //(유진)pfID를 변수로 받아와서 띄울수 있게 해주는것.
+  const navigate =  useNavigate();
 
   const [stageDetail, setStageDetail] = useState([]);
+
 
   //(유진)숫자를 천단위마다 쉼표로 끊어서 표시
   const formatNum = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
-  const complete = (event) => {
+  const handleStatus = (event) => {
     const pfID = Number(event.target.value);
     const confirmed = window.confirm('완료처리하시겠습니까?');
     if (confirmed) {
@@ -53,47 +51,101 @@ const AdminStageDetail = () => {
       });
   }, [])
 
+  const handleButton =(uno)=>{
+    navigate(`/admin/account/modify/${uno}`);
+
+  };
+
 
   return (
     <>
       <h1>관리자 스테이지 상세</h1>
-      <div>
-        <h3>스테이지 정보</h3>
-        <div>
+      <div className="container">
+        <div className="section">
+          <h3 className="section-title">스테이지 정보</h3>
           {/*stageDetail이 배열값이니까 배열중에 걍 첫번째 인덱스만 가져오면 된다.. 천재네,, gpt,,,모든건 자바로 통한다,,,*/}
           {stageDetail.length > 0 && (
-            <div>
-              <ul>
-                스테이지 이름 : {stageDetail[0].pfName}
-                스테이지 상태 : {stageDetail[0].startFlag}
-                스테이지 이율 : {stageDetail[0].pfRate}
-                스테이지 시작일 : {stageDetail[0].startDate}
-              </ul>
+            <div className="section-content">
+              <table>
+                <colgroup>
+                  <col width="9%" />
+                  <col width="9%" />
+                  <col width="9%" />
+                  <col width="9%" />
+                  <col width="9%" />
+                </colgroup>
+                <thead className="thead">
+                <tr className="tr">
+                  <th>이름</th>
+                  <th>상태</th>
+                  <th>이율</th>
+                  <th>시작일</th>
+                  <th>종료일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>{stageDetail[0].pfName}</td>
+                  <td>{stageDetail[0].startFlag}</td>
+                  <td>{stageDetail[0].pfRate}</td>
+                  {stageDetail[0].startDate !==null?<td>{stageDetail[0].startDate}</td>:<td>-</td>}
+                  {stageDetail[0].endDate !==null?<td>{stageDetail[0].endDate}</td>:<td>-</td>}
+
+                </tr>
+                </tbody>
+              </table>
             </div>
           )}
         </div>
         {/*유진 회원정보 띄우기*/}
-        <div>
-          <h3>회원정보</h3>
+        <div className="section">
+          <h3 className="section-title">회원정보</h3>
+              <table>
+                <colgroup>
+                  <col width="15%" />
+                  <col width="15%" />
+                  <col width="15%" />
+                  <col width="15%" />
+                  <col width="15%" />
+                  <col width="15%" />
+                  <col width="15%" />
+                </colgroup>
+                <thead className="thead">
+                <tr>
+                  <th>방장여부</th>
+                  <th>회원번호</th>
+                  <th>이름</th>
+                  <th>월 입금액</th>
+                  <th>실 수령액</th>
+                  <th>실 이득</th>
+                  <th>회원상세</th>
+                </tr>
+                </thead>
           {stageDetail.map((value, index) => (
-            <div key={index}>
-              <Link to={`/admin/account/detail/${value.uno}`}>
-                <ul>
-                  <li>
-                    방장여부 : {value.pfMaster} |
-                    회원번호 : {value.uno} |
-                    이름 : {value.name} |
-                    월 입금액 : {formatNum(Number(value.upayment))} |
-                    실 수령액 : {formatNum(Number(value.utotalReceipts))} |
-                    실 이득 : {formatNum(Number(value.ureceipt))}
-                  </li>
-                </ul>
-              </Link>
-            </div>
+                  <tbody>
+                  <tr>
+                    {value.pfMaster === 'M'?
+                      <td>방장</td>
+                        :<td>-</td>
+                    }
+                    <td>{value.uno}</td>
+                    <td>{value.name}</td>
+                    <td>{formatNum(Number(value.upayment))}</td>
+                    <td>{formatNum(Number(value.utotalReceipts))}</td>
+                    <td>{formatNum(Number(value.ureceipt))}</td>
+                    <td><button onClick={() => handleButton(value.uno)} className="member-btn">회원상세</button></td>
+
+                  </tr>
+                  </tbody>
           ))}
+              </table>
         </div>
         <div>
-          <button onClick={complete} value={pfID}>완료</button>
+          <SalesPieChart/>
+        </div>
+        <div>
+          <button onClick={handleStatus} className='complete-btn' value={pfID}>완료</button>
+
 
         </div>
       </div>
