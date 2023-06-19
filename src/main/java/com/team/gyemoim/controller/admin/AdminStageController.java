@@ -35,25 +35,23 @@ public class AdminStageController {
 public HashMap<String,Object> stage() {
     HashMap<String,Object> map = new HashMap<>();
     map.put("Stage",adminStageService.getStageList());
-    System.out.println("[컨트롤러] 스테이지 가져오기");
+
     return map;
 }
 
     // (현지)리스트 상태 바꾸기
     @PostMapping(value = "/admin/stage/list")
     public Integer checkPFID3(@RequestParam("pfID") Integer pfID) {
-        System.out.println("[컨트롤러] pfID 확인 " + pfID);
         return adminStageService.checkPFID(pfID);
     }
 
     //(현지) PF 데이터 가져와서 차트 보내기
-    @GetMapping("/admin/stage/Chart")
+    @GetMapping("/admin/stage/chart")
     @ResponseBody
-    public HashMap<String,Object> Chart() {
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("Chart",adminStageService.getStageList());
-        System.out.println("[컨트롤러] 차트에 스테이지 가져오기");
-        return map;
+    public List<AdminStageDetailDTO> getStageChart() {
+        List<AdminStageDetailDTO> chartDataList = adminStageService.getStageList();
+        System.out.println("[컨트롤러] 차트에 스테이지 가져오기: " + chartDataList);
+        return chartDataList;
     }
 
 
