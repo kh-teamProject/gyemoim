@@ -34,4 +34,9 @@ public class AdminAccountServiceImpl implements AdminAccountService {
   public List<Map<String, Object>> getAverageExpenditure() {
     return accountMapper.getAverageExpenditure();
   }
+
+  @Override
+  public List<Map<String, Object>> getMemberRole() { return accountMapper.getMemberRole();}
+
+  public int getTotalMemberCount() { return accountMapper.getTotalMemberCount();}
 }

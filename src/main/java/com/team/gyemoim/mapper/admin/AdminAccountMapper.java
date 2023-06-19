@@ -18,4 +18,8 @@ public interface AdminAccountMapper {
   List<Map<String, Object>> getInterest();
 
   List<Map<String, Object>> getAverageExpenditure();
+
+  List<Map<String, Object>> getMemberRole();
+
+  int getTotalMemberCount();
 }
