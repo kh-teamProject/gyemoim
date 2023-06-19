@@ -3,9 +3,7 @@ package com.team.gyemoim.service;
 import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
-import com.team.gyemoim.vo.ExpenditureVO;
-import com.team.gyemoim.vo.MyAccountVO;
-import com.team.gyemoim.vo.MyAccountHistoryVO;
+import com.team.gyemoim.vo.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +33,9 @@ public interface AccountService {
   // 비밀번호 체크
   boolean checkedPwd(Integer uNo, String password);
 
+  // 내 스테이지 리스트 가져오기
+  List<PFVO> getMyPfList(String startFlag, Integer uNo);
+
   // Update
   // 내 정보 수정하기
   void myInfoModify(MyPageDTO dto);
@@ -57,4 +58,6 @@ public interface AccountService {
   void updateExpenditure(MyPageDTO dto);
 
   void createMyAccount(MyPageDTO dto);
+
+  List<RollVO> getStageRollList(Integer pfID);
 }

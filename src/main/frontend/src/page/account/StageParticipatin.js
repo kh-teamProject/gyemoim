@@ -1,8 +1,35 @@
 import MyPageSidebar from "../../component/MyPageSidebar";
 import classes from "../css/MyStage.module.css";
 import {NavLink} from "react-router-dom";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import Stage from "../../component/Stage";
 
 const StageParticipatin = () => {
+  const token = Cookies.get('Set-Cookie');
+  const uNo = jwtDecode(token).uNo;
+  const startFlag = '참여중';
+
+  const [stageList, setStageList] = useState([]);
+  const [stageUserList, setStageUserList] = useState([]);
+
+  useEffect(() => {
+    axios.get(`/getMyPfList/${uNo}`, {
+      params: {
+        startFlag
+      }
+    })
+      .then((res) => {
+        setStageList(res.data.stageList)
+        setStageUserList(res.data.stageUserList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return (
     <section>
       <div>
@@ -37,7 +64,7 @@ const StageParticipatin = () => {
             </li>
           </ul>
         </div>
-        <h3>현재 참여중인 스테이지</h3>
+        <Stage stageList={stageList} stageUserList={stageUserList} Progress={startFlag}/>
       </div>
     </section>
   );
