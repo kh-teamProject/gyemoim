@@ -21,8 +21,6 @@ public class StageController {
     //(현지) <스테이지 생성> _스테이지 생성(PF)
     @PostMapping(value ="/stageCreate")
     public void stageCreate(StageCreateDTO stageCreateDTO,StageParticipateDTO stageParticipateDTO,ImportDTO importDTO) throws Exception{
-        System.out.println("[컨트롤러] 스테이지 생성 ");
-        System.out.println("stageCreateDTO = " + stageCreateDTO);
          stageService.stageCreate(stageCreateDTO);
         stageService.stageParticipate(stageParticipateDTO);
     }
@@ -32,7 +30,6 @@ public class StageController {
     // (현지)<스테이지생성>_참가 데이터(pfID,receiveTurn,pfMaster) 생성(ROLL)
     @PostMapping(value ="/stageAgree")
     public void stageCreate(StageParticipateDTO stageParticipateDTO) throws Exception{
-        System.out.println("[컨트롤러] 스테이지 참가 ");
         stageService.stageParticipate(stageParticipateDTO);
     }
   
@@ -61,9 +58,7 @@ public class StageController {
     // (현지)<스테이지생성>_중복체크
     @PostMapping(value ="/checkPfName")
     public boolean checkPfName(@RequestParam("pfName") String pfName) {
-         System.out.println("[컨트롤러] 중복체크 " + pfName);
          int count = stageService.checkPfName(pfName);
-        System.out.println("[컨트롤러] 중복체크 count " + count);
         return count>0;
     }
   

@@ -201,10 +201,11 @@ table td {
 .selected {
   background-color: red;
 
-
+}
   input.button0{
         display: none;
   }
+
   label.button0{
     padding: 1rem;
     margin: 1rem;
