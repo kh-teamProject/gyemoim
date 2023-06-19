@@ -34,7 +34,7 @@ const StageReport = (props) => {
     const location = useLocation();
     const pfIDNum = location.pathname.split('/');
 
-    const result = pfData.payment * 0.02 * (Math.pow(1 + 0.02, rollData.receiveTurn) - 1);
+    const result = pfData.payment * 0.02 * (Math.pow(1 + 0.02, rollData.receiveTurn) - 1).toFixed(2);
 
    useEffect(() => {
       axios.get('/StageReport', {
