@@ -183,7 +183,7 @@ const StageList = () => {
                     <div key={index}>
                       {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
                       {value.startFlag === '대기중' ? (
-                          <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
+                          <Link to={`/stageSelect/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
                             <div id="select-deposit">
                               <h3 className="stage-h3">{value.pfName}</h3>
                               <div className='speechImg'>
@@ -306,7 +306,7 @@ const StageList = () => {
                     <div key={index}>
                       {/*startFlag가 대기중일때만 Link동작하게 하는 코드 시작*/}
                       {value.startFlag === '대기중' ? (
-                          <Link to={`/test/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
+                          <Link to={`/stageSelect/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
                             <div id="select-deposit">
                               <h3 className="stage-h3">{value.pfName}</h3>
                               <div className='speechImg'>

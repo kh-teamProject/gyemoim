@@ -357,12 +357,14 @@
         where pfID = #{pfID}
     </select>
 
+    <!-- (지연)참여 순번 가져오기 -->
     <select id="getPartRoll" resultType="com.team.gyemoim.vo.RollVO">
         select *
         from roll
         where pfID = #{pfID}
     </select>
 
+    <!-- (지연)참여 순번 가져오기 -->
     <select id="getTurnRoll" resultType="com.team.gyemoim.dto.stage.PartiListDTO">
         SELECT DISTINCT rs.*
         FROM receiptSchedule rs, PF p
@@ -371,6 +373,7 @@
         AND p.pfID = #{pfID}
         ORDER BY rs.receiveTurn ASC
     </select>
+
     <!--(찬희) stageDelete -->
     <delete id="stageDelete" parameterType="com.team.gyemoim.dto.stage.StageINDTO">
         DELETE

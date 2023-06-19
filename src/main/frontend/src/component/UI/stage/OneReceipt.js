@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {Link, useLocation} from "react-router-dom";
-//import classes from "../../css/ReceiptTurn.module.css";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -28,7 +27,6 @@ const OneReceipt = ({ selectedRollData }) => {
 
 
   useEffect(() => {
-    console.log(pfIDNum);
     const pfID = pfIDNum[pfIDNum.length - 1];
 
     axios
@@ -38,8 +36,6 @@ const OneReceipt = ({ selectedRollData }) => {
         },
       })
       .then((res) => {
-        console.log(res.data.receipt);
-
         const receiptData = res.data.receipt.filter((item) => item.receiveTurn === selectedRollData.receiveTurn);
         setReceiptData(receiptData);
       })
@@ -59,7 +55,6 @@ const OneReceipt = ({ selectedRollData }) => {
           const token = jwtDecode(Cookies.get('Set-Cookie'));
           const uNo = token.uNo;
 
-          console.log(value);
           axios.post('/stageIn', null, {
             params: {
               uNo: uNo,
@@ -149,7 +144,6 @@ const OneReceipt = ({ selectedRollData }) => {
                 참여하기
           </button>
       ))}
-
           </div>
           <div style={{ marginTop: '20px' }}></div>
     </TableContainer>

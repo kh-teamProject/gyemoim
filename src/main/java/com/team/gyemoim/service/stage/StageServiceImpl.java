@@ -220,8 +220,7 @@ public class StageServiceImpl implements StageService {
   }
 
 
-  //(지연)선택한 계모임 정보 가져오기
-  //(지연)스테이지에 관한 PfInfo
+  //(지연)선택한 계모임 정보 가져오기, 스테이지에 관한 pfInfo
   @Override
   public List<StageSelectDTO> getPfInfo(Integer pfID) { return stageMapper.getPfInfo(pfID);}
 
@@ -229,24 +228,20 @@ public class StageServiceImpl implements StageService {
   @Override
   public List<RollDTO> getStageSelectRoll(RollDTO dto) {return stageMapper.getStageSelectRoll(dto);}
 
-
   // (지연)수령예정표 가져오기
   @Override
   public List<PfDTO> getReceipt(Integer pfID) {
     return stageMapper.getReceipt(pfID);
   }
 
-  // (지연)개인 수령예정표 가져오기
-//  @Override
-//  public List<PartiReceiptDTO> getOneReceipt(Integer pfID) {
-//    return stageMapper.getOneReceipt(pfID);
-//  }
-
   // (지연)참여 순번 가져오기
   public List<PartiListDTO> getParti(PartiListDTO dto) {
     return stageMapper.getParti(dto);
   }
 
+  //(지연)참여 순번 가져오기
   public List<RollVO> getPartRoll(RollVO vo) { return stageMapper.getPartRoll(vo);}
+
+  //(지연)참여 순번 가져오기
   public List<PartiListDTO> getTurnRoll(PartiListDTO dto) { return stageMapper.getTurnRoll(dto);}
 }

@@ -143,7 +143,6 @@ public class StageController {
   @GetMapping("/stageSelect")
   @ResponseBody
   public HashMap<String, Object> getStageSelect(@RequestParam Integer pfID, RollDTO dto) {
-      log.info("getStageSelect 컨트롤러 + " + pfID);
       HashMap<String,Object> map = new HashMap<String,Object>();
       map.put("pf", stageService.getPfInfo(pfID));
 
@@ -151,12 +150,10 @@ public class StageController {
       return map;
   }
 
-
   // (지연)스테이지 선택 수령예정표 가져오기
   @GetMapping("/Receipt")
   @ResponseBody
   public HashMap<String, Object> Receipt(@RequestParam Integer pfID, PfDTO dto) {
-      log.info("Receipt 컨트롤러 + " + pfID);
       HashMap<String,Object> map = new HashMap<String,Object>();
       map.put("pf", stageService.getPfInfo(pfID));
 
@@ -165,30 +162,15 @@ public class StageController {
       return map;
   }
 
-  // (지연)스테이지 선택 개인 수령예정표 가져오기
-//  @GetMapping("/OneReceipt")
-//  @ResponseBody
-//  public HashMap<String, Object> OneReceipt(@RequestParam Integer pfID, PartiReceiptDTO dto) {
-//      log.info("OneReceipt 컨트롤러 + " + pfID);
-//      HashMap<String,Object> map = new HashMap<String,Object>();
-//      map.put("pf", stageService.getPfInfo(pfID));
-//
-//      map.put("oneReceipt", stageService.getOneReceipt(pfID));
-//
-//      return map;
-//  }
-
   // (지연)스테이지 선택 참여 순번 가져오기
   @GetMapping("/Parti")
   @ResponseBody
   public HashMap<String, Object> Parti(@RequestParam Integer pfID, PartiListDTO dto, RollVO vo) {
-      log.info("Parti 컨트롤러 + " + pfID);
       HashMap<String,Object> map = new HashMap<String,Object>();
 
       map.put("pf", stageService.getPfInfo(pfID));
       map.put("parti", stageService.getParti(dto));
       map.put("partiRoll", stageService.getPartRoll(vo));
-        log.info(stageService.getPartRoll(vo));
       map.put("turnRoll", stageService.getTurnRoll(dto));
 
       return map;

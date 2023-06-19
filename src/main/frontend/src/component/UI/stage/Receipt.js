@@ -22,7 +22,6 @@ const Receipt = () => {
   const pfIDNum = location.pathname.split('/');
 
   useEffect(() => {
-    console.log(pfIDNum);
     const pfID = pfIDNum[pfIDNum.length - 1];
 
     axios.get('/Receipt', {
@@ -31,9 +30,7 @@ const Receipt = () => {
           }
         })
         .then((res) => {
-          console.log(res.data.pf);
           setPf(res.data.pf);
-          console.log(res.data.receipt);
           setReceipt(res.data.receipt);
 
 
@@ -43,7 +40,6 @@ const Receipt = () => {
         setPfData(pfData);
 
         const receiveTurnList = res.data.receipt.map((item) => item.receiveTurn);
-        console.log("receiveTurnList 리스트 : " + receiveTurnList);
         setReceiveTurnList(receiveTurnList);
 
         const upaymentList = res.data.receipt.map((item) => item.upayment);

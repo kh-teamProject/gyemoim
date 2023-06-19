@@ -17,14 +17,14 @@
 .eachId {
     background: #fff;
     border-radius: 14px;
-    color: #0693c1;
+    color: #4169E1;
     display: inline-block;
     font-size: 14px;
     font-weight: 400;
     height: 28px;
     line-height: 28px;
     padding: 0 20px;
-    text-align: center;
+    text-align: left;
 }
 
 .stageInfoCardTop {
@@ -74,5 +74,15 @@
     margin-top: 0px;
     margin-bottom: 100px;
     text-align: center;
+}
+
+.pfInfo {
+    color: #fff;
+    display: block;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    margin-top: 18px;
+    font-weight: bold;
 }
 
