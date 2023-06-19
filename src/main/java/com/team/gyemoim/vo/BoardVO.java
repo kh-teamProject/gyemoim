@@ -12,7 +12,7 @@ public class BoardVO {
 
     private int bid; // 게시글 번호
     private Integer uNo; // 글 작성자 회원번호
-    private String bType; // 글 종류 (공지사항/1:1 문의사항)
+    private String btype; // 글 종류 (공지사항/1:1 문의사항)
     private String name; // 글 작성자 이름
     private String title; // 글 제목
     private int views; // 조회수
@@ -24,7 +24,7 @@ public class BoardVO {
     public BoardVO dtoToVO(BoardWriteDTO dto){
         BoardVO boardVO = new BoardVO();
         boardVO.setUNo(dto.getUNo());
-        boardVO.setBType(dto.getBType());
+        boardVO.setBtype(dto.getBtype());
         boardVO.setName(dto.getName());
         boardVO.setTitle(dto.getTitle());
         boardVO.setContent(dto.getContent());

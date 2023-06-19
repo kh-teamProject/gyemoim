@@ -10,10 +10,10 @@
         SELECT REPLY.rno, REPLY.bid, REPLY.name, REPLY.uNo, REPLY.replyComm, REPLY.repDate, BOARD.bType
         FROM REPLY
         JOIN BOARD ON REPLY.bid = BOARD.bid
-        <if test="bType != '' and searchType == '' and searchKeyword == ''">
-            WHERE BOARD.bType = #{bType}
+        <if test="btype != '' and searchType == '' and searchKeyword == ''">
+            WHERE BOARD.bType = #{btype}
         </if>
-        <if test="bType == '' and searchType != '' and searchKeyword != ''">
+        <if test="btype == '' and searchType != '' and searchKeyword != ''">
             <if test="searchType == 'bid'">
                 AND REPLY.bid = #{searchKeyword}
             </if>
@@ -30,8 +30,8 @@
                 AND REPLY.repDate LIKE '%' || #{searchKeyword} || '%'
             </if>
         </if>
-        <if test="bType != '' and searchType != '' and searchKeyword != ''">
-            WHERE BOARD.bType = #{bType}
+        <if test="btype != '' and searchType != '' and searchKeyword != ''">
+            WHERE BOARD.bType = #{btype}
             <if test="searchType == 'bid'">
                 AND REPLY.bid = #{searchKeyword}
             </if>

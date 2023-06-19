@@ -21,7 +21,7 @@ const ReplyManagement = () => {
         // 검색된 List<ReplyVO> 리턴받음
         await axios.get("/admin/reply/searchList", {
             params: {
-                "bType": bType,
+                "btype": bType,
                 "searchType": searchType,
                 "searchKeyword": searchKeyword,
             },
@@ -159,7 +159,7 @@ const ReplyManagement = () => {
                                             {item.rno}
                                         </td>
                                         <td>
-                                            {item.bType}
+                                            {item.btype}
                                         </td>
                                         <td>
                                             {item.bid}

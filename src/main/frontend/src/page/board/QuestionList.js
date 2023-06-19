@@ -40,7 +40,7 @@ const QuestionList = () => {
         // 검색된 List<BoardVO> 리턴받음
         await axios.get("/board/searchList", {
             params: {
-                "bType": bType,
+                "btype": bType,
                 "searchType": searchType,
                 "searchKeyword": searchKeyword,
             }

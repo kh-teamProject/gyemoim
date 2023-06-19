@@ -22,7 +22,7 @@ public class AdminReplyServiceImpl implements AdminReplyService{
     @Override
     public List<AdminReplyListDTO> searchReplyList(AdminReplyListParamDTO dto) throws Exception {
         System.out.println("************** AdminReplyServiceImpl_searchReplyList 성공 :D ************");
-        System.out.println("************** AdminReplyServiceImpl_bType = " + dto.getBType());
+        System.out.println("************** AdminReplyServiceImpl_bType = " + dto.getBtype());
 
         return adminReplyMapper.searchReplyList(dto);
     }

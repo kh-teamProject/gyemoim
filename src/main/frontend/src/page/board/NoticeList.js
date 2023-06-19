@@ -44,7 +44,7 @@ const NoticeList = () => {
         // 검색된 List<BoardVO> 리턴받음
         await axios.get("/board/searchList", {
             params: {
-                "bTyp": bType,
+                "btype": bType,
                 "searchType": searchType,
                 "searchKeyword": searchKeyword,
             },
@@ -113,7 +113,7 @@ const NoticeList = () => {
 
     // 글쓰기 버튼 클릭시 발생하는 함수 (글쓰기 버튼 클릭 -> 글쓰기 page 로 이동)
     const moveNoticeWrite = () => {
-        navigate('notice/write');
+        navigate('write');
     };
 
 

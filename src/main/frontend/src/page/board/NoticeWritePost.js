@@ -12,7 +12,7 @@ const NoticeWritePost = () => {
     const [noticeFormData, setNoticeFormData] = useState({
         uno: uno,
         name: writer,
-        bType: "공지사항",
+        btype: "공지사항",
         title: "",
         content: "",
         secret: "P",

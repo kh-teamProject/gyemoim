@@ -22,7 +22,7 @@ public class AdminReplyController {
     @GetMapping("/admin/reply/searchList")
     public List<AdminReplyListDTO> searchReplyList(AdminReplyListParamDTO dto) throws Exception {
         System.out.println("************ AdminReplyController_searchReplyList 리스트 성공 :D **************");
-        System.out.println("** 컨트롤러_댓글 리스트 dto bType = " + dto.getBType());
+        System.out.println("** 컨트롤러_댓글 리스트 dto bType = " + dto.getBtype());
 
         return adminReplyService.searchReplyList(dto);
     }

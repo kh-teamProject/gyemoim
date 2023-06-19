@@ -13,15 +13,11 @@ import java.util.List;
 public interface BoardMapper {
 
     /* BoardWriteDAO (Create) */
-    //void write(BoardWriteDTO boardWriteDTO) throws Exception; // 게시글 쓰기
-   // void addAttachedName(String savedName) throws Exception; // 첨부파일 쓰기
     int getBid() throws Exception; // 게시글 번호 조회
     void insert(BoardVO boardVO) throws Exception; // 게시글 작성
 
 
     /* BoardDAO (Read) */
-    // 검색 후 페이징 된 게시글 갯수 구하기 (사용 o)
-    int searchCountBoard(PageVO spv);
     // 검색 후 검색에 해당하는 게시글 리스트 조회하기(사용 o)
     List<BoardVO> searchList(BoardListDTO dto) throws Exception;
     //int countBoard(); // 게시글 총 갯수 구하기
@@ -33,28 +29,13 @@ public interface BoardMapper {
 
 
 
-    /* BoardModifyDAO (Update) */
+    /* 수정 BoardModifyDAO (Update) */
     BoardVO modify(int bid); // 원래 글 정보 끌고오기
     void modifyUpdate(BoardModifyDTO boardModifyDTO) throws Exception; // 게시글 정보 수정하기
-    //AttachedVO attached(int bid); // 원래 글에 있는 첨부파일 끌고오기
-   // void addAttachedUpdate(BoardModifyDTO boardModifyDTO) throws Exception; // 새로운 첨부파일 추가하기
 
 
     /* 삭제 BoardDeleteDAO (Delete) */
     void delete(BoardDeleteDTO boardDeleteDTO) throws Exception; // 게시글 삭제하기
-
-
-
-    /* 게시글 리스트 관련해서 가져온 코드 */
-    /*
-    List<BoardVO> getBbsSearchPageList(BoardListParam param);// 검색 후 페이징해서 게시글들 리스트로 가져오기
-    Integer getBbsCount(BbsCountParam param);// 게시글 개수 구하기
-
-    // Bbs == BoardVO
-    Bbs getBbs(Integer seq);// 특정 게시글 번호 가지고 게시글들 가져오기
-    Integer createBbsReadCountHistory(CreateReadCountParam param);//
-    Integer increaseBbsReadCount(Integer seq); // 조회수 올리기?
-    */
 
 
     /* 첨부파일 관련 mapper */
@@ -64,10 +45,5 @@ public interface BoardMapper {
     // 첨부파일 상세보기
     AttachedVO getAttachedById(int bid);
 
-    // 첨부파일 수정
-    void updateAttached(AttachedVO attached);
-
-    // 첨부파일 삭제
-    void deleteAttached(int attachedID);
 
 }
