@@ -56,6 +56,7 @@ const App = () => {
     const cookie = Cookies.get('Set-Cookie');
     const [myInfo, setMyInfo] = useState({uNo: 0});
 
+
     useEffect(() => {
       if (Cookies.get('Set-Cookie')) {
         const token = Cookies.get('Set-Cookie');
@@ -288,6 +289,7 @@ const App = () => {
       </div>
     );
   }
+
 ;
 
 export default App;
