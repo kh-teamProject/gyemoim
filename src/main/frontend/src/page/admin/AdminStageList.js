@@ -102,7 +102,7 @@ const handleSendData = async () => {
      <div  className={styles.head}>
 
      <div  className={styles.slice2}>
-      <button onClick={handleSendData}>일괄처리</button>
+      <button onClick={handleSendData}>완료처리</button>
      </div>
 
       <div className={styles.slice}>
