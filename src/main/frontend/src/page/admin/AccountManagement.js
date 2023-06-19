@@ -9,9 +9,10 @@ const AccountManagement = () => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
   const [memberInfo, setMemberInfo] = useState([]);
+  const [totalMemberCount, setTotalMemberCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10); // 페이지당 아이템 수
-  const [roleFilter, setRoleFilter] = useState(null); // 가회원/정회원/관리자 필터
+  const [roleFilter, setRoleFilter] = useState(''); // 가회원/정회원/관리자 필터
 
   useEffect(() => {
     axios
@@ -23,6 +24,18 @@ const AccountManagement = () => {
         .catch((error) => {
           console.log("회원관리 페이지 에러" + error);
         });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("/getTotalMember")
+      .then((res) => {
+        setTotalMemberCount(res.data);
+        console.log(res.data)
+      })
+      .catch((error) => {
+        console.log("총 회원 수 가져오기 에러" + error);
+      });
   }, []);
 
   useEffect(() => {
@@ -52,8 +65,9 @@ const AccountManagement = () => {
   return (
       <>
         <h1>회원 리스트</h1>
+        <p>총 회원 수 : {totalMemberCount}명</p>
         <div className={classes.roleOption}>
-          <select value={roleFilter} onChange={handleMembershipFilter}>
+          <select value={roleFilter || undefined} onChange={handleMembershipFilter}>
             <option value="">전체</option>
             <option value="가회원">가회원</option>
             <option value="정회원">정회원</option>
@@ -107,6 +121,7 @@ const AccountManagement = () => {
             count={memberInfo.length}
             onChange={pageChangeHandler}
         />
+
       </>
   );
 };
