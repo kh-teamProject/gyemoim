@@ -10,11 +10,11 @@ public class AdminReplyListParamDTO {
     private String searchKeyword; // 검색어 내용
 
     // 게시글 타입 (공지사항 vs 1:1 문의사항)
-    private String type;
+    private String btype;
 
-    public AdminReplyListParamDTO(String searchType, String searchKeyword, String type) {
+    public AdminReplyListParamDTO(String searchType, String searchKeyword, String btype) {
         this.searchType = searchType;
         this.searchKeyword = searchKeyword;
-        this.type = type;
+        this.btype = btype;
     }
 }

@@ -10,13 +10,11 @@ import ReplyList from "../../component/ReplyList";
 import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 import viewImg from "../../component/images/view.png";
-import commentImg from "../../component/images/comment-alt.png";
 
 
 const NoticeDetail = () => {
 
     const [noticeDetail, setNoticeDetail] = useState({});
-    let replySum = 0; // 댓글 총 갯수
     // 파라미터 가져오기
     const {bid} = useParams();
     const token = jwtDecode(Cookies.get('Set-Cookie'));
@@ -40,9 +38,6 @@ const NoticeDetail = () => {
 
                 setNoticeDetail(response.data);
 
-                axios.get("/reply/list", {params: {"bid": bid}}).then((response) => {
-                    const replySum = response.data.length;
-                })
             })
             .catch((error) => {
                 console.log("NoticeDetail_getNoticeDetail 게시글 못가져옴 :<");
@@ -51,15 +46,10 @@ const NoticeDetail = () => {
             });
     }
 
-    /*// 파일 다운로드
-    const downloadImage = async (fileName) => {
-        const url = "";
-    }*/
-
 
     // 공지사항 목록으로 이동하는 함수
     const moveToNoticeList = (event) => {
-       navigate('/board/notice');
+        navigate('/board/notice');
     };
 
     // 글 수정 페이지로 이동하는 함수
@@ -83,9 +73,10 @@ const NoticeDetail = () => {
             bid: noticeDetail.bid,
             uno: noticeDetail.uno,
         };
+        console.log("*** 글 삭제 moveToNoticeDelete 들어옴 ***");
 
         // post 는 주로 데이터 생성 또는 업데이트 할 때 사용
-        await axios.delete('/board/delete', {data: deleteDTO})
+        await axios.delete("/board/delete", {data: deleteDTO})
             .then((response) => {
                 console.log("moveToNoticeDelete 글 삭제 성공 :D");
                 console.log(response.data);
@@ -95,21 +86,8 @@ const NoticeDetail = () => {
             }).catch((error) => {
                 console.log("moveToNoticeDelete 글 삭제 실패 :<");
                 console.log("글 삭제 에러: " + error);
-
             });
 
-    };
-
-    const handleFacebookShare = () => {
-        // Facebook 공유 기능 구현
-    };
-
-    const handleKakaoTalkShare = () => {
-        // 카카오톡 공유 기능 구현
-    };
-
-    const handleLinkCopy = () => {
-        // 링크 복사 기능 구현
     };
 
 
@@ -133,17 +111,17 @@ const NoticeDetail = () => {
                                   id="date">{new Date(noticeDetail.writeDate).toLocaleString()}</span>
                                 <span className={`${classes['evt_detail_cont_ttl_views']}`}><img src={viewImg}
                                                                                                  className={`${classes['view-img']}`}/>{noticeDetail.views}</span>
-                                <span className={`${classes['evt_detail_cont_ttl_comment']}`}><img src={commentImg}
-                                                                                                   className={`${classes['comment-img']}`}/>{replySum}</span>
                             </div>
                             <div className={`${classes['evt_share_btns']}`}>
-                                <button className={`${classes['event_btns']}`} onClick={handleFacebookShare}>
+                                <button className={`${classes['event_btns']}`}>
                                     <img alt="facebook-img" src={facebookImg} className={`${classes['facebook-img']}`}/>
                                 </button>
-                                <button className={`${classes['event_btns']}`} onClick={handleKakaoTalkShare} id="kakaotalk">
-                                    <img alt="kakaotalk-img" src={kakaotalkImg} className={`${classes['kakaotalk-img']}`}/>
+                                <button className={`${classes['event_btns']}`}
+                                        id="kakaotalk">
+                                    <img alt="kakaotalk-img" src={kakaotalkImg}
+                                         className={`${classes['kakaotalk-img']}`}/>
                                 </button>
-                                <button className={`${classes['event_btns']}`} onClick={handleLinkCopy}>
+                                <button className={`${classes['event_btns']}`}>
                                     <img alt="link-img" src={linkImg} className={`${classes['link-img']}`}/>
                                 </button>
                             </div>

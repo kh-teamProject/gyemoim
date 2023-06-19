@@ -11,7 +11,9 @@ import replyDeleteImg from "./images/reply-delete-button.png";
 /* 댓글 컴포넌트 */
 const Reply = (props) => {
 
-    const token = jwtDecode(Cookies.get('Set-Cookie'));
+    const token = Cookies.get('Set-Cookie');
+    const userRole = jwtDecode(token).userRole;
+    const uno = jwtDecode(token).uNo;
 
     // ReplyList.js 에 있는 댓글 리스트 ReplyList.map 에서 받는 원소 하나하나의 댓글
     const reply = props.obj;
@@ -91,20 +93,43 @@ const Reply = (props) => {
                     </div>
 
                     <div className={`${className['reply-button-box']}`}>
-                        {/* 자신이 작성한 댓글인 경우에만 수정, 삭제 가능 */}
-                        {(reply.uno === token.uNo) ? (
-                            <>
-                                <button className={`${className['reply-modify-button']}`} onClick={updateToggle}>
-                                    <img alt="reply-modify-img" src={replyModifyImg} className={`${className['replyModifyImg']}`}/>
-                                    수정
-                                </button>
-                                &nbsp;
-                                <button className={`${className['reply-delete-button']}`} onClick={deleteReplyComment}>
-                                    <img alt="reply-delete-img" src={replyDeleteImg} className={`${className['replyDeleteImg']}`}/>
-                                    삭제
-                                </button>
-                            </>
-                        ) : null}
+                        {/* 자신이 작성한 댓글인 경우와 운영자인 경우 수정, 삭제 가능 */}
+                        {(userRole == '관리자' ? (
+                                <>
+                                    <button className={`${className['reply-modify-button']}`} onClick={updateToggle}>
+                                        <img alt="reply-modify-img" src={replyModifyImg}
+                                             className={`${className['replyModifyImg']}`}/>
+                                        수정
+                                    </button>
+                                    &nbsp;
+                                    <button className={`${className['reply-delete-button']}`}
+                                            onClick={deleteReplyComment}>
+                                        <img alt="reply-delete-img" src={replyDeleteImg}
+                                             className={`${className['replyDeleteImg']}`}/>
+                                        삭제
+                                    </button>
+                                </>
+                            ) : (
+                                reply.uno === uno ? (
+                                    <>
+                                        <button className={`${className['reply-modify-button']}`}
+                                                onClick={updateToggle}>
+                                            <img alt="reply-modify-img" src={replyModifyImg}
+                                                 className={`${className['replyModifyImg']}`}/>
+                                            수정
+                                        </button>
+                                        &nbsp;
+                                        <button className={`${className['reply-delete-button']}`}
+                                                onClick={deleteReplyComment}>
+                                            <img alt="reply-delete-img" src={replyDeleteImg}
+                                                 className={`${className['replyDeleteImg']}`}/>
+                                            삭제
+                                        </button>
+                                    </>
+                                ) : (
+                                    null
+                                ))
+                        )}
                     </div>
 
                 </div>

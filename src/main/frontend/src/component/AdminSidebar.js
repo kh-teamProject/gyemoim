@@ -24,9 +24,6 @@ const AdminSidebar = () => {
                     </li>
                     <div className={`${classes['adminBoardToggleContents']}`}>
                         {toggle && (
-                            <li><NavLink to={'/admin/board'}> > 게시물 관리</NavLink></li>
-                        )}
-                        {toggle && (
                             <li><NavLink to={'/admin/reply'}> > 댓글 관리</NavLink></li>
                         )}
                     </div>

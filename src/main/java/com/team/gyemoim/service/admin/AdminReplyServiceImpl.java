@@ -22,12 +22,10 @@ public class AdminReplyServiceImpl implements AdminReplyService{
     @Override
     public List<AdminReplyListDTO> searchReplyList(AdminReplyListParamDTO dto) throws Exception {
         System.out.println("************** AdminReplyServiceImpl_searchReplyList 성공 :D ************");
+        System.out.println("************** AdminReplyServiceImpl_bType = " + dto.getBtype());
+
         return adminReplyMapper.searchReplyList(dto);
     }
 
-    @Override
-    public int searchCount(AdminReplyListParamDTO dto) throws Exception {
-        System.out.println("************** AdminReplyServiceImpl_searchCount 성공 :D ************");
-        return adminReplyMapper.searchCount(dto);
-    }
+
 }

@@ -22,15 +22,10 @@ public class AdminReplyController {
     @GetMapping("/admin/reply/searchList")
     public List<AdminReplyListDTO> searchReplyList(AdminReplyListParamDTO dto) throws Exception {
         System.out.println("************ AdminReplyController_searchReplyList 리스트 성공 :D **************");
+        System.out.println("** 컨트롤러_댓글 리스트 dto bType = " + dto.getBtype());
 
         return adminReplyService.searchReplyList(dto);
     }
     
-    /* [GET] 검색된 댓글 갯수 조회 API */
-    @GetMapping("/admin/reply/searchCount")
-    public int searchCount(AdminReplyListParamDTO dto) throws Exception {
-        System.out.println("************ AdminReplyController_searchCount 댓글 개수 성공 :D **************");
 
-        return adminReplyService.searchCount(dto);
-    }
 }

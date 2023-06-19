@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Reply from "../../component/Reply";
-import className from "../css/admin/ReplyManagement.css";
+import "../../page/css/admin/ReplyManagement.css";
 
 const ReplyManagement = () => {
     // 댓글 리스트
@@ -9,21 +9,26 @@ const ReplyManagement = () => {
     // 검색용 변수
     const [searchTypeVal, setSearchTypeVal] = useState("");
     const [searchKeywordVal, setSearchKeywordVal] = useState("");
-    const [typeVal, setTypeVal] = useState("");
+    const [bTypeVal, setBTypeVal] = useState("");
+    // 모달띄우는 false,true 여부 확인
+    const [modal, setModal] = useState(false);
+    // 특정 rno 에 대한 댓글 담기
+    const [selectedReply, setSelectedReply] = useState(null);
 
 
     // API 호출하여 댓글 리스트 목록 가져오기 (게시판종류, 검색타입, 검색어)
-    const fetchReplyList = async (type, searchType, searchKeyword) => {
+    const fetchReplyList = async (bType, searchType, searchKeyword) => {
         // 검색된 List<ReplyVO> 리턴받음
         await axios.get("/admin/reply/searchList", {
             params: {
-                "type": type,
+                "btype": bType,
                 "searchType": searchType,
                 "searchKeyword": searchKeyword,
             },
         })
             .then((response) => {
                 console.log("댓글 목록 리스트 : " + response.data);
+
                 setReplyList(response.data);
             })
             .catch((error) => {
@@ -38,8 +43,8 @@ const ReplyManagement = () => {
 
 
     // 게시판 종류 변경하는 함수
-    const changeType = (e) => {
-        setTypeVal(e.target.value);
+    const changeBType = (e) => {
+        setBTypeVal(e.target.value);
     }
     // 검색 타입 변경하는 함수
     const changeSearchType = (e) => {
@@ -51,11 +56,11 @@ const ReplyManagement = () => {
     }
     // 게시판종류, 검색어타입, 검색키워드 기반으로 조회하는 함수
     const handleFormSubmit = () => {
-        fetchReplyList(typeVal, searchTypeVal, searchKeywordVal);
+        fetchReplyList(bTypeVal, searchTypeVal, searchKeywordVal);
     }
     // 검색창 초기화
     const deleteFormSubmit = () => {
-        setTypeVal("");
+        setBTypeVal("");
         setSearchTypeVal("");
         setSearchKeywordVal("");
     }
@@ -73,6 +78,17 @@ const ReplyManagement = () => {
         return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
     };
 
+    // replyList 에서 댓글 원소 가져와 변경하기
+    const handleReplyClick = (rno) => {
+        const selectedReply = replyList.find((item) => item.rno === rno);
+        setSelectedReply(selectedReply);
+        setModal(true); // 모달 열기
+    }
+
+    // 모달 닫는 함수
+    const closeModal = () => {
+        setModal(false);
+    }
 
     return (
         <>
@@ -84,7 +100,7 @@ const ReplyManagement = () => {
                         <tbody>
                         <tr>
                             <td>
-                                <select value={typeVal} onChange={changeType}>
+                                <select value={bTypeVal} onChange={changeBType}>
                                     <option value="">게시판 선택</option>
                                     <option value="공지사항">공지</option>
                                     <option value="1:1 문의사항">문의</option>
@@ -143,7 +159,7 @@ const ReplyManagement = () => {
                                             {item.rno}
                                         </td>
                                         <td>
-                                            {item.type}
+                                            {item.btype}
                                         </td>
                                         <td>
                                             {item.bid}
@@ -153,7 +169,7 @@ const ReplyManagement = () => {
                                                 display: 'contents',
                                                 fontSize: '15px',
                                                 blockSize: '30px'
-                                            }}>{item.replyComm}</button>
+                                            }} onClick={() => handleReplyClick(item.rno)}>{item.replyComm}</button>
                                         </td>
                                         <td>
                                             {item.name}
@@ -176,6 +192,17 @@ const ReplyManagement = () => {
                 </div>
             </div>
 
+            {/* 모달창 */}
+            {modal && (
+                <div className="modal">
+                    <div className="modal-content">
+                            <span className="close" onClick={closeModal}>
+                                &times;
+                            </span>
+                        <Reply obj={selectedReply}/>
+                    </div>
+                </div>
+            )}
         </>
     );
 };
