@@ -1,47 +1,41 @@
 import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import "../css/board/Board.module.css";
 import "../../component/css/Page.module.css";
 import axios from "axios";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
+import "../css/board/Board.module.css"
 import classes from "../css/board/Board.module.css";
 
 const NoticeList = () => {
-
+    let userRole;
+    /* 로그인 상태인 경우에만, token 에서 userRole 가져오기 */
+    // 로그인 토큰에서 식별자(역할) userRole 가져오기
+    if (Cookies.get('Set-Cookie') !== undefined) {
+        const token = jwtDecode(Cookies.get('Set-Cookie'));
+        userRole = token.userRole;
+    };
     // 전체 게시글 리스트 받는 변수
     const [noticeList, setNoticeList] = useState([]);
-
-    // 게시글 타입 : 공지사항
+    // 게시글 종류 타입변수 = "공지사항" 지정
     const bType = "공지사항";
 
-    // 페이징 관련 변수
+    /* 페이징 관련 변수 */
     // 1) 현재페이지 : nowPage
     const [nowPage, setNowPage] = useState(1);
     // 2) 전체 페이지 수 : totalPage
     const [totalPage, setTotalPage] = useState(0);
-
     // 검색용 변수
     const [searchTypeVal, setSearchTypeVal] = useState("");
     const [searchKeywordVal, setSearchKeywordVal] = useState("");
-
     // Link 용 (함수)
     let navigate = useNavigate();
-
-    // 로그인 토큰에서 식별자(역할) userRole, 회원번호 uno 가져오기
-    const token = jwtDecode(Cookies.get('Set-Cookie'));
-    const userRole = token.userRole;
-    const uno = token.uNo;
-
-
     // 운영자 여부 확인을 위한 상태 변수
     const [isAdmin, setIsAdmin] = useState(false);
 
 
     // API 호출하여 게시글 목록 가져오기
     const fetchNoticeList = async (searchType, searchKeyword) => {
-
-        // 검색된 List<BoardVO> 리턴받음
         await axios.get("/board/searchList", {
             params: {
                 "btype": bType,
@@ -50,19 +44,13 @@ const NoticeList = () => {
             },
         })
             .then((response) => {
-                console.log("게시글 목록 response.data.list: " + response);
-                console.log(isAdmin);
-                console.log(token);
-
                 setNoticeList(response.data); // 검색된 공지사항 리스트 가져오기
                 setTotalPage(Math.ceil(response.data.length / 10)); // total 값을 가져와서 업데이트
             })
             .catch((error) => {
-                console.log("NoticeList_fetchNoticeList 게시글 불러오기 에러발생 :< ");
-                console.log(error);
+                console.log("NoticeList_fetchNoticeList_axios_errorMessage : " + error.message);
             })
     };
-
 
     // 초기 렌더링 시 게시글 목록과 전체 페이지 수를 가져온다.
     useEffect(() => {
@@ -70,35 +58,29 @@ const NoticeList = () => {
         if (userRole == "관리자") {
             setIsAdmin(true);
         }
-
         fetchNoticeList("", "");
-        //console.log("token : " + token);
     }, []);
-
 
     // 검색 타입 변경하는 함수
     const changeSearchType = (e) => {
         setSearchTypeVal(e.target.value);
-    }
+    };
 
     // 검색어 변경하는 함수
     const changeSearchKeyword = (e) => {
         setSearchKeywordVal(e.target.value);
-    }
+    };
 
     // searchKeyword (검색어), searchType (검색타입) 기반으로 조회하는 함수
     const handleFormSubmit = () => {
-        console.log("NoticeList_handleFormSubmit_searchTypeVal= " + searchTypeVal + ", searchKeywordVal= " + searchKeywordVal);
-
         fetchNoticeList(searchTypeVal, searchKeywordVal);
         navigate("/board/notice");
+
         // 페이지 버튼 클릭 시 현재 페이지를 1로 초기화
         setNowPage(1);
-
     };
 
-    // 페이지 변경할 때 호출되는 함수
-    // 클릭한 페이지에 해당하는 게시글 목록 가져오도록 설정함
+    // 페이지 변경할 때 호출되는 함수 (클릭한 페이지에 해당하는 게시글 목록 가져오도록 설정)
     const handlePageClick = (e) => {
         // 클릭한 페이지
         const targetPage = Number(e.target.value);
@@ -108,14 +90,12 @@ const NoticeList = () => {
         if (targetPage > 0 && targetPage <= totalPage) {
             setNowPage(targetPage);
         }
-    }
+    };
 
-
-    // 글쓰기 버튼 클릭시 발생하는 함수 (글쓰기 버튼 클릭 -> 글쓰기 page 로 이동)
+    // 글쓰기 페이지로 이동하는 함수
     const moveNoticeWrite = () => {
         navigate('write');
     };
-
 
     return (
         <section style={{
@@ -123,15 +103,13 @@ const NoticeList = () => {
         }}>
             <div>
                 <div>
-                    <div style={{marginTop: "8%"}}>
+                    <div>
                         <div className={`${classes["noticeList_ttl"]}`}>
                             <h1>공지사항</h1>
                             <p>계모임의 새로운 소식을 전합니다.</p>
                         </div>
 
-                        <div style={{
-                            margin: "45px 0 50px"
-                        }}>
+                        <div className={`${classes['search-container-box']}`}>
                             {/* 검색 시작 */}
                             <table className={`${classes['search-container']}`}>
                                 <tbody>
@@ -158,40 +136,25 @@ const NoticeList = () => {
                                     </td>
                                 </tr>
                                 </tbody>
-
                             </table>
                             <br/>
                             {/* 검색 끝 */}
 
-
-                            <table className={`${classes['board-container']}`} style={{
-                                borderCollapse: 'collapse'
-                            }}>
+                            <table className={`${classes['board-container']}`}>
                                 <thead>
                                 <tr>
-                                    <th className={`${classes['board-column']}`} style={{
-                                        borderSpacing: "30px"
-                                    }}>글번호
+                                    <th className={`${classes['board-column3']}`}>글번호
                                     </th>
-                                    <th className={`${classes['board-column']}`} style={{
-                                        borderSpacing: "10px"
-                                    }}>제목
+                                    <th className={`${classes['board-column1']}`}>제목
                                     </th>
-                                    <th className={`${classes['board-column']}`} style={{
-                                        borderSpacing: "10px"
-                                    }}>작성자
+                                    <th className={`${classes['board-column1']}`}>작성자
                                     </th>
-                                    <th className={`${classes['board-column']}`} style={{
-                                        borderSpacing: "10px"
-                                    }}>작성일
+                                    <th className={`${classes['board-column1']}`}>작성일
                                     </th>
-                                    <th className={`${classes['board-column']}`} style={{
-                                        borderSpacing: "10px"
-                                    }}>조회수
+                                    <th className={`${classes['board-column1']}`}>조회수
                                     </th>
                                 </tr>
                                 </thead>
-
                                 <tbody>
 
                                 {noticeList.length > 0 ? (
@@ -223,7 +186,7 @@ const NoticeList = () => {
                                         })
                                 ) : (
                                     <tr>
-                                        <td colSpan="5" style={{textAlign: "center"}}>
+                                        <td colSpan="5" className={`${classes['text-none']}`}>
                                             게시글이 없습니다.
                                         </td>
                                     </tr>
@@ -261,7 +224,6 @@ const NoticeList = () => {
                                 </nav>
                             </div>
                             {/* 페이징 끝 */}
-
 
                             {/* 글쓰기 버튼 */}
                             <div className={`${classes['board-write']}`}>

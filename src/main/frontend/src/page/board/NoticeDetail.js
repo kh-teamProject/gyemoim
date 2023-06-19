@@ -11,44 +11,43 @@ import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 import viewImg from "../../component/images/view.png";
 
-
 const NoticeDetail = () => {
+    let userRole;
+    let uNo;
+    /* 로그인 상태인 경우에만, token 에서 userRole 가져오기 */
+    // 로그인 토큰에서 식별자(역할) userRole, 회원번호 uNo 가져오기
+    if (Cookies.get('Set-Cookie') !== undefined) {
+        const token = jwtDecode(Cookies.get('Set-Cookie'));
+        uNo = token.uNo;
+        userRole = token.userRole;
+    };
 
+    // 공지사항 게시글 리스트 변수
     const [noticeDetail, setNoticeDetail] = useState({});
     // 파라미터 가져오기
     const {bid} = useParams();
-    const token = jwtDecode(Cookies.get('Set-Cookie'));
-    const uNo = token.uNo;
-    const userRole = token.userRole; // 운영자
-
+    // Link 용 함수
     const navigate = useNavigate();
 
+    /* 공지 게시글 세부사항 가져오기 */
     const getNoticeDetail = async () => {
-
         await axios.get("/board/read", {
             params: {
-                "bid": bid,
+                "boardBid": bid,
+                "readerUno": uNo,
             }
         })
             .then((response) => {
-                console.log("NoticeDetail_공지사항 게시글 세부내용 가져오기 성공 :D");
-                console.log("NoticeDetail_가져온 데이터 : " + response.data);
-                console.log("bid 가져와지니? " + bid);
-                console.log("readerUNo 가져와지니? " + uNo);
-
+                console.log("getNoticeDetail_axios 성공");
                 setNoticeDetail(response.data);
-
             })
             .catch((error) => {
-                console.log("NoticeDetail_getNoticeDetail 게시글 못가져옴 :<");
-                console.log("readerUNo = " + uNo);
-                console.log("NoticeDetail_axios 에러사항: " + error);
+                console.log("NoticeDetail_getNoticeDetail_axios_errorMessage : " + error.message);
             });
-    }
-
+    };
 
     // 공지사항 목록으로 이동하는 함수
-    const moveToNoticeList = (event) => {
+    const moveToNoticeList = () => {
         navigate('/board/notice');
     };
 
@@ -56,40 +55,27 @@ const NoticeDetail = () => {
     const moveToNoticeModify = async () => {
         await axios.get("/board/modify", {params: {bid: bid}})
             .then((response) => {
-                console.log("NoticeDetail.moveToNoticeModify 글 수정 페이지로 이동 :D ");
                 navigate(`/board/notice/modify/${bid}`);
             })
             .catch((error) => {
-                console.log("NoticeDetail.moveToNoticeModify 글 수정 페이지 이동 안됨 :< ");
-                console.log(error);
+                console.log("NoticeDetail_moveToNoticeModify_axios_errorMessage : " + error.message);
             })
     };
 
-
     // 글 삭제하는 함수
     const moveToNoticeDelete = async () => {
-
         const deleteDTO = {
             bid: noticeDetail.bid,
             uno: noticeDetail.uno,
         };
-        console.log("*** 글 삭제 moveToNoticeDelete 들어옴 ***");
-
-        // post 는 주로 데이터 생성 또는 업데이트 할 때 사용
         await axios.delete("/board/delete", {data: deleteDTO})
             .then((response) => {
-                console.log("moveToNoticeDelete 글 삭제 성공 :D");
-                console.log(response.data);
-
                 alert("글 삭제되었습니다.");
                 navigate("/board/notice");
             }).catch((error) => {
-                console.log("moveToNoticeDelete 글 삭제 실패 :<");
-                console.log("글 삭제 에러: " + error);
+                console.log("NoticeDetail_moveToNoticeDelete_axios_errorMessage : " + error.message);
             });
-
     };
-
 
     useEffect(() => {
         getNoticeDetail();
@@ -155,8 +141,6 @@ const NoticeDetail = () => {
                             </div>
                         </div>
                     </div>
-
-
                     {/* 댓글 테이블 */}
                     {/* 댓글 작성 컴포넌트 */}
                     {
@@ -165,10 +149,8 @@ const NoticeDetail = () => {
                             :
                             null
                     }
-
                     {/* 댓글 리스트 컴포넌트 */}
                     <ReplyList bid={bid}/>
-
                 </div>
             </div>
         </>

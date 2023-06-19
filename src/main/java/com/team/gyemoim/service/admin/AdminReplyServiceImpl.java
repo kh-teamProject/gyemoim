@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AdminReplyServiceImpl implements AdminReplyService{
+public class AdminReplyServiceImpl implements AdminReplyService {
 
     private final AdminReplyMapper adminReplyMapper;
 
@@ -18,14 +18,11 @@ public class AdminReplyServiceImpl implements AdminReplyService{
         this.adminReplyMapper = adminReplyMapper;
     }
 
-    // 검색 댓글 목록 조회
+    /* (Read) */
+    // 검색 및 전체 댓글 리스트 조회
     @Override
     public List<AdminReplyListDTO> searchReplyList(AdminReplyListParamDTO dto) throws Exception {
-        System.out.println("************** AdminReplyServiceImpl_searchReplyList 성공 :D ************");
-        System.out.println("************** AdminReplyServiceImpl_bType = " + dto.getBtype());
-
         return adminReplyMapper.searchReplyList(dto);
     }
-
 
 }

@@ -13,11 +13,10 @@ const ReplyWrite = (props) => {
     const token = jwtDecode(Cookies.get('Set-Cookie'));
     const uNo = token.uNo;
     const name = token.name;
-
+    // 게시글 번호 bid
     const bid = props.bid;
-
+    // Link 용 함수
     const navigate = useNavigate();
-
     // 댓글 내용 담는 변수
     const [replyComm, setReplyComm] = useState("");
 
@@ -41,20 +40,14 @@ const ReplyWrite = (props) => {
                 params: {bid: bid}
             })
             .then((response) => {
-                console.log("ReplyWrite_createReply 댓글 작성 성공 :D");
-                console.log("댓글 응답 데이터: " + response.data);
-
                 if (response.data.bid !== 0) {
                     navigate(0);
                 }
             })
             .catch((error) => {
-                console.log("ReplyWrite_createReply 댓글 작성 실패 :<");
-                console.log("보낼 댓글정보: " + req);
-                console.log(error);
+                console.log("Reply_createReply_axios_errorMessage : " + error.message);
             })
-
-    }
+    };
 
 
     return (
@@ -73,7 +66,6 @@ const ReplyWrite = (props) => {
                             댓글 추가
                         </button>
                     </div>
-
                 </div>
             </div>
             {/* 하단 영역 (댓글 내용) */}

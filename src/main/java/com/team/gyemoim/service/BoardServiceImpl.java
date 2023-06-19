@@ -4,23 +4,16 @@ import com.team.gyemoim.dto.board.*;
 import com.team.gyemoim.mapper.BoardMapper;
 import com.team.gyemoim.vo.AttachedVO;
 import com.team.gyemoim.vo.BoardVO;
-import com.team.gyemoim.vo.PageVO;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -30,12 +23,6 @@ public class BoardServiceImpl implements BoardService {
     private final String uploadPath; // FileUploadConfig 에 있는 uploadPath 주입
 
     /* (Create) */
-    // 첨부파일 조회하기
-    @Override
-    public AttachedVO getAttachedById(int bid) throws Exception {
-        return boardMapper.getAttachedById(bid);
-    }
-
     // 게시글 생성하고 생성된 게시글의 번호 bid 반환
     @Override
     @Transactional
@@ -45,7 +32,6 @@ public class BoardServiceImpl implements BoardService {
         boardVO = boardVO.dtoToVO(boardWriteDTO);
         int bid = boardMapper.getBid();
         boardVO.setBid(bid);
-        System.out.println(boardVO);
 
         boardMapper.insert(boardVO); // 게시글 저장 후 고유 식별자 반환
 
@@ -57,61 +43,41 @@ public class BoardServiceImpl implements BoardService {
             attachedVO.setFilePath(saveFile(file)); // 업로드 경로에 파일 저장
 
             // AttachedVO 객체를 데이터베이스에 저장 (첨부파일 생성)
-            System.out.println(attachedVO);
             boardMapper.saveAttached(attachedVO);
         }
-
         return boardVO.getBid(); // 게시글 고유 식별자 반환
     }
 
-
-    // 파일 실제 업로드 경로에 저장하는 로직
-    // 'file' 객체에서 파일 이름 얻어와 경로를 생성하고 해당 경로에 파일을 저장한다.
-    private String saveFile(MultipartFile file) throws IOException {
-        String originalFileName = file.getOriginalFilename();
-        String extension = FilenameUtils.getExtension(originalFileName);
-        String fileName = LocalDateTime.now().toString().replace(":", "-") + "." + extension;
-        String filePath = uploadPath + File.separator + fileName; // File.separator 사용하여 경로 구분자 설정
-        File dest = new File(filePath);
-        file.transferTo(dest);
-
-        return filePath;
-    }
-
-
-    // 검색에 해당하는 게시글 리스트 조회하기 (사용 o)
+    /* (Read) */
+    // 검색에 해당하는 게시글 리스트 조회하기
     @Override
     public List<BoardVO> searchList(BoardListDTO dto) throws Exception {
-       return boardMapper.searchList(dto);
+        return boardMapper.searchList(dto);
     }
 
-
-    /* 게시글 조회하기 */
+    // 글 상세보기
     @Override
-    public List<BoardVO> selectBoard() throws Exception {
-        System.out.println("BoardSereviceImpl.selectBoard_게시글 조회 : " + boardMapper.selectBoard());
-        return boardMapper.selectBoard();
-    }
-
-    // 특정 글 읽기 (조회수 수정)
-    @Override
-    public BoardVO readDetail(int bid, boolean increaseViews) throws Exception {
-        // 조회수 증가 여부에 따른 조회수 증가하기
-        if (increaseViews) {
-            boardMapper.updateViewCnt(bid);// 조회수 올리기
+    public BoardVO readDetail(BoardReadCountDTO dto) throws Exception {
+        /* 게시글 조회 기록 확인 후 기록 있는 경우 -> readCount + 1 (update)
+           기록 없는 경우 -> read_history 테이블 생성 후 readCount = 1 (insert) */
+        // 로그인 한 사용자의 조회수만 카운팅
+        if (dto.getReaderUno() != null) {
+            // 게시글 조회 확인 횟수
+            boardMapper.createBoardReadCountHistory(dto);
+            // 특정 게시글에 대한 나의 조회 확인 횟수 가져오기
+            int readCount = boardMapper.selectReadCount(dto);
+            // 조회 확인 횟수 == 1 인 경우 즉, 처음 조회한 경우
+            if (readCount == 1) boardMapper.updateViewCnt(dto.getBoardBid());// 실제 게시글 조회수 증가
         }
-        return boardMapper.readDetail(bid);
+        return boardMapper.readDetail(dto.getBoardBid());
     }
-
 
     /* (Update) */
     // 수정 페이지 불러오기
     @Override
     public BoardVO modify(int bid) throws Exception {
-        System.out.println("서비스 bid: " + bid);
         return boardMapper.modify(bid);
     }
-
 
     // 게시글 및 첨부파일 수정하기
     @Override
@@ -122,17 +88,31 @@ public class BoardServiceImpl implements BoardService {
         boardMapper.modifyUpdate(boardModifyDTO);
     }
 
-
-    /* 글 삭제 (Delete) BoardDeleteServiceImpl */
+    /* (Delete) */
+    // 글 삭제하기
     @Override
-    public void delete(BoardDeleteDTO boardDeleteDTO) {
-        try {
-            System.out.println("****** BoardServiceImpl_delete_게시글 삭제 성공 :D *****");
-            boardMapper.delete(boardDeleteDTO);
-        } catch (Exception e) {
-            System.out.println("****** BoardServiceImpl_delete_게시글 삭제 실패 :D *****");
-            System.out.println("****** 에러 메시지 = " + e.getMessage());
-        }
+    public void delete(BoardDeleteDTO boardDeleteDTO) throws Exception {
+        boardMapper.delete(boardDeleteDTO);
+    }
+
+    /* 첨부파일 (Read) */
+    // 첨부파일 조회하기
+    @Override
+    public AttachedVO getAttachedById(int bid) throws Exception {
+        return boardMapper.getAttachedById(bid);
+    }
+
+    /* 파일 실제 업로드 경로에 저장하는 로직 */
+    // 'file' 객체에서 파일 이름 얻어와 경로를 생성하고 해당 경로에 파일을 저장한다.
+    private String saveFile(MultipartFile file) throws IOException {
+        String originalFileName = file.getOriginalFilename();
+        String extension = FilenameUtils.getExtension(originalFileName);
+        String fileName = LocalDateTime.now().toString().replace(":", "-") + "." + extension;
+        String filePath = uploadPath + File.separator + fileName; // File.separator 사용하여 경로 구분자 설정
+        File dest = new File(filePath);
+        file.transferTo(dest);
+
+        return filePath;
     }
 
 }

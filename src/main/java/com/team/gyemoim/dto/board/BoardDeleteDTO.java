@@ -7,7 +7,6 @@ import lombok.ToString;
 @Data
 @ToString
 public class BoardDeleteDTO {
-
     private Integer uNo;
     private int bid;
 

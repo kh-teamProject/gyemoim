@@ -7,7 +7,6 @@ import java.util.List;
 
 @Data
 public class ReplyResponseDTO {
-
     private List<ReplyVO> replyVOList; // 댓글 리스트
 
     public ReplyResponseDTO(List<ReplyVO> replyVOList) {

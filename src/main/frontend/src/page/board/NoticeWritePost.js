@@ -3,11 +3,13 @@ import axios from "axios";
 import classes from "../css/board/Board.module.css";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
+import {useNavigate} from "react-router-dom";
 
 const NoticeWritePost = () => {
     const token = jwtDecode(Cookies.get("Set-Cookie"));
     const writer = token.userRole[0];
     const uno = token.uNo;
+    const navigate = useNavigate();
 
     const [noticeFormData, setNoticeFormData] = useState({
         uno: uno,
@@ -18,31 +20,35 @@ const NoticeWritePost = () => {
         secret: "P",
     });
 
+    /* 첨부파일 관련 변수 */
+    // 1) 첨부파일 업로드 담을 파일 변수
     const [file, setFile] = useState(null);
-    const [selectedFileName, setSelectedFileName] = useState("");//첨부파일 이름
-    const [imgBase64, setImgBase64] = useState([]);// 첨부파일 미리보기
+    // 2) 업로드 하려고 선택한 첨부파일 이름 변수
+    const [selectedFileName, setSelectedFileName] = useState("");
+    // 3) 첨부파일 미리보기
+    const [imgBase64, setImgBase64] = useState([]);
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
-
+        const {name, value} = e.target;// 변경된 요소의 'name' 과 'value' 속성을 추출함
         setNoticeFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
         }));
     };
 
+    // 첨부 파일 선택(input type="file") 요소의 변경 이벤트에 대한 핸들러
     const handleChangeFile = (event) => {
         const selectedFile = event.target.files[0];
         setFile(selectedFile);
         setSelectedFileName(selectedFile.name);
         setImgBase64([]);
 
+        // 업로드 할 선택된 파일이 있는 경우
         if (selectedFile) {
             let reader = new FileReader();
             reader.readAsDataURL(selectedFile);
             reader.onloadend = () => {
                 const base64 = reader.result;
-                console.log(base64);
                 if (base64) {
                     let base64Sub = base64.toString();
                     setImgBase64([base64Sub]);
@@ -51,19 +57,20 @@ const NoticeWritePost = () => {
         }
     };
 
+    // 첨부파일 삭제
     const handleDeleteFile = () => {
         setFile(null);
         setSelectedFileName("");
         setImgBase64([]);
     };
 
+    // 공지사항 목록 페이지로 이동
     const moveToNoticeList = () => {
-        window.location.href = "/board/notice";
+        navigate("/board/notice");
     };
 
     const handleNoticeSubmit = async (e) => {
         e.preventDefault();
-
         try {
             const formData = new FormData();
             formData.append("file", file);
@@ -74,14 +81,9 @@ const NoticeWritePost = () => {
                     "Content-Type": "multipart/form-data",
                 },
             });
-
-            console.log("NoticeWritePost_handleSubmit 성공 :D");
-            console.log("공지사항 : " + noticeFormData);
-            window.location.href = "/board/notice";
+            navigate("/board/notice");
         } catch (error) {
-            console.log("NoticeWritePost_handleSubmit axios 실패 :<");
-            console.log("글 작성자의 uNo 또는 uno: " + noticeFormData);
-            console.log("NoticeWritePost_handleSubmit axios 에러: " + error);
+            console.log("NoticeWritePost_handleSubmit_axios_errorMessage : " + error.message);
         }
     };
 

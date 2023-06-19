@@ -6,25 +6,19 @@ import replyListImg from "./images/reply-list-clip.png";
 
 const ReplyList = (props) => {
 
+    // 게시글 bid
     const bid = props.bid;
-
     // 댓글 리스트 담는 변수
     const [replyList, setReplyList] = useState([]);
-
 
     const getReplyList = async () => {
         await axios.get("/reply/list", {params: {bid: bid}})
             .then((response) => {
-                console.log("댓글 리스트 가져오기 성공 :D");
-                console.log(response.data);
-
                 setReplyList(response.data);
-
             }).catch((error) => {
-                console.log("댓글 리스트 가져오기 실패 :<");
-                console.log(error);
+                console.log("Reply_getReplyList_axios_errorMessage : " + error.message);
             });
-    }
+    };
 
 
     useEffect(() => {
@@ -49,7 +43,6 @@ const ReplyList = (props) => {
             }
         </>
     )
-
 }
 
 

@@ -10,15 +10,16 @@ import java.util.List;
 @Mapper
 public interface ReplyMapper {
 
-    /* 댓글 작성 */
+    /* (Create) 댓글 작성 */
     void createReply(CreateReplyParamDTO createReplyParamDTO) throws Exception;
 
-    /* 댓글 조회 */
+    /* (Read) 댓글 조회 */
     List<ReplyVO> getReplyList(int bid) throws Exception;
 
-    /* 댓글 삭제 */
+    /* (Update) 댓글 수정 */
+    void updateReply(UpdateReplyDTO updateReply) throws Exception;
+
+    /* (Delete) 댓글 삭제 */
     void deleteReply(int rno) throws Exception;
 
-    /* 댓글 수정 */
-    void updateReply(UpdateReplyDTO updateReply) throws Exception;
 }

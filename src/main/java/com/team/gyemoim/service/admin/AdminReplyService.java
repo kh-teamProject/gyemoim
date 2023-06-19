@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface AdminReplyService {
 
-    // 댓글 검색 리스트 가져오기
+    /* (Read) */
+    // 검색 및 전체 댓글 리스트 조회
     List<AdminReplyListDTO> searchReplyList(AdminReplyListParamDTO dto) throws Exception;
 
 }

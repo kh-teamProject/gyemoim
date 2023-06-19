@@ -10,8 +10,8 @@ import java.util.List;
 @Mapper
 public interface AdminReplyMapper {
 
-    // 검색된 댓글 목록 리스트 조회
+    /* (Read) */
+    // 검색 및 전체 댓글 리스트 조회
     List<AdminReplyListDTO> searchReplyList(AdminReplyListParamDTO dto) throws Exception;
-
 
 }

@@ -27,8 +27,6 @@ const ReplyManagement = () => {
             },
         })
             .then((response) => {
-                console.log("댓글 목록 리스트 : " + response.data);
-
                 setReplyList(response.data);
             })
             .catch((error) => {
