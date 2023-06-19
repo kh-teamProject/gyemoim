@@ -20,7 +20,6 @@ public class HomeController {
 
     @GetMapping("getStageList")
     public HashMap<String, Object> home(HomeListDTO dto) {
-        log.info("홈 컨트롤러");
         HashMap<String,Object> map = new HashMap<String,Object>();
         //시각화
         //1. 스테이지 전체 수
