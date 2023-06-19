@@ -38,7 +38,6 @@ import BoardManagement from "./page/admin/BoardManagement";
 import StageReport from "./component/UI/stage/StageReport";
 import AdminStageList from "./page/admin/AdminStageList";
 import AdminStageDetail from "./page/admin/AdminStageDetail";
-import Test from "./page/Test";
 import TestAdminAccountDetail from "./page/admin/TestAdminAccountDetail";
 import AccountModify from "./page/admin/AccountModify";
 import './App.css';
@@ -172,13 +171,6 @@ const App = () => {
           {
             path: 'stagelist',
             element: <StageList/>
-          },
-          //
-
-          {
-            path: 'test/:pfID',
-            element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' ?
-              <Test/> : <Navigate to="/"/>) : <Navigate to="/"/>
           },
           {
             path: '/stageCreate',
