@@ -65,8 +65,8 @@ const Home = () => {
               <div><p>완료 스테이지 수 : </p><span>{completePf}</span>개</div>
             </div>
             <div className={classes.allCount}>
-              <div><p>총 스테이지 참여자 수 : </p><span>{allPf}</span>명</div>
-              <div><p>총 스테이지 수 : </p><span>{allRoll}</span>개</div>
+              <div><p>총 스테이지 참여자 수 : </p><span>{allRoll}</span>명</div>
+              <div><p>총 스테이지 수 : </p><span>{allPf}</span>개</div>
             </div>
           </div>
           <HomeChart allPf={allPf} waitingPf={waitingPf} partPf={partPf} completePf={completePf}/>

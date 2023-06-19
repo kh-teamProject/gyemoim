@@ -68,7 +68,6 @@ const StageList = () => {
       axios
         .get('/stagelist', {})
         .then((res) => {
-          console.log(res.data.PF);
           setStage(res.data.PF);
           setTotalPage(Math.ceil(res.data.PF.length / list)); //전체 페이지 수 계산
         })
@@ -83,7 +82,6 @@ const StageList = () => {
           },
         })
         .then((res) => {
-          console.log(res.data);
           setStage(res.data);
           setTotalPage(Math.ceil(res.data.length / list)); //전체 페이지 수 계산
 
@@ -226,7 +224,7 @@ const StageList = () => {
                           <div className='stage-ing'>
                             <div>
                             <div id="select-deposit">
-                              <h3 classNameName="stage-h3">{value.pfName}</h3>
+                              <h3 className="stage-h3">{value.pfName}</h3>
                               <div className='speechImg'>
                                 <img src={require('../../component/assert/images/gyemoim_speech.png')} alt="speech"/>
                                 <span>{value.interest}</span>
