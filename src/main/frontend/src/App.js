@@ -186,8 +186,6 @@ const App = () => {
               <Navigate to="/"/>
           },
           {
-          {
-              <ChanHeeTest/> : <Navigate to="/"/>) : <Navigate to="/"/>
             path: '/stageAgree/:pfID',
             element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' ?
               <StagePartIn/> : <Navigate to="/"/>) : <Navigate to="/"/>
