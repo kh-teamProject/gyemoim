@@ -112,26 +112,22 @@ public interface StageMapper {
     int getUNoForMyAccount(StageRollDTO stageRollDTO);
 
 
-  //(지연)선택한 계모임 정보 가져오기
-  //(지연)스테이지에 관한 PfInfo
+  //(지연)선택한 계모임 정보 가져오기, 스테이지에 관한 pfInfo
   List<StageSelectDTO> getPfInfo(Integer pfID);
-
 
   //(지연) 계모임 장 Roll 정보 가져오기
   List<RollDTO> getStageSelectRoll(RollDTO dto);
 
-
   //(지연)수령예정표 가져오기
   List<PfDTO> getReceipt(Integer pfID);
-
-  //(지연)개인 수령예정표 가져오기
-//  List<PartiReceiptDTO> getOneReceipt(Integer pfID);
 
   //(지연)참여 순번 가져오기
   List<PartiListDTO> getParti(PartiListDTO dto);
 
+  //(지연)참여 순번 가져오기
   List<RollVO> getPartRoll(RollVO vo);
 
+  //(지연)참여 순번 가져오기
   List<PartiListDTO> getTurnRoll(PartiListDTO dto);
 
 

@@ -30,11 +30,6 @@ const ReceiptTurn = () => {
   const [selectedTurn, setSelectedTurn] = useState(null);
   const [selectedRollData, setSelectedRollData] = useState(null);
 
-  console.log('pfEntry  : ', pfEntry);
-  console.log('parti  : ', parti);
-  console.log('partRoll  : ', partRoll);
-
-  console.log('turnRoll  : ', turnRoll);
 
   const location = useLocation();
   const pfIDNum = location.pathname.split('/');
@@ -46,7 +41,6 @@ const ReceiptTurn = () => {
       }
     })
      .then((res) => {
-            console.log(res.data);
             setPf(res.data.pf);
             setRoll(res.data.roll);
 
@@ -111,7 +105,7 @@ const ReceiptTurn = () => {
              {Array.from({ length: pfEntry }, (_, index) => {
                const receiveTurnIndex = partRoll.findIndex((item) => item.receiveTurn === index + 1);
                const name =
-                 receiveTurnIndex !== -1 ? partRoll[receiveTurnIndex].name : '●';
+                 receiveTurnIndex !== -1 ? partRoll[receiveTurnIndex].name : null;
 
                  const selectedClass = selectedTurn === index + 1 ? classes.selected : '';
 
@@ -122,13 +116,13 @@ const ReceiptTurn = () => {
                    onClick={() => handleClickTurn(index)}
                  >
                    <span style={{ cursor: 'pointer' }}>
-                   { name === '●'
-                       ? <>
+                   { name === null
+                       ? <div className={`${classes.memTurn}`}>
                        {index + 1}
-                       </>
-                       : <>
-                       ●
-                       </>
+                       </div>
+                       : <div className={`${classes.memTurnEgg}`}>
+                       <img src={require('../../../component/images/egg002.png')} alt="egg"/>
+                       </div>
                    }
                    </span>
                  </li>
