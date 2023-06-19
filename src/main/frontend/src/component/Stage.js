@@ -1,20 +1,55 @@
-import egg from "./images/egg002.png";
-import classes from './css/Stage.module.css';
+import {Link} from "react-router-dom";
 
-const Stage = () => {
+import classes from '../page/css/Home.module.css';
+
+const Stage = (props) => {
+  const stageItems = props.stageList.map((stage, index) => {
+    const formattedDeposit = (stage.deposit / 10000).toFixed(0) + '만';
+    const filteredStageUserList = props.stageUserList.filter(item => item.pfID === stage.pfID);
+
+    return (
+      <Link to={`/stage/${stage.pfID}`} key={index}>
+        <div className={classes.stageBox}>
+          <div className={classes.stageTitle}>{stage.pfName}</div>
+          {/* <div className={classes.stageInterest}><FaMoneyBillAlt /><span>목돈</span></div> */}
+          <div className={classes.stageImage}>
+            <img src={require('./assert/images/gyemoim_speech.png')} alt="stageImage"/>
+            <span>{stage.interest}</span>
+          </div>
+          <ul>
+            {Array.from({length: stage.pfEntry}, (_, index) => {
+              const receiveTurnIndex = filteredStageUserList.findIndex((item) => item.receiveTurn === index + 1);
+              const uNo =
+                receiveTurnIndex !== -1 && filteredStageUserList[receiveTurnIndex] ? filteredStageUserList[receiveTurnIndex].uno : null;
+
+              return (
+                <li key={index} className={classes.memList}>
+                  {
+                    uNo === null
+                      ? <span>{index + 1}</span>
+                      : <span><img src={require('./images/egg002.png')} alt="stageImage"
+                                   className={classes.egg}/></span>
+                  }
+                </li>
+              );
+            })}
+          </ul>
+          <div className={classes.stageInfo}>
+            <div>이율(세후) <b>{stage.pfRate}%</b></div>
+            <div>약정금 <b>{formattedDeposit}원</b></div>
+          </div>
+        </div>
+      </Link>
+    );
+  });
   return (
-    <div className={classes.stage}>
-      <h4>따끈한 자본 만들기!!</h4>
-      <ul>
-        <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-        <li className={classes.stageEmpty}>2</li>
-        <li className={classes.stageEmpty}>3</li>
-        <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-        <li className={classes.stageEmpty}>5</li>
-        <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-        <li><img src={egg} alt="참여중인 순번" className={classes.stageImg} /></li>
-      </ul>
-      <p>이율(세후)9.81% <span>|</span> 약정금 520만원</p>
+    <div className={classes.homeStageList}>
+      {
+        stageItems.length === 0 ?
+          <p>{props.Progress}인 스테이지가 없습니다.</p>
+          :
+          stageItems
+      }
     </div>
   );
 };

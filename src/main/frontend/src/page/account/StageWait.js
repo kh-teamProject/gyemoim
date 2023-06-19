@@ -1,14 +1,40 @@
 import {NavLink} from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 import MyPageSidebar from "../../component/MyPageSidebar";
 import classes from "../css/MyStage.module.css";
 import Stage from "../../component/Stage";
 
 const StageWait = () => {
+  const token = Cookies.get('Set-Cookie');
+  const uNo = jwtDecode(token).uNo;
+  const startFlag = '대기중'
+
+  const [stageList, setStageList] = useState([]);
+  const [stageUserList, setStageUserList] = useState([]);
+
+  useEffect(() => {
+    axios.get(`/getMyPfList/${uNo}`, {
+      params: {
+        startFlag
+      }
+    })
+      .then((res) => {
+        setStageList(res.data.stageList)
+        setStageUserList(res.data.stageUserList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return (
     <section>
       <div>
-        <MyPageSidebar />
+        <MyPageSidebar/>
       </div>
       <div className={classes.field}>
         <div>
@@ -39,14 +65,7 @@ const StageWait = () => {
             </li>
           </ul>
         </div>
-        <h3>현재 참여중인 스테이지</h3>
-        <div className={`${classes['stage-wrap']}`}>
-          <Stage />
-          <Stage />
-          <Stage />
-          <Stage />
-          <Stage />
-        </div>
+        <Stage stageList={stageList} stageUserList={stageUserList} Progress={startFlag}/>
       </div>
     </section>
   );

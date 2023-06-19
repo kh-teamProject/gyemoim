@@ -4,9 +4,8 @@ import com.team.gyemoim.dto.BankHistoryDTO;
 import com.team.gyemoim.dto.InterestDTO;
 import com.team.gyemoim.dto.MyPageDTO;
 import com.team.gyemoim.service.AccountService;
-import com.team.gyemoim.vo.ExpenditureVO;
-import com.team.gyemoim.vo.MyAccountVO;
-import com.team.gyemoim.vo.MyAccountHistoryVO;
+import com.team.gyemoim.service.HomeService;
+import com.team.gyemoim.vo.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +18,7 @@ import java.util.List;
 public class AccountController {
 
   private final AccountService accountService;
+  private final HomeService homeService;
 
   // Creat
   // 계모임계좌에 입금하기
@@ -30,10 +30,7 @@ public class AccountController {
   // Read
   @GetMapping("/mypage")
   public HashMap<String, Object> getMyInfo(@RequestParam Integer uNo) {
-    System.out.println("uNo = " + uNo);
-    System.out.println("mypageController");
     System.out.println(accountService.getMyInfo(uNo));
-    System.out.println("aaaaaaaaaaaaaaaaaaaaa");
     return accountService.getMyInfo(uNo);
   }
 
@@ -60,6 +57,24 @@ public class AccountController {
   public boolean checkedPwd(@PathVariable Integer uNo, @RequestParam String password) {
     return accountService.checkedPwd(uNo, password);
   }
+
+  @GetMapping("/getMyPfList/{uNo}")
+  public HashMap<String, Object> getMyPfList(@RequestParam String startFlag, @PathVariable Integer uNo) {
+    HashMap<String, Object> map = new HashMap<>();
+
+    // 스테이지 리스트
+    //1. 내 계모임 대기중 리스트 데이터
+    map.put("stageList", accountService.getMyPfList(startFlag, uNo));
+    //2. pfID가 일치하는 roll 데이터
+    map.put("stageUserList", homeService.getPfRollList());
+    return map;
+  }
+
+  @GetMapping("/getStageRollList")
+  public List<RollVO> getStageRollList(@RequestParam Integer pfID) {
+    return accountService.getStageRollList(pfID);
+  }
+
   // Update
   // 내 정보 수정하기
   @PostMapping("/myInfoModify")

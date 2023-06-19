@@ -6,7 +6,6 @@ const AdminHome = () => {
 
   return (
     <>
-      <h1>관리자 홈</h1>
       <section className={classes.chartWrap}>
         <article className={classes.interestChart}>
           <h2>{'<관심사 비율>'}</h2>
