@@ -143,7 +143,6 @@ public class StageController {
   public HashMap<String, Object> getStageSelect(@RequestParam Integer pfID, RollDTO dto) {
       HashMap<String,Object> map = new HashMap<String,Object>();
       map.put("pf", stageService.getPfInfo(pfID));
-
       map.put("roll", stageService.getStageSelectRoll(dto));
       return map;
   }

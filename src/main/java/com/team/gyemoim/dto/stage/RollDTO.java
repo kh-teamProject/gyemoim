@@ -10,4 +10,5 @@ public class RollDTO {
     private Integer pfID; //계모임 식별번호
     private Integer receiveTurn; //곗돈 수령순서
     private String pfMaster; //계모임 장
+    private String name; // 이름
 }
