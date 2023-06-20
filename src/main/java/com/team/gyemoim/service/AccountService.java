@@ -60,4 +60,6 @@ public interface AccountService {
   void createMyAccount(MyPageDTO dto);
 
   List<RollVO> getStageRollList(Integer pfID);
+
+  List<PFVO> getRecommendStage(Integer uNo);
 }

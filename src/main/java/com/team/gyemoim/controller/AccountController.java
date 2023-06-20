@@ -30,7 +30,6 @@ public class AccountController {
   // Read
   @GetMapping("/mypage")
   public HashMap<String, Object> getMyInfo(@RequestParam Integer uNo) {
-    System.out.println(accountService.getMyInfo(uNo));
     return accountService.getMyInfo(uNo);
   }
 
@@ -63,7 +62,7 @@ public class AccountController {
     HashMap<String, Object> map = new HashMap<>();
 
     // 스테이지 리스트
-    //1. 내 계모임 대기중 리스트 데이터
+    //1. 내 계모임 리스트 데이터
     map.put("stageList", accountService.getMyPfList(startFlag, uNo));
     //2. pfID가 일치하는 roll 데이터
     map.put("stageUserList", homeService.getPfRollList());
@@ -75,6 +74,14 @@ public class AccountController {
     return accountService.getStageRollList(pfID);
   }
 
+  @GetMapping("/getRecommendStage/{uNo}")
+  public HashMap<String, Object> getRecommendStage(@PathVariable Integer uNo) {
+    HashMap<String, Object> map = new HashMap<>();
+    map.put("recommendStage", accountService.getRecommendStage(uNo));
+    map.put("stageUserList", homeService.getPfRollList());
+    return map;
+  }
+
   // Update
   // 내 정보 수정하기
   @PostMapping("/myInfoModify")
@@ -82,13 +89,11 @@ public class AccountController {
     List<ExpenditureVO> expenditureList = accountService.getExpenditure(dto.getUNo());
     List<MyAccountVO> myAccountList = accountService.getMyAccount(dto.getUNo());
     if(expenditureList.isEmpty() || myAccountList.isEmpty()) {
-      System.out.println("Create");
       accountService.myInfoModify(dto);
       accountService.createMyAccount(dto);
       accountService.createExpenditure(dto);
       return true;
     } else {
-      System.out.println("Update");
       accountService.myInfoModify(dto);
       accountService.updateExpenditure(dto);
       return true;

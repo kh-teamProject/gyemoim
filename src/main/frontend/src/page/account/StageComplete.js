@@ -39,7 +39,7 @@ const StageComplete = () => {
         <div>
           <ul className={classes.myStage}>
             <li>
-              <NavLink to={'/mypage/stage'}
+              <NavLink to={'/mypage/stage/wait'}
                        className={({isActive}) => isActive ? classes.isActive : undefined}>나의 스테이지</NavLink>
             </li>
             <li>

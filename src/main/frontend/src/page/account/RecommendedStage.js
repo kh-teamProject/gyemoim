@@ -1,8 +1,30 @@
 import MyPageSidebar from "../../component/MyPageSidebar";
 import classes from "../css/MyStage.module.css";
 import {NavLink} from "react-router-dom";
+import Stage from "../../component/Stage";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const RecommendedStage = () => {
+  const token = Cookies.get('Set-Cookie');
+  const uNo = jwtDecode(token).uNo;
+
+  const [stageList, setStageList] = useState([]);
+  const [stageUserList, setStageUserList] = useState([]);
+
+  useEffect(() => {
+    axios.get(`/getRecommendStage/${uNo}`)
+      .then((res) => {
+        console.log(res);
+        setStageList(res.data.recommendStage);
+        setStageUserList(res.data.stageUserList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <section>
@@ -13,7 +35,7 @@ const RecommendedStage = () => {
         <div>
           <ul className={classes.myStage}>
             <li>
-              <NavLink to={'/mypage/stage'}
+              <NavLink to={'/mypage/stage/wait'}
                        className={({isActive}) => isActive ? classes.isActive : undefined} end>나의 스테이지</NavLink>
             </li>
             <li>
@@ -22,6 +44,7 @@ const RecommendedStage = () => {
             </li>
           </ul>
         </div>
+        <Stage stageList={stageList} stageUserList={stageUserList} recommend={true}/>
       </div>
     </section>
   );

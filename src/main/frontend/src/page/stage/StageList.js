@@ -102,7 +102,6 @@ const StageList = () => {
           },
         })
         .then((res) => {
-          console.log(res.data);
           setRecommend(res.data);
         })
         .catch((error) => {
