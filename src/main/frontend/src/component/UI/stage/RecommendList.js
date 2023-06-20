@@ -2,8 +2,12 @@ import React from "react";
 import {Link} from "react-router-dom";
 
 import classes from '../../../page/css/StageList.modlue.css';
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 
-const RecommendList = ({recommend, roll}) => {
+const RecommendList = ({recommend,roll}) => {
+
+
   return (
     <div>
       <div
@@ -19,6 +23,7 @@ const RecommendList = ({recommend, roll}) => {
             const formattedDeposit = (value.deposit / 10000).toFixed(0) + '만';
             return (
               <div key={index}>
+                <h3>{value.name}님을 위한 추천스테이지</h3>
                 <Link to={`/stageSelect/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
                   <div id="select-deposit">
                     <h3 className="stage-h3">{value.pfName}</h3>

@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {FaMoneyBillAlt, FaAvianex, FaApple, FaTshirt, FaCarAlt, FaBirthdayCake, FaHiking} from 'react-icons/fa';
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -9,6 +9,7 @@ import MyPageSidebar from "../../component/MyPageSidebar";
 import classes from '../css/Interest.module.css';
 
 const Interest = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const token = jwtDecode(Cookies.get('Set-Cookie'));
   const uNo = token.uNo;
@@ -51,6 +52,7 @@ const Interest = () => {
     })
       .then((res) => {
         alert(res.data);
+        navigate('/mypage/info');
       })
       .catch((error) => {
         console.log(error);

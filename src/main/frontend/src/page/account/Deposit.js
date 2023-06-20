@@ -82,6 +82,7 @@ const Deposit = () => {
         }
       })
         .then((res) => {
+          alert('충전이 완료되었습니다.');
         })
         .catch((error) => {
           console.log(error);

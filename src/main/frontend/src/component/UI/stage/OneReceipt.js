@@ -125,7 +125,7 @@ const OneReceipt = ({ selectedRollData }) => {
       </div>
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px', marginRight: '50px' }}>
         {receiptData.map((item, index) => (
-         (userRole == '정회원' ? (<button
+         (userRole == '정회원' || userRole == '관리자'  ? (<button
                                          key={index}
                                          style={{
                                            border: '1px solid #4169E1',

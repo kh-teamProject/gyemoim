@@ -41,7 +41,7 @@ const StageList = () => {
   const selectInterest = (event) => {
     setInterest(event.target.value);
     setCurPage(1);
-    setList(10);
+    setList(20);
 
   }
 
@@ -90,11 +90,13 @@ const StageList = () => {
           console.log(error);
         });
     }
+
     //추천테이블 작동 코드
     if (checkedLogin) {
       //추천기능 변수와 state
       const token = jwtDecode(Cookies.get('Set-Cookie'));
       const uNo = token.uNo;
+
       axios
         .get('/recommend', {
           params: {
@@ -112,10 +114,10 @@ const StageList = () => {
 
   //추천테이블 값 뿌리는 스테이트
   const [recommend, setRecommend] = useState([])
-
   return (
     <>
       {/*로그인시 추천테이블*/}
+
       <RecommendList recommend={recommend} roll={roll}/>
 
       <h1>스테이지 조회</h1>

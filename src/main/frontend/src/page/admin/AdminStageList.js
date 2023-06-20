@@ -53,7 +53,7 @@ const AdminStageList = () => {
     return stageListTable
       .filter((value) => {
         if (startFlag === "전체") {
-          if (value.startFlag === "대기중" || value.startFlag === "참여중") {
+          if (value.startFlag === "대기중") {
             value.endDate = "-";
             return true;
           }

@@ -30,8 +30,8 @@
 
     <!--(유진) 스테이지 참여 회원정보 리스트 띄우기-->
   <select id="getStageMemList" resultType="com.team.gyemoim.dto.admin.AdminStageDetailDTO">
-    select  p.pfID, p.pfName, p.pfentry, p.payment, p.deposit,p.interest,p.startFlag,p.pfRate
-            ,r.receiveTurn,m.name, r.uno,rs.upayment,rs.uTotalpayment, rs.uTotalReceipts,rs.ureceipt
+    select  p.pfID, p.pfName, p.pfentry, p.payment, p.deposit,p.interest,p.startFlag,p.pfRate, p.startDate, p.endDate
+            ,r.receiveTurn, r.pfMaster,m.name, r.uno,rs.upayment,rs.uTotalpayment, rs.uTotalReceipts,rs.ureceipt
     from pf p,
          roll r,
          member m,
@@ -42,6 +42,7 @@
       and  p.deposit = rs.deposit
       and   rs.receiveturn= r.receiveturn
       and   rs.pfrate = p.pfrate
+    order by r.receiveTurn
   </select>
 <!-- (유진) 스테이지 상태 업데이트 하기  -->
     <update id="setStageComplete">

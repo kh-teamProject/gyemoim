@@ -77,7 +77,7 @@ const Login = () => {
         <div className={login.guide}>
           <ul className={login.ul}>
             <li className={login.li}>
-              <a className={login.a} href="/MemberEmailSearch">아이디 찾기</a>
+              <a className={login.a} href="/MemberEmailSearch">이메일 찾기</a>
             </li>
             <li className={login.li}>｜</li>
             <li className={login.li}>

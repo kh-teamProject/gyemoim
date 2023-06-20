@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Data
 public class StageListDTO {
+  private String name;//이름
   private int pfID; //계모임 식별번호
   private String pfMaster; //계주
   private String pfName; //계이름
