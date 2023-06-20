@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import {Pie} from 'react-chartjs-2';
 import axios from 'axios';
 import {Chart} from 'chart.js/auto';
+import styles from "../../../page/css/admin/AdminStageDetail.modlue.css";
 import {common} from "@mui/material/colors";
 
 const SalesPieChart = () => {
@@ -73,7 +74,10 @@ const SalesPieChart = () => {
               },
               title: {
                 display: true,
-                text: '월 납입금별 생성현황',
+                text: '<월 납입금별 생성현황>',
+                font:{
+                  size:20,
+                },
               },
             },
           },
@@ -143,7 +147,10 @@ const SalesPieChart = () => {
             },
             title: {
               display: true,
-              text: '관심사 별 분류',
+              text: '<관심사 별 분류>',
+              font:{
+                size:20,
+              },
             },
           },
         },
@@ -157,18 +164,18 @@ const SalesPieChart = () => {
   }
   return (
     <>
-      <div style={{width: '350px', height: '350px'}}>
-        <div>
-          <select onChange={handleStartFlag}>
+      <div style={{width: '450px', height: '450px'}}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <select className="select-btn" onChange={handleStartFlag}>
             <option value="전체">전체</option>
             <option value="대기중">대기중</option>
             <option value="참여중">참여중</option>
             <option value="완료">완료</option>
           </select>
         </div>
-        <span style={{display: 'flex'}}>
-      <canvas ref={paymentRef} id="payment-chart"/>
-      <canvas ref={interstRef} id="pfEntry-chart"/>
+        <span style={{margin:'20px',display: 'flex'}}>
+      <canvas ref={paymentRef} id="payment-chart" style={{margin:'30px'}}/>
+      <canvas ref={interstRef} id="pfEntry-chart" style={{margin:'30px'}}/>
       </span>
       </div>
     </>
