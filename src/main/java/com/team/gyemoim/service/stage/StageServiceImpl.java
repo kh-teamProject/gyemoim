@@ -34,6 +34,11 @@ public class StageServiceImpl implements StageService {
   }
 
   @Override
+  public List<RollDTO> getRoll() {
+    return stageMapper.getRoll();
+  }
+
+  @Override
   public List<StageListDTO> filterList(int deposit) {
     System.out.println("필터작동서비스");
     return stageMapper.filterList(deposit);
@@ -44,6 +49,7 @@ public class StageServiceImpl implements StageService {
     System.out.println("추천 서비스");
     return stageMapper.recommend(uno);
   }
+
 
   //(현지) <스테이지 생성> _스테이지 생성(PF)
   @Override

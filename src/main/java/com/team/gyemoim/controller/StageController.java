@@ -40,6 +40,7 @@ public class StageController {
   public HashMap<String,Object> stage() {
     HashMap<String,Object> map = new HashMap<>();
     map.put("PF",stageService.getPFList());
+    map.put("Roll",stageService.getRoll());
     System.out.println("계모임 조회 컨트롤러");
     return map;
   }

@@ -23,7 +23,8 @@ public interface StageMapper {
          filterList -> deposit에 따라서 리스트 해당하는것만 가져옴 
          recommend -> 입금액에 맞춰 무작위 추천*/
   List<StageListDTO> getPFList();
-  
+
+  List<RollDTO> getRoll();
   List<StageListDTO> filterList(int deposit);
 
   List<StageListDTO> recommend(int uno);

@@ -3,40 +3,37 @@
 <mapper namespace="com.team.gyemoim.mapper.StageMapper">
 <!--(유진)리스트 띄우기  -->
     <select id="getPFList" resultType="com.team.gyemoim.dto.stage.StageListDTO">
-      SELECT pf.pfID,
-             pf.pfName,
-             pfentry,
-             pf.payment,
-             pf.deposit,
-             pf.interest,
-             pf.startFlag,
-             roll.receiveTurn,
-             roll.uno
-      FROM pf
-      JOIN roll ON PF.PFID = roll.PFID
+      SELECT * FROM pf
       WHERE pf.startFlag NOT LIKE'%완료%'
     </select>
 
+<!--  유진)Roll 띄우기  -->
+    <select id="getRoll" resultType="com.team.gyemoim.dto.stage.RollDTO">
+        SELECT * FROM roll
+    </select>
+
+
     <!--(유진)deposit에 따라 값 달리 가져오기.-->
     <select id="filterList" resultType="com.team.gyemoim.dto.stage.StageListDTO">
-        SELECT pf.pfID,pf.pfName,pfentry, pf.payment,pf.deposit,pf.interest,pf.startFlag,roll.receiveTurn, roll.uno
-        FROM PF
-        JOIN ROLL ON PF.PFID = ROLL.PFID
+        SELECT * FROM PF
         WHERE
+        startFlag NOT LIKE'%완료%'AND(
         (#{deposit} = 70 AND pf.deposit BETWEEN 0 AND 700000)
         OR(#{deposit} = 150  AND pf.deposit BETWEEN 1000000 AND 1500000)
         OR (#{deposit} = 250  AND pf.deposit BETWEEN 2000000 AND 2500000)
         OR (#{deposit} = 350 AND pf.deposit BETWEEN 2800000 AND 3500000)
+        )
     </select>
 
     <!--(유진) 입금액에 맞춰 무작위 추천  -->
     <select id="recommend" resultType="com.team.gyemoim.dto.stage.StageListDTO">
-        SELECT a.* from( SELECT pf.pfID,pf.pfName,pfentry, pf.payment,pf.deposit,pf.interest,pf.startFlag,roll.receiveTurn, roll.uno
+        SELECT a.* from( SELECT pf.pfID,pf.pfName,pf.pfentry,pf.pfRate, pf.payment,pf.deposit,pf.interest,pf.startFlag,roll.receiveTurn, roll.uno
         FROM pf
         JOIN roll ON PF.PFID = roll.PFID
         ORDER BY DBMS_RANDOM.RANDOM) a ,member m
         WHERE m.uno= #{uno}
-        and a.payment = m.monthlyLimit
+        and startFlag = '대기중'
+        and m.monthlyLimit = a.payment
         and  4 > ROWNUM
     </select>
     <!--(현지) <스테이지 생성> _스테이지 생성(PF)-->
