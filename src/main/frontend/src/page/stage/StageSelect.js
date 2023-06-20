@@ -44,9 +44,11 @@ const Sidebar = () => {
 
 
         const unoList = res.data.roll.map((item) => item.uno);
+        const nameList = res.data.roll.map((item) => item.name);
 
         const rollData = {
-          uno: unoList.join('')
+          uno: unoList.join(''),
+          name: nameList.join('')
         };
         setRollData(rollData);
 
@@ -78,8 +80,8 @@ const Sidebar = () => {
           <div className="user">
             <div className={classes.stageInfoCardTop}>
               <span id="createUser" style={{ color: '#FFFFFF' }}>
-              <img src={require('../../component/images/gyemoim_bbiyak.png')} alt="egg" style={{ width: '45px', height: '45px', margin: '-7px -10px', marginRight: '10px', marginBottom: '-15px' }} />
-              {rollData.uno}</span>
+              <img src={require('../../component/images/gyemoim_bbiyak.png')} alt="egg" style={{ width: '45px', height: '45px', margin: '-7px -10px', marginRight: '5px', marginBottom: '-15px' }} />
+              {rollData.name}</span>
               <div style={{ marginTop: '30px' }}></div>
               <div className={`${classes.pfInfo}`}>
               <span id="stageTitle">{pfData.pfName}</span>
@@ -91,8 +93,7 @@ const Sidebar = () => {
               <div className="price">
                 <div className={classes.price}>
                   약정금:
-                  <span id="totalMonet"> {pfData.deposit}</span>
-                  원
+                  <span id="totalMonet"> {`${Math.floor(pfData.deposit / 10000)}만원`}</span>
                 </div>
               </div>
             </div>
@@ -100,8 +101,7 @@ const Sidebar = () => {
           <div className="priceDetail">
             <div className={classes.priceDetail}>
               월
-              <span id="stageMoney"> {pfData.payment}</span>
-              원
+              <span id="stageMoney"> {`${Math.floor(pfData.payment / 10000)}만원`}</span>
             </div>
             <div className={classes.priceDetailed}>
               <span id="stageRateTitle1">이율(세후) </span>

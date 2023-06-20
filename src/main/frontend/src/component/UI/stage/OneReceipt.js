@@ -21,6 +21,18 @@ const OneReceipt = ({ selectedRollData }) => {
   const location = useLocation();
   const pfIDNum = location.pathname.split('/');
 
+  let userRole;
+  let uNo;
+  /* 로그인 상태일때만 토큰 생성 */
+            if (Cookies.get('Set-Cookie') !== undefined) {
+            const token = Cookies.get("Set-Cookie");
+            uNo = jwtDecode(token).uNo;
+            userRole = jwtDecode(token).userRole;
+            }
+//            else{
+//                 alert('로그인이 필요합니다.');
+//                 }
+
 
   const [selectedButton, setSelectedButton] = useState(null);
   const navigate = useNavigate();
@@ -50,10 +62,7 @@ const OneReceipt = ({ selectedRollData }) => {
      const handleClick = (value) => {
           setSelectedButton(value);
           const pfID = pfIDNum[pfIDNum.length - 1];
-
-          if (checkedLogin) {
-          const token = jwtDecode(Cookies.get('Set-Cookie'));
-          const uNo = token.uNo;
+          console.log("userRole = " + userRole);
 
           axios.post('/stageIn', null, {
             params: {
@@ -65,12 +74,11 @@ const OneReceipt = ({ selectedRollData }) => {
             .then(response => {
                  navigate('/stage/' + pfID);
             })
-            .catch(error => {
+            .catch((error) => {
               // 에러 처리
+              console.log("axios error = " + error.message);
             });
-                 }else{
-                     alert('로그인이 필요합니다.');
-                 }
+
 
           };
 
@@ -117,32 +125,33 @@ const OneReceipt = ({ selectedRollData }) => {
       </div>
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px', marginRight: '50px' }}>
         {receiptData.map((item, index) => (
-        <button
-          key={index}
-          style={{
-            border: '1px solid #4169E1',
-            height: '46px',
-            fontSize: '16px',
-            width: '15%',
-            fontWeight: 'bold',
-            margin: '1px 0',
-            transition: 'background-color 0.3s',
-            backgroundColor: '#4169E1',
-            color: '#FFFFFF',
-            cursor: 'pointer',
-          }}
-            onMouseEnter={(e) => {
-            e.target.style.backgroundColor = '#FFFFFF';
-            e.target.style.color = '#4169E1';
-            }}
-            onMouseLeave={(e) => {
-            e.target.style.backgroundColor = '#4169E1';
-            e.target.style.color = '#FFFFFF';
-            }}
-            onClick={() => handleClick(item.receiveTurn)}
-            >
-                참여하기
-          </button>
+         (userRole == '정회원' ? (<button
+                                         key={index}
+                                         style={{
+                                           border: '1px solid #4169E1',
+                                           height: '46px',
+                                           fontSize: '16px',
+                                           width: '15%',
+                                           fontWeight: 'bold',
+                                           margin: '1px 0',
+                                           transition: 'background-color 0.3s',
+                                           backgroundColor: '#4169E1',
+                                           color: '#FFFFFF',
+                                           cursor: 'pointer',
+                                         }}
+                                           onMouseEnter={(e) => {
+                                           e.target.style.backgroundColor = '#FFFFFF';
+                                           e.target.style.color = '#4169E1';
+                                           }}
+                                           onMouseLeave={(e) => {
+                                           e.target.style.backgroundColor = '#4169E1';
+                                           e.target.style.color = '#FFFFFF';
+                                           }}
+                                           onClick={() => handleClick(item.receiveTurn)}
+                                           >
+                                               참여하기
+                                         </button>) : <></>)
+
       ))}
           </div>
           <div style={{ marginTop: '20px' }}></div>

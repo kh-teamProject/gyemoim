@@ -108,11 +108,11 @@ const Receipt = () => {
           {receiveTurnList.map((item, index) => (
             <TableRow key={index}>
               <TableCell align="center">{item}</TableCell>
-              <TableCell align="center">{receiptData[index].uPayment}</TableCell>
-              <TableCell align="center">{receiptData[index].utotalPayment}</TableCell>
-              <TableCell align="center">{receiptData[index].utotalReceipts}</TableCell>
+              <TableCell align="center">{receiptData[index].uPayment.toLocaleString()}</TableCell>
+              <TableCell align="center">{receiptData[index].utotalPayment.toLocaleString()}</TableCell>
+              <TableCell align="center">{receiptData[index].utotalReceipts.toLocaleString()}</TableCell>
               <TableCell align="center">{receiptData[index].urate}</TableCell>
-              <TableCell align="center">{receiptData[index].ureceipt}</TableCell>
+              <TableCell align="center">{receiptData[index].ureceipt.toLocaleString()}</TableCell>
             </TableRow>
           ))}
         </TableBody>

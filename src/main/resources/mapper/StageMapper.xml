@@ -333,10 +333,11 @@
 
     <!-- (지연) 선택한 계모임 정보 가져오기, 계모임 장 Roll 정보 가져오기 -->
     <select id="getStageSelectRoll" resultType="com.team.gyemoim.dto.stage.RollDTO">
-        SELECT DISTINCT r.uNo, r.pfMaster, r.pfID, r.receiveTurn
-        FROM Roll r, PF p
+        SELECT DISTINCT r.uNo, r.pfMaster, r.pfID, r.receiveTurn, m.name
+        FROM Roll r, MEMBER m, PF p
         WHERE p.pfID = #{pfID}
         AND r.pfID = p.pfID
+        AND r.uNo = m.uNo
         AND r.pfMaster = 'M'
     </select>
 
