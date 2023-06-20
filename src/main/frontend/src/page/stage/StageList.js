@@ -29,11 +29,9 @@ const StageList = () => {
   const handleButtonClick = (event) => {
     if (event.target.value === '전체') {
       setDeposit(event.target.value);
-      console.log(event.target.value);
     } else {
       let i = Number(event.target.value);
       setDeposit(i);
-      console.log(i);
     }
     setCurPage(1); //페이지 버튼 클릭시 현재 페이지를 1로 초기화
     setList(10);
@@ -41,7 +39,6 @@ const StageList = () => {
   };
   //관심사 목록기반으로 조회하는 함수
   const selectInterest = (event) => {
-    console.log(event.target.value);
     setInterest(event.target.value);
     setCurPage(1);
     setList(10);
@@ -105,7 +102,6 @@ const StageList = () => {
           },
         })
         .then((res) => {
-          console.log(res.data);
           setRecommend(res.data);
         })
         .catch((error) => {
@@ -120,7 +116,7 @@ const StageList = () => {
   return (
     <>
       {/*로그인시 추천테이블*/}
-      <RecommendList recommend={recommend} formatNum={formatNum}/>
+      <RecommendList recommend={recommend} roll={roll}/>
 
       <h1>스테이지 조회</h1>
       <div>

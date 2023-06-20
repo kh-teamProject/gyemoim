@@ -41,18 +41,15 @@ public class StageController {
     HashMap<String,Object> map = new HashMap<>();
     map.put("PF",stageService.getPFList());
     map.put("Roll",stageService.getRoll());
-    System.out.println("계모임 조회 컨트롤러");
     return map;
   }
   
   @GetMapping("/filter") // (유진)버튼 선택시 특정 약정금의 계모임만 조회할 수 있음.
   public List<StageListDTO> filterList(@RequestParam("deposit") int deposit){
-    System.out.println("필터작동컨트롤러");
     return stageService.filterList(deposit);
   }
   @GetMapping("/recommend")//(유진) uno존재시 입금액 맞춰 무작위로 추천
   public List<StageListDTO> recommend(@RequestParam("uno") int uno){
-      System.out.println("계모임 추천 컨트롤러" +uno);
       return stageService.recommend(uno);
   }
   

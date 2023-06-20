@@ -23,6 +23,7 @@ import java.util.*;
 @Component
 public class StageServiceImpl implements StageService {
   /*(유진) getPFList -> 전체버튼일때 리스트 전부 가져옴
+          getRoll -> roll 테이블 값 가져옴
           filterList -> deposit에 따라서 리스트 해당하는것만 가져옴
           recommend -> 입금액에 맞춰 무작위 추천
    */
@@ -40,13 +41,11 @@ public class StageServiceImpl implements StageService {
 
   @Override
   public List<StageListDTO> filterList(int deposit) {
-    System.out.println("필터작동서비스");
     return stageMapper.filterList(deposit);
   }
 
   @Override
   public List<StageListDTO> recommend(int uno) {
-    System.out.println("추천 서비스");
     return stageMapper.recommend(uno);
   }
 

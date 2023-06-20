@@ -17,7 +17,9 @@ Integer updateStatus(Integer pfID);
 //(현지) 스테이지 차트 조회
 List<AdminStageDetailDTO> getStageChart();
 
+//(유진) 스테이지 상세 조회
   List<AdminStageDetailDTO> getStageMemList(int pfID);
 
+  //(유진) 스테이지 완료 처리
   void setStageComplete(int pfID);
 }
