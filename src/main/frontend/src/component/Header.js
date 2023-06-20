@@ -12,22 +12,22 @@ const Header = () => {
   const dispatch = useDispatch();
   const checkedLogin = useSelector((state) => state.checkedLogin);
 
-    const handleLogout = async () => {
-        try {
-            await axios.post("/api/logout").then((res) => {
-                Cookies.remove("Set-Cookie");
-                dispatch({ type: "logout" });
-                window.location.href = '/';
-            });
-        } catch (error) {
-            console.log("로그아웃 에러: " + error);
-        }
-    };
+  const handleLogout = async () => {
+    try {
+      await axios.post("/api/logout").then((res) => {
+        Cookies.remove("Set-Cookie");
+        dispatch({type: "logout"});
+        window.location.href = '/';
+      });
+    } catch (error) {
+      console.log("로그아웃 에러: " + error);
+    }
+  };
 
-    useEffect(() => {
-        if (checkedLogin) {
-        }
-    }, [checkedLogin]);
+  useEffect(() => {
+    if (checkedLogin) {
+    }
+  }, [checkedLogin]);
 
   return (
     <header>

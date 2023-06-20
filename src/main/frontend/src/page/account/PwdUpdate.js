@@ -8,7 +8,6 @@ import PwdUpdateModule from "../../page/css/PwdUpdate.module.css";
 import MyPageSidebar from "../../component/MyPageSidebar";
 import classes from "../css/MyPage.module.css";
 
-
 const PwdUpdate = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -62,13 +61,19 @@ const PwdUpdate = () => {
                 <NavLink to={'/mypage/info'}>개인정보 수정</NavLink>
               </li>
               <li>
-                <NavLink to={'/mypage/info/interest'} className={`${location.pathname.includes('interest') ? classes.isActive : undefined}`}>관심사 수정</NavLink>
+                <NavLink to={'/mypage/info/interest'}
+                         className={`${location.pathname.includes('interest') ? classes.isActive : undefined}`}>관심사
+                  수정</NavLink>
               </li>
               <li>
-                <NavLink to={`/mypage/info/pwdUpdate/${uNo}`} className={`${location.pathname.includes('pwdUpdate') ? classes.isActive : undefined}`}>비밀번호 변경</NavLink>
+                <NavLink to={`/mypage/info/pwdUpdate/${uNo}`}
+                         className={`${location.pathname.includes('pwdUpdate') ? classes.isActive : undefined}`}>비밀번호
+                  변경</NavLink>
               </li>
               <li>
-                <NavLink to={`/mypage/info/delete/${uNo}`} className={`${location.pathname.includes('delete') ? classes.isActive : undefined}`}>회원 탈퇴</NavLink>
+                <NavLink to={`/mypage/info/delete/${uNo}`}
+                         className={`${location.pathname.includes('delete') ? classes.isActive : undefined}`}>회원
+                  탈퇴</NavLink>
               </li>
             </ul>
           </div>

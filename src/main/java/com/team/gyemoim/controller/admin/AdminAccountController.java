@@ -1,10 +1,14 @@
 package com.team.gyemoim.controller.admin;
 
+import com.team.gyemoim.dto.MemberDTO;
+import com.team.gyemoim.dto.admin.AdminListParamDTO;
 import com.team.gyemoim.service.admin.AdminAccountService;
 import com.team.gyemoim.vo.MemberVO;
 import lombok.AllArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -39,5 +43,10 @@ public class AdminAccountController {
   public ResponseEntity<Integer> getTotalMemberCount(){
     int getTotalMemberCount = accountService.getTotalMemberCount();
     return ResponseEntity.ok().body(getTotalMemberCount);
+  }
+
+  @GetMapping("/searchMember")
+  public List<MemberDTO> searchMember(AdminListParamDTO adminListParamDTO) {
+    return accountService.searchMember(adminListParamDTO);
   }
 }

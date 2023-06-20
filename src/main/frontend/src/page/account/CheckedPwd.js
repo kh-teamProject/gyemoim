@@ -14,8 +14,9 @@ const CheckedPwd = () => {
 
   const token = Cookies.get('Set-Cookie');
   const uNo = jwtDecode(token).uNo;
+
   const locationHandler = () => {
-    if(enteredPassword.trim() === '') {
+    if (enteredPassword.trim() === '') {
       alert('비밀번호를 입력해주세요.');
       return;
     }
@@ -25,7 +26,7 @@ const CheckedPwd = () => {
       }
     })
       .then((res) => {
-        if(res.data) {
+        if (res.data) {
           navigate(`/mypage/info/modify/${uNo}`);
         } else {
           alert('비밀번호가 일치하지않습니다.');
@@ -39,7 +40,7 @@ const CheckedPwd = () => {
   return (
     <section>
       <div>
-        <MyPageSidebar />
+        <MyPageSidebar/>
       </div>
       <div className={`${classes['checkPwd-wrap']}`}>
         <h2>비밀번호 확인</h2>
@@ -47,7 +48,9 @@ const CheckedPwd = () => {
           type="password"
           name={"password"}
           className={`${classes['password-input']}`}
-          onChange={(e) => {setEnteredPassword(e.target.value)}}
+          onChange={(e) => {
+            setEnteredPassword(e.target.value)
+          }}
         />
         <br/>
         <button

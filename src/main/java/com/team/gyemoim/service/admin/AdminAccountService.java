@@ -1,5 +1,7 @@
 package com.team.gyemoim.service.admin;
 
+import com.team.gyemoim.dto.MemberDTO;
+import com.team.gyemoim.dto.admin.AdminListParamDTO;
 import com.team.gyemoim.vo.MemberVO;
 
 import java.util.HashMap;
@@ -20,4 +22,6 @@ public interface AdminAccountService {
   List<Map<String, Object>> getMemberRole();
 
   int getTotalMemberCount();
+
+  List<MemberDTO> searchMember(AdminListParamDTO adminListParamDTO);
 }

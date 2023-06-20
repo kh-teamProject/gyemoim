@@ -1,7 +1,10 @@
 package com.team.gyemoim.mapper.admin;
 
+import com.team.gyemoim.dto.MemberDTO;
+import com.team.gyemoim.dto.admin.AdminListParamDTO;
 import com.team.gyemoim.vo.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,4 +25,6 @@ public interface AdminAccountMapper {
   List<Map<String, Object>> getMemberRole();
 
   int getTotalMemberCount();
+
+  List<MemberDTO> searchMember(AdminListParamDTO adminListParamDTO);
 }

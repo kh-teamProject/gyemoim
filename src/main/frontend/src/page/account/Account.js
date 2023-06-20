@@ -11,11 +11,9 @@ const Account = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
 
-    // 이메일 인증
     const [verificationCode, setVerificationCode] = useState('');
     const [isCodeVerified, setIsCodeVerified] = useState(false);
 
-    // 이용약관
     const [ageConfirmation, setAgeConfirmation] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [privacyAccepted, setPrivacyAccepted] = useState(false);
@@ -24,7 +22,6 @@ const Account = () => {
 
     const navigate = useNavigate();
 
-    // 이메일 인증 번호 발송
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
         if (email === '') {
@@ -33,14 +30,12 @@ const Account = () => {
         }
 
         try {
-            // 이메일 중복 확인
             const res = await axios.post('/api/account/checkEmail', { email });
             if (res.data.exists) {
                 alert('이미 등록된 이메일입니다.');
                 return;
             }
 
-            // 이메일이 존재하지 않으면 인증 번호 전송
             await axios.post('/api/account/mailConfirm', { email });
             alert('해당 이메일로 인증 번호가 전송되었습니다.');
         } catch (error) {
@@ -56,7 +51,6 @@ const Account = () => {
         }
 
         try {
-            // 인증 번호 일치여부 확인
             await axios.post('/api/account/verifyEmailCode', {email, ePw: verificationCode});
             setIsCodeVerified(true);
             alert('인증 되었습니다.');
@@ -110,12 +104,9 @@ const Account = () => {
             return;
         }
 
-        // 회원가입
         const user = {email, password, name, phone};
         try {
             const res = await axios.post('api/account', user);
-            console.log(user);
-            console.log(res);
             alert(user.name + '님 회원가입을 축하합니다');
             navigate('/login');
         } catch (err) {

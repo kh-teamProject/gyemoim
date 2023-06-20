@@ -36,9 +36,7 @@ import StageManagement from "./page/admin/StageManagement";
 import ReplyManagement from "./page/admin/ReplyManagement";
 import StageReport from "./component/UI/stage/StageReport";
 import AdminStageList from "./page/admin/AdminStageList";
-
 import AdminStageDetail from "./page/admin/AdminStageDetail";
-import TestAdminAccountDetail from "./page/admin/TestAdminAccountDetail";
 import AccountModify from "./page/admin/AccountModify";
 import './App.css';
 import MemberPwdSearch from "./page/account/MemberPwdSearch";
@@ -65,7 +63,6 @@ const App = () => {
           name: jwtDecode(token).name,
           userRole: jwtDecode(token).userRole[0]
         });
-        console.log(jwtDecode(token).userRole[0]);
       }
     }, [myInfo.uNo, myInfo.userRole]);
 
@@ -158,10 +155,9 @@ const App = () => {
           },
           {
             path: 'stage/:pfID',
-            element: <Stage/>
+            element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' ?
+              <Stage/> : <Navigate to="/"/>) : <Navigate to="/"/>
           },
-
-          // 권한 상관 x
           {
             path: '/stageSelect/:pfID',
             element: <StageSelect/>
@@ -170,8 +166,6 @@ const App = () => {
             path: 'stagelist',
             element: <StageList/>
           },
-          //
-
           {
             path: '/stageCreate',
             element: cookie ? (jwtDecode(cookie).userRole[0] !== '가회원' ? <StageCreate/> : <Navigate to="/"/>) :
@@ -182,8 +176,6 @@ const App = () => {
             element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' ?
               <StagePartIn/> : <Navigate to="/"/>) : <Navigate to="/"/>
           },
-
-          // 권한 상관 x
           {
             path: 'board/notice',
             element: <NoticeList/>
@@ -192,8 +184,6 @@ const App = () => {
             path: 'board/notice/detail/:bid',
             element: <NoticeDetail/>
           },
-          //
-
           {
             path: 'board',
             element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' || jwtDecode(cookie).userRole[0] === '정회원' || jwtDecode(cookie).userRole[0] === '가회원' ?
@@ -233,7 +223,6 @@ const App = () => {
         path: '/admin',
         element: cookie ? (jwtDecode(cookie).userRole[0] === '관리자' ? <AdminRoot/> : <Navigate to="/"/>) :
           <Navigate to="/"/>,
-        // element: <AdminRoot/>,
         children: [
           {
             index: true,
@@ -242,10 +231,6 @@ const App = () => {
           {
             path: 'account',
             element: <AccountManagement/>
-          },
-          {
-            path: 'account/detail/:uno',
-            element: <TestAdminAccountDetail/>
           },
           {
             path: 'account/modify/:uNo',

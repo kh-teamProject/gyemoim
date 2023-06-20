@@ -12,7 +12,6 @@ const MemberEmailSearch = () => {
 
     const navigate = useNavigate();
 
-
     const handleNameChange = (event) => {
         setName(event.target.value);
     };
