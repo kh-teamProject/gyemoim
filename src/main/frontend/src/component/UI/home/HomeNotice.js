@@ -8,7 +8,7 @@ import classes from '../../../page/css/Home.module.css';
 const HomeNotice = (props) => {
   const noticeItems = props.noticeList.map((notice, index) => (
     <div key={index} className={classes.noticeBox}>
-      <Link to={`/notice/${notice.bid}`} key={index}>
+      <Link to={`/board/notice/detail/${notice.bid}`} key={index}>
       <>
         <div className={classes.noticeTitle}>
           <span><FaVolumeUp /></span>
