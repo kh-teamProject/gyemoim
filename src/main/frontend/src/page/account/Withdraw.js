@@ -87,6 +87,7 @@ const Withdraw = () => {
         }
       })
         .then((res) => {
+          alert('출금이 완료되었습니다.');
         })
         .catch((error) => {
           console.log(error);

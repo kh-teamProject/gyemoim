@@ -192,7 +192,7 @@ public class StageServiceImpl implements StageService {
   }
   //(찬희). 스테이지 금액 -> my계좌로 순서에 맞게 update / 자동으로 곗돈 지급
   @Override
-  @Scheduled(cron = "0 40 19 31 * ?") // 매달 25일 0시 0분 0초에 실행
+  @Scheduled(cron = "0 06 21 20 * ?") // 매달 25일 0시 0분 0초에 실행
   public void performUpdate() {
     if( stageRollDTO != null) {
       int currentStageBalance = stageMapper.getStageBalance(stageRollDTO);

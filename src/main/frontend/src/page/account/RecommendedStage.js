@@ -1,11 +1,12 @@
-import MyPageSidebar from "../../component/MyPageSidebar";
-import classes from "../css/MyStage.module.css";
+import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
-import Stage from "../../component/Stage";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
-import {useEffect, useState} from "react";
 import axios from "axios";
+
+import Stage from "../../component/Stage";
+import MyPageSidebar from "../../component/MyPageSidebar";
+import classes from "../css/MyStage.module.css";
 
 const RecommendedStage = () => {
   const token = Cookies.get('Set-Cookie');

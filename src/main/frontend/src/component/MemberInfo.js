@@ -88,20 +88,12 @@ const MemberInfo = () => {
     })
       .then((res) => {
         alert('회원정보 수정이 완료되었습니다. 다시 로그인 해주세요.');
+        Cookies.remove("Set-Cookie");
+        dispatch({ type: "logout" });
         navigate('/');
       })
       .catch((error) => {
         console.log(error);
-      });
-
-    axios.post("/api/logout")
-      .then((res) => {
-        Cookies.remove("Set-Cookie");
-        dispatch({ type: "logout" });
-        window.location.href = '/';
-      })
-      .catch((error) => {
-        console.log("로그아웃 에러: " + error);
       });
   };
 

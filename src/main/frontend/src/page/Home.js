@@ -25,7 +25,6 @@ const Home = () => {
       params: {}
     })
       .then((res) => {
-        console.log(res.data);
         setStageList(res.data.stageList);
         setStageUserList(res.data.stageUserList);
 

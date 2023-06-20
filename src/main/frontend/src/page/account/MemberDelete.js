@@ -93,6 +93,7 @@ const MemberDelete = () => {
             onChange={(e) => {
               setEnteredPassword(e.target.value)
             }}
+            placeholder={'비밀번호를 입력해주세요.'}
           />
           <br/>
           <button

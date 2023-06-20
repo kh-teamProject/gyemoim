@@ -87,6 +87,10 @@ const MyPage = () => {
             <input type="text" id="phone" value={myInfo.phone || ''} readOnly/>
           </div>
           <div className={classes.field}>
+            <label htmlFor="">관심사</label>
+            <input type="text" id="" value={myInfo.interest || ''} readOnly/>
+          </div>
+          <div className={classes.field}>
             <label htmlFor="">회원구분</label>
             <input type="text" id="" value={myInfo.userRole || ''} readOnly/>
           </div>

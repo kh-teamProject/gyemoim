@@ -64,7 +64,6 @@ const App = () => {
           name: jwtDecode(token).name,
           userRole: jwtDecode(token).userRole[0]
         });
-        console.log(jwtDecode(token).userRole[0]);
       }
     }, [myInfo.uNo, myInfo.userRole]);
 

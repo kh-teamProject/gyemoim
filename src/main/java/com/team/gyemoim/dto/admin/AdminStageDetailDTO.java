@@ -11,6 +11,7 @@ public class AdminStageDetailDTO {
    //스테이지 기본 정보
     private Integer pfID; // 번호(시퀀스)
     private String pfName; //이름(유니크)
+    private String pfMaster;//방장
     private  Integer pfEntry;//참가자 수(5,7)
     private  BigDecimal pfRate; //이율
     private Integer deposit;//약정금
