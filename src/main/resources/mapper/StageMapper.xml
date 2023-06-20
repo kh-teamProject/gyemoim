@@ -33,7 +33,7 @@
         ORDER BY DBMS_RANDOM.RANDOM) a ,member m
         WHERE m.uno= #{uno}
         and startFlag = '대기중'
-        and m.monthlyLimit = a.payment
+        and m.monthlyLimit >= a.payment
         and  4 > ROWNUM
     </select>
     <!--(현지) <스테이지 생성> _스테이지 생성(PF)-->
