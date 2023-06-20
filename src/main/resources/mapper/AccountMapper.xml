@@ -151,4 +151,12 @@
     WHERE PFID = #{pfID}
   </select>
 
+  <select id="getRecommendStage" resultType="com.team.gyemoim.vo.PFVO">
+    SELECT *
+    FROM PF p, MEMBER m
+    WHERE p.INTEREST = m.INTEREST AND p.PAYMENT BETWEEN 0 AND m.MONTHLYLIMIT AND uNo = #{uNo}
+            AND p.STARTFLAG = '대기중'
+    ORDER BY p.PFID
+  </select>
+
 </mapper>

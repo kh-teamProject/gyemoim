@@ -4,11 +4,12 @@ import classes from '../page/css/Home.module.css';
 
 const Stage = (props) => {
   const stageItems = props.stageList.map((stage, index) => {
+    const link = props.recommend ? `/stageSelect/${stage.pfID}` : `/stage/${stage.pfID}`;
     const formattedDeposit = (stage.deposit / 10000).toFixed(0) + '만';
     const filteredStageUserList = props.stageUserList.filter(item => item.pfID === stage.pfID);
 
     return (
-      <Link to={`/stage/${stage.pfID}`} key={index}>
+      <Link to={link} key={index}>
         <div className={classes.stageBox}>
           <div className={classes.stageTitle}>{stage.pfName}</div>
           {/* <div className={classes.stageInterest}><FaMoneyBillAlt /><span>목돈</span></div> */}

@@ -65,4 +65,6 @@ public interface AccountMapper {
   void updateExpenditure(MyPageDTO dto);
 
   List<RollVO> getStageRollList(Integer pfID);
+
+  List<PFVO> getRecommendStage(Integer uNo);
 }

@@ -94,6 +94,11 @@ public class AccountServiceImpl implements AccountService {
     return accountMapper.getStageRollList(pfID);
   }
 
+  @Override
+  public List<PFVO> getRecommendStage(Integer uNo) {
+    return accountMapper.getRecommendStage(uNo);
+  }
+
   // Update
   @Override
   public void myInfoModify(MyPageDTO myPageDTO) {

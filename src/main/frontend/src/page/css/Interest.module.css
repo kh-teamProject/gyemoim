@@ -91,23 +91,35 @@
 .checklist {
   width: 110px;
   height: 30px;
-  border: 1px solid gray;
+  border: 1px solid blue;
   border-radius: 50px;
-  color: gray;
-  line-height: 30px;
+  color: blue;
+  padding: 3px 5px;
+  line-height: 24px;
+  cursor: pointer;
 }
 
 .checklist input {
   display: none;
 }
 
-.checklist input:checked + label {
-  color: #8158d3;
+.checklist input + label {
+  display: inline-block;
+  margin: -5px;
+  width: 110px;
+  height: 30px;
+  border-radius: 50px;
+  line-height: 31px;
   cursor: pointer;
 }
 
+.checklist input:checked + label {
+  color: white;
+  background: blue;
+}
+
 .checklist input:checked ~ .checklist {
-  border-color: #8158d3;
+  border-color: blue;
 }
 
 .interest-btn {
