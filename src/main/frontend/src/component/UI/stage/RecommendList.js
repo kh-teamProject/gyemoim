@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import classes from '../../../page/css/StageList.modlue.css';
 
-const RecommendList = ({ recommend, formatNum }) => {
+const RecommendList = ({recommend}) => {
   return (
     <div>
       <div
@@ -20,22 +20,24 @@ const RecommendList = ({ recommend, formatNum }) => {
               acc.push({
                 pfName: value.pfName,
                 pfID: value.pfID,
-                receiveTurn: [{ turn: value.receiveTurn, uno: value.uno }],
+                receiveTurn: [{turn: value.receiveTurn, uno: value.uno}],
                 deposit: value.deposit,
                 payment: value.payment,
                 pfEntry: value.pfEntry,
+                pfRate: value.pfRate,
                 startFlag: value.startFlag,
                 interest: value.interest
               });
             } else {
-              acc[index].receiveTurn.push({ turn: value.receiveTurn, uno: value.uno });
+              acc[index].receiveTurn.push({turn: value.receiveTurn, uno: value.uno});
             }
             return acc;
           }, [])
           .map((value, index) => {
+            const formattedDeposit = (value.deposit / 10000).toFixed(0) + '만';
             return (
               <div key={index}>
-                <Link to={`/stageSelect/${value.pfID}`} style={{ textDecoration: "none" }} id="select-stage">
+                <Link to={`/stageSelect/${value.pfID}`} style={{textDecoration: "none"}} id="select-stage">
                   <div id="select-deposit">
                     <h3 className="stage-h3">{value.pfName}</h3>
                     <div className='speechImg'>
@@ -58,10 +60,7 @@ const RecommendList = ({ recommend, formatNum }) => {
                     })}
                   </ul>
                   <div id="stage-payInfo">
-                    <p>
-                      약정금 :<strong>{formatNum(Number(value.deposit))}</strong> | 월 입금액 :{" "}
-                      <strong>{formatNum(Number(value.payment))}</strong>
-                    </p>
+                    <p>약정금 :<strong>{formattedDeposit}원</strong> | 이율 : <strong>{value.pfRate}%</strong></p>
                   </div>
                 </Link>
               </div>
