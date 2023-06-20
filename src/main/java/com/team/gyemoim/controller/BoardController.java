@@ -22,19 +22,11 @@ public class BoardController {
 
     public final BoardService boardService;
 
-    // 전체 게시글 목록 조회하는 API
-    @GetMapping("/board/notice/list")
-    public List<BoardVO> getBoardList() throws Exception {
-        return boardService.selectBoard();
-    }
-
-    // 검색어, 검색 타입 받아서 그 검색된 게시글 리스트 조회 API
-    // [GET /board/searchList?type={type}&searchType={searchType}&searchKeyword={searchKeyword}]
+    /* 검색어, 검색 타입 받아서 그 검색된 게시글 리스트 조회 API (Read) */
     @GetMapping("/board/searchList")
     public List<BoardVO> searchList(BoardListDTO dto) throws Exception {
         return boardService.searchList(dto);
     }
-
 
     /* 첨부파일 포함한 게시글 작성 API (Create) */
     @PostMapping("/board/writePost")
@@ -45,21 +37,21 @@ public class BoardController {
             BoardWriteDTO boardWriteDTO = objectMapper.readValue(boardWriteDTOJson, BoardWriteDTO.class);
             // 게시글 저장하고 작성된 게시글의 고유 식별자 bid 반한하는 코드
             int bid = boardService.writePost(boardWriteDTO, file);
-            return ResponseEntity.ok("BoardController 글 작성 writePost 돌아간닷 첨부파일도 포함이닷 ! :D");
+            return ResponseEntity.ok("BoardController_writePost_success :D");
         } catch (Exception e) {
-            System.out.println("error 메시지: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("글 작성 실패 :< -FROM BoardController_writePost-");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController_writePost_failed_" + e.getMessage());
         }
     }
 
 
     /* 게시글 읽기 API (Read) [GET /board/notice/read/{bid}] */
-   @GetMapping("/board/read")
-    public BoardVO read(@RequestParam("bid") int bid, @RequestParam(value = "increaseViews", defaultValue = "true") boolean increaseViews) throws Exception {
-        BoardVO boardVO = boardService.readDetail(bid, increaseViews);
+    @GetMapping("/board/read")
+    public BoardVO read(@RequestParam(value = "boardBid") int boardBid, @RequestParam(value = "readerUno", required = false) Integer readerUno) throws Exception {
+        BoardReadCountDTO dto = new BoardReadCountDTO(boardBid, readerUno);
+        BoardVO boardVO = boardService.readDetail(dto);
+
         return boardVO;
     }
-
 
     /* 첨부파일 존재여부 확인 API */
     @GetMapping("/board/attachment")
@@ -72,7 +64,7 @@ public class BoardController {
                 return ResponseEntity.ok().build();// 첨부파일 없으면 빈 응답 반환
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("컨트롤러_첨부파일 가져오기 실패 :<");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController_getAttachment_failed_" + e.getMessage());
         }
     }
 
@@ -83,33 +75,27 @@ public class BoardController {
         return boardService.modify(bid);
     }
 
-    // 글 수정 업데이트하기
+    /* 글 수정 업데이트하기 */
     @PostMapping("/board/modifyPost")
     public ResponseEntity<String> modifyPost(@RequestBody BoardModifyDTO boardModifyDTO) {
         try {
             // 게시글 저장하고 작성된 게시글의 고유 식별자 bid 반한하는 코드
             boardService.modifyUpdate(boardModifyDTO);
-            return ResponseEntity.ok("BoardController 글 수정 업뎃 완료, 첨부파일도 포함이닷 ! :D");
+            return ResponseEntity.ok("BoardController_modifyPost_success :D");
         } catch (Exception e) {
-            System.out.println("error 메시지: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController 글 수정 실패 :< ");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController_modifyPost_failed_" + e.getMessage());
         }
     }
 
-    /* 삭제 Delete */
+    /* 삭제 (Delete) */
     @DeleteMapping("/board/delete")
     public ResponseEntity<String> delete(@RequestBody BoardDeleteDTO boardDeleteDTO) {
         try {
-            System.out.println("*************** 글 삭제 delete 컨트롤러 성공 >< *****************");
-            System.out.println("boardDelete 이리 오너라: " + boardDeleteDTO);
             boardService.delete(boardDeleteDTO);
-            return ResponseEntity.ok("BoardController.delete 글 삭제 성공 :D");
+            return ResponseEntity.ok("BoardController_delete_success :D");
         } catch (Exception e) {
-            System.out.println("*************** 글 삭제 delete 컨트롤러 실패 :< *****************");
-            System.out.println("에러 이유: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController 글 삭제 실패 :< ");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BoardController_delete_failed_" + e.getMessage());
         }
     }
-
 
 }

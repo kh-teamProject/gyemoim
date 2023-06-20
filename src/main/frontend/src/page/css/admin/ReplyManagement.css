@@ -1,3 +1,103 @@
+.reply-search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 7px;
+}
+
+.reply-search table {
+    min-width: 100%;
+}
+
+.reply-search-select-container {
+    left: auto;
+    display: flex;
+}
+
+.reply-search select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 150px;
+    height: 40px;
+    background-color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.reply-search option {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.reply-search option:first-child {
+    text-align: center;
+}
+
+.reply-search input[type="text"] {
+    width: 800px;
+    height: 45px;
+    font-size: 18px;
+}
+
+.reply-search-btns {
+    display: flex;
+}
+
+.reply-search-btns button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    color: #004DC1;
+    border: #85a7da solid 1px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    margin-right: 10px;
+    margin-left: -.5px;
+    font-size: 16px;
+}
+
+.reply-search-btns button:hover {
+    background-color: lightsteelblue;
+}
+
+.reply-table {
+    margin: auto;
+    min-width: 100%;
+    border-collapse: collapse;
+    color: #333;
+    border-radius: .4em;
+    overflow: hidden;
+}
+
+.reply-table thead {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    color: #fff;
+    background-color:#004DC1;
+}
+
+.reply-table th, .reply-table td {
+    padding: .5em 0.3em;
+}
+
+.reply-table tr {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.reply-table td:first-child {
+    margin-top: .5em;
+}
+
+.reply-table td:last-child {
+    margin-bottom: .5em;
+}
+
+
+/* 모달창 */
 .modal {
     position: fixed;
     z-index: 1;

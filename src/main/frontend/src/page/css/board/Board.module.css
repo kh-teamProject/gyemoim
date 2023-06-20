@@ -1,10 +1,5 @@
 /* 검색 테이블 스타일 */
-.search-container {
-    width: 500px;
-    margin: 0 auto;
-}
-
-.noticeList_ttl {
+.noticeList_ttl, .questionList_ttl {
     font-size: 1.5rem;
     margin: 0 15px;
 }
@@ -13,21 +8,43 @@
     font-style: normal;
 }
 
-/* 게시판 테이블 스타일 */
-.board-container {
-    width: 900px;
-    margin-top: 30px;
+.search-container-box {
+    margin: 45px 0 50px;
 }
 
-.board-column {
+.search-container {
+    width: 500px;
+    margin: 0 auto;
+}
+
+/* 게시판 테이블 스타일 */
+.board-container {
+    width: 1024px;
+    margin-top: 30px;
+    border-collapse: collapse;
+}
+
+.board-column1 {
     border-top: 2px solid darkblue;
     border-bottom: 2px solid darkblue;
     padding: 3px;
+    border-spacing: 10px;
+}
+
+.board-column3 {
+    border-top: 2px solid darkblue;
+    border-bottom: 2px solid darkblue;
+    padding: 3px;
+    border-spacing: 30px;
 }
 
 .text-center {
     border-bottom: 1px solid darkblue;
     padding: 15px;
+}
+
+.text-none {
+    text-align: center;
 }
 
 .title-link {

@@ -9,25 +9,18 @@ const QuestionList = () => {
 
     // 전체 게시글 리스트 받는 변수
     const [questionList, setQuestionList] = useState([]);
-
     // 게시글 타입 : 1:1 문의사항
     const bType = "1:1 문의사항";
-
-    // 페이징 관련 변수
+    /* 페이징 관련 변수 */
     // 1) 현재페이지 : nowPage
     const [nowPage, setNowPage] = useState(1);
     // 2) 전체 페이지 수 : totalPage
     const [totalPage, setTotalPage] = useState(0);
-
-
     // 검색용 변수
     const [searchTypeVal, setSearchTypeVal] = useState("");
     const [searchKeywordVal, setSearchKeywordVal] = useState("");
-
-
     // Link 용 (함수)
-    let navigate = useNavigate();
-
+    const navigate = useNavigate();
     // 로그인 토큰에서 회원번호 uno 가 있으면 가져오고 아니면 null 로 설정
     const token = Cookies.get('Set-Cookie');
     const uno = token ? jwtDecode(token).uNo : null;
@@ -36,7 +29,6 @@ const QuestionList = () => {
 
     // API 호출하여 게시글 목록 가져오기
     const fetchQuestionList = async (searchType, searchKeyword) => {
-
         // 검색된 List<BoardVO> 리턴받음
         await axios.get("/board/searchList", {
             params: {
@@ -46,16 +38,12 @@ const QuestionList = () => {
             }
         })
             .then((response) => {
-                console.log("게시글 목록 response.data.list: " + response);
-
                 setQuestionList(response.data); // 검색된 문의사항 리스트 가져오기
                 setTotalPage(Math.ceil(response.data.length / 10)); // total 값을 가져와서 업데이트
             })
             .catch((error) => {
-                console.log("QuestionList_fetchQuestionList 게시글 불러오기 에러발생 :< ");
-                console.log(error);
+                console.log("QuestionList_fetchQuestionList_axios_errorMessage : " + error.message);
             })
-
     };
 
 
@@ -67,17 +55,15 @@ const QuestionList = () => {
     // 검색 타입 변경하는 함수
     const changeSearchType = (e) => {
         setSearchTypeVal(e.target.value);
-    }
+    };
 
     // 검색어 변경하는 함수
     const changeSearchKeyword = (e) => {
         setSearchKeywordVal(e.target.value);
-    }
+    };
 
     // searchKeyword (검색어), searchType (검색타입) 기반으로 조회하는 함수
     const handleFormSubmit = () => {
-        console.log("QuestionList_handleFormSubmit_searchTypeVal= " + searchTypeVal + ", searchKeywordVal= " + searchKeywordVal);
-
         fetchQuestionList(searchTypeVal, searchKeywordVal);
         navigate("/board/question");
 
@@ -91,20 +77,18 @@ const QuestionList = () => {
     const handlePageClick = (e) => {
         // 클릭한 페이지
         const targetPage = Number(e.target.value);
-
         // 클릭한 targetPage 가 0보다 크고 totalPage 보다 작거나 같으면
         // 즉, 클릭한 페이지가 유효 범위에 있을 때
         // 현재페이지 setNowPage 를 클릭한 페이지 targetPage 로 변경해준다.
         if (targetPage > 0 && targetPage <= totalPage) {
             setNowPage(targetPage);
         }
-    }
+    };
 
 
     // (board.secret == 'S') && (board.uNo != login.uNo) 인 경우 발생하는 함수
     const handleSecretClick = () => {
         alert("다른 사람의 비밀글은 볼 수 없습니다.");
-        console.log("userRole = " + userRole);
     };
 
     // 글쓰기 버튼 클릭시 문의사항 글쓰기 페이지로 이동하는 함수
@@ -120,12 +104,12 @@ const QuestionList = () => {
             <div>
                 <div>
                     <div>
-                        <div>
+                        <div className={`${classes['questionList_ttl']}`}>
                             <h1>1:1 문의사항</h1>
                             <p>문의사항을 상세하게 적어주세요.</p>
                         </div>
 
-                        <div>
+                        <div className={`${classes['search-container-box']}`}>
                             {/* 검색 시작 */}
                             <table className={`${classes['search-container']}`}>
                                 <tbody>
@@ -156,30 +140,18 @@ const QuestionList = () => {
                             <br/>
                             {/* 검색 끝 */}
 
-                            <table className={`${classes['board-container']}`} style={{
-                                borderCollapse: 'collapse'
-                            }}>
+                            <table className={`${classes['board-container']}`}>
                                 <thead>
                                 <tr>
-                                    <th className={`${classes['board-column']}`} style={{
-                                        borderSpacing: "30px"
-                                    }}>글번호
+                                    <th className={`${classes['board-column3']}`}>글번호
                                     </th>
-                                    <th className={`${classes['board-column']}`} style={{
-                                        borderSpacing: "10px"
-                                    }}>제목
+                                    <th className={`${classes['board-column1']}`}>제목
                                     </th>
-                                    <th className={`${classes['board-column']}`} style={{
-                                        borderSpacing: "10px"
-                                    }}>작성자
+                                    <th className={`${classes['board-column1']}`}>작성자
                                     </th>
-                                    <th className={`${classes['board-column']}`} style={{
-                                        borderSpacing: "10px"
-                                    }}>작성일
+                                    <th className={`${classes['board-column1']}`}>작성일
                                     </th>
-                                    <th className={`${classes['board-column']}`} style={{
-                                        borderSpacing: "10px"
-                                    }}>조회수
+                                    <th className={`${classes['board-column1']}`}>조회수
                                     </th>
                                 </tr>
                                 </thead>
@@ -206,14 +178,14 @@ const QuestionList = () => {
                                                                 <Link
                                                                     to={`/board/question/detail/${item.bid}`}
                                                                     className={`${classes['title-link']}`}>
-                                                                    [비밀글]
+                                                                    {item.title}
                                                                 </Link>
                                                             ) : (
                                                                 uno === item.uno ? (
                                                                     <Link
                                                                         to={`/board/question/detail/${item.bid}`}
                                                                         className={`${classes['title-link']}`}>
-                                                                        [비밀글]
+                                                                        {item.title}
                                                                     </Link>
                                                                 ) : (
                                                                     <Link to="#"
@@ -237,7 +209,7 @@ const QuestionList = () => {
                                         })
                                 ) : (
                                     <tr>
-                                        <td colSpan="5" style={{textAlign: "center"}}>
+                                        <td colSpan="5" className={`${classes['text-none']}`}>
                                             게시글이 없습니다.
                                         </td>
                                     </tr>

@@ -4,22 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.team.gyemoim.mapper.BoardMapper">
 
-    <!-- 게시글 Read -->
-    <!-- 게시글 총 갯수 구하기 -->
-    <select id="countBoard" resultType="int">
-        SELECT COUNT(*)
-        FROM BOARD
+    <!-- (Create) -->
+    <!-- 게시글 번호 조회 -->
+    <select id="getBid" resultType="int">
+        SELECT BID_BOA_SEQ.NEXTVAL
+        FROM dual
     </select>
 
-    <!-- 게시글 목록 가져오기 -->
-    <select id="selectBoard" resultType="com.team.gyemoim.vo.BoardVO">
-        SELECT *
-        FROM BOARD
-        ORDER BY writeDate DESC
-    </select>
+    <!-- 글 작성 -->
+    <insert id="insert" parameterType="com.team.gyemoim.vo.BoardVO">
+        INSERT INTO board (bid, uNo, name, bType, title, views, content, writeDate, secret)
+        VALUES (#{bid}, #{uNo}, #{name}, #{btype}, #{title}, 0, #{content}, sysdate, #{secret})
+    </insert>
 
 
-    <!-- 게시글 리스트 조회하기 (검색 O & 게시글 타입에 따라 조회) -->
+    <!-- (Read) -->
+    <!-- 검색 및 전체 게시글 리스트 조회 -->
     <select id="searchList" parameterType="com.team.gyemoim.dto.board.BoardListDTO"
             resultType="com.team.gyemoim.vo.BoardVO">
         SELECT *
@@ -39,12 +39,32 @@
         ORDER BY writeDate DESC
     </select>
 
-
-    <!-- 특정 게시글 상세보기 -->
+    <!-- 특정 글 상세보기 -->
     <select id="readDetail" resultType="com.team.gyemoim.vo.BoardVO">
         SELECT *
         FROM BOARD
-        WHERE bid = #{bid}
+        WHERE bid = #{boardBid}
+    </select>
+
+    <!-- 게시글 조회수 레코드 생성 -->
+    <!-- 위의 코드에서는 MERGE INTO 문을 사용하여 두 개의 작업을 수행합니다.
+        USING 절을 사용하여 임시로 값들을 선택합니다. ON 절을 사용하여 매칭 여부를 확인하고,
+        매칭된 경우에는 업데이트하고 매칭되지 않은 경우에는 새로운 레코드를 삽입합니다.
+        또한 now() 함수를 사용하여 현재 날짜와 시간을 가져오도록 수정합니다. -->
+    <insert id="createBoardReadCountHistory" parameterType="com.team.gyemoim.dto.board.BoardReadCountDTO">
+        MERGE INTO read_history rh
+            USING dual
+            ON (rh.board_bid = #{boardBid} AND rh.read_uNo = #{readerUno})
+            WHEN MATCHED THEN
+                UPDATE SET rh.latest_access_at = SYSDATE, rh.readCount = rh.readCount + 1
+            WHEN NOT MATCHED THEN
+                INSERT (board_bid, read_uNo, latest_access_at, readCount)
+                    VALUES (#{boardBid}, #{readerUno}, SYSDATE, 1)
+    </insert>
+
+    <!-- 글 조회 확인 횟수 조회하기 -->
+    <select id="selectReadCount" parameterType="com.team.gyemoim.dto.board.BoardReadCountDTO" resultType="int">
+        select readCount from read_history where board_bid = #{boardBid} and read_uNo = #{readerUno}
     </select>
 
 
@@ -52,33 +72,19 @@
     <update id="updateViewCnt">
         UPDATE BOARD
         SET views = views + 1
-        WHERE bid = #{bid}
+        WHERE bid = #{boardBid}
     </update>
 
 
-    <!-- 게시글 Create -->
-    <!-- 게시글 번호 조회 -->
-    <select id="getBid" resultType="int">
-        SELECT BID_BOA_SEQ.NEXTVAL FROM dual
-    </select>
-
-    <!-- 글 작성하기 -->
-    <insert id="insert" parameterType="com.team.gyemoim.vo.BoardVO">
-        INSERT INTO board (bid, uNo, name, bType, title, views, content, writeDate, secret)
-        VALUES (#{bid}, #{uNo}, #{name}, #{btype}, #{title}, 0, #{content}, sysdate, #{secret})
-    </insert>
-
-
-    <!-- 게시글 Update -->
-    <!-- 수정 전 원래 글 세부내용 가져오기 -->
+    <!-- (Update) -->
+    <!-- 수정 전 글 내용 가져오기 -->
     <select id="modify" resultType="com.team.gyemoim.vo.BoardVO" parameterType="int">
         SELECT *
         FROM BOARD
         WHERE bid = #{bid}
     </select>
 
-
-    <!-- 특정 bid 에 해당하는 게시글 수정하기 -->
+    <!-- 게시글 수정 업데이트 하기 -->
     <update id="modifyUpdate" parameterType="com.team.gyemoim.dto.board.BoardModifyDTO">
         UPDATE BOARD
         SET uNo     = #{uNo},
@@ -89,7 +95,7 @@
         WHERE bid = #{bid}
     </update>
 
-    <!-- 특정 bid 에 해당하는 게시글에 있는 첨부파일 수정하기 -->
+    <!-- 해당 게시글에 있는 첨부파일 수정 -->
     <update id="addAttachedUpdate">
         UPDATE ATTACHED
         SET filename = #{filename}
@@ -97,7 +103,7 @@
     </update>
 
 
-    <!-- 게시글 Delete -->
+    <!-- (Delete) -->
     <!-- 특정 bid 와 글 작성자 uNo에 해당하는 게시글 삭제하기 -->
     <delete id="delete" parameterType="com.team.gyemoim.dto.board.BoardDeleteDTO">
         DELETE
@@ -108,21 +114,21 @@
 
 
     <!-- 첨부파일 -->
-    <!-- 첨부파일 생성 Create -->
+    <!-- (Create) -->
+    <!-- 첨부파일 생성 -->
     <insert id="saveAttached" parameterType="com.team.gyemoim.vo.AttachedVO">
         INSERT INTO Attached (attachedID, bid, filename, fileSize, fileType, filePath, uploadDate, modifyDate)
         VALUES (ATTACHEDID_ATTACHED_SEQ.NEXTVAL, #{bid}, #{filename}, #{fileSize}, #{fileType},
                 #{filePath}, SYSTIMESTAMP, SYSTIMESTAMP)
     </insert>
 
-    <!-- 첨부파일 조회하기 Read -->
+    <!-- (Read) -->
+    <!-- 첨부파일 조회 -->
     <select id="getAttachedById" parameterType="int" resultType="com.team.gyemoim.vo.AttachedVO">
         SELECT *
         FROM Attached
         WHERE bid = #{bid}
     </select>
-
-
 
 </mapper>
 

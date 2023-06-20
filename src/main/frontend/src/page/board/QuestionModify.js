@@ -6,14 +6,13 @@ import jwtDecode from "jwt-decode";
 import Cookies from "js-cookie";
 
 const QuestionModify = () => {
-
-    const [questionModify, setQuestionModify] = useState([]); // BoardVO 수정 전 데이터 담는 변수
-
-    const {bid} = useParams();// 파라미터 가져오기
-    const navigate = useNavigate();
-
     const token = jwtDecode(Cookies.get('Set-Cookie'));
     const uNo = parseInt(token.uNo);
+    // BoardVO 수정 전 데이터 담는 변수
+    const [questionModify, setQuestionModify] = useState([]);
+    // 파라미터 가져오기
+    const {bid} = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getQuestionModify();
@@ -22,23 +21,18 @@ const QuestionModify = () => {
 
     // 수정 전 기존 문의사항 내용들 가져오기
     const getQuestionModify = async () => {
-
         await axios.get("/board/modify", {params: {bid: bid}})
             .then((response) => {
-
                 setQuestionModify(response.data);
             })
             .catch((error) => {
-                console.log("QuestionModify_getQuestionModify 왜 안되는거얏 :<");
-                console.log("QuestionModify_axios 에러사항: " + error);
+                console.log("QuestionModify_getQuestionModify_axios_errorMessage : " + error.message);
             })
     };
-
 
     // 게시글 수정된 데이터로 바꿔주는 함수
     const handleChange = (e) => {
         const {name, value} = e.target;// 변경된 요소의 'name' 과 'value' 속성을 추출함
-
         setQuestionModify((prevQuestionModify) => ({
             ...prevQuestionModify,
             [name]: value,
@@ -51,23 +45,18 @@ const QuestionModify = () => {
         e.preventDefault();
 
         try {
-            console.log("문의사항 수정 취소하겠습니다!! ");
             alert("문의사항 게시글 수정 취소합니다.");
             navigate(-1);
         } catch (error) {
-            console.log("문의사항 수정 취소 불가합니다 에러발생 :<");
-            console.log(error);
+            console.log("QuestionModify_moveToQuestionDetail_axios_errorMessage : " + error.message);
         }
-
-    }
+    };
 
 
     // 수정 업데이트 하기
     // 수정하기 버튼 누르면 글 수정했습니다 alert 띄워주고 글 detail 페이지로 이동
     const modifyUpdateQuestionPost = async (e) => {
         e.preventDefault();
-
-        console.log("문의사항 수정 업데이트 가보자구~");
 
         // 수정한 데이터 보내기 위해서 boardModifyDTO 변수에 담기
         const boardModifyDTO = {
@@ -80,25 +69,15 @@ const QuestionModify = () => {
             secret: questionModify.secret,
         };
 
-        console.log("업데이트 할 데이터 : " + boardModifyDTO.title);
-        console.log("업데이트 할 데이터 : " + boardModifyDTO.content);
-        console.log("업데이트 할 데이터 : " + boardModifyDTO.uno);
-
         await axios.post("/board/modifyPost", boardModifyDTO)
             .then((response) => {
-                console.log("QuestionModify_getQuestionModify 문의사항 수정 하기 성공 :D");
-                console.log("QuestionModify_문의사항 글 가져온 데이터 : " + response.data);
-                console.log("bid 가져와지니? " + bid);
-
-                alert("글 수정하였습니다.");
+              alert("글 수정하였습니다.");
                 navigate(`/board/question/detail/${bid}`);// 문의사항 수정 완료 후 글 상세보기로 이동
             })
             .catch((error) => {
-                console.log("QuestionModify_getQuestionModify 문의사항 수정 왜 안되는거얏 :<");
-                console.log("에러사항: " + error);
+                console.log("QuestionModify_getQuestionModify_axios_errorMessage : " + error.message);
             });
-
-    }
+    };
 
     return (
         <>

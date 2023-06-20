@@ -16,14 +16,9 @@ public class AdminReplyController {
 
     public final AdminReplyService adminReplyService;
 
-
-    /* [GET] 검색된 댓글 리스트 조회 API
-    [ /admin/reply/searchList?type={type}&searchType={searchType}&searchKeyword={searchKeyword}] */
+    /* [GET] 검색된 댓글 리스트 조회 API */
     @GetMapping("/admin/reply/searchList")
     public List<AdminReplyListDTO> searchReplyList(AdminReplyListParamDTO dto) throws Exception {
-        System.out.println("************ AdminReplyController_searchReplyList 리스트 성공 :D **************");
-        System.out.println("** 컨트롤러_댓글 리스트 dto bType = " + dto.getBtype());
-
         return adminReplyService.searchReplyList(dto);
     }
     

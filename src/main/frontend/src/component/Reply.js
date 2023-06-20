@@ -14,19 +14,15 @@ const Reply = (props) => {
     const token = Cookies.get('Set-Cookie');
     const userRole = jwtDecode(token).userRole;
     const uno = jwtDecode(token).uNo;
-
     // ReplyList.js 에 있는 댓글 리스트 ReplyList.map 에서 받는 원소 하나하나의 댓글
     const reply = props.obj;
-
     // 댓글 원소의 댓글번호 rno
     const rno = reply.rno;
     const name = reply.name;
-
+    // Link 용 함수
     const navigate = useNavigate();
-
     // 댓글 수정 영역 표시 여부
     const [show, setShow] = useState(false);
-
     // 댓글 내용 담는 변수
     const [replyComm, setReplyComm] = useState(reply.replyComm);
 
@@ -35,11 +31,18 @@ const Reply = (props) => {
         setReplyComm(event.target.value);
     };
 
-    // 수정된 날짜 포맷 변경 함수
-    const formatDate = (date) => {
-        const formattedDate = new Date(date).toISOString().replace(/T/, " ").replace(/\..+/, "");
-        return formattedDate;
-    }
+    // 댓글 작성일자 포맷팅 함수 (YYYY/MM/DD HH:MM:SS)
+    const formatDate = (repDate) => {
+        const date = new Date(repDate);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+
+        return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+    };
 
     /* 댓글 수정 */
     const updateReply = async () => {
@@ -53,14 +56,11 @@ const Reply = (props) => {
             .then((response) => {
                 navigate(0);
             }).catch((error) => {
-                console.log("댓글 수정 실패 :<");
-                console.log("에러 메시지 : " + error.getMessage);
-
-                alert(error.response.data);
+                console.log("Reply_updateReply_axios_errorMessage : " + error.getMessage);
             });
 
         updateToggle();
-    }
+    };
 
 
     /* 댓글 삭제 */
@@ -69,15 +69,14 @@ const Reply = (props) => {
             .then((response) => {
                 navigate(0);
             }).catch((error) => {
-                console.log("댓글 삭제 실패 :<");
-                console.log("에러 메시지 : " + error.message);
+                console.log("Reply_deleteReplyComment_axios_errorMessage : " + error.message);
             })
-    }
+    };
 
     // 댓글 수정 영역의 표시 여부 전환하는 함수
     const updateToggle = () => {
         setShow(show => !show)
-    }
+    };
 
     return (
         <>

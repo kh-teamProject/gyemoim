@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Data
 public class AttachedVO {
-
     private int attachedID; // 첨부파일 id
     private int bid; // 파일이 있는 게시글 번호
     private String filename; // 파일명
@@ -19,12 +18,11 @@ public class AttachedVO {
     private Timestamp uploadDate; // 업로드 일시
     private Timestamp modifyDate; // 수정 일시
 
-
     public AttachedVO() {
 
     }
 
-    public AttachedVO(int attachedID, int bid, String filename, int fileSize, String fileType, String filePath, Timestamp uploadDate, Timestamp modifyDate) {
+    /*public AttachedVO(int attachedID, int bid, String filename, int fileSize, String fileType, String filePath, Timestamp uploadDate, Timestamp modifyDate) {
         this.attachedID = attachedID;
         this.bid = bid;
         this.filename = filename;
@@ -33,7 +31,7 @@ public class AttachedVO {
         this.filePath = filePath;
         this.uploadDate = uploadDate;
         this.modifyDate = modifyDate;
-    }
+    }*/
 
     public AttachedVO dtoToVO(int bid,MultipartFile file){
         AttachedVO vo = new AttachedVO();

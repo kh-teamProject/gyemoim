@@ -27,8 +27,6 @@ const ReplyManagement = () => {
             },
         })
             .then((response) => {
-                console.log("댓글 목록 리스트 : " + response.data);
-
                 setReplyList(response.data);
             })
             .catch((error) => {
@@ -67,16 +65,17 @@ const ReplyManagement = () => {
 
     // 댓글 작성일자 포맷팅 함수 (YYYY/MM/DD HH:MM:SS)
     const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        const seconds = String(date.getSeconds()).padStart(2, '0');
+        const repDate = new Date(dateString);
+        const year = repDate.getFullYear();
+        const month = String(repDate.getMonth() + 1).padStart(2, '0');
+        const day = String(repDate.getDate()).padStart(2, '0');
+        const hours = String(repDate.getHours()).padStart(2, '0');
+        const minutes = String(repDate.getMinutes()).padStart(2, '0');
+        const seconds = String(repDate.getSeconds()).padStart(2, '0');
 
         return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
     };
+
 
     // replyList 에서 댓글 원소 가져와 변경하기
     const handleReplyClick = (rno) => {
@@ -93,29 +92,31 @@ const ReplyManagement = () => {
     return (
         <>
             <div>
-                <h1>댓글 관리</h1>
+                <h3>댓글 관리</h3>
                 {/* 검색창 시작 */}
-                <div style={{display: 'inline-block'}}>
+                <div className="reply-search">
                     <table>
                         <tbody>
                         <tr>
-                            <td>
-                                <select value={bTypeVal} onChange={changeBType}>
-                                    <option value="">게시판 선택</option>
-                                    <option value="공지사항">공지</option>
-                                    <option value="1:1 문의사항">문의</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select value={searchTypeVal} onChange={changeSearchType}>
-                                    <option value="">검색 옵션 선택</option>
-                                    <option value="bid">게시글 번호</option>
-                                    <option value="uno">회원 번호</option>
-                                    <option value="name">작성자</option>
-                                    <option value="replyComm">내용</option>
-                                    <option value="repDate">작성시간</option>
-                                </select>
-                            </td>
+                            <div className="reply-search-select-container">
+                                <td>
+                                    <select value={bTypeVal} onChange={changeBType}>
+                                        <option value="">게시판 선택</option>
+                                        <option value="공지사항">공지</option>
+                                        <option value="1:1 문의사항">문의</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select value={searchTypeVal} onChange={changeSearchType}>
+                                        <option value="">검색 옵션 선택</option>
+                                        <option value="bid">게시글 번호</option>
+                                        <option value="uno">회원 번호</option>
+                                        <option value="name">작성자</option>
+                                        <option value="replyComm">내용</option>
+                                        <option value="repDate">작성시간</option>
+                                    </select>
+                                </td>
+                            </div>
                             <td>
                             <span>
                                 <input type="text" placeholder="검색어를 입력하세요."
@@ -123,20 +124,27 @@ const ReplyManagement = () => {
                                        onChange={changeSearchKeyword}/>
                             </span>
                             </td>
-                            <td>
+                            <td className="reply-search-btns">
                                 <button type="button" onClick={handleFormSubmit}>검색</button>
-                            </td>
-                            <td>
                                 <button type="button" onClick={deleteFormSubmit}>초기화</button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
+
                 </div>
                 {/* 검색창 끝 */}
 
                 <div style={{display: 'grid'}}>
-                    <table>
+                    <table className="reply-table" style={{width: '100rem'}}>
+                        <colgroup>
+                            <col style={{width: '8%'}}/>
+                            <col style={{width: '8%'}}/>
+                            <col style={{width: '8%'}}/>
+                            <col style={{width: '30%'}}/>
+                            <col style={{width: '8%'}}/>
+                            <col style={{width: '12%'}}/>
+                        </colgroup>
                         <thead>
                         <tr>
                             <th>댓글번호</th>
@@ -167,8 +175,8 @@ const ReplyManagement = () => {
                                         <td>
                                             <button style={{
                                                 display: 'contents',
-                                                fontSize: '15px',
-                                                blockSize: '30px'
+                                                fontSize: '18px',
+                                                blockSize: '30px',
                                             }} onClick={() => handleReplyClick(item.rno)}>{item.replyComm}</button>
                                         </td>
                                         <td>
