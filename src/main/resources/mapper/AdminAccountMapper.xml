@@ -37,4 +37,21 @@
         WHERE userRole IN ('가회원', '정회원')
     </select>
 
+    <select id="searchMember" parameterType="com.team.gyemoim.dto.admin.AdminListParamDTO" resultType="com.team.gyemoim.dto.MemberDTO">
+        SELECT *
+        FROM MEMBER
+        WHERE
+        <choose>
+            <when test="searchType == 'email'">
+                LOWER(email) LIKE '%' || LOWER(#{searchKeyword}) || '%'
+            </when>
+            <when test="searchType == 'name'">
+                LOWER(name) LIKE '%' || LOWER(#{searchKeyword}) || '%'
+            </when>
+            <when test="searchType == 'uNo'">
+                LOWER(uNo) LIKE '%' || LOWER(#{searchKeyword}) || '%'
+            </when>
+        </choose>
+    </select>
+
 </mapper>

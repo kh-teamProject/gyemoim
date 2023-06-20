@@ -40,3 +40,23 @@
   position: absolute;
   right: 0;
 }
+
+.searchMember {
+  position: absolute;
+  left: 580px;
+}
+
+.searchMember > select {
+  font-size: 15px;
+  height: 21px;
+}
+
+.searchMember > button {
+  display: inline-block;
+  width: 50px;
+  line-height: 16px;
+}
+
+.memberTotal{
+  font-size: 20px;
+}

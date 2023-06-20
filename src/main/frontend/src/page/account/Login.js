@@ -21,28 +21,19 @@ const Login = () => {
       await axios.post('/api/login', {
         email,
         password,
-
       })
         .then((res) => {
-
           Cookies.set('Set-Cookie', res.data.data);
 
           const decodedToken = jwtDecode(res.data.data);
           const name = decodedToken.name;
           const uNo = decodedToken.uNo;
-
           const userRole = decodedToken.userRole;
 
           dispatch({type: 'login'});
-          console.log(checkedLogin);
-          console.log('이름', name);
-          console.log('uNo', uNo);
-          console.log('userRole', userRole);
-
 
           alert(`${name}님 환영합니다.`);
           window.location.href = '/';
-
         })
         .catch((error) => {
           console.log(error);
@@ -51,7 +42,6 @@ const Login = () => {
     } catch (error) {
       console.error(error);
       alert('이메일이나 비밀번호를 다시 확인해 주세요.')
-
     }
   };
 

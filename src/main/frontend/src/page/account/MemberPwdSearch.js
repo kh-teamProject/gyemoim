@@ -8,8 +8,6 @@ const MemberPwdSearch = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleInputChange = (event) => {
@@ -27,7 +25,7 @@ const MemberPwdSearch = () => {
         event.preventDefault();
 
         if (!email || !name) {
-            setError('이메일과 이름을 모두 입력해주세요.');
+            alert('이메일과 이름을 모두 입력해주세요.');
             return;
         }
 
@@ -37,20 +35,15 @@ const MemberPwdSearch = () => {
             .post('/api/password/forgot', { email, name, phone })
             .then((response) => {
                 if (response.data.error) {
-                    setError(response.data.error);
-                    setMessage('');
                     alert('입력하신 정보가 일치하지 않습니다.');
                 } else {
-                    setMessage(response.data.message);
-                    setError('');
                     alert('임시 비밀번호가 입력하신 이메일로 전송되었습니다.');
                     navigate('/login')
                 }
             })
             .catch((error) => {
-                setError('서버 오류가 발생했습니다.');
-                setMessage('');
-                alert('서버 오류가 발생했습니다.');
+                console.log(error)
+                alert('일치하는 회원이 없습니다.');
             });
     };
 
@@ -60,8 +53,6 @@ const MemberPwdSearch = () => {
                 <img src={gyemoim_character} style={{width: '150px', height: '150px'}} alt="Logo"/>
                 <h2>비밀번호 찾기</h2>
                 <p>계모임 가입으로 목돈 모으기 성공!</p>
-                {error && <p>{error}</p>}
-                {message && <p>{message}</p>}
                 <div className={pwdSearch.field}>
                     <input
                         type="email"
