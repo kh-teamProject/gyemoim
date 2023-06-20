@@ -11,6 +11,7 @@ const MemberInfo = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
+  const adminLocation = location.pathname.includes('admin');
   const pathParts = location.pathname.split('/');
   const lastPath = pathParts[pathParts.length - 1];
 
@@ -65,7 +66,6 @@ const MemberInfo = () => {
 
   const myInfoChangeHandler = (e) => {
     e.preventDefault();
-    console.log(expenditure);
     if(
       myInfo.bankName === '' ||
       myInfo.bankAccountNumber === '' ||
@@ -87,10 +87,13 @@ const MemberInfo = () => {
       ...expenditure,
     })
       .then((res) => {
-        alert('회원정보 수정이 완료되었습니다. 다시 로그인 해주세요.');
-        Cookies.remove("Set-Cookie");
-        dispatch({ type: "logout" });
-        navigate('/');
+        if(!adminLocation) {
+          alert('회원정보 수정이 완료되었습니다. 다시 로그인 해주세요.');
+          Cookies.remove("Set-Cookie");
+          dispatch({ type: "logout" });
+          navigate('/');
+        }
+        alert('회원정보 수정이 완료되었습니다.');
       })
       .catch((error) => {
         console.log(error);
@@ -115,10 +118,19 @@ const MemberInfo = () => {
             <label htmlFor="phone">휴대폰</label>
             <input type="text" id="phone" value={myInfo.phone || ''} onChange={(e) => {setMyInfo({...myInfo, phone: e.target.value})}}  />
           </div>
-          <div className={classes.field}>
-            <label htmlFor="">회원구분</label>
-            <input type="text" id="" value={myInfo.userRole || ''} readOnly />
-          </div>
+          {
+            adminLocation
+              ?
+              <div className={classes.field}>
+                <label htmlFor="">회원구분</label>
+                <input type="text" value={myInfo.userRole || ''} onChange={(e) => {setMyInfo({...myInfo, userRole: e.target.value})}} />
+              </div>
+              :
+              <div className={classes.field}>
+                <label htmlFor="">회원구분</label>
+                <input type="text" value={myInfo.userRole || ''} readOnly />
+              </div>
+          }
         </Card>
         <Card>
           <h3>{'<은행정보>'}</h3>

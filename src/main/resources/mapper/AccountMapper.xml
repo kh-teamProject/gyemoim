@@ -61,6 +61,9 @@
     <if test="userRole == '가회원'">
       , USERROLE = '정회원'
     </if>
+    <if test="userRole == '관리자'">
+      , USERROLE = '관리자'
+    </if>
     WHERE UNO = #{uNo}
   </update>
 
@@ -137,12 +140,13 @@
 
   <select id="getMyPfList" resultType="com.team.gyemoim.vo.PFVO">
     SELECT *
-    FROM PF p, ROLL r
-    WHERE p.PFID = r.PFID AND p.STARTFLAG = #{arg0} AND r.UNO = (
-        SELECT UNO
-        FROM MEMBER
-        WHERE uNo = #{arg1}
-      )
+    FROM PF p,
+         ROLL r
+    WHERE p.PFID = r.PFID
+      AND p.STARTFLAG = #{arg0}
+      AND r.UNO = (SELECT UNO
+                   FROM MEMBER
+                   WHERE uNo = #{arg1})
   </select>
 
   <select id="getStageRollList" resultType="com.team.gyemoim.vo.RollVO">
@@ -153,9 +157,12 @@
 
   <select id="getRecommendStage" resultType="com.team.gyemoim.vo.PFVO">
     SELECT *
-    FROM PF p, MEMBER m
-    WHERE p.INTEREST = m.INTEREST AND p.PAYMENT BETWEEN 0 AND m.MONTHLYLIMIT AND uNo = #{uNo}
-            AND p.STARTFLAG = '대기중'
+    FROM PF p,
+         MEMBER m
+    WHERE p.INTEREST = m.INTEREST
+      AND p.PAYMENT BETWEEN 0 AND m.MONTHLYLIMIT
+      AND uNo = #{uNo}
+      AND p.STARTFLAG = '대기중'
     ORDER BY p.PFID
   </select>
 
