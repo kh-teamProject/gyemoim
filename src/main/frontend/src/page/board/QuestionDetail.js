@@ -22,11 +22,13 @@ const QuestionDetail = () => {
         try {
             const response = await axios.get("/board/read", {
                 params: {
-                    "bid": bid,
+                    "boardBid": bid,
+                    "readerUno": uNo,
                 },
             });
             setQuestionDetail(response.data);
 
+            // 첨부파일 존재여부 확인
             const attachmentResponse = await axios.get("/board/attachment", {
                 params: {
                     bid: bid,

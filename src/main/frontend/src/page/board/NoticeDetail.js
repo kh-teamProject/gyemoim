@@ -20,8 +20,9 @@ const NoticeDetail = () => {
         const token = jwtDecode(Cookies.get('Set-Cookie'));
         uNo = token.uNo;
         userRole = token.userRole;
-    };
-
+    } else {
+        uNo = null;
+    }
     // 공지사항 게시글 리스트 변수
     const [noticeDetail, setNoticeDetail] = useState({});
     // 파라미터 가져오기

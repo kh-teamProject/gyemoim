@@ -46,7 +46,7 @@ public class BoardController {
 
     /* 게시글 읽기 API (Read) [GET /board/notice/read/{bid}] */
     @GetMapping("/board/read")
-    public BoardVO read(@RequestParam("boardBid") int boardBid, @RequestParam("readerUno") Integer readerUno) throws Exception {
+    public BoardVO read(@RequestParam(value = "boardBid") int boardBid, @RequestParam(value = "readerUno", required = false) Integer readerUno) throws Exception {
         BoardReadCountDTO dto = new BoardReadCountDTO(boardBid, readerUno);
         BoardVO boardVO = boardService.readDetail(dto);
 
