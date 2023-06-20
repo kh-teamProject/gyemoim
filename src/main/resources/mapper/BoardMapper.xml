@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.gyemoim.mapper.BoardMapper">
+
+    <!-- (Create) -->
+    <!-- 게시글 번호 조회 -->
+    <select id="getBid" resultType="int">
+        SELECT BID_BOA_SEQ.NEXTVAL
+        FROM dual
+    </select>
+
+    <!-- 글 작성 -->
+    <insert id="insert" parameterType="com.team.gyemoim.vo.BoardVO">
+        INSERT INTO board (bid, uNo, name, bType, title, views, content, writeDate, secret)
+        VALUES (#{bid}, #{uNo}, #{name}, #{btype}, #{title}, 0, #{content}, sysdate, #{secret})
+    </insert>
+
+
+    <!-- (Read) -->
+    <!-- 검색 및 전체 게시글 리스트 조회 -->
+    <select id="searchList" parameterType="com.team.gyemoim.dto.board.BoardListDTO"
+            resultType="com.team.gyemoim.vo.BoardVO">
+        SELECT *
+        FROM BOARD
+        WHERE bType = #{btype}
+        <if test="searchType != ''  and searchKeyword != '' ">
+            <if test="searchType == 'title'">
+                AND title LIKE '%' || #{searchKeyword} || '%'
+            </if>
+            <if test="searchType == 'content'">
+                AND content LIKE '%' || #{searchKeyword} || '%'
+            </if>
+            <if test="searchType == 'name'">
+                AND name LIKE '%' || #{searchKeyword} || '%'
+            </if>
+        </if>
+        ORDER BY writeDate DESC
+    </select>
+
+    <!-- 특정 글 상세보기 -->
+    <select id="readDetail" resultType="com.team.gyemoim.vo.BoardVO">
+        SELECT *
+        FROM BOARD
+        WHERE bid = #{boardBid}
+    </select>
+
+    <!-- 게시글 조회수 레코드 생성 -->
+    <!-- 위의 코드에서는 MERGE INTO 문을 사용하여 두 개의 작업을 수행합니다.
+        USING 절을 사용하여 임시로 값들을 선택합니다. ON 절을 사용하여 매칭 여부를 확인하고,
+        매칭된 경우에는 업데이트하고 매칭되지 않은 경우에는 새로운 레코드를 삽입합니다.
+        또한 now() 함수를 사용하여 현재 날짜와 시간을 가져오도록 수정합니다. -->
+    <insert id="createBoardReadCountHistory" parameterType="com.team.gyemoim.dto.board.BoardReadCountDTO">
+        MERGE INTO read_history rh
+            USING dual
+            ON (rh.board_bid = #{boardBid} AND rh.read_uNo = #{readerUno})
+            WHEN MATCHED THEN
+                UPDATE SET rh.latest_access_at = SYSDATE, rh.readCount = rh.readCount + 1
+            WHEN NOT MATCHED THEN
+                INSERT (board_bid, read_uNo, latest_access_at, readCount)
+                    VALUES (#{boardBid}, #{readerUno}, SYSDATE, 1)
+    </insert>
+
+    <!-- 글 조회 확인 횟수 조회하기 -->
+    <select id="selectReadCount" parameterType="com.team.gyemoim.dto.board.BoardReadCountDTO" resultType="int">
+        select readCount from read_history where board_bid = #{boardBid} and read_uNo = #{readerUno}
+    </select>
+
+
+    <!-- 게시글 조회수 수정 -->
+    <update id="updateViewCnt">
+        UPDATE BOARD
+        SET views = views + 1
+        WHERE bid = #{boardBid}
+    </update>
+
+
+    <!-- (Update) -->
+    <!-- 수정 전 글 내용 가져오기 -->
+    <select id="modify" resultType="com.team.gyemoim.vo.BoardVO" parameterType="int">
+        SELECT *
+        FROM BOARD
+        WHERE bid = #{bid}
+    </select>
+
+    <!-- 게시글 수정 업데이트 하기 -->
+    <update id="modifyUpdate" parameterType="com.team.gyemoim.dto.board.BoardModifyDTO">
+        UPDATE BOARD
+        SET uNo     = #{uNo},
+            name    = #{name},
+            title   = #{title},
+            content = #{content},
+            secret  = #{secret}
+        WHERE bid = #{bid}
+    </update>
+
+    <!-- 해당 게시글에 있는 첨부파일 수정 -->
+    <update id="addAttachedUpdate">
+        UPDATE ATTACHED
+        SET filename = #{filename}
+        WHERE bid = #{bid}
+    </update>
+
+
+    <!-- (Delete) -->
+    <!-- 특정 bid 와 글 작성자 uNo에 해당하는 게시글 삭제하기 -->
+    <delete id="delete" parameterType="com.team.gyemoim.dto.board.BoardDeleteDTO">
+        DELETE
+        FROM BOARD
+        WHERE bid = #{bid}
+          AND uNo = #{uNo}
+    </delete>
+
+
+    <!-- 첨부파일 -->
+    <!-- (Create) -->
+    <!-- 첨부파일 생성 -->
+    <insert id="saveAttached" parameterType="com.team.gyemoim.vo.AttachedVO">
+        INSERT INTO Attached (attachedID, bid, filename, fileSize, fileType, filePath, uploadDate, modifyDate)
+        VALUES (ATTACHEDID_ATTACHED_SEQ.NEXTVAL, #{bid}, #{filename}, #{fileSize}, #{fileType},
+                #{filePath}, SYSTIMESTAMP, SYSTIMESTAMP)
+    </insert>
+
+    <!-- (Read) -->
+    <!-- 첨부파일 조회 -->
+    <select id="getAttachedById" parameterType="int" resultType="com.team.gyemoim.vo.AttachedVO">
+        SELECT *
+        FROM Attached
+        WHERE bid = #{bid}
+    </select>
+
+</mapper>
+
+

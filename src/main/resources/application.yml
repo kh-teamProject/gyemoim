@@ -4,6 +4,36 @@ spring:
     username: CHICKEN
     password: MUMANI
     driverClassName: oracle.jdbc.driver.OracleDriver
+  servlet:
+    multipart:
+      max-file-size: 15MB      # 파일 업로드 최대 파일 크기설정
+      max-request-size: 15MB   # 파일 업로드 최대 요청 크기 설정
+      file-size-threshold: 2KB # 파일 임시 저장 경계값 설정
+
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: kwon524@naver.com
+    password: rnjsdhtn2@
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl.enable: true
+          ssl.trust: smtp.naver.com
+
+  redis:
+    host: localhost
+    port: 6379
+
+jwt:
+  header: Gyemoim
+  secret: GyemoimChickenMumani
+  token-validity-in-seconds: 1800   #30분
+
 
 mybatis:
   mapper-locations: classpath:mapper/**.xml
+
+upload:
+    path: C:/gyemoim/upload

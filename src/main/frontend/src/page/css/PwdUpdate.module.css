@@ -1,0 +1,69 @@
+.pwdUpdateWrap {
+  min-height: 680px;
+}
+
+.field {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.field ul {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 30px;
+  padding: 0;
+}
+
+.field ul li {
+  position: relative;
+  width: 140px;
+  height: 40px;
+  font-size: 1.5rem;
+  color: gray;
+  cursor: pointer;
+}
+
+.field ul li  a.isActive {
+  color: black;
+  font-weight: bold;
+}
+
+.field ul li  a.isActive::after{
+  content: '';
+  display: inline-block;
+  width: 150px;
+  border-bottom: 2px solid gray;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.field label {
+  display: inline-block;
+  margin-right: 20px;
+  width: 130px;
+  text-align: left;
+}
+
+.field input {
+  display: inline-block;
+  width: 250px;
+  height: 35px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+}
+
+.pwd-submit-btn {
+  width: 200px;
+  height: 40px;
+  color: white;
+  background: #004dc1;
+  line-height: 40px;
+  border-radius: 4px;
+  border: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}

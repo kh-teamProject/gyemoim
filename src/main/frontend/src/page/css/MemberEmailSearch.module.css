@@ -1,0 +1,103 @@
+.main {
+    min-height: 680px;
+}
+
+.form{
+    padding-top: 50px;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin: 0px 0;
+}
+
+.field {
+    /*position: relative;*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+
+}
+
+
+
+.field input {
+    width: 400px;
+    height: 50px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+}
+
+
+.btn {
+    background: #004dc1;
+    cursor: pointer;
+    width: 400px;
+    border-radius: 5px;
+    color: #fff;
+    /*display: block;*/
+    font-size: 20px;
+    font-weight: 400;
+    height: 60px;
+    line-height: 55px;
+    text-align: center;
+    margin-top: 15px;
+    border: 0;
+}
+
+.guide {
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+
+.guide > .ul {
+    margin: 0 auto;
+    width: 300px;
+    overflow: hidden;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.guide > .ul .li {
+    width: 500px;
+
+    float: left;
+    color: #000000;
+}
+
+.guide > .ul .li .a {
+    color: #000000;
+    font-size: 15px;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalContent {
+    background-color: #ffffff;
+    padding: 30px 130px 30px;
+    border-radius: 4px;
+    font-size: 25px;
+}
+
+.close {
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+}

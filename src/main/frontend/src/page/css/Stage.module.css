@@ -1,0 +1,269 @@
+ul{
+    list-style: none;
+    padding: 0;
+}
+img{
+    width: 100%;
+}
+.red{
+    color: #FF0000;
+}
+.backRed{
+    background-color: #FF0000 !important;
+}
+.black{
+    color: #000 !important;
+}
+.stageTitle{
+        font-size: 2rem;
+        margin: 4rem 0 0;
+        display: block;
+}
+.areaLayout{
+    background-color: #F7F7F7;
+    padding: 3rem;
+    margin-top: 3rem;
+}
+.areaLayout > div{
+    width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 2rem;
+}
+.areaLayout > div> div:first-child {
+    position: relative;
+    flex : 3;
+    background-color: white;
+    border-radius: 10px;
+    padding: 11rem 2rem 2rem;
+    box-shadow: 2px 2px 5px #0000003b;
+}
+.areaLayout > div> div:last-child {
+    flex : 1;
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 2px 2px 5px #0000003b;
+}
+
+.blueArea{
+    background-color: #004DC1;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 10px 10px 0 0;
+    padding: 2rem 0;
+}
+.blueArea p{
+    color: white;
+}
+
+.pfInfo{
+    display: flex;
+    gap: 3rem;
+    color: white;
+    text-align: left;
+    padding: 0 2rem;
+    line-height: 1.5;
+    margin: 0;
+}
+.pfInfo li{
+    font-size: 1.6rem
+}
+.pfInfo li:first-child{
+    text-align: center;
+}
+.pfInfo span{
+    font-size: 1.15rem
+}
+.pfInfo li .seqNum{
+    background-color: #fff;
+    color: #004dc1;
+    padding: 0.3rem 0.7rem;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+
+.boxButton{
+    display: flex;
+    gap: 1rem;
+}
+.boxBtn{
+    border: 1px solid;
+    border-radius: 10px;
+    text-align: left;
+    padding: 0.5rem 1rem;
+    flex: 1;
+    cursor: pointer;
+}
+.boxTitle{
+    font-size: 1.4rem;
+    text-align: left;
+    margin-bottom: 0.3rem;
+    margin-top: 0.3rem;
+}
+.boxButton a{
+    color: black;
+    text-decoration: none;
+    display: block;
+    flex: 1;
+}
+.boxBtn a:hover{
+    color: white;
+    background-color: #004DC1;
+}
+.boxButton .boxBtn p{
+    margin: 0.5rem 0;
+}
+.stageZone{
+    padding: 2rem 0;
+    margin-top: 2rem;
+}
+.stageZone p:first-child{
+    margin: 0 0 0.3rem;
+}
+.subTitle{
+    font-size: 1.72rem;
+    margin: 0;
+}
+/*seqArea*/
+.seqArea{
+    display: flex;
+    gap: 1.4rem 1rem;
+    padding: 2rem 0 1rem;
+    flex-flow: row wrap;
+}
+.seqArea .seqList{
+    width: 21.3%;
+    position: relative;
+    text-align: left;
+    padding-left: 4.5rem;
+}
+.seqList .seqNum{
+     position: absolute;
+     background-color: #828282;
+     color: white;
+     padding: 0.5rem 0.9rem;
+     border-radius: 50%;
+     left: 10px;
+     top: 5px;
+     font-size: 1.3rem;
+ }
+.seqList .myTurn{
+     position: absolute;
+     left: 7px;
+     top: -20px;
+     color: #FF0000;
+ }
+.seqList .seqBal{
+    font-size: small;
+}
+.seqList .seqPay{
+    font-size: 1.7rem;
+}
+/*deposit box*/
+.depositBox{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0.8rem 2rem;
+    position: relative;
+    margin: 0.3rem 0 1rem;
+}
+.depositBox .depositLogo{
+    background-color: blue;
+    border-radius: 100%;
+    padding: 0.2rem 0.5rem;
+}
+.depositBox .depositLogo img{
+    width: 3.5rem;
+}
+.depositBox .depositBtn{
+    padding: 0rem 2.5rem;
+    height: 50px;
+    font-size: 1.2rem;
+    color: white;
+    background-color: #004DC1;
+    border: 1px solid #004DC1;
+    position: absolute;
+    right: 2rem;
+    cursor: pointer;
+}
+.depositBox .grayBtn{
+    background-color: #939393;
+    border: 1px solid #939393;
+    color: white;
+}
+.depositBox .depositDesc p:first-child{
+    margin-bottom: 0;
+}
+.depositBox .depositDesc p:last-child{
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+.caution{
+    text-align: left;
+}
+.caution p{
+    margin: 3px;
+}
+
+/*member*/
+.memberList{
+    padding: 1rem 0;
+}
+.memberList p.boxTitle{
+    text-align: center;
+}
+.memberList .memList{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 1rem 0;
+    position: relative;
+}
+.memberList .memNum{
+    background-color: #939393;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 50%;
+    left: 10px;
+    top: 5px;
+    font-size: 1.3rem;
+}
+.memberList .blueNum{
+    background-color: #004DC1;
+}
+.memberList .memInfo{
+    font-size: 1.3rem;
+    color: #939393;
+}
+.memList .pfMaster{
+    position: absolute;
+    top: -0.9rem;
+    left: -0.17rem;
+    width: 2rem;
+    transform: rotate(347deg);
+}
+/*community*/
+.community{
+    border-top: 1px solid #bababa;
+    padding: 2rem 0 1rem;
+    margin-top: 1rem;
+}
+.community button.exit{
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    color: white;
+    background-color: #004DC1;
+    border: 1px solid #004DC1;
+    cursor: pointer;
+}
+.community p.caution{
+    font-size: 0.9rem;
+    text-align: left;
+    margin-top: 1.5rem;
+}

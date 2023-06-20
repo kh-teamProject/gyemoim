@@ -1,0 +1,26 @@
+.checkPwd-wrap {
+  min-height: 677px;
+}
+
+.password-input {
+  width: 300px;
+  height: 40px;
+  border-radius: 4px;
+  padding: 0 10px;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.password-input.isActive {
+  border: 1px solid red;
+}
+
+.check-btn {
+  width: 100px;
+  height: 40px;
+  background: skyblue;
+  border: 0;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 1rem;
+}

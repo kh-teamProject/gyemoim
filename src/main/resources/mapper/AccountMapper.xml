@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.gyemoim.mapper.AccountMapper">
+
+  <resultMap id="memberResultMap" type="java.util.HashMap">
+    <result property="uNo" column="uNo"/>
+    <result property="email" column="email"/>
+    <result property="password" column="password"/>
+    <result property="name" column="name"/>
+    <result property="phone" column="phone"/>
+    <result property="bankName" column="bankName"/>
+    <result property="bankAccountNumber" column="bankAccountNumber"/>
+    <result property="accountHolder" column="accountHolder"/>
+    <result property="identifier" column="identifier"/>
+    <result property="enrollDate" column="enrollDate"/>
+    <result property="interest" column="interest"/>
+    <result property="userRole" column="userRole"/>
+    <result property="monthlySalary" column="monthlySalary"/>
+    <result property="monthlyLimit" column="monthlyLimit"/>
+  </resultMap>
+
+  <select id="getMyInfo" resultMap="memberResultMap">
+    SELECT *
+    FROM member
+    WHERE uNo = #{uNo}
+  </select>
+
+  <!-- password 확인을 위한 select문 -->
+  <select id="getPassword" resultType="String">
+    SELECT password
+    FROM MEMBER
+    WHERE uNo = #{uNo}
+  </select>
+
+  <!-- 계모임 계좌 정보 가져오기 -->
+  <select id="getMyAccount" resultType="com.team.gyemoim.vo.MyAccountVO">
+    SELECT *
+    FROM MYACCOUNT
+    WHERE uNo = #{uNo}
+  </select>
+
+  <!-- 내 계모임 계좌 거래내역 가져오기 -->
+  <select id="getMyAccountHistory" resultType="com.team.gyemoim.vo.MyAccountHistoryVO">
+    SELECT *
+    FROM MYACCOUNTHISTORY
+    WHERE uNo = #{uNo}
+    ORDER BY TRADINGHOURS DESC
+  </select>
+
+  <!-- 내 정보 수정 -->
+  <update id="myInfoModify" parameterType="com.team.gyemoim.dto.MyPageDTO">
+    UPDATE MEMBER
+    SET NAME = #{name},
+    PHONE = #{phone},
+    BANKNAME = #{bankName},
+    BANKACCOUNTNUMBER = #{bankAccountNumber},
+    ACCOUNTHOLDER = #{accountHolder},
+    MONTHLYSALARY = #{monthlySalary},
+    MONTHLYLIMIT = (#{monthlySalary} - #{medicalCost} - #{housingCost} - #{foodCost} - #{culturalCost} - #{etc}) * 0.1
+    <if test="userRole == '가회원'">
+      , USERROLE = '정회원'
+    </if>
+    <if test="userRole == '관리자'">
+      , USERROLE = '관리자'
+    </if>
+    WHERE UNO = #{uNo}
+  </update>
+
+  <!-- 내 관심사 수정 -->
+  <update id="interestUpdate">
+    UPDATE MEMBER
+    SET interest = #{interest}
+    WHERE uNo = #{uNo}
+  </update>
+
+  <!-- 계모임 계좌 정보 수정 -->
+  <update id="myAccountUpdate" parameterType="com.team.gyemoim.vo.MyAccountVO">
+    update MYACCOUNT
+    SET
+    <choose>
+      <when test="bankHistory == '충전'">
+        MYBALANCE = MYBALANCE + #{transactionAmount}
+      </when>
+      <when test="bankHistory == '출금'">
+        MYBALANCE = MYBALANCE - #{transactionAmount}
+      </when>
+    </choose>
+    WHERE UNO = #{uNo}
+  </update>
+
+  <!-- 계모임 계좌 거래내역 저장 -->
+  <insert id="deposit" parameterType="com.team.gyemoim.dto.BankHistoryDTO">
+    INSERT INTO MYACCOUNTHISTORY(UNO, BANKNAME, BANKACCOUNTNUMBER, TRANSACTIONAMOUNT, BANKHISTORY, TRADINGHOURS)
+    VALUES (#{uNo}, #{bankName}, #{bankAccountNumber}, #{transactionAmount}, #{bankHistory}, sysdate)
+  </insert>
+
+  <!-- 정회원으로 변경시 myAccount에 계모임 계좌 생성 -->
+  <insert id="createMyAccount">
+    INSERT INTO MYACCOUNT(uNo)
+    VALUES (#{uNo})
+  </insert>
+
+  <!-- 회원 탈퇴 -->
+  <update id="memberDelete">
+    UPDATE MEMBER
+    SET ISLEAVE = 'Y'
+    WHERE uNo = #{uNo}
+  </update>
+
+  <!-- 지출목록 데이터 생성 -->
+  <insert id="createExpenditure">
+    INSERT INTO EXPENDITURE
+    values (#{uNo}, #{medicalCost}, #{housingCost}, #{foodCost}, #{culturalCost}, #{etc})
+  </insert>
+
+  <!-- 회원에 지출데이터가 있는지 확인 -->
+  <select id="getExpenditure" resultType="com.team.gyemoim.vo.ExpenditureVO">
+    SELECT *
+    FROM EXPENDITURE
+    WHERE uNo = #{uNo}
+  </select>
+
+  <!-- 지출 내역 수정 -->
+  <update id="updateExpenditure">
+    UPDATE EXPENDITURE
+    SET MEDICALCOST  = #{medicalCost},
+        HOUSINGCOST  = #{housingCost},
+        FOODCOST     = #{foodCost},
+        CULTURALCOST = #{culturalCost},
+        ETC          = #{etc}
+    WHERE uNo = #{uNo}
+  </update>
+
+  <select id="checkedPwd" resultType="String">
+    SELECT password
+    FROM MEMBER
+    WHERE uNo = #{uNo}
+  </select>
+
+  <select id="getMyPfList" resultType="com.team.gyemoim.vo.PFVO">
+    SELECT *
+    FROM PF p,
+         ROLL r
+    WHERE p.PFID = r.PFID
+      AND p.STARTFLAG = #{arg0}
+      AND r.UNO = (SELECT UNO
+                   FROM MEMBER
+                   WHERE uNo = #{arg1})
+  </select>
+
+  <select id="getStageRollList" resultType="com.team.gyemoim.vo.RollVO">
+    SELECT *
+    FROM ROLL
+    WHERE PFID = #{pfID}
+  </select>
+
+  <select id="getRecommendStage" resultType="com.team.gyemoim.vo.PFVO">
+    SELECT *
+    FROM PF p,
+         MEMBER m
+    WHERE p.INTEREST = m.INTEREST
+      AND p.PAYMENT BETWEEN 0 AND m.MONTHLYLIMIT
+      AND uNo = #{uNo}
+      AND p.STARTFLAG = '대기중'
+    ORDER BY p.PFID
+  </select>
+
+</mapper>

@@ -1,0 +1,69 @@
+.button {
+    color: skyblue;
+}
+
+.PartiNum {
+    background-color: #f7f7f7;
+    padding: 20px;
+    box-sizing: border-box;
+    width:1100px;
+    height:800px;
+    object-fit: cover;
+}
+
+.stageSelectOrder {
+    color: #1a1a1a;
+    display: block;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.stageSelectOrder > p {
+    color: #505050;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    margin-top: 22px;
+}
+
+
+.memberOrder{
+       gap: 1rem;
+       display: flex;
+       justify-content: center;
+}
+
+.memList {
+       box-sizing: border-box;
+       color: #4169E1;
+       display: block;
+       font-size: 20px;
+       font-weight: 400;
+       height: 43px;
+       text-align: center;
+       width: 43px;
+       padding: 0.3rem 0.8rem;
+}
+
+
+.memTurn {
+  border: 2.0px solid #4169E1;
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: block;
+  height: 43px;
+  width: 43px;
+  padding: 0.3rem 0.8rem;
+}
+
+.memTurnEgg {
+  box-sizing: border-box;
+  color: #4169E1;
+  display: block;
+  text-align: center;
+  height: 10px;
+  width: 65px;
+  padding: 0.3rem 0.8rem;
+  margin: -7px -10px;
+}

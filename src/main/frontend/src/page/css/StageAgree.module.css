@@ -1,0 +1,255 @@
+ul{
+    padding: 0;
+}
+
+ul li {
+  list-style-type:none;
+  margin: 5px;
+  padding: 0;
+}
+
+.won ul li {
+text-align: right;
+}
+
+body{
+ background: #F7F7F7;
+  text-align: center;
+}
+
+.title {
+   color: #373f57;
+}
+
+.gap{
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    justify-content: space-between;
+
+}
+/*flex*/
+.flexD{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.flex6{
+    flex:6;
+    padding: 2rem;
+
+}
+
+.flex2{
+    flex:2;
+     padding: 1rem;
+
+}
+
+.flex1{
+    flex:1;
+     padding: 0.5rem;
+
+}
+
+.font{
+    text-align: left;
+}
+
+/*버튼*/
+.button {
+  text-align: center;
+   border: 3px solid  #004DC1;
+    background-color: #004DC1;
+    color: white ;
+    width: 300px;
+    border-radius: 10px;
+    font-size: 1.3rem;
+}
+
+.inputStage {
+  border-radius: 4px;
+  border: 1px solid #8491a7;
+    width: 300px;
+  height: 48px;
+  font-size: 16px;
+  line-height: 24px
+}
+
+
+
+.margin{
+text-align : right;
+}
+
+/*제목*/
+.sixth { position: relative; }
+
+.sixth:before,
+.sixth:after {
+  content: '[';
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  height: 100%;
+  font-size: 1.25em;
+  color: blue;
+
+  transition: all 0.5s ease;
+}
+
+.sixth:after { content: ']'; }
+
+.sixth:hover:before {
+  transform: translateX(-5px);
+}
+
+.sixth:hover:after {
+  transform: translateX(5px);
+}
+
+/*박스 */
+.box {
+  background: #fff;
+  border-radius: 7px;
+  display: inline-block;
+  height: 100%;
+  margin: 2rem;
+   padding: 2rem;
+  position: relative;
+
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.box2 {
+  background: #fff;
+  border-radius: 7px;
+  display: inline-block;
+  width : 30rem;
+
+  margin: 1rem;
+   padding: 1rem;
+  position: relative;
+
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+/*3D 버튼*/
+.button001 {
+  display: inline-block;
+  position: relative;
+  width: 120px;
+  padding: 0;
+  margin: 0px 20px 10px 0;
+  font-weight: 600;
+  text-align: center;
+  line-height: 50px;
+  color: #FFF;
+  border-radius: 5px;
+  transition: all 0.2s ;
+  font-size: 1.15rem;
+  border: 2px solid black;
+}
+.widthBig{
+  width: 14rem;
+}
+.btnBlueGreen {
+  background: #004dc1;
+}
+.btnBlueGreen.btnPush {
+  box-shadow: 3px 5px 0px 0px #5b9cff;
+}
+.btnPush:hover {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.btnBlueGreen.btnPush:hover {
+  box-shadow: 0px 0px 0px 0px #5b9cff;
+}
+
+/*step*/
+.steps{
+    display: flex;
+    max-width: 700px!important;
+    margin: 10px auto 0;
+}
+.steps .step_item{
+    flex-direction: row;
+    align-items: stretch;
+    margin: 1em 0;
+    background: 0 0;
+    box-shadow: none;
+    line-height: 1.5;
+    border-radius: 0;
+    display: block;
+    background-color: transparent;
+    border: none;
+    justify-content: left;
+    padding: 0!important;
+    position: relative;
+    flex: 1;
+}
+
+.steps .active:before{
+    background-color: #FF204B !important;
+    color: #fff !important;
+    border-color: #FF204B !important;
+}
+.steps .step_item:before{
+    position: absolute;
+    top: 0;
+    left: calc(50% - 14px);
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    border-radius: 50px;
+    font-size: 1rem;
+    border: 1px solid rgba(0,0,0,.25);
+    background-color: #fff;
+    color: rgba(0,0,0,.25);
+    z-index: 9;
+    display: block;
+    text-align: center;
+    content: counters(ordered,".");
+    margin-right: 1rem;
+    counter-increment: ordered;
+    font-family: inherit;
+    font-weight: 700;
+}
+.steps .active:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: calc(100% - 10px);
+    height: 1px;
+    top: 13px;
+    right: calc(50% - 0px);
+    border: none;
+    margin-left: 8px;
+    transform: none;
+    background-color: #FF204B;
+}
+.steps .step_item .content{
+    align-self: flex-start;
+    margin: 46px auto 0!important;
+    max-width: calc(100% - 46px);
+    text-align: center;
+    width: 100%;
+}
+.steps .step_item .content .title{
+    color: #FF204B;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.steps .step_item .content .gray{
+    color: #868686 !important;
+}
+.position_relative{
+    position: relative;
+}
+.hiyokoImg{
+    width: 20rem;
+    position: absolute;
+    top: 15.5rem;
+    right: 17rem;
+}

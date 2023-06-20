@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team.gyemoim.mapper.MemberMapper">
+
+    <!-- 회원가입 -->
+    <insert id="account">
+        INSERT INTO MEMBER
+            (uNo, email, password, name, phone, userRole)
+        VALUES (uno_mem_seq.nextVal, #{email}, #{password}, #{name}, #{phone}, #{userRole})
+    </insert>
+
+    <!-- 회원 권한 정보 -->
+    <select id="findByEmail" resultType="com.team.gyemoim.dto.MemberDTO">
+        SELECT *
+        FROM MEMBER
+        WHERE email = #{email}
+    </select>
+
+    <!-- email 찾기 -->
+    <select id="memberEmailSearch" resultType="string">
+        SELECT email
+        FROM Member
+        WHERE name = #{name}
+          AND phone = #{phone}
+    </select>
+
+    <!-- password 찾기 / 변경 -->
+    <update id="updatePassword" parameterType="com.team.gyemoim.dto.MemberDTO">
+        UPDATE MEMBER
+        SET password = #{password}
+        WHERE email = #{email}
+    </update>
+
+    <!-- password 찾기 (이메일, 이름) -->
+    <select id="findByEmailAndName" resultType="com.team.gyemoim.dto.MemberDTO">
+        SELECT *
+        FROM MEMBER
+        WHERE email = #{email}
+          AND name = #{name}
+          AND phone = #{phone}
+    </select>
+
+    <!-- 비밀번호 변경 -->
+    <update id="pwdUpdate">
+        UPDATE MEMBER
+        SET password = #{password}
+        WHERE uNo = #{uNo}
+    </update>
+
+
+</mapper>

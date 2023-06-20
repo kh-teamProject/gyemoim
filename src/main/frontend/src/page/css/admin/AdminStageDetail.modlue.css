@@ -1,0 +1,58 @@
+.container {
+    padding: 20px;
+}
+
+.section {
+    margin-bottom: 80px;
+    margin-top: 80px;
+}
+
+.section-title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.section-content {
+    margin-top: 10px;
+}
+.thead{
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    background: #004DC1;
+    color: #fff;
+    background-color: #004DC1;
+}
+.tr{
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.complete-btn{
+    text-align: center;
+    border: 1px solid #004DC1;
+    background-color: #004DC1;
+    color: white;
+    width:11rem;
+    height: 3.5rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.member-btn{
+    text-align: center;
+    border: 3px solid #004DC1;
+    background-color: white;
+    color: #004DC1;
+    width: 8rem;
+    height: 3.5rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+.select-btn{
+    padding: 0.5rem 1rem;
+    width: 6rem;
+}
+
+
+

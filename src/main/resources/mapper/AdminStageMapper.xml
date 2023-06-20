@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.gyemoim.mapper.admin.AdminStageMapper">
+
+    <!--(현지)리스트 띄우기  -->
+    <select id="getStageList" resultType="com.team.gyemoim.dto.admin.AdminStageDetailDTO">
+        SELECT *
+        FROM pf
+        ORDER BY  startDate
+    </select>
+
+    <!--(현지)리스트 상태 변경 -->
+    <update id="updateStatus" parameterType="com.team.gyemoim.dto.admin.AdminStageDetailDTO">
+        UPDATE pf
+        SET  startflag='완료'
+        WHERE pfID = #{pfID}
+        ORDER BY endDate
+    </update>
+
+
+    <!--(현지)차트 데이터 가져오기  -->
+    <select id="getStageChart" resultType="com.team.gyemoim.dto.admin.AdminStageDetailDTO">
+        SELECT endDate, SUM(deposit) AS totalDeposit
+        FROM pf
+        WHERE startflag = '완료'
+        GROUP BY endDate
+        ORDER BY endDate
+    </select>
+
+
+    <!--(유진) 스테이지 참여 회원정보 리스트 띄우기-->
+  <select id="getStageMemList" resultType="com.team.gyemoim.dto.admin.AdminStageDetailDTO">
+    select  p.pfID, p.pfName, p.pfentry, p.payment, p.deposit,p.interest,p.startFlag,p.pfRate, p.startDate, p.endDate
+            ,r.receiveTurn, r.pfMaster,m.name, r.uno,rs.upayment,rs.uTotalpayment, rs.uTotalReceipts,rs.ureceipt
+    from pf p,
+         roll r,
+         member m,
+         receiptschedule rs
+    where p.pfID =#{pfID}
+      and p.pfID = r.pfID
+      and   m.uno = r.uno
+      and  p.deposit = rs.deposit
+      and   rs.receiveturn= r.receiveturn
+      and   rs.pfrate = p.pfrate
+    order by r.receiveTurn
+  </select>
+<!-- (유진) 스테이지 상태 업데이트 하기  -->
+    <update id="setStageComplete">
+    UPDATE pf set startFlag = '완료'
+    where pfID=#{pfID}
+    </update>
+
+</mapper>

@@ -1,0 +1,55 @@
+main {
+  min-height: 587px;
+}
+
+.memberText {
+  font-size: 2.5rem;
+  margin-top: 20px;
+}
+
+.field {
+  font-size: 1.25rem;
+  margin-bottom: 15px;
+}
+
+.field label {
+  display: inline-block;
+  margin-right: 20px;
+  width: 120px;
+  text-align: left;
+}
+
+.field input, .field select {
+  width: 300px;
+  height: 30px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+}
+
+.field .submit-btn {
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+  color: white;
+  background: skyblue;
+  line-height: 40px;
+  border-radius: 4px;
+  border: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.field .pwd-submit-btn {
+  /*display: inline-block;*/
+  width: 100px;
+  height: 40px;
+  color: white;
+  background: skyblue;
+  line-height: 40px;
+  border-radius: 4px;
+  border: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}

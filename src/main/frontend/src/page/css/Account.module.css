@@ -1,0 +1,124 @@
+.main {
+    min-height: 644px;
+    justify-content: space-evenly;
+}
+
+h2 {
+    padding-bottom: 15px;
+    margin-top: 10px;
+    font-size: 2.1em;
+    /*margin: 20px 0;*/
+}
+
+.field {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 6px;
+    border-radius: 5px;
+
+
+}
+
+.field > .email {
+    width: 290px;
+
+}
+
+.emailConfirm{
+    position: absolute;
+    right: 0;
+    display: inline-block;
+    height: 50px;
+    background: #004dc1;
+    cursor: pointer;
+    width: 100px;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 13px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.emailConfirmCheck{
+    position: absolute;
+    right: 0;
+    display: inline-block;
+    height: 50px;
+    background: #85a7da;
+    cursor: pointer;
+    width: 100px;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 13px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.field > .confirms {
+    width: 200px;
+}
+
+.field > .confirmCheck {
+    font-size: 0.8rem;
+    line-height: 50px;
+}
+
+.field input {
+    width: 400px;
+    height: 50px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+}
+
+/*.field > .pwdError{*/
+/*    display: inline-block;*/
+/*    color: red;*/
+/*    font-size: 120px;*/
+/*    margin-top: 5px;*/
+/*}*/
+
+/*.field > .pwdSuccess{*/
+/*    display: inline-block;*/
+/*    color: green;*/
+/*    font-size: 12px;*/
+/*    margin-top: 5px;*/
+/*}*/
+
+.checkboxGroup .checkboxAll{
+    margin-top: 9px;
+    border: 0;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: left;
+    height: 18px;
+}
+
+.checkboxGroup .checkbox{
+    margin-top: 9px;
+    border: 0;
+    font-size: 13px;
+    text-align: left;
+    height: 18px;
+}
+
+.btn {
+    background: #004dc1;
+    cursor: pointer;
+    width: 400px;
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    font-size: 20px;
+    font-weight: 400;
+    height: 60px;
+    line-height: 55px;
+    text-align: center;
+    margin-top: 10px;
+    border: 0;
+}

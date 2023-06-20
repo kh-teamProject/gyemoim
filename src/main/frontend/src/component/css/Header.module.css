@@ -1,0 +1,33 @@
+header {
+  width: 100%;
+  background: #4040f1;
+}
+
+header nav {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header nav div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 200px;
+  width: 250px;
+}
+
+header nav a {
+  color: white;
+  text-decoration: none;
+}
+
+header nav a:visited {
+  color: white;
+}
+
+header nav a:active {
+  text-decoration: none;
+}
