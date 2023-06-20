@@ -11,6 +11,8 @@ import SalesPieChart from "../../component/UI/stage/SalesPieChart";
 const StageList = () => {
   // 계모임 값 뿌리기
   const [stage, setStage] = useState([]);
+  // roll 값 뿌리기
+  const [roll, setRoll] = useState([]);
   // 약정금 버튼으로 스테이지 세팅하는 State
   const [deposit, setDeposit] = useState('전체');
   // 관심사 기반으로 스테이지 세팅하는 State
@@ -27,11 +29,9 @@ const StageList = () => {
   const handleButtonClick = (event) => {
     if (event.target.value === '전체') {
       setDeposit(event.target.value);
-      console.log(event.target.value);
     } else {
       let i = Number(event.target.value);
       setDeposit(i);
-      console.log(i);
     }
     setCurPage(1); //페이지 버튼 클릭시 현재 페이지를 1로 초기화
     setList(10);
@@ -39,7 +39,6 @@ const StageList = () => {
   };
   //관심사 목록기반으로 조회하는 함수
   const selectInterest = (event) => {
-    console.log(event.target.value);
     setInterest(event.target.value);
     setCurPage(1);
     setList(10);
@@ -69,6 +68,7 @@ const StageList = () => {
         .get('/stagelist', {})
         .then((res) => {
           setStage(res.data.PF);
+          setRoll(res.data.Roll);
           setTotalPage(Math.ceil(res.data.PF.length / list)); //전체 페이지 수 계산
         })
         .catch((error) => {
@@ -116,7 +116,7 @@ const StageList = () => {
   return (
     <>
       {/*로그인시 추천테이블*/}
-      <RecommendList recommend={recommend} formatNum={formatNum}/>
+      <RecommendList recommend={recommend} roll={roll}/>
 
       <h1>스테이지 조회</h1>
       <div>
@@ -152,25 +152,9 @@ const StageList = () => {
       <div className="stage-wrap">
         <div className="stage">
           {stage.slice((curPage - 1) * list, curPage * list)
-            .reduce((acc, value) => {
-              const index = acc.findIndex(item => item.pfID === value.pfID)
-              if (index === -1) {
-                acc.push({
-                  pfName: value.pfName,
-                  pfID: value.pfID,
-                  receiveTurn: [{turn: value.receiveTurn, uno: value.uno}],
-                  deposit: value.deposit,
-                  payment: value.payment,
-                  pfEntry: value.pfEntry,
-                  startFlag: value.startFlag,
-                  interest: value.interest,
-                })
-              } else {
-                acc[index].receiveTurn.push({turn: value.receiveTurn, uno: value.uno})
-              }
-              return acc
-            }, [])
             .map((value, index) => {
+              const rollItem = (roll.filter((item) => item.pfID===value.pfID));
+              const formattedDeposit = (value.deposit / 10000).toFixed(0) + '만';
               //내가 참여한 스테이지를 클릭한 경우 찬희언니 페이지로 보내버려
               if (checkedLogin) {
                 const token = jwtDecode(Cookies.get('Set-Cookie'));
@@ -190,8 +174,8 @@ const StageList = () => {
                             </div>
                             <ul className='stageListUl'>
                               {[...Array(Number(value.pfEntry))].map((_, index) => {
-                                const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index + 1)
-                                const uno = receiveTurnIndex !== -1 ? value.receiveTurn[receiveTurnIndex].uno : null
+                                const receiveTurnIndex = rollItem.findIndex(item => item.receiveTurn === index + 1)
+                                const uno = receiveTurnIndex !== -1 ? rollItem[receiveTurnIndex].uno : null
                                 return (
                                   <li key={index} id="rec-turn">
                                     {[uno].includes(loggedInUno) ? (
@@ -213,8 +197,8 @@ const StageList = () => {
                               })}
                             </ul>
                             <div id="stage-payInfo">
-                              <p>약정금 :<strong>{formatNum(Number(value.deposit))}</strong> | 월 입금액
-                                : <strong>{formatNum(Number(value.payment))}</strong></p>
+                              <p>약정금 :<strong>{formattedDeposit}원</strong> | 이율
+                                : <strong>{value.pfRate}%</strong></p>
                             </div>
                           </Link>)
                         :
@@ -230,7 +214,7 @@ const StageList = () => {
                               </div>
                             </div>
                             <div id="stage-payInfo">
-                              <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                              <p>약정금 :<strong>{formattedDeposit}원</strong> | 이율 : <strong>{value.pfRate}%</strong></p>
                             </div>
                           </div>
                             <div className='all-attend'>
@@ -257,8 +241,8 @@ const StageList = () => {
 
                             <ul className='stageListUl'>
                               {[...Array(Number(value.pfEntry))].map((_, index) => {
-                                const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index + 1)
-                                const uno = receiveTurnIndex !== -1 ? value.receiveTurn[receiveTurnIndex].uno : null
+                                const receiveTurnIndex = rollItem.findIndex(item => item.receiveTurn === index + 1)
+                                const uno = receiveTurnIndex !== -1 ? rollItem[receiveTurnIndex].uno : null
                                 return (
                                   <li key={index} id="rec-turn">
                                     {uno === null
@@ -271,7 +255,7 @@ const StageList = () => {
                             </ul>
 
                             <div id="stage-payInfo">
-                              <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                              <p>약정금 :<strong>{formattedDeposit}원</strong> | 이율 : <strong>{value.pfRate}%</strong></p>
                             </div>
                           </Link>
                         )
@@ -290,7 +274,7 @@ const StageList = () => {
                             <p>스테이지 진행중입니다</p>
                           </div>
                           <div id="stage-payInfo">
-                            <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                            <p>약정금 :<strong>{formattedDeposit}원</strong> | 이율 : <strong>{value.pfRate}%</strong></p>
                           </div>
                         </div>)}
                       {/*startFlag가 대기중일때만 Link동작하게 하는 코드 끝*/}
@@ -313,8 +297,8 @@ const StageList = () => {
                             </div>
                             <ul className='stageListUl'>
                               {[...Array(Number(value.pfEntry))].map((_, index) => {
-                                const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index + 1)
-                                const uno = receiveTurnIndex !== -1 ? value.receiveTurn[receiveTurnIndex].uno : null
+                                const receiveTurnIndex = rollItem.findIndex(item => item.receiveTurn === index + 1)
+                                const uno = receiveTurnIndex !== -1 ? rollItem[receiveTurnIndex].uno : null
                                 return (
                                   <li key={index} id="rec-turn">
                                     {uno === null
@@ -326,8 +310,8 @@ const StageList = () => {
                               })}
                             </ul>
                             <div id="stage-payInfo">
-                              <p>약정금 :<strong>{formatNum(Number(value.deposit))}</strong> | 월 입금액
-                                : <strong>{formatNum(Number(value.payment))}</strong></p>
+                              <p>약정금 :<strong>{formattedDeposit}원</strong> | 이율
+                                : <strong>{value.pfRate}%</strong></p>
                             </div>
                           </Link>
                         )
@@ -346,7 +330,7 @@ const StageList = () => {
                             <p>스테이지 진행중입니다</p>
                           </div>
                           <div id="stage-payInfo">
-                            <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                            <p>약정금 :<strong>{formattedDeposit}원</strong> | 이율 : <strong>{value.pfRate}%</strong></p>
                           </div>
                         </div>)}
                       {/*startFlag가 대기중일때만 Link동작하게 하는 코드 끝*/}
@@ -367,8 +351,8 @@ const StageList = () => {
 
                             <ul className='stageListUl'>
                               {[...Array(Number(value.pfEntry))].map((_, index) => {
-                                const receiveTurnIndex = value.receiveTurn.findIndex(item => item.turn === index + 1)
-                                const uno = receiveTurnIndex !== -1 ? value.receiveTurn[receiveTurnIndex].uno : null
+                                const receiveTurnIndex = rollItem.findIndex(item => item.receiveTurn === index + 1)
+                                const uno = receiveTurnIndex !== -1 ? rollItem[receiveTurnIndex].uno : null
                                 return (
                                   <li key={index} id="rec-turn">
                                     {uno === null
@@ -381,7 +365,7 @@ const StageList = () => {
                             </ul>
 
                             <div id="stage-payInfo">
-                              <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                              <p>약정금 :<strong>{formattedDeposit}원</strong> | 이율 : <strong>{value.pfRate}%</strong></p>
                             </div>
                           </Link>
                         )
@@ -400,7 +384,7 @@ const StageList = () => {
                             <p>스테이지 진행중입니다</p>
                           </div>
                           <div id="stage-payInfo">
-                            <p>약정금 :<strong>{value.deposit}</strong> | 월 입금액 : <strong>{value.payment}</strong></p>
+                            <p>약정금 :<strong>{formattedDeposit}원</strong> | 이율 : <strong>{value.pfRate}%</strong></p>
                           </div>
                         </div>)}
                       {/*startFlag가 대기중일때만 Link동작하게 하는 코드 끝*/}

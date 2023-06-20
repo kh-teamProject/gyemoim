@@ -38,7 +38,6 @@ import StageReport from "./component/UI/stage/StageReport";
 import AdminStageList from "./page/admin/AdminStageList";
 
 import AdminStageDetail from "./page/admin/AdminStageDetail";
-import TestAdminAccountDetail from "./page/admin/TestAdminAccountDetail";
 import AccountModify from "./page/admin/AccountModify";
 import './App.css';
 import MemberPwdSearch from "./page/account/MemberPwdSearch";
@@ -170,8 +169,6 @@ const App = () => {
             path: 'stagelist',
             element: <StageList/>
           },
-          //
-
           {
             path: '/stageCreate',
             element: cookie ? (jwtDecode(cookie).userRole[0] !== '가회원' ? <StageCreate/> : <Navigate to="/"/>) :
@@ -242,10 +239,6 @@ const App = () => {
           {
             path: 'account',
             element: <AccountManagement/>
-          },
-          {
-            path: 'account/detail/:uno',
-            element: <TestAdminAccountDetail/>
           },
           {
             path: 'account/modify/:uNo',

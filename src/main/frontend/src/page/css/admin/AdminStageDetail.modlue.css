@@ -31,7 +31,7 @@
     border: 1px solid #004DC1;
     background-color: #004DC1;
     color: white;
-    width: 8rem;
+    width:11rem;
     height: 3.5rem;
     border-radius: 10px;
     font-size: 1.3rem;
@@ -49,5 +49,10 @@
     font-size: 1.3rem;
     cursor: pointer;
 }
+.select-btn{
+    padding: 0.5rem 1rem;
+    width: 6rem;
+}
+
 
 
