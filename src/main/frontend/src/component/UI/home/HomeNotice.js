@@ -15,7 +15,9 @@ const HomeNotice = (props) => {
           {notice.title}
         </div>
         <div className={classes.noticeDate}>{moment(notice.writeDate).format("YYYY-MM-DD")}</div>
-        <div className={classes.noticeContent}>{notice.content}</div>
+        <div className={classes.noticeContent}>
+            {notice.content.length > 60 ? `${notice.content.slice(0, 60)}...` : notice.content}
+        </div>
         </>
       </Link>
     </div>
