@@ -80,38 +80,47 @@ input.aa + label {
   margin: auto;
   min-width: 300px;
   max-width: 100%;
+  position: relative;
+  left: 11rem;
 
 
 }
 
 /*대기중 슬라이스*/
 .slice{
-
-  position: relative;
-    padding: 2%;
-    left: 27%;
-    display: inline-block;
+    position: relative;
+    right: -42rem;
 
 }
 
-.slice2{
-
+.slice3{
     position: relative;
-   padding: 1%;
-    right: 36%;
-    display: inline-block;
+        right: -39rem;
+}
 
+
+.slice2{
+    position: relative;
+    right: 6rem;
 }
 
 .slice > select{
 
-       position: absolute;
+
+       font-size: 1.2rem;
+       border: 1px solid #004DC1;
+       padding: 0.5rem 1rem;
+       width: 7rem;
+
+}
+
+.slice > input{
        font-size: 1.2rem;
        border: 1px solid #004DC1;
        padding: 0.5rem 1rem;
        width: 10rem;
-
 }
+
 .slice2 > button{
   text-align: center;
    border: 1px solid #004DC1;
@@ -123,6 +132,13 @@ input.aa + label {
     font-size: 1.3rem;
     cursor: pointer;
 
+}
+
+.slice3 > input{
+      font-size: 1.2rem;
+      border: 1px solid #004DC1;
+      padding: 0.5rem 1rem;
+      width: 10rem;
 }
 
 
