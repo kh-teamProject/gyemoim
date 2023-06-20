@@ -57,7 +57,8 @@ const Agree = () => {
         <div className={styles.flex6}>
         <div className={styles.box2}>
           <div className={styles.flex1}>
-            <h3>{pfName} 스테이지 생성</h3>
+            <h3>{pfName}</h3>
+            <p>나의 스테이지를 확인하세요</p>
           </div>
 
           <div className={styles.flex2}>

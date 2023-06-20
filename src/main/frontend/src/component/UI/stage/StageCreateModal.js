@@ -14,7 +14,7 @@ const ModalOverlay = (props) => {
     <div className={classes.modal}>
       <Agree />
       <Link to={`/stageList`}>
-      <button onClick={props.onConfirm}>다음</button>
+      <button onClick={props.onConfirm} className={[classes.button001, classes.btnPush, classes.btnBlueGreen, classes.widthBig].join(' ')} >다음</button>
     </Link>
     </div>
   );

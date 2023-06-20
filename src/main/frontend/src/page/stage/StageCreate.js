@@ -189,12 +189,23 @@ const countClickHandler = (value) => {
   return (
     <>
     <div className={styles.flexD}>
-    <div className={styles.flex2}>
-      <h1 className={styles.title}> Stage 등록</h1>
-         <h3>
-        Stage 등록을 시작합니다. 선택 또는 기입한 사항을 빠짐없이 확인하여
-        진행해주세요.
-        </h3>
+    <div className={[styles.flex2, styles.position_relative].join(' ')}>
+        <img src={require('../../component/assert/images/stageCreate_hiyoko.png')} alt="logo" className={styles.hiyokoImg} />
+        <h1 className={styles.title}> Stage 등록</h1>
+        <div className={styles.steps}>
+            <div className={[styles.active, styles.step_item].join(' ')}>
+                <div className={styles.content}>
+                    <div className={styles.title}>스테이지 정보 입력</div>
+                    <div className={styles.description}> Stage 등록을 시작합니다. 선택 또는 기입한 사항을 빠짐없이 확인하여 진행해주세요.</div>
+                </div>
+            </div>
+            <div className={styles.step_item} style={{ counterIncrement: 'ordered' }}>
+                <div className={styles.content}>
+                    <div className={[styles.title, styles.gray].join(' ')}>약관동의</div>
+                    <div className={styles.gray}>스테이지 생성 시 약관동의는 필수입니다.</div>
+                </div>
+            </div>
+        </div>
      </div>
      </div>
 

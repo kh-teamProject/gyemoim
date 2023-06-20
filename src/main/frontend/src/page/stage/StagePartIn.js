@@ -40,7 +40,25 @@ const StagePartIn = () => {
   return (
     <>
 
-     <div className={styles.flex6}>
+     <div className={[styles.flex6, styles.position_relative].join(' ')}>
+     <img src={require('../../component/assert/images/stageAgree_hiyoko.png')} alt="logo" className={styles.hiyokoImg} />
+     <div className={styles.flex2}>
+             <h1 className={styles.title}> Stage 등록</h1>
+             <div className={styles.steps}>
+                 <div className={styles.step_item} >
+                     <div className={styles.content}>
+                         <div className={[styles.title, styles.gray].join(' ')}>스테이지 정보 입력</div>
+                         <div className={styles.gray}> Stage 등록을 시작합니다. 선택 또는 기입한 사항을 빠짐없이 확인하여 진행해주세요.</div>
+                     </div>
+                 </div>
+                 <div className={[styles.active, styles.step_item].join(' ')} style={{ counterIncrement: 'ordered' }}>
+                     <div className={styles.content}>
+                         <div className={styles.title} >약관동의</div>
+                         <div className={styles.description}>스테이지 생성 시 약관동의는 필수입니다.</div>
+                     </div>
+                 </div>
+             </div>
+          </div>
       <div className={styles.box}>
         <div className={styles.flexD}>
           <div>
@@ -76,7 +94,7 @@ const StagePartIn = () => {
 
 
       <div className={styles.flex1}>
-        <button className={styles.button} onClick={modalHandler} disabled={!checked}>스테이지 확인 </button>
+        <button className={[styles.button001, styles.btnPush, styles.btnBlueGreen, styles.widthBig].join(' ')} onClick={modalHandler} disabled={!checked}>스테이지 확인 </button>
          {page && <StageCreateModal onConfirm={pageHandler}/>}
         </div>
      </div>
