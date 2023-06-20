@@ -11,20 +11,26 @@ const AdminSidebar = () => {
         setToggle(toggle => !toggle);// on, off 개념 boolean
     }
 
+    const [toggle01, setToggle01] = useState(false); // 토글 초기값 false 설정
+
+    const toggleStage = () => {
+        setToggle01(toggle01 => !toggle01);// on, off 개념 boolean
+    }
+
     return (
         <>
             <div className={`${classes['adminSidebar-wrap']}`}>
-                <img src={logo} alt="logo" width={200}/>
+                <NavLink to={'/admin'}><img src={logo} alt="logo" width={200}/></NavLink>
                 <ul>
                     <li><NavLink to={'/admin'}>홈</NavLink></li>
                     <li><NavLink to={'/admin/account'}>회원 관리</NavLink></li>
-                    <li><NavLink to={'/admin/stage'}>스테이지 관리</NavLink></li>
+                    <li><NavLink to={'/admin/stage/list'}>스테이지 관리</NavLink></li>
                     <li>
                         <button className={`${classes['adminBoardToggle-button']}`} onClick={toggleButton}>게시판 관리</button>
                     </li>
                     <div className={`${classes['adminBoardToggleContents']}`}>
                         {toggle && (
-                            <li><NavLink to={'/admin/reply'}> > 댓글 관리</NavLink></li>
+                            <li><NavLink to={'/admin/reply'}>>댓글 관리</NavLink></li>
                         )}
                     </div>
                 </ul>

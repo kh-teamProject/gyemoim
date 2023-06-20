@@ -350,10 +350,10 @@ label > svg{
   width: 14rem;
 }
 .btnBlueGreen {
-  background: #ff6436;
+  background: #004dc1;
 }
 .btnBlueGreen.btnPush {
-  box-shadow: 3px 5px 0px 0px #ff8678;
+  box-shadow: 3px 5px 0px 0px #5b9cff;
 }
 .btnPush:hover {
   margin-top: 5px;
@@ -361,8 +361,95 @@ label > svg{
 }
 
 .btnBlueGreen.btnPush:hover {
-  box-shadow: 0px 0px 0px 0px #ff6436;
+  box-shadow: 0px 0px 0px 0px #5b9cff;
 }
 .marginTop01{
     margin-top: 1rem;
+}
+
+/*step*/
+.steps{
+    display: flex;
+    max-width: 700px!important;
+    margin: 10px auto 0;
+}
+.steps .step_item{
+    flex-direction: row;
+    align-items: stretch;
+    margin: 1em 0;
+    background: 0 0;
+    box-shadow: none;
+    line-height: 1.5;
+    border-radius: 0;
+    display: block;
+    background-color: transparent;
+    border: none;
+    justify-content: left;
+    padding: 0!important;
+    position: relative;
+    flex: 1;
+}
+
+.steps .active:before{
+    background-color: #FF204B !important;
+    color: #fff !important;
+    border-color: #FF204B !important;
+}
+.steps .step_item:before{
+    position: absolute;
+    top: 0;
+    left: calc(50% - 14px);
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    border-radius: 50px;
+    font-size: 1rem;
+    border: 1px solid rgba(0,0,0,.25);
+    background-color: #fff;
+    color: rgba(0,0,0,.25);
+    z-index: 9;
+    display: block;
+    text-align: center;
+    content: counters(ordered,".");
+    margin-right: 1rem;
+    counter-increment: ordered;
+    font-family: inherit;
+    font-weight: 700;
+}
+.steps .active:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: calc(100% - 10px);
+    height: 1px;
+    top: 13px;
+    left: calc(50% - 10px);
+    border: none;
+    margin-left: 8px;
+    transform: none;
+    background-color: #FF204B;
+}
+.steps .step_item .content{
+    align-self: flex-start;
+    margin: 46px auto 0!important;
+    max-width: calc(100% - 46px);
+    text-align: center;
+    width: 100%;
+}
+.steps .step_item .content .title{
+    color: #FF204B;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.steps .step_item .content .gray{
+    color: #868686 !important;
+}
+.position_relative{
+    position: relative;
+}
+.hiyokoImg{
+    width: 20rem;
+    position: absolute;
+    top: 13.5rem;
+    right: 5rem;
 }

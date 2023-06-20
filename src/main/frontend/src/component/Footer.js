@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer>
       <div className={`${classes['logo-wrap']}`}>
-        <img src={logo} alt="logo" width={"150"} height={"70"}/>
+        <img src={logo} alt="logo" width={"150"} height={"auto"}/>
       </div>
       <div className={`${classes['member-wrap']}`}>
         <p>팀장: 민재홍</p>
