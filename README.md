@@ -36,3 +36,39 @@
 
 ## 시작가이드
 
+## 주요기능
+
+## 아키텍쳐
+|Front-End|Back-End|
+|---|---|
+|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/c3be9267-ef5b-4381-ac4e-2dd8054eb0a4" width="450px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/f083c7a1-5a38-4621-9a53-07623d41fdc5" width="450px">|
+
+## 화면구성
+### 회원관리
+|회원가입 및 JWT|마이페이지|
+|---|---|
+|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/1f4156b5-d100-4c93-99d1-57cc3a12d1a2" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/1f4156b5-d100-4c93-99d1-57cc3a12d1a2" width="500px">|
+|설명|설명|
+
+### 계모임
+|계모임 생성|계모임 선택|
+|---|---|
+|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/ee0057f3-8f08-407d-a0a4-d05bfd6b9955" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/c8266183-7bc5-4728-bdb0-861ed1d7e6a4" width="500px">|
+|설명|설명|
+
+|계모임 운영|계모임 추천 및 페이징|
+|---|---|
+|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/8a1a5875-fb2a-45d0-859c-cf00aecb672d" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/7afa5282-96bc-42e5-952d-3d503a84ddad" width="500px">|
+|설명|설명|
+
+### 게시판
+|게시판|댓글|
+|---|---|
+|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/ee0057f3-8f08-407d-a0a4-d05bfd6b9955" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/ee0057f3-8f08-407d-a0a4-d05bfd6b9955" width="500px">|
+|설명|설명|
+
+### 시각화
+|계모임 생성|계모임 선택|
+|---|---|
+|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/ee0057f3-8f08-407d-a0a4-d05bfd6b9955" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/c8266183-7bc5-4728-bdb0-861ed1d7e6a4" width="500px">|
+|설명|설명|
