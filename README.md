@@ -8,16 +8,17 @@
 * <b>프로젝트 기간</b> | 2023.05월 ~ 2023.06 (약 30일)
 * <b>프로젝트 목표</b> | Spring 프레임워크를 기반으로 하여 다양한 기술과 환경에서 실용적인 웹을 개발하는 것을 목표로 하였습니다. 
 * <b>Erd-Cloud</b> | <a href="https://www.erdcloud.com/d/S6MwRcSgsmva45ySg">https://www.erdcloud.com/d/S6MwRcSgsmva45ySg</a>
-* <b>착수보고서</b> | <a href="https://docs.google.com/presentation/d/1mROKKpeZyaS5wuaYalImkQawu0Jj2gfU/edit#slide=id.g22993f719a9_0_4">https://docs.google.com/presentation/d/1mROKKpeZyaS5wuaYalImkQawu0Jj2gfU/edit#slide=id.g22993f719a9_0_4</a>
-* <b>WBS</b> | <a href="https://docs.google.com/spreadsheets/d/1UPWAqjXY9MwH_GNtTCQeLkB2hhBgnJgA/edit#gid=1857947579">https://docs.google.com/spreadsheets/d/1UPWAqjXY9MwH_GNtTCQeLkB2hhBgnJgA/edit#gid=1857947579</a>
-* <b>구현 영상</b> | 준비중
+* <b>착수보고서</b> | <a href="https://docs.google.com/presentation/d/1mROKKpeZyaS5wuaYalImkQawu0Jj2gfU/edit#slide=id.g22993f719a9_0_4">착수보고서 바로가기</a>
+* <b>WBS</b> | <a href="https://docs.google.com/spreadsheets/d/1UPWAqjXY9MwH_GNtTCQeLkB2hhBgnJgA/edit#gid=1857947579">WBS 바로가기</a>
+* <b>구현 영상</b> | <a href="https://www.youtube.com/watch?v=i7u8KaYVpgs">https://www.youtube.com/watch?v=i7u8KaYVpgs</a>
 
 
 ## 개발팀 소개
-|권오수|민재홍|이현지|김지연|김찬희|이유진|길현지|
+|권오수|민재홍|이현지|김찬희|김지연|이유진|길현지|
 |:---|:---|:---|:---|:---|:---|:---|
-|<a href="https://github.com/kwonohsoo">@kwonohsoo</a>|<a href="https://github.com/JaeHong94">@JaeHong94</a>|<a href="https://github.com/HYUNJI830">@HYUNJI830</a>|<a href="https://github.com/kmm05">@kmm05</a>|<a href="https://github.com/chaaanhee">@chaaanhee</a>|<a href="https://github.com/e-u-gene">@e-u-gene</a>|<a href="https://github.com/khyunji99">@khyunji99</a>|
-|회원가입&JWT|마이페이지|계모임 생성|계모임 선택|계모임 운영|계모임 추천 및 페이징|게시판 구현|
+|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/c5c4b2cf-13b5-49d8-84ae-a1e9fc97291a" width="120px" />|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/a55c879b-fdbe-4395-9425-3bf43fee3895" width="120px" />|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/e0108906-f745-43e6-9ad2-fab1eb15cabc" width="120px" />|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/c0266559-1d6e-452b-9717-c113ebedf6ad" width="120px" />|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/60f0c32e-582c-44ee-8fcb-f480761533ae" width="120px" />|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/4870b183-08b5-47fe-a579-562379dfad6e" width="120px" />|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/75d1bc80-d694-49ec-922a-99ce4d4647c4" width="120px" />|
+|<a href="https://github.com/kwonohsoo">@kwonohsoo</a>|<a href="https://github.com/JaeHong94">@JaeHong94</a>|<a href="https://github.com/HYUNJI830">@HYUNJI830</a>|<a href="https://github.com/chaaanhee">@chaaanhee</a>|<a href="https://github.com/kmm05">@kmm05</a>|<a href="https://github.com/e-u-gene">@e-u-gene</a>|<a href="https://github.com/khyunji99">@khyunji99</a>|
+|회원가입&JWT|마이페이지|계모임 생성|계모임 운영|계모임 선택|계모임 추천 및 페이징|게시판 구현|
 
 
 ## 기술활용
