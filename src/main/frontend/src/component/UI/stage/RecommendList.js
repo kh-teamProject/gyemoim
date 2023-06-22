@@ -4,15 +4,11 @@ import {Link} from "react-router-dom";
 import classes from '../../../page/css/StageList.modlue.css';
 
 const RecommendList = ({recommend, roll}) => {
+  const name = recommend.length > 0 ? recommend[0].name : '';
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
+      <h2>{name}님을 위한 추천 계모임</h2>
+      <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
         {recommend
           .map((value, index) => {
             const rollItem = (roll.filter((item) => item.pfID === value.pfID));

@@ -27,9 +27,8 @@
 
     <!--(유진) 입금액과 관심사에 맞춰 무작위 추천  -->
     <select id="recommend" resultType="com.team.gyemoim.dto.stage.StageListDTO">
-        SELECT a.* from( SELECT pf.pfID,pf.pfName,pf.pfentry,pf.pfRate, pf.payment,pf.deposit,pf.interest,pf.startFlag,roll.receiveTurn, roll.uno
+        SELECT a.*, m.name from( SELECT *
         FROM pf
-        JOIN roll ON PF.PFID = roll.PFID
         ORDER BY DBMS_RANDOM.RANDOM) a ,member m
         WHERE m.uno= #{uno}
         and a.startFlag = '대기중'
