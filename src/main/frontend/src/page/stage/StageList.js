@@ -6,7 +6,6 @@ import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import {useSelector} from "react-redux";
 import RecommendList from "../../component/UI/stage/RecommendList";
-import SalesPieChart from "../../component/UI/stage/SalesPieChart";
 
 const StageList = () => {
   // 계모임 값 뿌리기
@@ -90,8 +89,8 @@ const StageList = () => {
           console.log(error);
         });
     }
-
-    //추천테이블 작동 코드
+    //checkedLogin 이 존재한다면
+    // 추천테이블 작동 코드 돌아감
     if (checkedLogin) {
       //추천기능 변수와 state
       const token = jwtDecode(Cookies.get('Set-Cookie'));
@@ -117,8 +116,9 @@ const StageList = () => {
   return (
     <>
       {/*로그인시 추천테이블*/}
-
+      {checkedLogin&&
       <RecommendList recommend={recommend} roll={roll}/>
+      }
 
       <h1>스테이지 조회</h1>
       <div>
