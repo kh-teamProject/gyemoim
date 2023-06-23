@@ -132,7 +132,7 @@ $ npm start
 ### 게시판
 |게시판|댓글|
 |---|---|
-|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/ee0057f3-8f08-407d-a0a4-d05bfd6b9955" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/ee0057f3-8f08-407d-a0a4-d05bfd6b9955" width="500px">|
+|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277248/f0e2b93d-3389-4c9a-b966-f480f7a64a1f" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277248/8fa3b2ac-a4c8-4d5a-abc6-9e448fee18a4" width="500px">|
 
 ### 시각화
 |고객 운영 시각화|계모임 운영 시각화|
