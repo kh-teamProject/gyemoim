@@ -118,7 +118,6 @@ $ npm start
 |회원가입 및 JWT|마이페이지|
 |---|---|
 |<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/8f573e44-aaa6-4bc8-a692-ed45e691f63c" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/1f4156b5-d100-4c93-99d1-57cc3a12d1a2" width="500px">|
-|설명|설명|
 
 ### 계모임
 |계모임 생성|계모임 선택|
