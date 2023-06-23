@@ -5,7 +5,7 @@
 
 ## Channels
 * <b>프로젝트 소개</b> | 고객 수입/지출 데이터 분석 기반으로 추천 가능한 계모임 플랫폼을 만들어 곗돈을 투명하게 관리하겠다는 계획을 구체화했습니다.
-* <b>프로젝트 기간</b> | 2023.05월 ~ 2023.06 (약 30일)
+* <b>프로젝트 기간</b> | 2023.05월 8일 ~ 2023.06.16 (약 40일)
 * <b>프로젝트 목표</b> | Spring 프레임워크를 기반으로 하여 다양한 기술과 환경에서 실용적인 웹을 개발하는 것을 목표로 하였습니다. 
 * <b>Erd-Cloud</b> | <a href="https://www.erdcloud.com/d/S6MwRcSgsmva45ySg">https://www.erdcloud.com/d/S6MwRcSgsmva45ySg</a>
 * <b>착수보고서</b> | <a href="https://docs.google.com/presentation/d/1mROKKpeZyaS5wuaYalImkQawu0Jj2gfU/edit#slide=id.g22993f719a9_0_4">착수보고서 바로가기</a>
@@ -123,11 +123,11 @@ $ npm start
 ### 계모임
 |계모임 생성|계모임 선택|
 |---|---|
-|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/ee0057f3-8f08-407d-a0a4-d05bfd6b9955" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/c8266183-7bc5-4728-bdb0-861ed1d7e6a4" width="500px">|
+|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/ee0057f3-8f08-407d-a0a4-d05bfd6b9955" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/8a6d7c53-1130-4dca-a552-5ee76db7e56c" width="500px">|
 
 |계모임 운영|계모임 추천 및 페이징|
 |---|---|
-|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/8a1a5875-fb2a-45d0-859c-cf00aecb672d" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/7afa5282-96bc-42e5-952d-3d503a84ddad" width="500px">|
+|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/8a1a5875-fb2a-45d0-859c-cf00aecb672d" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/79eaf936-efa9-4860-8c60-2341ffbf44a9" width="500px">|
 
 ### 게시판
 |게시판|댓글|
@@ -137,7 +137,7 @@ $ npm start
 ### 시각화
 |고객 운영 시각화|계모임 운영 시각화|
 |---|---|
-|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/ee0057f3-8f08-407d-a0a4-d05bfd6b9955" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/c8266183-7bc5-4728-bdb0-861ed1d7e6a4" width="500px">|
+|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/f5d72c3e-7447-42c7-ac23-03ae14de0280" width="500px">|<img src="https://github.com/kh-teamProject/gyemoim/assets/117277304/4350e1ae-62e3-46cf-8d92-23f69a1a9d3f" width="500px">|
 
 ## 자체 평가 의견
 * 먹튀 없는 계모임을 위해서 채권 추심제도를 이용해야했는데 그럴수 없어서 아쉽습니다. 채권 추심제도만 이용할 수 있다면 실무 활용도 가능할 것 같습니다. 
