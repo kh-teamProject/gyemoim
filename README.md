@@ -29,7 +29,7 @@
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/MVC-6DB33F?style=for-the-badge&logo=MVC&logoColor=white"> <img src="https://img.shields.io/badge/MyBatis-F80000?style=for-the-badge&logo=MyBatis&logoColor=white">  <img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white">
 
 ### DataBase
-<img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white">
+<img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white">  <img src="https://img.shields.io/badge/redis-F80000?style=for-the-badge&logo=redis&logoColor=white">
 
 ### Tool
 <img src="https://img.shields.io/badge/intellijidea-000000?style=for-the-badge&logo=intellijidea&logoColor=white">
@@ -74,7 +74,8 @@ $ npm start
 
 ## 주요기능
 * 회원 기능
-  * 회원가입 & JWT
+  * 회원가입
+  * Spring Security, JWT
   * 로그인/로그아웃
   * 이메일 찾기, 임시 비밀번호 전송, 비밀번호 변경
   * 마이페이지
