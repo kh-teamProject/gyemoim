@@ -9,7 +9,7 @@
 * <b>프로젝트 목표</b> | Spring 프레임워크를 기반으로 하여 다양한 기술과 환경에서 실용적인 웹을 개발하는 것을 목표로 하였습니다. 
 * <b>Erd-Cloud</b> | <a href="https://www.erdcloud.com/d/S6MwRcSgsmva45ySg">https://www.erdcloud.com/d/S6MwRcSgsmva45ySg</a>
 * <b>착수보고서</b> | <a href="https://docs.google.com/presentation/d/1mROKKpeZyaS5wuaYalImkQawu0Jj2gfU/edit#slide=id.g22993f719a9_0_4">착수보고서 바로가기</a>
-* <b>WBS</b> | <a href="https://docs.google.com/spreadsheets/d/1UPWAqjXY9MwH_GNtTCQeLkB2hhBgnJgA/edit#gid=1857947579">WBS 바로가기</a>
+* <b>WBS</b> | <a href="https://docs.google.com/spreadsheets/d/1UPWAqjXY9MwH_GNtTCQeLkB2hhBgnJgA/edit#gid=1856763595">WBS 바로가기</a>
 * <b>구현 영상</b> | <a href="https://www.youtube.com/watch?v=i7u8KaYVpgs">https://www.youtube.com/watch?v=i7u8KaYVpgs</a>
 
 
