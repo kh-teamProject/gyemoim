@@ -11,7 +11,7 @@
 .container {
   display: grid;
   grid-template-columns: 1fr 2.7fr;
-  grid-template-rows: 100fr 1fr;
+  grid-template-rows: 100fr 1fr
 }
 
 .eachId {
