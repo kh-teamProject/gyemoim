@@ -349,21 +349,18 @@
         ORDER BY rs.receiveTurn ASC
     </select>
 
-    <!-- (지연)참여 순번 가져오기 -->
     <select id="getParti" resultType="com.team.gyemoim.dto.stage.PartiListDTO">
         select *
         from pf
         where pfID = #{pfID}
     </select>
 
-    <!-- (지연)참여 순번 가져오기 -->
     <select id="getPartRoll" resultType="com.team.gyemoim.vo.RollVO">
         select *
         from roll
         where pfID = #{pfID}
     </select>
 
-    <!-- (지연)참여 순번 가져오기 -->
     <select id="getTurnRoll" resultType="com.team.gyemoim.dto.stage.PartiListDTO">
         SELECT DISTINCT rs.*
         FROM receiptSchedule rs, PF p

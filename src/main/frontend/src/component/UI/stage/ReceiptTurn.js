@@ -128,7 +128,7 @@ const ReceiptTurn = () => {
                  </li>
                );
              })}
-       </ul>
+           </ul>
        <div style={{ marginTop: '30px' }}></div>
        <OneReceipt selectedRollData={selectedRollData} />
        </div>
